@@ -220,7 +220,7 @@ dispatch(Promise.resolve({ type: ADD_TODO, payload: { text: 'Use middleware!' } 
 ```
 promise middleware 會偵測有 promise 被 dispatched，攔截它並取而代之在未來的時間點以 resolved 的值來 dispatch。
 
-可以非常簡單地藉由 function composition 來建立 Middleware。在這份文件中，我們並不打算聚焦在 middleware 如何運作，不過以下是如何在你建立的 store 時候起用它：
+可以非常簡單地藉由 function composition 來建立 Middleware。在這份文件中，我們並不打算聚焦在 middleware 如何運作，不過以下是如何在你建立的 store 時候啟用它：
 
 ```js
 import { createStore, applyMiddleware } from 'redux';
