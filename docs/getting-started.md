@@ -93,7 +93,7 @@ const boundRemoveTodo = id => dispatch(addTodo(id));
 
 現在讓我們來建立我們的 store 來回應我們前面定義的 action。
 
-跟其他的 Flux 實作不同，Redux 只有一個 store，而不是在你的應用程式中每個 domain 的資料有不同的 store。代替建立多個 stores 來手動地管理它們自己的內部的 state 的方式，我們建立 **reducers** 來指定要如何計算 state 來回應新的 actions。
+跟其他的 Flux 實作不同，Redux 只有一個 store，而不是在你的應用程式中每個 domain 的資料有不同的 store。代替建立多個 stores 來手動地管理它們自己內部 state 的方式，我們建立 **reducers** 來指定要如何計算 state 來回應新的 actions。
 
 一個 reducer 看起來像這樣：
 
