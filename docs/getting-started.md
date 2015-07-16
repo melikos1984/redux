@@ -248,3 +248,5 @@ Flux 在 React 社群裡最流行，不過 Redux 可以與任何種類的 view l
 就是這樣！正如你所看到的，儘管 Redux 提供強大的功能，Redux 的核心真的非常簡單。
 
 如果你有這份指南可以如何改善的建議，請讓我們知道。
+
+原文連結: [https://github.com/gaearon/redux/blob/improve-docs/docs/getting-started.md](https://github.com/gaearon/redux/blob/improve-docs/docs/getting-started.md)
