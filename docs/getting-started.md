@@ -139,7 +139,7 @@ function todoReducer(state = initialState, action) {
 - `state` 是 store 先前的 state。在你建立你的 store 之後，Redux 會立即 dispatch 一個假 action，在那個時候 `state` 會是 undefined。在那之後。`state` 會是前一次 reducer 回傳的值。
 - 我們藉由一個預設參數來指定 store 的 initial state。
 - 我們藉由一個 switch statement 來分辨 action type。
-- **我們不改變先前的 state** — 我們基於**先前的** state 物件回傳一個**新的**state 物件。
+- **我們不改變先前的 state** — 我們基於**先前的** state 物件回傳一個**新的** state 物件。
 
 最後一點尤其重要：永遠不要去改變先前的 state 物件。每次都必須回傳一個新的 state。請記住，reducers 是 pure functions，不應該進行改變或是有副作用的行為。這裡我們藉由 ES7 spread operator 來深層複製舊 state 的值到一個新物件。你可以使用像 Immutable.js 之類的 library 來追求夠好的 API 與更佳的效能，因為它使用 [persistent data structures](http://en.wikipedia.org/wiki/Persistent_data_structure)。下面就是同樣的 store 使用 immutable 的值將會看起來的樣子：
 
