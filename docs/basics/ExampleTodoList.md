@@ -1,4 +1,4 @@
-# Example: Todo List
+# 範例: Todo List
 
 This is the complete source code of the tiny todo app we built during the [basics tutorial](./README.md).
 

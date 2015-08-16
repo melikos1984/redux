@@ -1,4 +1,4 @@
-# Ecosystem
+# 生態系
 
 Redux is a tiny library, but its contracts and APIs are carefully chosen to spawn an ecosystem of tools and extensions.
 

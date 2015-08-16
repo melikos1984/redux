@@ -1,27 +1,27 @@
 # [Redux](http://rackt.github.io/redux)
 
-Redux is a predictable state container for JavaScript apps.  
+Redux is a predictable state container for JavaScript apps.
 
 It helps you write applications that behave consistently, run in different environments (client, server, and native), and are easy to test. On top of that, it provides a great developer experience, such as [live code editing combined with a time traveling debugger](https://github.com/gaearon/redux-devtools).
 
-You can use Redux together with [React](https://facebook.github.io/react/), or with any other view library.  
+You can use Redux together with [React](https://facebook.github.io/react/), or with any other view library.
 It is tiny (2kB) and has no dependencies.
 
-[![build status](https://img.shields.io/travis/rackt/redux/master.svg?style=flat-square)](https://travis-ci.org/rackt/redux) 
-[![npm version](https://img.shields.io/npm/v/redux.svg?style=flat-square)](https://www.npmjs.com/package/redux) 
+[![build status](https://img.shields.io/travis/rackt/redux/master.svg?style=flat-square)](https://travis-ci.org/rackt/redux)
+[![npm version](https://img.shields.io/npm/v/redux.svg?style=flat-square)](https://www.npmjs.com/package/redux)
 [![npm downloads](https://img.shields.io/npm/dm/redux.svg?style=flat-square)](https://www.npmjs.com/package/redux)
 [![redux channel on slack](https://img.shields.io/badge/slack-redux@reactiflux-61DAFB.svg?style=flat-square)](http://www.reactiflux.com)
 
 
-### Testimonials
+### 推薦
 
->[“Love what you’re doing with Redux”](https://twitter.com/jingc/status/616608251463909376)  
+>[“Love what you’re doing with Redux”](https://twitter.com/jingc/status/616608251463909376)
 >Jing Chen, creator of Flux
 
->[“I asked for comments on Redux in FB's internal JS discussion group, and it was universally praised. Really awesome work.”](https://twitter.com/fisherwebdev/status/616286955693682688)  
+>[“I asked for comments on Redux in FB's internal JS discussion group, and it was universally praised. Really awesome work.”](https://twitter.com/fisherwebdev/status/616286955693682688)
 >Bill Fisher, creator of Flux
 
->[“It's cool that you are inventing a better Flux by not doing Flux at all.”](https://twitter.com/andrestaltz/status/616271392930201604)  
+>[“It's cool that you are inventing a better Flux by not doing Flux at all.”](https://twitter.com/andrestaltz/status/616271392930201604)
 >André Staltz, creator of Cycle
 
 ### Developer Experience
@@ -30,10 +30,10 @@ I wrote Redux while working on my React Europe talk called [“Hot Reloading wit
 
 ### Influences
 
-Redux evolves the ideas of [Flux](https://facebook.github.io/flux), but avoids its complexity by taking cues from [Elm](http://elm-lang.org/guide/architecture).  
+Redux evolves the ideas of [Flux](https://facebook.github.io/flux), but avoids its complexity by taking cues from [Elm](http://elm-lang.org/guide/architecture).
 Whether you used them or not, Redux takes a few minutes to get started with.
 
-### Installation
+### 安裝
 
 To install the stable version:
 
@@ -50,8 +50,8 @@ npm install --save-dev redux-devtools
 
 ### The Gist
 
-The whole state of your app is stored in an object tree inside a single *store*.  
-The only way to change the state tree is to emit an *action*, an object describing what happened.  
+The whole state of your app is stored in an object tree inside a single *store*.
+The only way to change the state tree is to emit an *action*, an object describing what happened.
 To specify how the actions transform the state tree, you write pure *reducers*.
 
 That’s it!
@@ -116,18 +116,18 @@ This architecture might seem like an overkill for a counter app, but the beauty 
 * [Glossary](http://rackt.github.io/redux/docs/Glossary.html)
 * [API Reference](http://rackt.github.io/redux/docs/api/index.html)
 
-### Examples
+### 範例
 
 * [Counter](http://rackt.github.io/redux/docs/introduction/Examples.html#counter) ([source](https://github.com/rackt/redux/tree/master/examples/counter))
 * [TodoMVC](http://rackt.github.io/redux/docs/introduction/Examples.html#todomvc) ([source](https://github.com/rackt/redux/tree/master/examples/todomvc))
 * [Async](http://rackt.github.io/redux/docs/introduction/Examples.html#async) ([source](https://github.com/rackt/redux/tree/master/examples/async))
 * [Real World](http://rackt.github.io/redux/docs/introduction/Examples.html#real-world) ([source](https://github.com/rackt/redux/tree/master/examples/real-world))
 
-### Discussion
+### 討論
 
 Join the **#redux** channel of the [Reactiflux](http://reactiflux.com) Slack community.
 
-### Thanks
+### 致謝
 
 * [The Elm Architecture](https://github.com/evancz/elm-architecture-tutorial) for a great intro to modeling state updates with reducers;
 * [Turning the database inside-out](http://blog.confluent.io/2015/03/04/turning-the-database-inside-out-with-apache-samza/) for blowing my mind;
@@ -142,9 +142,9 @@ Join the **#redux** channel of the [Reactiflux](http://reactiflux.com) Slack com
 
 Special thanks to [Jamie Paton](http://jdpaton.github.io) for handing over the `redux` NPM package name.
 
-### Patrons
+### 贊助者
 
-The work on Redux was [funded by the community](https://www.patreon.com/reactdx).  
+The work on Redux was [funded by the community](https://www.patreon.com/reactdx).
 Meet some of the outstanding companies that made it possible:
 
 * [Webflow](http://webflow.com/)

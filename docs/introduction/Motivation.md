@@ -1,4 +1,4 @@
-# Motivation
+# 動機
 
 As the requirements to JavaScript single-page applications get more sophisticated, **more state needs to be managed** by the JavaScript code than ever before. This state may include server responses, cached data, and data created locally, but not yet persisted to the server. It also includes the UI state, such as the active route, the selected tab, whether to show a spinner or pagination controls, and so on.
 

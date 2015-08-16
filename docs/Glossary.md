@@ -8,9 +8,9 @@
 type State = any;
 ```
 
-*State* (也稱作 *state tree*) 是個廣義的詞彙，不過在 Redux API 中，它通常是指被 store 管理的單一狀態值並藉由 [`getState()`](api/Store.md#getState) 回傳。它代表 Redux 應用程式的完整狀態，通常是個多層的巢狀 object。
+*State* (也稱作 *state tree*) 是個廣義的詞彙，不過在 Redux API 中，它通常是指被 store 管理的單一狀態值並藉由 [`getState()`](api/Store.md#getState) 來回傳。它代表 Redux 應用程式的完整狀態，通常是個多層的巢狀物件。
 
-習慣上，top-level state 是個 object 或一些其他 key-value collection 像是 Map，but technically it can be any type。不過，你應該盡你所能讓 state serializable。不要放任何你不能輕易轉成 JSON 的東西在裡面。
+慣例上，底層 state 是個物件或一些其他 key-value collection 像是 Map，不過技術上來說它可以是任何 type。不過，你應該盡你所能讓 state serializable。不要放任何你不能輕易轉成 JSON 的東西在裡面。
 
 ## Action
 
@@ -18,13 +18,13 @@ type State = any;
 type Action = Object;
 ```
 
-An *action* is a plain object that represents an intention to change the state. Actions are the only way to get data into the store. Any data, whether from UI events, network callbacks, or other sources such as WebSockets needs to eventually be dispatched as actions.
+*action* 是個一般的 JavaScript 物件，它代表一個改變 state 的意圖。Actions 是讓 data 進到 store 的唯一方式。任何 data，無論是從 UI 事件、網路 callbacks、或其他來源，像是 WebSockets 最後都需要作為 actions 被 dispatch。
 
-習慣上，actions should have a `type` field that indicates the type of action being performed。 Types can be defined as constants and imported from another module。 It’s better to use strings for `type` than [Symbols](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Symbol) because strings are serializable。
+慣例上，actions 應該有一個 `type` 屬性，它代表被執行的 action 的類型。Types 可以被定義成常數並從其他 module import。使用字串作為 `type` 會比使用 [Symbols](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Symbol) 好，因為字串是 serializable 的。
 
-Other than `type`, the structure of an action object is really up to you。 If you’re interested, check out [Flux Standard Action](https://github.com/acdlite/flux-standard-action) for recommendations on how actions should be constructed。
+除了 `type` 以外，一個 action 物件的結構完全取決於你。如果你有興趣，請查看 [Flux Standard Action](https://github.com/acdlite/flux-standard-action) 上有關應該如何建構 actions 的建議。
 
-See also [async action](#async-action) below。
+另外請查看下面的 [async action](#async-action)。
 
 ## Reducer
 
@@ -32,11 +32,11 @@ See also [async action](#async-action) below。
 type Reducer<S, A> = (state: S, action: A) => S;
 ```
 
-A *reducer* (也稱作 *reducing function*) is a function that accepts an accumulation and a value and returns a new accumulation. They are used to reduce a collection of values down to a single value.
+A *reducer* (也稱作 *reducing function*) 是一個 function，它接收一個累積值和一個值並回傳一個新的累積值。它們通常被用來把一組值 reduce down 成一個單一值。
 
-Reducers are not unique to Redux—they are a fundamental concept in functional programming.  Even most non-functional languages, like JavaScript, have a built-in API for reducing. In JavaScript, it's [`Array.prototype.reduce()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce).
+Reducers 不是 Redux 獨有的—它們是 functional programming 裡的基礎概念。甚至大多數的非 functional languages，像是 JavaScript，都有一個內建的 reducing API。在 JavaScript 裡，那就是 [`Array.prototype.reduce()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)。
 
-In Redux, the accumulated value is the state object, and the values being accumulated are actions. Reducers calculate a new state given the previous state and an action. They must be *pure functions*—functions that return the exact same output for given inputs. They should also be free of side-effects. This is what enables exciting features like hot reloading and time travel.
+在 Redux 裡，累積值就是 state 物件，而被累積的值就是 actions。Reducers 依照先前的 state 和一個 action 來計算一個新的 state。它們必須是 *pure functions*—就是對給定的 inputs 會每次回傳完全一樣的 output 的 functions。它們也應該是沒有 side-effects 的。這就是使像是 hot reloading 和 time travel 等令人興奮的功能成真的東西。
 
 Reducers 是 Redux 中最重要的概念。
 
@@ -49,13 +49,13 @@ type BaseDispatch = (a: Action) => Action;
 type Dispatch = (a: Action | AsyncAction) => any;
 ```
 
-A *dispatching function* (or simply *dispatch function*) is a function that accepts an action or an [async action](#async-action); it then may or may not dispatch one or more actions to the store.
+*dispatching function* (或簡稱為 *dispatch function*) 是接收一個 action 或一個 [async action](#async-action) 的 function；接著它可能會、也可能不會 dispatch 一個或更多 actions 到 store。
 
-We must distinguish between dispatching functions in general and the base [`dispatch`](api/Store.md#dispatch) function provided by the store instance without any middleware.
+我們必須區分通常的 dispatching functions 和沒有任何 middleware 的 store instance 所提供的基本 [`dispatch`](api/Store.md#dispatch) function。
 
-The base dispatch function *always* synchronously sends an action to the store’s reducer, along with the previous state returned by the store, to calculate a new state. It expects actions to be plain objects ready to be consumed by the reducer.
+基本的 dispatch function *總是*同步的把 action 發送到 store 的 reducer，伴隨著 store 回傳的先前 state，以計算一個新的 state。它預期 actions 是準備好要被 reducer 消耗的一般物件。
 
-[Middleware](#middleware) wraps the base dispatch function. It allows the dispatch function to handle [async actions](#async-action) in addition to actions. Middleware may transform, delay, ignore, or otherwise interpret actions or async actions before passing them to the next middleware. See below for more information.
+[Middleware](#middleware) 包裝了基本的 dispatch function。它讓 dispatch function 除了 actions 以外還可以去處理 [async actions](#async-action)。 Middleware 可以在把 actions 或 async actions 傳遞到下一個 middleware 之前，以轉換、延遲、忽略、或其他別的方式處理它們。請往下看以了解更多資訊。
 
 ## Action Creator
 
@@ -63,11 +63,11 @@ The base dispatch function *always* synchronously sends an action to the store�
 type ActionCreator = (...args: any) => Action | AsyncAction;
 ```
 
-An *action creator* is, quite simply, a function that creates an action. Do not confuse the two terms—again, an action is a payload of information, and an action creator is a factory that creates an action.
+*action creator* 是個產生 actions 的 function，非常地簡單。不要混淆這兩個詞—重複一次，action 是個資訊 payload，而 action creator 是個產生 action 的 factory。
 
-Calling an action creator only produces an action, but does not dispatch it. You need to call the store’s [`dispatch`](api/Store.md#dispatch) function to actually cause the mutation. Sometimes we say *bound action creators* to mean functions that call an action creator and immediately dispatch its result to a specific store instance.
+呼叫 action creator 只會產生一個 action，但是不會 dispatch 它。你需要呼叫 store 的 [`dispatch`](api/Store.md#dispatch) function 來實際地造成變化。有時我們稱 *bound action creators* 來表示，呼叫一個 action creator 並立即 dispatch 它的結果到一個具體的 store instance 的 functions。
 
-If an action creator needs to read the current state, perform an API call, or cause a side effect, like a routing transition, it should return an [async action](#async-action) instead of an action.
+如果 action creator 需要讀取現在的 state、執行 API 呼叫，或引起 side effect，例如 routing 轉換，它需要回傳一個 [async action](#async-action) 而不是 action。
 
 ## Async Action
 
@@ -75,7 +75,7 @@ If an action creator needs to read the current state, perform an API call, or ca
 type AsyncAction = any;
 ```
 
-An *async action* is a value that is sent to a dispatching function, but is not yet ready for consumption by the reducer. It will be transformed by [middleware](#middleware) into an action (or a series of actions) before being sent to the base [`dispatch()`](api/Store.md#dispatch) function. Async actions may have different types, depending on the middleware you use. They are often asynchronous primitives, like a Promise or a thunk, which are not passed to the reducer immediately, but trigger action dispatches once an operation has completed.
+An *async action* is a value that is sent to a dispatching function, but is not yet ready for consumption by the reducer。它將會在被送到基本的 [`dispatch()`](api/Store.md#dispatch) function 之前，被 [middleware](#middleware) 轉換成一個 action (或一連串的 actions)。 Async actions may have different types, depending on the middleware you use。 They are often asynchronous primitives, like a Promise or a thunk, which are not passed to the reducer immediately, but trigger action dispatches once an operation has completed。
 
 ## Middleware
 
@@ -84,11 +84,11 @@ type MiddlewareAPI = { dispatch: Dispatch, getState: () => State };
 type Middleware = (api: MiddlewareAPI) => (next: Dispatch) => Dispatch;
 ```
 
-A middleware is a higher-order function that composes a [dispatch function](#dispatching-function) to return a new dispatch function. It often turns [async actions](#async-action) into actions.
+middleware 是一個 higher-order function，它組合 [dispatch function](#dispatching-function) 以回傳一個新的 dispatch function。它通常把 [async actions](#async-action) 轉換成 actions。
 
 Middleware is composable using function composition. It is useful for logging actions, performing side effects like routing, or turning an asynchronous API call into a series of synchronous actions.
 
-See [`applyMiddleware(...middlewares)`](./api/applyMiddleware.md) for a detailed look at middleware.
+可以查看 [`applyMiddleware(...middlewares)`](./api/applyMiddleware.md) 來深入了解 middleware。
 
 ## Store
 
@@ -102,15 +102,15 @@ type Store = {
 };
 ```
 
-A store is an object that holds the application’s state tree.
-There should only be a single store in a Redux app, as the composition happens on the reducer level.
+store 是個保存應用程式的 state tree 的物件。
+在一個 Redux 應用程式裡，應該只有一個 store，因為 composition 發生在 reducer 層級。
 
-- [`dispatch(action)`](api/Store.md#dispatch) is the base dispatch function described above.
-- [`getState()`](api/Store.md#getState) returns the current state of the store.
-- [`subscribe(listener)`](api/Store.md#subscribe) registers a function to be called on state changes.
-- [`getReducer()`](api/Store.md#getReducer) and [`replaceReducer(nextReducer)`](api/Store.md#replaceReducer) can be used to implement hot reloading and code splitting. Most likely you won’t use them.
+- [`dispatch(action)`](api/Store.md#dispatch) 是上面描述過的基本 dispatch function。
+- [`getState()`](api/Store.md#getState) 回傳現在 store 的 state。
+- [`subscribe(listener)`](api/Store.md#subscribe) 註冊一個會在 state 改變時被呼叫的 function。
+- [`getReducer()`](api/Store.md#getReducer) 和 [`replaceReducer(nextReducer)`](api/Store.md#replaceReducer) 可以被用來實作 hot reloading 與 code splitting。你很有可能不會使用它們。
 
-See the complete [store API reference](api/Store.md#dispatch) for more details.
+查看完整的 [store API reference](api/Store.md#dispatch) 來了解細節。
 
 ## Store creator
 
@@ -118,7 +118,7 @@ See the complete [store API reference](api/Store.md#dispatch) for more details.
 type StoreCreator = (reducer: Reducer, initialState: ?State) => Store;
 ```
 
-A store creator is a function that creates a Redux store. Like with dispatching function, we must distinguish the base store creator, [`createStore(reducer, initialState)`](api/createStore.md) exported from the Redux package, from store creators that are returned from the store enhancers.
+store creator 是個用來建立一個 Redux store 的 function。就像 dispatching function 一樣，我們必須區分從 Redux package exported 的基本的 store creator [`createStore(reducer, initialState)`](api/createStore.md)，與從 store enhancers 回傳的 store creators。
 
 ## Store enhancer
 
@@ -126,10 +126,10 @@ A store creator is a function that creates a Redux store. Like with dispatching 
 type StoreEnhancer = (next: StoreCreator) => StoreCreator;
 ```
 
-A store enhancer is a higher-order function that composes a store creator to return a new, enhanced store creator. This is similar to middleware in that it allows you to alter the store interface in a composable way.
+store enhancer 是個 higher-order function，它 composes a store creator to 回傳一個新的, enhanced store creator。 This is similar to middleware in that it allows you to alter the store interface in a composable way。
 
-Store enhancers are much the same concept as higher-order components in React, which are also occasionally called “component enhancers”.
+Store enhancers are much the same concept as higher-order components in React, which are also occasionally called “component enhancers”。
 
-Because a store is not an instance, but rather a plain-object collection of functions, copies can be easily created and modified without mutating the original store. There is an example in [`compose`](api/compose.md) documentation demonstrating that.
+Because a store is not an instance, but rather a plain-object collection of functions, copies can be easily created and modified without mutating the original store。 There is an example in [`compose`](api/compose.md) documentation demonstrating that。
 
-Most likely you’ll never write a store enhancer, but you may use the one provided by the [developer tools](https://github.com/gaearon/redux-devtools). It is what makes time travel possible without the app being aware it is happening. Amusingly, the [Redux middleware implementation](api/applyMiddleware.md) is itself a store enhancer.
+Most likely you’ll never write a store enhancer, but you may use the one provided by the [developer tools](https://github.com/gaearon/redux-devtools)。 It is what makes time travel possible without the app being aware it is happening。 Amusingly, the [Redux middleware implementation](api/applyMiddleware.md) is itself a store enhancer。

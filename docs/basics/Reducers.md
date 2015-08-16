@@ -126,7 +126,7 @@ function todoApp(state = initialState, action) {
         text: action.text,
         completed: false
       }]
-    });    
+    });
   default:
     return state;
   }
@@ -390,6 +390,6 @@ const todoApp = combineReducers({
 export default todoApp;
 ```
 
-## Next Steps
+## 下一步
 
 Next, we’ll explore how to [create a Redux store](Store.md) that holds the state and takes care of calling your reducer when you dispatch an action.

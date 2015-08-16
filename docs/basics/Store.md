@@ -70,6 +70,6 @@ import todoApp from './reducers';
 let store = createStore(todoApp);
 ```
 
-## Next Steps
+## 下一步
 
 Before creating a UI for our todo app, we will take a detour to see [how the data flows in a Redux application](DataFlow.md).

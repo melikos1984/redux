@@ -1,10 +1,10 @@
-# Prior Art
+# 先前技術
 
 Redux has a mixed heritage. It is similar to some patterns and technologies, but is also different from them in important ways. We explore some of the similarities and the differences below.
 
 ### Flux
 
-Can Redux be considered a [Flux](https://facebook.github.io/flux/) implementation?  
+Can Redux be considered a [Flux](https://facebook.github.io/flux/) implementation?
 [Yes](https://twitter.com/fisherwebdev/status/616278911886884864), and [no](https://twitter.com/andrestaltz/status/616270755605708800).
 
 (Don’t worry, [Flux creators](https://twitter.com/jingc/status/616608251463909376) [approve of it](https://twitter.com/fisherwebdev/status/616286955693682688), if that’s all you wanted to know.)

@@ -1,4 +1,4 @@
-# Three Principles
+# 三大原則
 
 Redux can be described in three fundamental principles:
 
