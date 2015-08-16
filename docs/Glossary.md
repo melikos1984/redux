@@ -1,6 +1,6 @@
-# Glossary
+# 術語表
 
-This is a glossary of the core terms in Redux, along with their type signatures. The types are documented using [Flow notation](http://flowtype.org/docs/quick-reference.html).
+這是 Redux 中核心詞彙的術語表，以及它們的 type signatures。這些 types 是使用 [Flow notation](http://flowtype.org/docs/quick-reference.html) 來記錄。
 
 ## State
 
@@ -8,9 +8,9 @@ This is a glossary of the core terms in Redux, along with their type signatures.
 type State = any;
 ```
 
-*State* (also called *state tree*) is a broad term, but in the Redux API it usually refers to the single state value that is managed by the store and returned by [`getState()`](api/Store.md#getState). It represents the entire state of a Redux application, which is often a deeply nested object.
+*State* (也稱作 *state tree*) 是個廣義的詞彙，不過在 Redux API 中，它通常是指被 store 管理的單一狀態值並藉由 [`getState()`](api/Store.md#getState) 回傳。它代表 Redux 應用程式的完整狀態，通常是個多層的巢狀 object。
 
-By convention, the top-level state is an object or some other key-value collection like a Map, but technically it can be any type. Still, you should do your best to keep the state serializable. Don’t put anything inside it that you can’t easily turn to JSON.
+習慣上，top-level state 是個 object 或一些其他 key-value collection 像是 Map，but technically it can be any type。不過，你應該盡你所能讓 state serializable。不要放任何你不能輕易轉成 JSON 的東西在裡面。
 
 ## Action
 
@@ -18,13 +18,13 @@ By convention, the top-level state is an object or some other key-value collecti
 type Action = Object;
 ```
 
-An *action* is a plain object that represents an intention to change the state. Actions are the only way to get data into the store. Any data, whether from the UI events, network callbacks, or other sources such as WebSockets need to eventually be dispatched as actions.
+An *action* is a plain object that represents an intention to change the state。 Actions are the only way to get data into the store。 Any data, whether from the UI events, network callbacks, or other sources such as WebSockets need to eventually be dispatched as actions。
 
-By convention, actions should have a `type` field that indicates the type of action being performed. Types can be defined as constants and imported from another module. It’s better to use strings for `type` than [Symbols](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Symbol) because strings are serializable.
+習慣上，actions should have a `type` field that indicates the type of action being performed。 Types can be defined as constants and imported from another module。 It’s better to use strings for `type` than [Symbols](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Symbol) because strings are serializable。
 
-Other than `type`, the structure of an action object is really up to you. If you’re interested, check out [Flux Standard Action](https://github.com/acdlite/flux-standard-action) for recommendations on how actions should be constructed.
+Other than `type`, the structure of an action object is really up to you。 If you’re interested, check out [Flux Standard Action](https://github.com/acdlite/flux-standard-action) for recommendations on how actions should be constructed。
 
-See also [async action](#async-action) below.
+See also [async action](#async-action) below。
 
 ## Reducer
 
@@ -32,13 +32,13 @@ See also [async action](#async-action) below.
 type Reducer<S, A> = (state: S, action: A) => S;
 ```
 
-A *reducer* (also called a *reducing function*) is a function that accepts an accumulation and a value and returns a new accumulation. They are used to reduce a collection of values down to a single value.
+A *reducer* (也稱作 *reducing function*) is a function that accepts an accumulation and a value and returns a new accumulation. They are used to reduce a collection of values down to a single value.
 
 Reducers are not unique to Redux—they are a fundamental concept in functional programming.  Even most non-functional languages, like JavaScript, have a built-in API for reducing. In JavaScript, it's [`Array.prototype.reduce()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce).
 
 In Redux, the accumulated value is the state object, and the values being accumulated are actions. Reducers calculate a new state given the previous state and an action. They must be *pure functions*—functions that return the exact same output for given inputs. They should also be free of side-effects. This is what enables exciting features like hot reloading and time travel.
 
-Reducers are the most important concept in Redux.
+Reducers 是 Redux 中最重要的概念。
 
 *Do not put the API calls into reducers.*
 
@@ -102,7 +102,7 @@ type Store = {
 };
 ```
 
-A store is an object that holds the application’s state tree.  
+A store is an object that holds the application’s state tree.
 There should only be a single store in a Redux app, as the composition happens on the reducer level.
 
 - [`dispatch(action)`](api/Store.md#dispatch) is the base dispatch function described above.
