@@ -4,7 +4,7 @@ Redux architecture revolves around a **strict unidirectional data flow**.
 
 This means that all data in an application follows the same lifecycle pattern, making the logic of your app more predictable and easier to understand. It also encourages data normalization, so that you don't end up with multiple, independent copies of the same data that are unaware of one another.
 
-If you're still not convinced, read [Motivation](../introduction/Motivation.md) and [The Case for Flux](https://medium.com/@dan_abramov/the-case-for-flux-379b7d1982c6) for a compelling argument in favor of unidirectional data flow. Although [Redux is not exactly Flux](../introduction/Relation to Other Libraries.md), it shares the same key benefits.
+If you're still not convinced, read [Motivation](../introduction/Motivation.md) and [The Case for Flux](https://medium.com/@dan_abramov/the-case-for-flux-379b7d1982c6) for a compelling argument in favor of unidirectional data flow. Although [Redux is not exactly Flux](../introduction/PriorArt.md), it shares the same key benefits.
 
 The data lifecycle in any Redux app follows these 4 steps:
 
@@ -18,7 +18,7 @@ The data lifecycle in any Redux app follows these 4 steps:
     { type: 'ADD_TODO', text: 'Read the Redux docs.'};
     ```
 
-  Think of an action as a very brief snippet of news. “Mary liked article 42.” or “Read the Redux docs.” was added to the list of todos.”
+  Think of an action as a very brief snippet of news. “Mary liked article 42.” or “‘Read the Redux docs.’ was added to the list of todos.”
 
   You can call [`store.dispatch(action)`](../api/Store.md#dispatch) from anywhere in your app, including components and XHR callbacks, or even at scheduled intervals.
 
@@ -46,13 +46,13 @@ The data lifecycle in any Redux app follows these 4 steps:
     let nextState = todoApp(previousState, action);
     ```
 
-    Note that reducer is a pure function. It only *computes* the next state. It should be completely predictable: calling it with the same inputs many times should produce the same outputs. It shouldn’t perform any side effects like API calls or router transitions. These should happen before an action is dispatched.
+    Note that a reducer is a pure function. It only *computes* the next state. It should be completely predictable: calling it with the same inputs many times should produce the same outputs. It shouldn’t perform any side effects like API calls or router transitions. These should happen before an action is dispatched.
 
 3. **The root reducer may combine the output of multiple reducers into a single state tree.**
 
   How you structure the root reducer is completely up to you. Redux ships with a [`combineReducers()`](../api/combineReducers.md) helper function, useful for “splitting” the root reducer into separate functions that each manage one branch of the state tree.
 
-  Here’s how [`combineReducers()`](../api/combineReducers.md) works. Let’s say you have a list of todos, and the currently selected filter setting to keep track of with two reducers:
+  Here’s how [`combineReducers()`](../api/combineReducers.md) works. Let’s say you have two reducers, one for a list of todos, and another for the currently selected filter setting:
 
     ```js
     function todos(state = [], action) {

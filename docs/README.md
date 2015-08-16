@@ -1,6 +1,6 @@
-## Summary
+## Table of Contents
 
-* [Read Me](README.md)
+* [Read Me](/README.md)
 * [Introduction](/docs/introduction/README.md)
   * [Motivation](/docs/introduction/Motivation.md)
   * [Three Principles](/docs/introduction/ThreePrinciples.md)
@@ -18,21 +18,22 @@
   * [Middleware](/docs/advanced/Middleware.md)
   * [Async Actions](/docs/advanced/AsyncActions.md)
   * [Async Flow](/docs/advanced/AsyncFlow.md)
-  * [Usage with React Router](/docs/advanced/UsageWithReactRouter.md)
+  * Usage with React Router
   * [Example: Reddit API](/docs/advanced/ExampleRedditAPI.md)
-  * [Next Steps](/docs/advanced/NextSteps.md)
+  * Next Steps
 * [Recipes](/docs/recipes/README.md)
   * [Migrating to Redux](/docs/recipes/MigratingToRedux.md)
   * [Reducing Boilerplate](/docs/recipes/ReducingBoilerplate.md)
-  * [Server Rendering](/docs/recipes/ServerRendering.md)
+  * Server Rendering
   * [Computing Derived Data](/docs/recipes/ComputingDerivedData.md)
   * [Writing Tests](/docs/recipes/WritingTests.md)
-* [Troubleshooting](docs/Troubleshooting.md)
-* [Glossary](docs/Glossary.md)
-* [API Reference](docs/api/README.md)
-  * [createStore](docs/api/createStore.md)
-  * [Store](docs/api/Store.md)
-  * [combineReducers](docs/api/combineReducers.md)
-  * [applyMiddleware](docs/api/applyMiddleware.md)
-  * [bindActionCreators](docs/api/bindActionCreators.md)
-  * [compose](docs/api/compose.md)
+* [Troubleshooting](/docs/Troubleshooting.md)
+* [Glossary](/docs/Glossary.md)
+* [API Reference](/docs/api/README.md)
+  * [createStore](/docs/api/createStore.md)
+  * [Store](/docs/api/Store.md)
+  * [combineReducers](/docs/api/combineReducers.md)
+  * [applyMiddleware](/docs/api/applyMiddleware.md)
+  * [bindActionCreators](/docs/api/bindActionCreators.md)
+  * [compose](/docs/api/compose.md)
+* [Patrons](/PATRONS.md)

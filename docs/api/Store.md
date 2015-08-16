@@ -40,7 +40,7 @@ The store’s reducing function will be called with the current [`getState()`](#
 >##### A Note for Flux Users
 >If you attempt to call `dispatch` from inside the [reducer](../Glossary.md#reducer), it will throw with an error saying “Reducers may not dispatch actions.” This is similar to “Cannot dispatch in a middle of dispatch” error in Flux, but doesn’t cause the problems associated with it. In Flux, a dispatch is forbidden while Stores are handling the action and emitting updates. This is unfortunate because it makes it impossible to dispatch actions from component lifecycle hooks or other benign places.
 
->In Redux, subscriptions are called after the root reducer returned the new state, so you *may* dispatch in the subscription listeners. You are only disallowed to dispatch inside the reducers because they must have no side effects. If you want to cause a side effect in response to an action, the right place to do this is in the potentially async [action creator](../Glossary.md#action-creator).
+>In Redux, subscriptions are called after the root reducer has returned the new state, so you *may* dispatch in the subscription listeners. You are only disallowed to dispatch inside the reducers because they must have no side effects. If you want to cause a side effect in response to an action, the right place to do this is in the potentially async [action creator](../Glossary.md#action-creator).
 
 #### Arguments
 
@@ -83,7 +83,7 @@ store.dispatch(addTodo('Read about the middleware'));
 
 Adds a change listener. It will be called any time an action is dispatched, and some part of the state tree may potentially have changed. You may then call [`getState()`](#getState) to read the current state tree inside the callback.
 
-It is a low-level API. Most likely, instead of using it directly, you’ll use React (or other) bindings. If you feel that the callback needs to be invoked with the current state, you might want to [convert the store to an Observable or write a custom `observeStore` utility instead](https://github.com/gaearon/redux/issues/303#issuecomment-125184409).
+It is a low-level API. Most likely, instead of using it directly, you’ll use React (or other) bindings. If you feel that the callback needs to be invoked with the current state, you might want to [convert the store to an Observable or write a custom `observeStore` utility instead](https://github.com/rackt/redux/issues/303#issuecomment-125184409).
 
 To unsubscribe the change listener, invoke the function returned by `subscribe`.
 
@@ -122,7 +122,7 @@ handleChange();
 
 >##### Deprecated
 
->This API has been [deprecated](https://github.com/gaearon/redux/issues/350).  
+>This API has been [deprecated](https://github.com/rackt/redux/issues/350).  
 >It will be removed when we find a better solution for this problem.
 
 Returns the reducer currently used by the store to calculate the state.
@@ -139,7 +139,7 @@ It is an advanced API. You might only need this if you implement a hot reloading
 
 >##### Deprecated
 
->This API has been [deprecated](https://github.com/gaearon/redux/issues/350).  
+>This API has been [deprecated](https://github.com/rackt/redux/issues/350).  
 >It will be removed when we find a better solution for this problem.
 
 Replaces the reducer currently used by the store to calculate the state.

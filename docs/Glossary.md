@@ -18,7 +18,7 @@ type State = any;
 type Action = Object;
 ```
 
-An *action* is a plain object that represents an intention to change the state。 Actions are the only way to get data into the store。 Any data, whether from the UI events, network callbacks, or other sources such as WebSockets need to eventually be dispatched as actions。
+An *action* is a plain object that represents an intention to change the state. Actions are the only way to get data into the store. Any data, whether from UI events, network callbacks, or other sources such as WebSockets needs to eventually be dispatched as actions.
 
 習慣上，actions should have a `type` field that indicates the type of action being performed。 Types can be defined as constants and imported from another module。 It’s better to use strings for `type` than [Symbols](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Symbol) because strings are serializable。
 
@@ -40,7 +40,7 @@ In Redux, the accumulated value is the state object, and the values being accumu
 
 Reducers 是 Redux 中最重要的概念。
 
-*Do not put the API calls into reducers.*
+*不要在 reducers 裡面呼叫 API*
 
 ## Dispatching Function
 
@@ -51,7 +51,7 @@ type Dispatch = (a: Action | AsyncAction) => any;
 
 A *dispatching function* (or simply *dispatch function*) is a function that accepts an action or an [async action](#async-action); it then may or may not dispatch one or more actions to the store.
 
-We must distinguish between dispatching functions in general and the base [`dispatch`](api/Store.md#dispatch) function provided by the store instance without the middleware.
+We must distinguish between dispatching functions in general and the base [`dispatch`](api/Store.md#dispatch) function provided by the store instance without any middleware.
 
 The base dispatch function *always* synchronously sends an action to the store’s reducer, along with the previous state returned by the store, to calculate a new state. It expects actions to be plain objects ready to be consumed by the reducer.
 
@@ -63,11 +63,11 @@ The base dispatch function *always* synchronously sends an action to the store�
 type ActionCreator = (...args: any) => Action | AsyncAction;
 ```
 
-An *action creator* is, quite simply, a function that creates an action. Do not confuse the two terms—again, an action is a payload of information, and an action creator is a factory that creates them.
+An *action creator* is, quite simply, a function that creates an action. Do not confuse the two terms—again, an action is a payload of information, and an action creator is a factory that creates an action.
 
 Calling an action creator only produces an action, but does not dispatch it. You need to call the store’s [`dispatch`](api/Store.md#dispatch) function to actually cause the mutation. Sometimes we say *bound action creators* to mean functions that call an action creator and immediately dispatch its result to a specific store instance.
 
-If an action creator needs to read the current state, perform an API call, or a side effect like a routing transition, it should return an [async action](#async-action) instead of an action.
+If an action creator needs to read the current state, perform an API call, or cause a side effect, like a routing transition, it should return an [async action](#async-action) instead of an action.
 
 ## Async Action
 
@@ -132,4 +132,4 @@ Store enhancers are much the same concept as higher-order components in React, w
 
 Because a store is not an instance, but rather a plain-object collection of functions, copies can be easily created and modified without mutating the original store. There is an example in [`compose`](api/compose.md) documentation demonstrating that.
 
-Most likely you’ll never write a store enhancer, but you may use the one provided by the [developer tools](https://github.com/gaearon/redux-devtools). It is what makes time travel possible without the app being aware it is happening. Amusingly, [Redux middleware implementation](api/applyMiddleware.md) is itself a store ehancer.
+Most likely you’ll never write a store enhancer, but you may use the one provided by the [developer tools](https://github.com/gaearon/redux-devtools). It is what makes time travel possible without the app being aware it is happening. Amusingly, the [Redux middleware implementation](api/applyMiddleware.md) is itself a store enhancer.

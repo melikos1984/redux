@@ -2,7 +2,7 @@
 
 Composes functions from left to right.
 
-This is a functional programming utility, and is included in Redux as convenience.  
+This is a functional programming utility, and is included in Redux as a convenience.  
 You might want to use it to apply several [store enhancers](../Glossary.md#store-enhancer) in a row.
 
 #### Arguments
@@ -20,7 +20,6 @@ This example demonstrates how to use `compose` to enhance a [store](Store.md) wi
 ```js
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import createMiddleware from './clientMiddleware';
 import * as reducers from '../reducers/index';
 
 let reducer = combineReducers(reducers);
@@ -33,10 +32,10 @@ let finalCreateStore;
 // UglifyJS will eliminate the dead code depending on the build environment.
 
 if (process.env.NODE_ENV === 'production') {
-  finalCreateStore = applyMiddleware(middleware)(createStore);
+  finalCreateStore = applyMiddleware(...middleware)(createStore);
 } else {
   finalCreateStore = compose(
-    applyMiddleware(middleware),
+    applyMiddleware(...middleware),
     require('redux-devtools').devTools(),
     require('redux-devtools').persistState(
       window.location.href.match(/[?&]debug_session=([^&]+)\b/)
@@ -61,4 +60,4 @@ let store = finalCreateStore(reducer);
 
 #### Tips
 
-* All `compose` does is it lets you write deeply nested function transformations without the rightward drift of the code. Don’t give it too much credit!
+* All `compose` does is let you write deeply nested function transformations without the rightward drift of the code. Don’t give it too much credit!

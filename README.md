@@ -1,13 +1,13 @@
-# [Redux](http://gaearon.github.io/redux)
+# [Redux](http://rackt.github.io/redux)
 
 Redux is a predictable state container for JavaScript apps.  
 
-It helps you write applications that behave consistently, run in different environments (client, server, and native), and are easy to test. On top of that, it provides a great developer experience, such as live code editing combined with a time traveling debugger.
+It helps you write applications that behave consistently, run in different environments (client, server, and native), and are easy to test. On top of that, it provides a great developer experience, such as [live code editing combined with a time traveling debugger](https://github.com/gaearon/redux-devtools).
 
 You can use Redux together with [React](https://facebook.github.io/react/), or with any other view library.  
 It is tiny (2kB) and has no dependencies.
 
-[![build status](https://img.shields.io/travis/gaearon/redux/master.svg?style=flat-square)](https://travis-ci.org/gaearon/redux) 
+[![build status](https://img.shields.io/travis/rackt/redux/master.svg?style=flat-square)](https://travis-ci.org/rackt/redux) 
 [![npm version](https://img.shields.io/npm/v/redux.svg?style=flat-square)](https://www.npmjs.com/package/redux) 
 [![npm downloads](https://img.shields.io/npm/dm/redux.svg?style=flat-square)](https://www.npmjs.com/package/redux)
 [![redux channel on slack](https://img.shields.io/badge/slack-redux@reactiflux-61DAFB.svg?style=flat-square)](http://www.reactiflux.com)
@@ -35,6 +35,8 @@ Whether you used them or not, Redux takes a few minutes to get started with.
 
 ### Installation
 
+To install the stable version:
+
 ```
 npm install --save redux
 ```
@@ -50,7 +52,7 @@ npm install --save-dev redux-devtools
 
 The whole state of your app is stored in an object tree inside a single *store*.  
 The only way to change the state tree is to emit an *action*, an object describing what happened.  
-To specify how the state tree is transformed by the actions, you write pure *reducers*.
+To specify how the actions transform the state tree, you write pure *reducers*.
 
 That’s it!
 
@@ -62,11 +64,11 @@ import { createStore } from 'redux';
  * It describes how an action transforms the state into the next state.
  *
  * The shape of the state is up to you: it can be a primitive, an array, an object,
- * or even an Immutable.js data structure. The only important part is you should
- * return a new object if the state changes, instead of mutating the parameter.
+ * or even an Immutable.js data structure. The only important part is that you should
+ * not mutate the state object, but return a new object if the state changes.
  *
  * In this example, we use a `switch` statement and strings, but you can use a helper that
- * follows a different convention (such as function maps) that makes sense for your project.
+ * follows a different convention (such as function maps) if it makes sense for your project.
  */
 function counter(state = 0, action) {
   switch (action.type) {
@@ -79,7 +81,7 @@ function counter(state = 0, action) {
   }
 }
 
-// Create a Redux store that holds the state of your app.
+// Create a Redux store holding the state of your app.
 // Its API is { subscribe, dispatch, getState }.
 let store = createStore(counter);
 
@@ -104,9 +106,26 @@ If you’re coming from Flux, there is a single important difference you need to
 
 This architecture might seem like an overkill for a counter app, but the beauty of this pattern is how well it scales to large and complex apps. It also enables very powerful developer tools, because it is possible to trace every mutation to the action that caused it. You can record user sessions and reproduce them just by replaying every action.
 
+### Documentation
+
+* [Introduction](http://rackt.github.io/redux/docs/introduction/index.html)
+* [Basics](http://rackt.github.io/redux/docs/basics/index.html)
+* [Advanced](http://rackt.github.io/redux/docs/advanced/index.html)
+* [Recipes](http://rackt.github.io/redux/docs/recipes/index.html)
+* [Troubleshooting](http://rackt.github.io/redux/docs/Troubleshooting.html)
+* [Glossary](http://rackt.github.io/redux/docs/Glossary.html)
+* [API Reference](http://rackt.github.io/redux/docs/api/index.html)
+
+### Examples
+
+* [Counter](http://rackt.github.io/redux/docs/introduction/Examples.html#counter) ([source](https://github.com/rackt/redux/tree/master/examples/counter))
+* [TodoMVC](http://rackt.github.io/redux/docs/introduction/Examples.html#todomvc) ([source](https://github.com/rackt/redux/tree/master/examples/todomvc))
+* [Async](http://rackt.github.io/redux/docs/introduction/Examples.html#async) ([source](https://github.com/rackt/redux/tree/master/examples/async))
+* [Real World](http://rackt.github.io/redux/docs/introduction/Examples.html#real-world) ([source](https://github.com/rackt/redux/tree/master/examples/real-world))
+
 ### Discussion
 
-Join the **#redux** channel of the [Reactiflux](http://reactiflux.com/) Slack community.
+Join the **#redux** channel of the [Reactiflux](http://reactiflux.com) Slack community.
 
 ### Thanks
 
@@ -121,7 +140,17 @@ Join the **#redux** channel of the [Reactiflux](http://reactiflux.com/) Slack co
 * [Cycle](https://github.com/staltz/cycle) for showing how often a function is the best tool;
 * [React](https://github.com/facebook/react) for the pragmatic innovation.
 
-Special thanks to [Jamie Paton](http://jdpaton.github.io/) for handing over the `redux` NPM package name.
+Special thanks to [Jamie Paton](http://jdpaton.github.io) for handing over the `redux` NPM package name.
+
+### Patrons
+
+The work on Redux was [funded by the community](https://www.patreon.com/reactdx).  
+Meet some of the outstanding companies that made it possible:
+
+* [Webflow](http://webflow.com/)
+* [Chess iX](http://www.chess-ix.com/)
+
+[See the full list of Redux patrons.](PATRONS.md)
 
 ### License
 
