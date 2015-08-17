@@ -1,17 +1,17 @@
 # 範例
 
-Redux is distributed with a few examples in its [source code](https://github.com/rackt/redux/tree/master/examples).
-**To run any of them, clone the repo and run `npm install` both in the root and the example folder.**
+Redux 是隨著一些範例在它的[原始碼](https://github.com/rackt/redux/tree/master/examples)中一起發佈的。
+**要執行任何一個範例，你必須 clone repo 並在專案根目錄和範例目錄都執行 `npm install`。**
 
 >##### Note on Copying
->If you copy Redux examples outside their folders, remove these lines from their `webpack.config.js`:
+>如果你把 Redux 範例複製到它們的目錄外面，必須從它們的 `webpack.config.js` 移除這幾行：
 >
 >```js
 >alias: {
 >   'redux': path.join(__dirname, '..', '..', 'src')
 >},
 >```
->and
+>和
 >```js
 >{
 >   test: /\.js$/,
@@ -20,11 +20,11 @@ Redux is distributed with a few examples in its [source code](https://github.com
 >},
 ```
 >
-> Otherwise they’ll try to resolve Redux to a relative `src` folder, and the build will fail.
+> 否則他們將會嘗試到相對的 `src` 目錄解析 Redux，而 build 將會失敗。
 
 ## Counter
 
-Run the [Counter](https://github.com/rackt/redux/tree/master/examples/counter) example:
+執行 [Counter](https://github.com/rackt/redux/tree/master/examples/counter) 範例：
 
 ```
 git clone https://github.com/gaearon/redux.git
@@ -39,14 +39,14 @@ npm start
 open http://localhost:3000/
 ```
 
-It covers:
+它涵蓋了：
 
-* Basic Redux flow;
-* Testing.
+* 基礎的 Redux 資料流；
+* 測試。
 
 ## TodoMVC
 
-Run the [TodoMVC](https://github.com/rackt/redux/tree/master/examples/todomvc) example:
+執行 [TodoMVC](https://github.com/rackt/redux/tree/master/examples/todomvc) 範例：
 
 ```
 git clone https://github.com/gaearon/redux.git
@@ -61,15 +61,15 @@ npm start
 open http://localhost:3000/
 ```
 
-It covers:
+它涵蓋了：
 
-* Redux flow with two reducers;
-* Updating nested data;
-* Testing.
+* 伴隨著兩個 reducers 的 Redux 資料流；
+* 更新巢狀資料；
+* 測試。
 
 ## Async
 
-Run the [Async](https://github.com/rackt/redux/tree/master/examples/async) example:
+執行 [Async](https://github.com/rackt/redux/tree/master/examples/async) 範例：
 
 ```
 git clone https://github.com/gaearon/redux.git
@@ -84,15 +84,15 @@ npm start
 open http://localhost:3000/
 ```
 
-It covers:
+它涵蓋了：
 
-* Basic async Redux flow with [redux-thunk](https://github.com/gaearon/redux-thunk);
-* Caching responses and showing a spinner while data is fetching;
-* Invalidating the cached data.
+* 使用 [redux-thunk](https://github.com/gaearon/redux-thunk) 處理基礎的 async Redux 資料流；
+* 快取回應並在抓取資料時顯示一個 spinner；
+* 讓快取的資料失效。
 
 ## Real World
 
-Run the [Real World](https://github.com/rackt/redux/tree/master/examples/real-world) example:
+執行 [Real World](https://github.com/rackt/redux/tree/master/examples/real-world) 範例：
 
 ```
 git clone https://github.com/gaearon/redux.git
@@ -107,16 +107,16 @@ npm start
 open http://localhost:3000/
 ```
 
-It covers:
+它涵蓋了：
 
-* Real-world async Redux flow;
-* Keeping entities in a normalized entity cache;
-* A custom middleware for API calls;
-* Caching responses and showing a spinner while data is fetching;
-* Pagination;
-* Routing.
+* 真實世界的 async Redux 資料流；
+* 保存 entities 在一個正規化的 entity 快取裡；
+* 給 API 呼叫用的自訂 middleware;
+* 快取回應並在抓取資料時顯示一個 spinner；
+* Pagination；
+* Routing。
 
-## More Examples
+## 更多範例
 
-You can find more examples in [Awesome Redux](https://github.com/xgrommx/awesome-redux).
+你可以在 [Awesome Redux](https://github.com/xgrommx/awesome-redux) 找到更多範例。
 

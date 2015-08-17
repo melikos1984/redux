@@ -4,7 +4,7 @@ In the [basics walkthrough](../basics/README.md), we explored how to structure a
 
 * [Middleware](Middleware.md)
 * [Async Actions](AsyncActions.md)
-* [Async Flow](AsyncFlow.md)
+* [Async 資料流](AsyncFlow.md)
 * [Usage with React Router](UsageWithReactRouter.md)
-* [Example: Reddit API](ExampleRedditAPI.md)
+* [範例：Reddit API](ExampleRedditAPI.md)
 * [Next Steps](NextSteps.md)

@@ -1,4 +1,4 @@
-# Usage with React
+# 搭配 React 運用
 
 From the very beginning, we need to stress that Redux has no relation to React. You can write Redux apps with React, Angular, Ember, jQuery, or vanilla JavaScript.
 
@@ -271,7 +271,7 @@ First, we need to import `Provider` from [`react-redux`](http://github.com/gaear
 #### `index.js`
 
 ```js
-import React from 'react'; 
+import React from 'react';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import App from './containers/App';

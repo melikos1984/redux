@@ -86,7 +86,7 @@ type Middleware = (api: MiddlewareAPI) => (next: Dispatch) => Dispatch;
 
 middleware 是一個 higher-order function，它組合 [dispatch function](#dispatching-function) 以回傳一個新的 dispatch function。它通常把 [async actions](#async-action) 轉換成 actions。
 
-Middleware is composable using function composition. It is useful for logging actions, performing side effects like routing, or turning an asynchronous API call into a series of synchronous actions.
+Middleware is composable using function composition。 It is useful for logging actions, performing side effects like routing, or turning an asynchronous API call into a series of synchronous actions。
 
 可以查看 [`applyMiddleware(...middlewares)`](./api/applyMiddleware.md) 來深入了解 middleware。
 
@@ -102,7 +102,7 @@ type Store = {
 };
 ```
 
-store 是個保存應用程式的 state tree 的物件。
+store 是個保存應用程式 state tree 的物件。
 在一個 Redux 應用程式裡，應該只有一個 store，因為 composition 發生在 reducer 層級。
 
 - [`dispatch(action)`](api/Store.md#dispatch) 是上面描述過的基本 dispatch function。
@@ -126,10 +126,10 @@ store creator 是個用來建立一個 Redux store 的 function。就像 dispatc
 type StoreEnhancer = (next: StoreCreator) => StoreCreator;
 ```
 
-store enhancer 是個 higher-order function，它 composes a store creator to 回傳一個新的, enhanced store creator。 This is similar to middleware in that it allows you to alter the store interface in a composable way。
+store enhancer 是個 higher-order function，它組合 store creator 以回傳一個新的、強化的 store creator。這與 middleware 類似，它也讓你可以用組合的方式改變 store 的 interface。
 
-Store enhancers are much the same concept as higher-order components in React, which are also occasionally called “component enhancers”。
+Store enhancers 跟 React 的 higher-order components 是大致相同的概念，後者偶爾也被稱為「component enhancers」。
 
-Because a store is not an instance, but rather a plain-object collection of functions, copies can be easily created and modified without mutating the original store。 There is an example in [`compose`](api/compose.md) documentation demonstrating that。
+因為 store 不是個 instance，而只是一個 plain-object collection of functions, copies can be easily created and modified without mutating the original store。在 [`compose`](api/compose.md) 文件中有一個範例展示了這個。
 
-Most likely you’ll never write a store enhancer, but you may use the one provided by the [developer tools](https://github.com/gaearon/redux-devtools)。 It is what makes time travel possible without the app being aware it is happening。 Amusingly, the [Redux middleware implementation](api/applyMiddleware.md) is itself a store enhancer。
+很有可能你永遠也不會去寫 store enhancer，但是你可能使用了一個 [developer tools](https://github.com/gaearon/redux-devtools) 提供的。 It is what makes time travel possible without the app being aware it is happening。 Amusingly, the [Redux middleware implementation](api/applyMiddleware.md) is itself a store enhancer。

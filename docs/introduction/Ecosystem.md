@@ -6,7 +6,7 @@ For an extensive list of everything related to Redux, we recommend [Awesome Redu
 
 On this page we will only feature a few of them that the Redux maintainers have vetted personally. Don’t let this discourage you from trying the rest of them! The ecosystem is growing too fast, and we have a limited time to look at everything. Consider these the “staff picks”, and don’t hesitate to submit a PR if you’ve built something wonderful with Redux.
 
-## Bindings
+## 綁定
 
 * [react-redux](https://github.com/gaearon/react-redux) — React
 * [ng-redux](https://github.com/wbuchwalter/ng-redux) — Angular
@@ -26,16 +26,16 @@ On this page we will only feature a few of them that the Redux maintainers have 
 * [redux-actions](https://github.com/acdlite/redux-actions) — Reduces the boilerplate in writing reducers and action creators
 * [redux-transducers](https://github.com/acdlite/redux-transducers) — Transducer utilities for Redux
 
-## Developer Tools
+## 開發者工具
 
 * [redux-devtools](http://github.com/gaearon/redux-devtools) — An action logger with time travel UI, hot reloading and error handling for the reducers, [first demoed at React Europe](https://www.youtube.com/watch?v=xsSnOQynTHs)
 
-## Tutorials and Articles
+## 教學和文章
 
 * [redux-tutorial](https://github.com/happypoulp/redux-tutorial) — Learn how to use redux step by step
 * [What the Flux?! Let’s Redux.](https://blog.andyet.com/2015/08/06/what-the-flux-lets-redux)
 * [Handcrafting an Isomorphic Redux Application (With Love)](https://medium.com/@bananaoomarang/handcrafting-an-isomorphic-redux-application-with-love-40ada4468af4)
 
-## More
+## 更多
 
 [Awesome Redux](https://github.com/xgrommx/awesome-redux) is an extensive list of Redux-related repositories.

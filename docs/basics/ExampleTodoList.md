@@ -1,8 +1,8 @@
-# 範例: Todo List
+# 範例：Todo 清單
 
-This is the complete source code of the tiny todo app we built during the [basics tutorial](./README.md).
+This is the complete source code of the tiny todo app we built during the [basics tutorial](./README.md)。
 
-## Entry Point
+## 進入點
 
 #### `index.js`
 
