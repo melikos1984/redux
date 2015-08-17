@@ -1,10 +1,10 @@
 # 生態系
 
-Redux is a tiny library, but its contracts and APIs are carefully chosen to spawn an ecosystem of tools and extensions。
+Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來衍生出工具和 extensions 的生態系。
 
-For an extensive list of everything related to Redux，我們推薦 [Awesome Redux](https://github.com/xgrommx/awesome-redux)。它包含 examples, boilerplates, middleware, utility libraries, and more。
+如果需要一個有關 Redux 一切的廣泛清單，我們推薦 [Awesome Redux](https://github.com/xgrommx/awesome-redux)。它包含範例、boilerplates、middleware、utility libraries 和許多其他的東西。
 
-On this page we will only feature a few of them that the Redux maintainers have vetted personally. Don’t let this discourage you from trying the rest of them! The ecosystem is growing too fast, and we have a limited time to look at everything. Consider these the “staff picks”, and don’t hesitate to submit a PR if you’ve built something wonderful with Redux.
+在這個頁面上，我們將只列出它們之中一些 Redux 維護者已經親自審核的。不要因此而打消你嘗試其他項目的念頭！這個生態系成長得太快，我們沒有足夠的時間去查看所有的東西。請把這些當作「員工推薦」，如果你已經使用 Redux 做出了很棒的東西，請不要猶豫馬上提交一個 PR。
 
 ## 綁定
 
@@ -13,11 +13,11 @@ On this page we will only feature a few of them that the Redux maintainers have 
 
 ## Middleware
 
-* [redux-thunk](http://github.com/gaearon/redux-thunk) — The easiest way to write async action creators
+* [redux-thunk](http://github.com/gaearon/redux-thunk) — 撰寫 async action creators 的最簡單方式
 * [redux-promise](https://github.com/acdlite/redux-promise) — [FSA](https://github.com/acdlite/flux-standard-action)-compliant promise middleware
 * [redux-rx](https://github.com/acdlite/redux-rx) — RxJS utilities for Redux, including a middleware for Observable
 * [redux-batched-updates](https://github.com/acdlite/redux-batched-updates) — Batch React updates that occur as a result of Redux dispatches
-* [redux-logger](https://github.com/fcomb/redux-logger) — Log every Redux action and the next state
+* [redux-logger](https://github.com/fcomb/redux-logger) — 記錄每一個 Redux action 和下一個 state
 
 ## Utilities
 
@@ -32,10 +32,10 @@ On this page we will only feature a few of them that the Redux maintainers have 
 
 ## 教學和文章
 
-* [redux-tutorial](https://github.com/happypoulp/redux-tutorial) — Learn how to use redux step by step
+* [redux-tutorial](https://github.com/happypoulp/redux-tutorial) — 一步一步的學習如何使用 redux
 * [What the Flux?! Let’s Redux.](https://blog.andyet.com/2015/08/06/what-the-flux-lets-redux)
 * [Handcrafting an Isomorphic Redux Application (With Love)](https://medium.com/@bananaoomarang/handcrafting-an-isomorphic-redux-application-with-love-40ada4468af4)
 
 ## 更多
 
-[Awesome Redux](https://github.com/xgrommx/awesome-redux) is an extensive list of Redux-related repositories.
+[Awesome Redux](https://github.com/xgrommx/awesome-redux) 是一個廣泛的 Redux 相關 repositories 的清單。
