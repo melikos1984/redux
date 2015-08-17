@@ -13,7 +13,7 @@
 }
 ```
 
-Actions 是一般的 JavaScript 物件。慣例上，actions 應該有一個字串 `type` 屬性，它代表被執行的 action 的類型。Types 通常應該被定義成字串常數。Once your app is large enough, you may want to move them into a separate module.
+Actions 是一般的 JavaScript 物件。慣例上，actions 應該有一個字串 `type` 屬性，它代表被執行的 action 的類型。Types 通常應該被定義成字串常數。一旦你的應用程式夠大了，你能會想把它們移進一個 separate module.
 
 ```js
 import { ADD_TODO, REMOVE_TODO } from '../actionTypes';
@@ -137,7 +137,7 @@ export function setVisibilityFilter(filter) {
 
 ## 下一步
 
-Now let’s [define some reducers](Reducers.md) to specify how the state updates when you dispatch these actions!
+現在讓我們來[定義一些 reducers](Reducers.md) to specify how the state updates when you dispatch these actions!
 
 >##### Note for Advanced Users
 >If you’re already familiar with the basic concepts and have previously completed this tutorial, don’t forget to check out [async actions](../advanced/AsyncActions.md) in the [advanced tutorial](../advanced/README.md) to learn how to handle AJAX responses and compose action creators into async control flow.

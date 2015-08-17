@@ -1,7 +1,7 @@
-# Patrons
+# 贊助者
 
-The work on Redux was [funded by the community](https://www.patreon.com/reactdx).  
-Meet some of the outstanding companies and individuals that made it possible:
+在 Redux 的工作是[由社群出資](https://www.patreon.com/reactdx)。
+遇到一些卓越的公司與個人使這可以成真：
 
 * [Webflow](https://webflow.com/)
 * [Chess iX](http://www.chess-ix.com/)

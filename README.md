@@ -106,7 +106,7 @@ If you’re coming from Flux, there is a single important difference you need to
 
 This architecture might seem like an overkill for a counter app, but the beauty of this pattern is how well it scales to large and complex apps. It also enables very powerful developer tools, because it is possible to trace every mutation to the action that caused it. You can record user sessions and reproduce them just by replaying every action.
 
-### Documentation
+### 文件
 
 * [Introduction](http://rackt.github.io/redux/docs/introduction/index.html)
 * [Basics](http://rackt.github.io/redux/docs/basics/index.html)
@@ -125,7 +125,7 @@ This architecture might seem like an overkill for a counter app, but the beauty 
 
 ### 討論
 
-Join the **#redux** channel of the [Reactiflux](http://reactiflux.com) Slack community.
+加入 [Reactiflux](http://reactiflux.com) Slack 社群的 **#redux** 頻道。
 
 ### 致謝
 
@@ -144,13 +144,13 @@ Special thanks to [Jamie Paton](http://jdpaton.github.io) for handing over the `
 
 ### 贊助者
 
-The work on Redux was [funded by the community](https://www.patreon.com/reactdx).
-Meet some of the outstanding companies that made it possible:
+在 Redux 的工作是[由社群出資](https://www.patreon.com/reactdx)。
+遇到一些卓越的公司使這可以成真：
 
 * [Webflow](http://webflow.com/)
 * [Chess iX](http://www.chess-ix.com/)
 
-[See the full list of Redux patrons.](PATRONS.md)
+[查看完整的 Redux 贊助者清單。](PATRONS.md)
 
 ### License
 

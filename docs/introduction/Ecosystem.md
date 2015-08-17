@@ -1,8 +1,8 @@
 # 生態系
 
-Redux is a tiny library, but its contracts and APIs are carefully chosen to spawn an ecosystem of tools and extensions.
+Redux is a tiny library, but its contracts and APIs are carefully chosen to spawn an ecosystem of tools and extensions。
 
-For an extensive list of everything related to Redux, we recommend [Awesome Redux](https://github.com/xgrommx/awesome-redux). It contains examples, boilerplates, middleware, utility libraries, and more.
+For an extensive list of everything related to Redux，我們推薦 [Awesome Redux](https://github.com/xgrommx/awesome-redux)。它包含 examples, boilerplates, middleware, utility libraries, and more。
 
 On this page we will only feature a few of them that the Redux maintainers have vetted personally. Don’t let this discourage you from trying the rest of them! The ecosystem is growing too fast, and we have a limited time to look at everything. Consider these the “staff picks”, and don’t hesitate to submit a PR if you’ve built something wonderful with Redux.
 

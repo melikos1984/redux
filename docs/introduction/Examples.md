@@ -3,7 +3,7 @@
 Redux 是隨著一些範例在它的[原始碼](https://github.com/rackt/redux/tree/master/examples)中一起發佈的。
 **要執行任何一個範例，你必須 clone repo 並在專案根目錄和範例目錄都執行 `npm install`。**
 
->##### Note on Copying
+>##### 關於複製的提醒
 >如果你把 Redux 範例複製到它們的目錄外面，必須從它們的 `webpack.config.js` 移除這幾行：
 >
 >```js

@@ -6,7 +6,7 @@ That said, Redux works especially well with frameworks like [React](http://faceb
 
 We will use React to build our simple todo app.
 
-## Installing React Redux
+## 安裝 React Redux
 
 [React bindings](https://github.com/gaearon/react-redux) are not included in Redux by default. You need to install them explicitly:
 
