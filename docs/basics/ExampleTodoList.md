@@ -1,6 +1,6 @@
 # 範例：Todo 清單
 
-This is the complete source code of the tiny todo app we built during the [basics tutorial](./README.md)。
+這是我們在[基礎教學](./README.md)建立的小型 todo 應用程式的完整的原始碼。
 
 ## 進入點
 
@@ -17,8 +17,8 @@ let store = createStore(todoApp);
 
 let rootElement = document.getElementById('root');
 React.render(
-  // The child must be wrapped in a function
-  // to work around an issue in React 0.13.
+  // child 包在一個 function 裡面
+  // 來避開在 React 0.13 裡的一個問題。
   <Provider store={store}>
     {() => <App />}
   </Provider>,
@@ -26,7 +26,7 @@ React.render(
 );
 ```
 
-## Action Creators and Constants
+## Action Creators 和常數
 
 #### `actions.js`
 
@@ -40,7 +40,7 @@ export const COMPLETE_TODO = 'COMPLETE_TODO';
 export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
 
 /*
- * other constants
+ * 其他常數
  */
 
 export const VisibilityFilters = {
@@ -126,7 +126,7 @@ import Footer from '../components/Footer';
 
 class App extends Component {
   render() {
-    // Injected by connect() call:
+    // 藉由 connect() 呼叫而注入的：
     const { dispatch, visibleTodos, visibilityFilter } = this.props;
     return (
       <div>
@@ -172,8 +172,8 @@ function selectTodos(todos, filter) {
   }
 }
 
-// Which props do we want to inject, given the global state?
-// Note: use https://github.com/faassen/reselect for better performance.
+// 我們想要從給定的全域 state 注入哪些 props?
+// 提醒: 使用 https://github.com/faassen/reselect 來增進效能。
 function select(state) {
   return {
     visibleTodos: selectTodos(state.todos, state.visibilityFilter),

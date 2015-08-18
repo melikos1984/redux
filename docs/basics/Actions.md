@@ -86,7 +86,7 @@ const boundAddTodo = (text) => dispatch(addTodo(text));
 const boundCompleteTodo = (index) => dispatch(CompleteTodo(index));
 ```
 
-You’ll be able to call them directly:
+你將可以直接去呼叫它們：
 
 ```
 boundAddTodo(text);
@@ -109,7 +109,7 @@ export const COMPLETE_TODO = 'COMPLETE_TODO';
 export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER';
 
 /*
- * other constants
+ * 其他常數
  */
 
 export const VisibilityFilters = {
@@ -137,7 +137,7 @@ export function setVisibilityFilter(filter) {
 
 ## 下一步
 
-現在讓我們來[定義一些 reducers](Reducers.md) to specify how the state updates when you dispatch these actions!
+現在讓我們來[定義一些 reducers](Reducers.md) 以指定當你 dispatch 這些 actions 時，state 要如何更新！
 
->##### Note for Advanced Users
->If you’re already familiar with the basic concepts and have previously completed this tutorial, don’t forget to check out [async actions](../advanced/AsyncActions.md) in the [advanced tutorial](../advanced/README.md) to learn how to handle AJAX responses and compose action creators into async control flow.
+>##### 給進階使用者的提醒
+>如果你已經熟悉基本的概念而且之前已經看完了這份教學，請不要忘記查看在[進階教學](../advanced/README.md)中的 [async actions](../advanced/AsyncActions.md)，以學習如何處理 AJAX 回應和組合 action creators 到非同步控制流程中。

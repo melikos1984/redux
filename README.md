@@ -2,7 +2,7 @@
 
 Redux 是個給 JavaScript 應用程式所使用的可預測 state 容器。
 
-他幫助你撰寫行為一致的應用程式，可以在不同的環境執行 (客戶端、伺服器、原生應用程式)，並且易於測試。在這之上，它提供一個很棒的開發體驗，例如 [live code editing combined with a time traveling debugger](https://github.com/gaearon/redux-devtools)。
+他幫助你撰寫行為一致的應用程式，可以在不同的環境下執行 (客戶端、伺服器、原生應用程式)，並且易於測試。在這之上，它提供一個很棒的開發體驗，例如 [live code editing combined with a time traveling debugger](https://github.com/gaearon/redux-devtools)。
 
 你可以使用 Redux 結合 [React](https://facebook.github.io/react/)，或結合其他任何的 view library。
 它非常小 (2kB) 並且沒有任何依賴套件。
@@ -26,7 +26,7 @@ Redux 是個給 JavaScript 應用程式所使用的可預測 state 容器。
 
 ### 開發經驗
 
-I wrote Redux while working on my React Europe talk called [“Hot Reloading with Time Travel”](https://www.youtube.com/watch?v=xsSnOQynTHs). My goal was to create a state management library with minimal API but completely predictable behavior, so it is possible to implement logging, hot reloading, time travel, universal apps, record and replay, without any buy-in from the developer.
+我在準備我的 React Europe 演講 [“Hot Reloading with Time Travel”](https://www.youtube.com/watch?v=xsSnOQynTHs) 的時候撰寫了 Redux。我那時的目標是建立一個 state 管理 library，它只有最少的 API，但卻擁有完全可預測的行為，所以它可以實現 logging、hot reloading、time travel、universal apps、record 和 replay，而不需要開發者任何其他的代價。
 
 ### 受到的影響
 
@@ -35,13 +35,13 @@ Whether you have used them or not, Redux takes a few minutes to get started with
 
 ### 安裝
 
-To install the stable version:
+安裝穩定版本：
 
 ```
 npm install --save redux
 ```
 
-Most likely, you’ll also need [the React bindings](http://github.com/gaearon/react-redux) and [the developer tools](http://github.com/gaearon/redux-devtools).
+大多數情況，你也會需要 [React 的綁定](http://github.com/gaearon/react-redux)和[開發者工具](http://github.com/gaearon/redux-devtools)。
 
 ```
 npm install --save react-redux
@@ -108,13 +108,13 @@ This architecture might seem like an overkill for a counter app, but the beauty 
 
 ### 文件
 
-* [Introduction](http://rackt.github.io/redux/docs/introduction/index.html)
-* [Basics](http://rackt.github.io/redux/docs/basics/index.html)
-* [Advanced](http://rackt.github.io/redux/docs/advanced/index.html)
+* [介紹](http://rackt.github.io/redux/docs/introduction/index.html)
+* [基礎](http://rackt.github.io/redux/docs/basics/index.html)
+* [進階](http://rackt.github.io/redux/docs/advanced/index.html)
 * [Recipes](http://rackt.github.io/redux/docs/recipes/index.html)
-* [Troubleshooting](http://rackt.github.io/redux/docs/Troubleshooting.html)
-* [Glossary](http://rackt.github.io/redux/docs/Glossary.html)
-* [API Reference](http://rackt.github.io/redux/docs/api/index.html)
+* [疑難排解](http://rackt.github.io/redux/docs/Troubleshooting.html)
+* [術語表](http://rackt.github.io/redux/docs/Glossary.html)
+* [API 參考](http://rackt.github.io/redux/docs/api/index.html)
 
 ### 範例
 
