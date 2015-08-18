@@ -1,4 +1,4 @@
-# Reducing Boilerplate
+# 減少 Boilerplate
 
 Redux is in part [inspired by Flux](../introduction/PriorArt.md), and the most common complaint about Flux is how it makes you write a lot of boilerplate. In this recipe, we will consider how Redux lets us choose how verbose we’d like our code to be, depending on personal style, team preferences, longer term maintainability, and so on.
 
@@ -140,7 +140,7 @@ export const removeTodo = makeActionCreator('REMOVE_TODO', 'id');
 
 See [redux-action-utils](https://github.com/insin/redux-action-utils) and [redux-actions](https://github.com/acdlite/redux-actions) for examples of such utilities.
 
-Note that such utilities add magic to your code.  
+Note that such utilities add magic to your code.
 Are magic and indirection really worth it to avoid a few extra few lines of code?
 
 ## Async Action Creators

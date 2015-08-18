@@ -16,13 +16,13 @@ Redux 是個給 JavaScript 應用程式所使用的可預測 state 容器。
 ### 推薦
 
 >[“Love what you’re doing with Redux”](https://twitter.com/jingc/status/616608251463909376)
->Jing Chen, creator of Flux
+>Jing Chen，Flux 作者
 
 >[“I asked for comments on Redux in FB's internal JS discussion group, and it was universally praised. Really awesome work.”](https://twitter.com/fisherwebdev/status/616286955693682688)
->Bill Fisher, creator of Flux
+>Bill Fisher，Flux 作者
 
 >[“It's cool that you are inventing a better Flux by not doing Flux at all.”](https://twitter.com/andrestaltz/status/616271392930201604)
->André Staltz, creator of Cycle
+>André Staltz，Cycle 作者
 
 ### 開發經驗
 

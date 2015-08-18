@@ -4,7 +4,7 @@ Because most of the Redux code you write are functions, and many of them are pur
 
 ### Setting Up
 
-We recommend [Mocha](http://mochajs.org/) as the testing engine.
+我們推薦用 [Mocha](http://mochajs.org/) 作為測試引擎。
 Note that it runs in a Node environment, so you won’t have access to DOM.
 
 ```
@@ -31,7 +31,7 @@ and run `npm test` to run it once, or `npm run test:watch` to test on every file
 
 In Redux, action creators are functions which return plain objects. When testing action creators we want to test whether the correct action creator was called and also whether the right action was returned.
 
-#### Example
+#### 範例
 
 ```js
 export function addTodo(text) {
@@ -64,7 +64,7 @@ describe('actions', () => {
 
 A reducer should return the new state after applying the action to the previous state, and that’s the behavior tested below.
 
-#### Example
+#### 範例
 
 ```js
 import { ADD_TODO } from '../constants/ActionTypes';
@@ -259,7 +259,7 @@ export default function jsdomReact() {
 
 Call it before running any component tests. Note this is a dirty workaround, and it can be removed once [facebook/react#4019](https://github.com/facebook/react/issues/4019) is fixed.
 
-### Glossary
+### 術語表
 
 - [React Test Utils](http://facebook.github.io/react/docs/test-utils.html): Test utilities that ship with React.
 

@@ -1,6 +1,6 @@
 # 範例：Reddit API
 
-This is the complete source code of the Reddit headline fetching example we built during the [advanced tutorial](README.md).
+這是我們在[進階教學](README.md)中建立的抓取 Reddit 標題的範例的完整的原始碼。
 
 ## 進入點
 
