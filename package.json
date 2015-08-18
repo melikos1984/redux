@@ -24,7 +24,7 @@
     "docs:clean": "rimraf _book",
     "docs:build": "gitbook build -g rackt/redux",
     "docs:watch": "gitbook serve",
-    "docs:publish": "npm run docs:clean && npm run docs:build && cd _book && git init && git commit --allow-empty -m 'update book' && git checkout -b gh-pages && touch .nojekyll && git add . && git commit -am 'update book' && git push git@github.com:rackt/redux gh-pages --force"
+    "docs:publish": "npm run docs:clean && npm run docs:build && cd _book && git init && git commit --allow-empty -m 'update book' && git checkout -b gh-pages && touch .nojekyll && git add . && git commit -am 'update book' && git push git@github.com:chentsulin/redux gh-pages --force"
   },
   "repository": {
     "type": "git",
