@@ -31,7 +31,7 @@ I wrote Redux while working on my React Europe talk called [“Hot Reloading wit
 ### Influences
 
 Redux evolves the ideas of [Flux](https://facebook.github.io/flux), but avoids its complexity by taking cues from [Elm](http://elm-lang.org/guide/architecture).
-Whether you used them or not, Redux takes a few minutes to get started with.
+Whether you have used them or not, Redux takes a few minutes to get started with.
 
 ### 安裝
 
@@ -122,6 +122,8 @@ This architecture might seem like an overkill for a counter app, but the beauty 
 * [TodoMVC](http://rackt.github.io/redux/docs/introduction/Examples.html#todomvc) ([source](https://github.com/rackt/redux/tree/master/examples/todomvc))
 * [Async](http://rackt.github.io/redux/docs/introduction/Examples.html#async) ([source](https://github.com/rackt/redux/tree/master/examples/async))
 * [Real World](http://rackt.github.io/redux/docs/introduction/Examples.html#real-world) ([source](https://github.com/rackt/redux/tree/master/examples/real-world))
+
+If you’re new to the NPM ecosystem and have troubles getting a project up and running, or aren’t sure where to paste the gist above, check out [simplest-redux-example](https://github.com/jackielii/simplest-redux-example) that uses Redux together with React and Browserify.
 
 ### 討論
 
