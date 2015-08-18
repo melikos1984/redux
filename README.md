@@ -1,11 +1,11 @@
 # [Redux](http://rackt.github.io/redux)
 
-Redux is a predictable state container for JavaScript apps.
+Redux 是個給 JavaScript 應用程式所使用的可預測 state 容器。
 
-It helps you write applications that behave consistently, run in different environments (client, server, and native), and are easy to test. On top of that, it provides a great developer experience, such as [live code editing combined with a time traveling debugger](https://github.com/gaearon/redux-devtools).
+他幫助你撰寫行為一致的應用程式，可以在不同的環境執行 (客戶端、伺服器、原生應用程式)，並且易於測試。在這之上，它提供一個很棒的開發體驗，例如 [live code editing combined with a time traveling debugger](https://github.com/gaearon/redux-devtools)。
 
-You can use Redux together with [React](https://facebook.github.io/react/), or with any other view library.
-It is tiny (2kB) and has no dependencies.
+你可以使用 Redux 結合 [React](https://facebook.github.io/react/)，或結合其他任何的 view library。
+它非常小 (2kB) 並且沒有任何依賴套件。
 
 [![build status](https://img.shields.io/travis/rackt/redux/master.svg?style=flat-square)](https://travis-ci.org/rackt/redux)
 [![npm version](https://img.shields.io/npm/v/redux.svg?style=flat-square)](https://www.npmjs.com/package/redux)
@@ -24,11 +24,11 @@ It is tiny (2kB) and has no dependencies.
 >[“It's cool that you are inventing a better Flux by not doing Flux at all.”](https://twitter.com/andrestaltz/status/616271392930201604)
 >André Staltz, creator of Cycle
 
-### Developer Experience
+### 開發經驗
 
 I wrote Redux while working on my React Europe talk called [“Hot Reloading with Time Travel”](https://www.youtube.com/watch?v=xsSnOQynTHs). My goal was to create a state management library with minimal API but completely predictable behavior, so it is possible to implement logging, hot reloading, time travel, universal apps, record and replay, without any buy-in from the developer.
 
-### Influences
+### 受到的影響
 
 Redux evolves the ideas of [Flux](https://facebook.github.io/flux), but avoids its complexity by taking cues from [Elm](http://elm-lang.org/guide/architecture).
 Whether you have used them or not, Redux takes a few minutes to get started with.
@@ -131,7 +131,7 @@ If you’re new to the NPM ecosystem and have troubles getting a project up and 
 
 ### 致謝
 
-* [The Elm Architecture](https://github.com/evancz/elm-architecture-tutorial) for a great intro to modeling state updates with reducers;
+* [Elm 架構](https://github.com/evancz/elm-architecture-tutorial) for a great intro to modeling state updates with reducers;
 * [Turning the database inside-out](http://blog.confluent.io/2015/03/04/turning-the-database-inside-out-with-apache-samza/) for blowing my mind;
 * [Developing ClojureScript with Figwheel](http://www.youtube.com/watch?v=j-kj2qwJa_E) for convincing me that re-evaluation should “just work”;
 * [Webpack](https://github.com/webpack/docs/wiki/hot-module-replacement-with-webpack) for Hot Module Replacement;
@@ -142,7 +142,7 @@ If you’re new to the NPM ecosystem and have troubles getting a project up and 
 * [Cycle](https://github.com/staltz/cycle) for showing how often a function is the best tool;
 * [React](https://github.com/facebook/react) for the pragmatic innovation.
 
-Special thanks to [Jamie Paton](http://jdpaton.github.io) for handing over the `redux` NPM package name.
+特別感謝 [Jamie Paton](http://jdpaton.github.io) 它移交了 `redux` NPM 套件名稱給我們。
 
 ### 贊助者
 
