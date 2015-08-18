@@ -19,11 +19,11 @@ Actions 是一般的 JavaScript 物件。慣例上，actions 應該有一個字�
 import { ADD_TODO, REMOVE_TODO } from '../actionTypes';
 ```
 
->##### Note on Boilerplate
+>##### 關於 Boilerplate 的提醒
 
 >You don’t have to define action type constants in a separate file, or even to define them at all. For a small project, it might be easier to just use string literals for action types. However, there are some benefits to explicitly declaring constants in larger codebases. Read [Reducing Boilerplate](../recipes/ReducingBoilerplate.md) for more practical tips on keeping your codebase clean.
 
-除了 `type` 以外，一個 action 物件的結構完全取決於你。如果你有興趣，請查看 [Flux Standard Action](https://github.com/acdlite/flux-standard-action) 上有關應該如何建構 actions 的建議。
+除了 `type` 以外，一個 action 物件的結構完全取決於你。如果你有興趣，請查看 [Flux Standard Action](https://github.com/acdlite/flux-standard-action) 上有關可以如何建構 actions 的建議。
 
 We’ll add one more action type to describe a user ticking off a todo as completed. We refer to a particular todo by `index` because we store them in an array. In a real app it is wiser to generate a unique ID every time something new is created.
 
