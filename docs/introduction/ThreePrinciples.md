@@ -1,12 +1,12 @@
 # 三大原則
 
-Redux can be described in three fundamental principles:
+Redux 可以用三個基本的原則來描述：
 
-### Single source of truth
+### 唯一真相來源
 
-**The [state](../Glossary.md#state) of your whole application is stored in an object tree inside a single [store](../Glossary.md#store).**
+**你整個應用程式的 [state](../Glossary.md#state)，被儲存在一個樹狀物件放在唯一的 [store](../Glossary.md#store) 裡面。**
 
-This makes it easy to create universal apps. The state from the server can be serialized and hydrated into the client with no extra coding effort. It is easier to debug an application when there is a single state tree. You can also persist your app’s state in development for a faster development cycle. And with a single state tree, you get previously difficult functionality like Undo/Redo for free.
+這讓建立 universal 應用程式變得更簡單。從 server 來的 state 可以被 serialized 並 hydrated 進去客戶端，而不需要撰寫其他額外的程式碼。當只有一個 state tree 時，比較容易去 debug 一個應用程式。你也可以為了加快開發週期，在開發期間保存應用程式的 state。伴隨著單一的 state tree，你還可以輕易得到在以前很困難實現的功能，例如：復原/重做。
 
 ```js
 console.log(store.getState());
@@ -23,11 +23,11 @@ console.log(store.getState());
 }
 ```
 
-### State is read-only
+### State 是唯讀的
 
-**The only way to mutate the state is to emit an [action](../Glossary.md#action), an object describing what happened.**
+**改變 state 的唯一的方式是發出一個 [action](../Glossary.md#action)，也就是一個描述發生什麼事的物件。**
 
-This ensures that the views or the network callbacks never write directly to the state, and instead express the intent to mutate. Because all mutations are centralized and happen one by one in a strict order, there are no subtle race conditions to watch out for. Actions are just plain objects, so they can be logged, serialized, stored, and later replayed for debugging or testing purposes.
+這能確保 views 或網路 callbacks 永遠不會直接寫入 state，而是表達了變更的意圖。因為所有的變更都是集中的，並依照嚴格的順序一個接一個的發生，沒有需要特別注意的微妙 race conditions。Actions 只是普通物件，所以它們可以被記錄、serialized、儲存、並在之後為了 debugging 或測試目的而重播。
 
 ```js
 store.dispatch({
@@ -41,11 +41,11 @@ store.dispatch({
 });
 ```
 
-### Mutations are written as pure functions
+### 變更被寫成 pure functions
 
-**To specify how the state tree is transformed by actions, you write pure [reducers](../Glossary.md#reducer).**
+**要指定 state tree 如何藉由 actions 來轉變，你必須撰寫 pure [reducers](../Glossary.md#reducer)。**
 
-Reducers are just pure functions that take the previous state and an action, and return the next state. Remember to return new state objects, instead of mutating the previous state. You can start with a single reducer, but as your app grows, you can split it into smaller reducers that manage specific parts of the state tree. Because reducers are just functions, you can control the order in which they are called, pass additional data, or even make reusable reducers for common tasks such as pagination.
+Reducers 只是 pure functions，它取得先前的 state 和一個 action，並回傳下一個 state。請記得要回傳一個新的 state 物件，而不要去改變先前的 state。你可以從單一一個 reducer 開始，但是隨著你的應用程式成長，你可以把拆分成比較小的 reducers 來管理 state tree 中的特定部分。因為 reducers 只是 functions，你可以控制它們被呼叫的順序、傳遞額外的資料、或甚至建立可重用的 reducers 來做一些常見的任務，例如 pagination。
 
 ```js
 function visibilityFilter(state = 'SHOW_ALL', action) {
@@ -82,4 +82,4 @@ let reducer = combineReducers({ visibilityFilter, todos });
 let store = createStore(reducer);
 ```
 
-That’s it! Now you know what Redux is all about.
+就這樣！現在你已經知道 Redux 都是些什麼了。

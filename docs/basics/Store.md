@@ -1,10 +1,10 @@
 # Store
 
-In the previous sections, we defined the [actions](Action.md) that represent the facts about “what happened” and the [reducers](Reducers.md) that update the state according to those actions.
+在前面的章節，我們定義了代表實際上「發生了什麼」的 [actions](Action.md)，和依據這些 actions 更新 state 的 [reducers](Reducers.md)。
 
-The **Store** is the object that brings them together. The store has the following responsibilities:
+**Store** 是 brings them together 的物件。store 有以下的責任：
 
-* Holds application state;
+* 掌管應用程式狀態；
 * Allows access to state via [`getState()`](../api/Store.md#getState);
 * Allows state to be updated via [`dispatch(action)`](../api/Store.md#dispatch);
 * Registers listeners via [`subscribe(listener)`](../api/Store.md#subscribe).
@@ -28,20 +28,20 @@ let store = createStore(todoApp, window.STATE_FROM_SERVER);
 
 ## Dispatching Actions
 
-Now that we have created a store, let’s verify our program works! Even without any UI, we can already test the update logic.
+現在我們已經建立了一個 store，let’s verify our program works! Even without any UI, we can already test the update logic.
 
 ```js
 import { addTodo, completeTodo, setVisibilityFilter, VisibilityFilters } from './actions';
 
-// Log the initial state
+// 記錄初始 state
 console.log(store.getState());
 
-// Every time the state changes, log it
+// 每次 state 變更，就記錄它
 let unsubscribe = store.subscribe(() =>
   console.log(store.getState())
 );
 
-// Dispatch some actions
+// Dispatch 一些 actions
 store.dispatch(addTodo('Learn about actions'));
 store.dispatch(addTodo('Learn about reducers'));
 store.dispatch(addTodo('Learn about store'));
@@ -49,17 +49,17 @@ store.dispatch(completeTodo(0));
 store.dispatch(completeTodo(1));
 store.dispatch(setVisibilityFilter(VisibilityFilters.SHOW_COMPLETED));
 
-// Stop listening to state updates
+// 停止監聽 state 的更新
 unsubscribe();
 ```
 
-You can see how this causes the state held by the store to change:
+你可以看到 how this causes the state held by the store to change:
 
 <img src='http://i.imgur.com/zMMtoMz.png' width='70%'>
 
 We specified the behavior of our app before we even started writing the UI. We won’t do this in this tutorial, but at this point you can write tests for your reducers and action creators. You won’t need to mock anything because they are just functions. Call them, and make assertions on what they return.
 
-## Source Code
+## 原始碼
 
 #### `index.js`
 
@@ -72,4 +72,4 @@ let store = createStore(todoApp);
 
 ## 下一步
 
-Before creating a UI for our todo app, we will take a detour to see [how the data flows in a Redux application](DataFlow.md).
+在為我們的 todo 應用程式建立 UI 之前，we will take a detour to see [how the data flows in a Redux application](DataFlow.md).

@@ -3,9 +3,9 @@
 Redux is not a monolithic framework, but a set of contracts and a [few functions that make them work together](../api/README.md). The majority of your “Redux code” will not even use Redux APIs, as most of the time you’ll be writing functions.
 
 This makes it easy to migrate both to and from Redux.
-We don’t want to lock you in!
+我們不想要把你綁在上面！
 
-## From Flux
+## 從 Flux
 
 [Reducers](../Glossary.md#reducer) capture “the essence” of Flux Stores, so it’s possible to gradually migrate an existing Flux project towards Redux, whether you are using [Flummox](http://github.com/acdlite/flummox), [Alt](http://github.com/goatslacker/alt), [traditional Flux](https://github.com/facebook/flux), or any other Flux library.
 
@@ -25,7 +25,7 @@ Your process will look like this:
 
 * Finally, you might want to begin using some Redux idioms like middleware to further simplify your asynchronous code.
 
-## From Backbone
+## 從 Backbone
 
-Sorry, you’ll need to rewrite your model layer.
-It’s way too different!
+抱歉，你需要重寫你的 model layer。
+他們的方式差太多了！
