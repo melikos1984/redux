@@ -13,7 +13,7 @@
 }
 ```
 
-Actions 是一般的 JavaScript 物件。慣例上，actions 應該有一個字串 `type` 屬性，它代表被執行的 action 的類型。Types 通常應該被定義成字串常數。一旦你的應用程式夠大了，你能會想把它們移進一個 separate module.
+Actions 是一般的 JavaScript 物件。慣例上，actions 應該有一個字串 `type` 屬性，它代表被執行的 action 的類型。Types 通常應該被定義成字串常數。一旦你的應用程式夠大了，你能會想把它們移進一個單獨的 module。
 
 ```js
 import { ADD_TODO, REMOVE_TODO } from '../actionTypes';
@@ -21,11 +21,11 @@ import { ADD_TODO, REMOVE_TODO } from '../actionTypes';
 
 >##### 關於 Boilerplate 的提醒
 
->You don’t have to define action type constants in a separate file, or even to define them at all. For a small project, it might be easier to just use string literals for action types. However, there are some benefits to explicitly declaring constants in larger codebases. Read [Reducing Boilerplate](../recipes/ReducingBoilerplate.md) for more practical tips on keeping your codebase clean.
+>你不需要定義 action type 常數在一個單獨的檔案，或甚至完全不需要定義它們。對小專案來說，直接使用字面字串當作 action types 可能更簡單一些。不過，在較大的程式庫中明確的定義常數有一些好處。閱讀[減少 Boilerplate](../recipes/ReducingBoilerplate.md) 來了解更多讓你的程式庫保持乾淨的實用技巧。
 
 除了 `type` 以外，一個 action 物件的結構完全取決於你。如果你有興趣，請查看 [Flux Standard Action](https://github.com/acdlite/flux-standard-action) 上有關可以如何建構 actions 的建議。
 
-We’ll add one more action type to describe a user ticking off a todo as completed. We refer to a particular todo by `index` because we store them in an array. In a real app it is wiser to generate a unique ID every time something new is created.
+我們再添加一個 action type 來描述一個使用者對 todo 打勾表示已完成。我們藉由 `index` 參考到特定的 todo，因為我們把他們儲存在一個陣列中。在一個實際的應用程式中，在每次新東西被創建時產生一個唯一的 ID 是比較明智的。
 
 ```js
 {
@@ -34,9 +34,9 @@ We’ll add one more action type to describe a user ticking off a todo as comple
 }
 ```
 
-It’s a good idea to pass as little data in action as possible. For example, it’s better to pass `index` than the whole todo object.
+盡量讓 action 中傳遞的資料越少越好。舉例來說，傳遞 `index` 比傳遞整個 todo 物件來得好。
 
-Finally, we’ll add one more action type for changing the currently visible todos.
+最後，們再添加一個 action type 來改變現在顯示的 todos。
 
 ```js
 {
@@ -93,7 +93,7 @@ boundAddTodo(text);
 boundCompleteTodo(index);
 ```
 
-`dispatch()` function 可以藉由 [`store.dispatch()`](../api/Store.md#dispatch) 直接地從 store 取用，不過你將更可能會藉由 helper 來取用它，例如 [react-redux](http://github.com/gaearon/react-redux) 的 `connect()`。 You can use [`bindActionCreators()`](../api/bindActionCreators.md) to automatically bind many action creators to a `dispatch()` function.
+`dispatch()` function 可以藉由 [`store.dispatch()`](../api/Store.md#dispatch) 直接地從 store 取用，不過你將更可能會藉由 helper 來取用它，例如 [react-redux](http://github.com/gaearon/react-redux) 的 `connect()`。你可以使用 [`bindActionCreators()`](../api/bindActionCreators.md) 來自動綁定許多 action creators 到一個 `dispatch()` function。
 
 ## 原始碼
 
