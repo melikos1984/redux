@@ -1,6 +1,6 @@
 # Recipes
 
-These are some use cases and code snippets to get you started with Redux in a real app. They assume you understand the topics in [basic](../basics/README.md) and [advanced](../advanced/README.md) tutorials.
+這裡有一些使用案例和程式碼片段讓你在實際的應用程式入門 Redux。這邊假設你已經了解[基礎](../basics/README.md)和[進階](../advanced/README.md)教學裡的主題。
 
 * [遷移到 Redux](MigratingToRedux.md)
 * [減少 Boilerplate](ReducingBoilerplate.md)
