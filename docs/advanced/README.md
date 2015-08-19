@@ -4,7 +4,7 @@
 
 * [Middleware](Middleware.md)
 * [Async Actions](AsyncActions.md)
-* [Async 資料流](AsyncFlow.md)
+* [非同步資料流](AsyncFlow.md)
 * [Usage with React Router](UsageWithReactRouter.md)
 * [範例：Reddit API](ExampleRedditAPI.md)
 * [Next Steps](NextSteps.md)

@@ -17,7 +17,7 @@
 * [進階](/docs/advanced/README.md)
   * [Middleware](/docs/advanced/Middleware.md)
   * [Async Actions](/docs/advanced/AsyncActions.md)
-  * [Async 資料流](/docs/advanced/AsyncFlow.md)
+  * [非同步資料流](/docs/advanced/AsyncFlow.md)
   * Usage with React Router
   * [範例：Reddit API](/docs/advanced/ExampleRedditAPI.md)
   * Next Steps
