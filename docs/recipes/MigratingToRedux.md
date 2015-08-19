@@ -7,13 +7,13 @@ This makes it easy to migrate both to and from Redux.
 
 ## 從 Flux
 
-[Reducers](../Glossary.md#reducer) capture “the essence” of Flux Stores, so it’s possible to gradually migrate an existing Flux project towards Redux, whether you are using [Flummox](http://github.com/acdlite/flummox), [Alt](http://github.com/goatslacker/alt), [traditional Flux](https://github.com/facebook/flux), or any other Flux library.
+[Reducers](../Glossary.md#reducer) capture “the essence” of Flux Stores，所以無論你是使用 [Flummox](http://github.com/acdlite/flummox)、[Alt](http://github.com/goatslacker/alt)、[傳統 Flux](https://github.com/facebook/flux)，或任何其他的 Flux library，it’s possible to gradually migrate an existing Flux project towards Redux。
 
 It is also possible to do the reverse and migrate from Redux to any of these libraries following the same steps.
 
-Your process will look like this:
+你的流程會看起來像這樣：
 
-* Create a function called `createFluxStore(reducer)` that creates a Flux store compatible with your existing app from a reducer function. Internally it might look similar to [`createStore`](../api/createStore.md) implementation from Redux. Its dispatch handler should just call the `reducer` for any action, store the next state, and emit change.
+* 建立一個叫做 `createFluxStore(reducer)` 的 function，that creates a Flux store compatible with your existing app from a reducer function. Internally it might look similar to [`createStore`](../api/createStore.md) implementation from Redux. Its dispatch handler should just call the `reducer` for any action, store the next state, and emit change.
 
 * This allows you to gradually rewrite every Flux Store in your app as a reducer, but still export `createFluxStore(reducer)` so the rest of your app is not aware that this is happening and sees the Flux stores.
 

@@ -15,13 +15,13 @@ Redux 是個給 JavaScript 應用程式所使用的可預測 state 容器。
 
 ### 推薦
 
->[“Love what you’re doing with Redux”](https://twitter.com/jingc/status/616608251463909376)
+>[“我愛那些你在 Redux 做的東西”](https://twitter.com/jingc/status/616608251463909376)
 >Jing Chen，Flux 作者
 
->[“I asked for comments on Redux in FB's internal JS discussion group, and it was universally praised. Really awesome work.”](https://twitter.com/fisherwebdev/status/616286955693682688)
+>[“我在 FB 的內部 JS 討論群組尋求對 Redux 的評論，並獲得了普遍的好評。真的做得非常棒。”](https://twitter.com/fisherwebdev/status/616286955693682688)
 >Bill Fisher，Flux 作者
 
->[“It's cool that you are inventing a better Flux by not doing Flux at all.”](https://twitter.com/andrestaltz/status/616271392930201604)
+>[“這很酷，你藉由完全不做 Flux 來發明了一個更好的 Flux。”](https://twitter.com/andrestaltz/status/616271392930201604)
 >André Staltz，Cycle 作者
 
 ### 開發經驗
@@ -30,8 +30,8 @@ Redux 是個給 JavaScript 應用程式所使用的可預測 state 容器。
 
 ### 受到的影響
 
-Redux evolves the ideas of [Flux](https://facebook.github.io/flux), but avoids its complexity by taking cues from [Elm](http://elm-lang.org/guide/architecture).
-Whether you have used them or not, Redux takes a few minutes to get started with.
+Redux 從 [Flux](https://facebook.github.io/flux) 的概念發展而來，不過藉由從 [Elm](http://elm-lang.org/guide/architecture) 獲取線索來避免它的複雜度。
+不管你以前有沒有用過它們，只需要花幾分鐘就能入門 Redux。
 
 ### 安裝
 
@@ -54,13 +54,13 @@ The whole state of your app is stored in an object tree inside a single *store*.
 The only way to change the state tree is to emit an *action*, an object describing what happened.
 To specify how the actions transform the state tree, you write pure *reducers*.
 
-That’s it!
+就這樣！
 
 ```js
 import { createStore } from 'redux';
 
 /**
- * This is a reducer, a pure function with (state, action) => state signature.
+ * 這是一個 reducer, a pure function with (state, action) => state signature.
  * It describes how an action transforms the state into the next state.
  *
  * The shape of the state is up to you: it can be a primitive, an array, an object,

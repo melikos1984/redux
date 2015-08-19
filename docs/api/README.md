@@ -1,10 +1,10 @@
 # API 參考
 
-The Redux API surface is tiny. Redux defines a set of contracts for you to implement (such as [reducers](../Glossary.md#reducer)) and provides a few helper functions to tie these contracts together.
+Redux 暴露出來的 API 非常少。Redux 定義一系列的介面給你去實作 (例如 [reducers](../Glossary.md#reducer)) 並提供少數的 helper functions 來把這些介面綁在一起。
 
-This section documents the complete Redux API. Keep in mind that Redux is only concerned with managing the state. In a real app, you’ll also want to use UI bindings like [react-redux](https://github.com/gaearon/react-redux).
+這個章節把 Redux API 完整的文件化。Keep in mind that Redux is only concerned with managing the state. In a real app, you’ll also want to use UI bindings like [react-redux](https://github.com/gaearon/react-redux).
 
-### Top-Level Exports
+### 頂層 Exports
 
 * [createStore(reducer, [initialState])](createStore.md)
 * [combineReducers(reducers)](combineReducers.md)

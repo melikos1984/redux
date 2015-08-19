@@ -10,7 +10,7 @@ type State = any;
 
 *State* (也稱作 *state tree*) 是個廣義的詞彙，不過在 Redux API 中，它通常是指被 store 管理的單一狀態值並藉由 [`getState()`](api/Store.md#getState) 來回傳。它代表 Redux 應用程式的完整狀態，通常是個多層的巢狀物件。
 
-慣例上，底層 state 是個物件或一些其他 key-value collection 像是 Map，不過技術上來說它可以是任何 type。不過，你應該盡你所能讓 state serializable。不要放任何你不能輕易轉成 JSON 的東西在裡面。
+慣例上，頂層 state 是個物件或一些其他 key-value collection 像是 Map，不過技術上來說它可以是任何 type。不過，你應該盡你所能讓 state serializable。不要放任何你不能輕易轉成 JSON 的東西在裡面。
 
 ## Action
 

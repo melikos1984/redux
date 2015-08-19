@@ -1,6 +1,6 @@
 # Middleware
 
-If you've used server-side libraries like [Express](http://expressjs.com/) and [Koa](http://koajs.com/), you are familiar with a concept of *middleware*. In these frameworks, middleware is some code you can put between the framework receiving a request, and framework generating a response. For example, Express or Koa middleware may add CORS headers, logging, compression, and more. The best feature of middleware is that it’s composable in a chain. You can use multiple independent third-party middleware in a single project.
+如果你使用過一些伺服器端的 libraries，像是 [Express](http://expressjs.com/) 或是 [Koa](http://koajs.com/)，你應該對 *middleware* 的概念很熟悉。In these frameworks, middleware is some code you can put between the framework receiving a request, and framework generating a response. For example, Express or Koa middleware may add CORS headers, logging, compression, and more. The best feature of middleware is that it’s composable in a chain. You can use multiple independent third-party middleware in a single project.
 
 Redux middleware solves different problems than Express or Koa middleware, but in a conceptually similar way. **It provides a third-party extension point between dispatching an action, and the moment it reaches the store.** People use Redux middleware for logging, crash reporting, talking to an asynchronous API, routing, and more.
 
@@ -14,7 +14,7 @@ This article is divided into an in-depth intro to help you grok the concept, and
 
 >If you’re really impatient, skip ahead to [seven examples](#seven-examples) and come back.
 
-## Understanding Middleware
+## 了解 Middleware
 
 While middleware can be used for a variety of things, including asynchronous API calls, it’s really important that you understand where it comes from. We’ll guide you through the thought process leading to middleware, by using logging and crash reporting as examples.
 
@@ -181,7 +181,7 @@ We could use it to apply multiple middleware like this:
 applyMiddlewareByMonkeypatching(store, [logger, crashReporter]);
 ```
 
-However, it is still monkeypatching.  
+However, it is still monkeypatching.
 The fact that we hide it inside the library doesn’t alter this fact.
 
 ### Attempt #5: Removing Monkeypatching
