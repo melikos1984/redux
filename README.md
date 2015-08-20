@@ -15,13 +15,13 @@ Redux 是個給 JavaScript 應用程式所使用的可預測 state 容器。
 
 ### 推薦
 
->[“我愛那些你在 Redux 做的東西”](https://twitter.com/jingc/status/616608251463909376)
+>[「我愛那些你在 Redux 做的東西」](https://twitter.com/jingc/status/616608251463909376)
 >Jing Chen，Flux 作者
 
->[“我在 FB 的內部 JS 討論群組尋求對 Redux 的評論，並獲得了普遍的好評。真的做得非常棒。”](https://twitter.com/fisherwebdev/status/616286955693682688)
+>[「我在 FB 的內部 JS 討論群組尋求對 Redux 的評論，並獲得了普遍的好評。真的做得非常棒。」](https://twitter.com/fisherwebdev/status/616286955693682688)
 >Bill Fisher，Flux 作者
 
->[“這很酷，你藉由完全不做 Flux 來發明了一個更好的 Flux。”](https://twitter.com/andrestaltz/status/616271392930201604)
+>[「這很酷，你藉由完全不做 Flux 來發明了一個更好的 Flux。」](https://twitter.com/andrestaltz/status/616271392930201604)
 >André Staltz，Cycle 作者
 
 ### 開發經驗
@@ -48,7 +48,7 @@ npm install --save react-redux
 npm install --save-dev redux-devtools
 ```
 
-### The Gist
+### 程式碼片段
 
 The whole state of your app is stored in an object tree inside a single *store*.
 The only way to change the state tree is to emit an *action*, an object describing what happened.
@@ -60,7 +60,7 @@ To specify how the actions transform the state tree, you write pure *reducers*.
 import { createStore } from 'redux';
 
 /**
- * 這是一個 reducer, a pure function with (state, action) => state signature.
+ * 這是一個 reducer，a pure function with (state, action) => state signature.
  * It describes how an action transforms the state into the next state.
  *
  * The shape of the state is up to you: it can be a primitive, an array, an object,
@@ -81,8 +81,8 @@ function counter(state = 0, action) {
   }
 }
 
-// Create a Redux store holding the state of your app.
-// Its API is { subscribe, dispatch, getState }.
+// 建立一個 Redux store 來掌管你的應用程式的 state。
+// 它的 API 是 { subscribe, dispatch, getState }。
 let store = createStore(counter);
 
 // You can subscribe to the updates manually, or use bindings to your view layer.
@@ -123,7 +123,7 @@ This architecture might seem like an overkill for a counter app, but the beauty 
 * [Async](http://rackt.github.io/redux/docs/introduction/Examples.html#async) ([source](https://github.com/rackt/redux/tree/master/examples/async))
 * [Real World](http://rackt.github.io/redux/docs/introduction/Examples.html#real-world) ([source](https://github.com/rackt/redux/tree/master/examples/real-world))
 
-If you’re new to the NPM ecosystem and have troubles getting a project up and running, or aren’t sure where to paste the gist above, check out [simplest-redux-example](https://github.com/jackielii/simplest-redux-example) that uses Redux together with React and Browserify.
+如果你不熟悉 NPM 生態系並在讓 project 運作起來時遇到了困難，或是你不確定要在哪裡貼上上面的程式碼片段，請查看 [simplest-redux-example](https://github.com/jackielii/simplest-redux-example)，它把 Redux 和 React、Browserify 結合在一起。
 
 ### 討論
 
