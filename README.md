@@ -2,7 +2,7 @@
 
 Redux 是個給 JavaScript 應用程式所使用的可預測 state 容器。
 
-他幫助你撰寫行為一致的應用程式，可以在不同的環境下執行 (客戶端、伺服器、原生應用程式)，並且易於測試。在這之上，它提供一個很棒的開發體驗，例如 [live code editing combined with a time traveling debugger](https://github.com/gaearon/redux-devtools)。
+他幫助你撰寫行為一致的應用程式，可以在不同的環境下執行 (客戶端、伺服器、原生應用程式)，並且易於測試。在這之上，它提供一個很棒的開發體驗，例如 [程式碼即時編輯與時間旅行除錯器結合](https://github.com/gaearon/redux-devtools)。
 
 你可以使用 Redux 結合 [React](https://facebook.github.io/react/)，或結合其他任何的 view library。
 它非常小 (2kB) 並且沒有任何依賴套件。
@@ -26,7 +26,7 @@ Redux 是個給 JavaScript 應用程式所使用的可預測 state 容器。
 
 ### 開發經驗
 
-我在準備我的 React Europe 演講 [“Hot Reloading with Time Travel”](https://www.youtube.com/watch?v=xsSnOQynTHs) 的時候撰寫了 Redux。我那時的目標是建立一個 state 管理 library，它只有最少的 API，但卻擁有完全可預測的行為，所以它可以實現 logging、hot reloading、time travel、universal apps、record 和 replay，而不需要開發者任何其他的代價。
+我在準備我的 React Europe 演講 [「Hot Reloading 與時間旅行」](https://www.youtube.com/watch?v=xsSnOQynTHs) 的時候撰寫了 Redux。我那時的目標是建立一個 state 管理 library，它只有最少的 API，但卻擁有完全可預測的行為，所以它可以實現 logging、hot reloading、時間旅行、universal 應用程式、記錄和重播，而不需要開發者任何其他的代價。
 
 ### 受到的影響
 
@@ -50,9 +50,9 @@ npm install --save-dev redux-devtools
 
 ### 程式碼片段
 
-The whole state of your app is stored in an object tree inside a single *store*.
-The only way to change the state tree is to emit an *action*, an object describing what happened.
-To specify how the actions transform the state tree, you write pure *reducers*.
+你的應用程式的完整 state 被以一個 object tree 的形式儲存在單一一個的 *store* 裡面。
+改變 state tree 的唯一方式是去發送一個 *action*，action 是一個描述發生什麼事的物件。
+要指定 actions 要如何轉換 state tree 的話，你必須撰寫 pure *reducers*。
 
 就這樣！
 
@@ -60,15 +60,15 @@ To specify how the actions transform the state tree, you write pure *reducers*.
 import { createStore } from 'redux';
 
 /**
- * 這是一個 reducer，a pure function with (state, action) => state signature.
- * It describes how an action transforms the state into the next state.
+ * 這是一個 reducer，一個有 (state, action) => state signature 的 pure function。
+ * 它描述一個 action 如何把 state 轉換成下一個 state。
  *
- * The shape of the state is up to you: it can be a primitive, an array, an object,
- * or even an Immutable.js data structure. The only important part is that you should
- * not mutate the state object, but return a new object if the state changes.
+ * state 的形狀取決於你：它可以是基本類型、一個陣列、一個物件，
+ * 或甚至是一個 Immutable.js 資料結構。唯一重要的部分是你
+ * 不應該改變 state 物件，而是當 state 變化時回傳一個新的物件。
  *
- * In this example, we use a `switch` statement and strings, but you can use a helper that
- * follows a different convention (such as function maps) if it makes sense for your project.
+ * 在這個範例中，我們使用一個 `switch` 陳述句和字串，不過你可以使用一個 helper，
+ * 來遵照一個不同的慣例 (例如 function maps)，如果它對你的專案有意義。
  */
 function counter(state = 0, action) {
   switch (action.type) {
@@ -85,13 +85,13 @@ function counter(state = 0, action) {
 // 它的 API 是 { subscribe, dispatch, getState }。
 let store = createStore(counter);
 
-// You can subscribe to the updates manually, or use bindings to your view layer.
+// 你可以手動的去訂閱更新，或是使用跟你的 view layer 之間的綁定。
 store.subscribe(() =>
   console.log(store.getState())
 );
 
-// The only way to mutate the internal state is to dispatch an action.
-// The actions can be serialized, logged or stored and later replayed.
+// 變更內部 state 的唯一方法是 dispatch 一個 action。
+// actions 可以被 serialized、logged 或是儲存並在之後重播。
 store.dispatch({ type: 'INCREMENT' });
 // 1
 store.dispatch({ type: 'INCREMENT' });
@@ -100,11 +100,11 @@ store.dispatch({ type: 'DECREMENT' });
 // 1
 ```
 
-Instead of mutating the state directly, you specify the mutations you want to happen with plain objects called *actions*. Then you write a special function called a *reducer* to decide how every action transforms the entire application’s state.
+你必須指定你想要隨著被稱作 *actions* 的一般物件而發生的變更，而不是直接改變 state。接著你會寫一個被稱作 *reducer* 的特別 function，來決定每個 action 如何轉變整個應用程式的 state。
 
-If you’re coming from Flux, there is a single important difference you need to understand. Redux doesn’t have a Dispatcher or support many stores. Instead, there is just a single store with a single root reducing function. As your app grows, instead of adding stores, you split the root reducer into smaller reducers independently operating on the different parts of the state tree. This is exactly like there is just one root component in a React app, but it is composed out of many small components.
+如果你以前使用 Flux，那你需要了解一個重要的差異。Redux 沒有 Dispatcher 也不支援多個 stores。反而是只有一個唯一的 store 和一個唯一的 root reducing function。當你的應用程式變大時，你會把 root reducer 拆分成比較小的獨立 reducers 來在 state tree 的不同部分上操作，而不是添加 stores。 這就像在 React 應用程式中只有一個 root component，但是他是由許多小的 components 組合而成。
 
-This architecture might seem like an overkill for a counter app, but the beauty of this pattern is how well it scales to large and complex apps. It also enables very powerful developer tools, because it is possible to trace every mutation to the action that caused it. You can record user sessions and reproduce them just by replaying every action.
+這個架構用於一個計數器應用程式可能看似有點矯枉過正，不過這個模式的美妙之處就在於它如何擴展到大型且模雜的應用程式。它也啟用了非常強大的開發工具，因為它可以追蹤每一次的變更和造成變更的 action。你可以記錄使用者的 sessions 並藉由重播每個 action 來重現它們。
 
 ### 文件
 
@@ -118,12 +118,12 @@ This architecture might seem like an overkill for a counter app, but the beauty 
 
 ### 範例
 
-* [Counter](http://rackt.github.io/redux/docs/introduction/Examples.html#counter) ([source](https://github.com/rackt/redux/tree/master/examples/counter))
-* [TodoMVC](http://rackt.github.io/redux/docs/introduction/Examples.html#todomvc) ([source](https://github.com/rackt/redux/tree/master/examples/todomvc))
-* [Async](http://rackt.github.io/redux/docs/introduction/Examples.html#async) ([source](https://github.com/rackt/redux/tree/master/examples/async))
-* [Real World](http://rackt.github.io/redux/docs/introduction/Examples.html#real-world) ([source](https://github.com/rackt/redux/tree/master/examples/real-world))
+* [Counter](http://rackt.github.io/redux/docs/introduction/Examples.html#counter) ([原始碼](https://github.com/rackt/redux/tree/master/examples/counter))
+* [TodoMVC](http://rackt.github.io/redux/docs/introduction/Examples.html#todomvc) ([原始碼](https://github.com/rackt/redux/tree/master/examples/todomvc))
+* [Async](http://rackt.github.io/redux/docs/introduction/Examples.html#async) ([原始碼](https://github.com/rackt/redux/tree/master/examples/async))
+* [Real World](http://rackt.github.io/redux/docs/introduction/Examples.html#real-world) ([原始碼](https://github.com/rackt/redux/tree/master/examples/real-world))
 
-如果你不熟悉 NPM 生態系並在讓 project 運作起來時遇到了困難，或是你不確定要在哪裡貼上上面的程式碼片段，請查看 [simplest-redux-example](https://github.com/jackielii/simplest-redux-example)，它把 Redux 和 React、Browserify 結合在一起。
+如果你不熟悉 NPM 生態系並在讓專案運作起來時遇到了困難，或是你不確定要在哪裡貼上上面的程式碼片段，請查看 [simplest-redux-example](https://github.com/jackielii/simplest-redux-example)，它把 Redux 和 React、Browserify 結合在一起。
 
 ### 討論
 
@@ -131,16 +131,16 @@ This architecture might seem like an overkill for a counter app, but the beauty 
 
 ### 致謝
 
-* [Elm 架構](https://github.com/evancz/elm-architecture-tutorial) for a great intro to modeling state updates with reducers;
-* [Turning the database inside-out](http://blog.confluent.io/2015/03/04/turning-the-database-inside-out-with-apache-samza/) for blowing my mind;
-* [Developing ClojureScript with Figwheel](http://www.youtube.com/watch?v=j-kj2qwJa_E) for convincing me that re-evaluation should “just work”;
-* [Webpack](https://github.com/webpack/docs/wiki/hot-module-replacement-with-webpack) for Hot Module Replacement;
-* [Flummox](https://github.com/acdlite/flummox) for teaching me to approach Flux without boilerplate or singletons;
-* [disto](https://github.com/threepointone/disto) for a proof of concept of hot reloadable Stores;
-* [NuclearJS](https://github.com/optimizely/nuclear-js) for proving this architecture can be performant;
-* [Om](https://github.com/omcljs/om) for popularizing the idea of a single state atom;
-* [Cycle](https://github.com/staltz/cycle) for showing how often a function is the best tool;
-* [React](https://github.com/facebook/react) for the pragmatic innovation.
+* [Elm 架構](https://github.com/evancz/elm-architecture-tutorial) 關於如何用 reducers 來更新 state 的偉大介紹；
+* [Turning the database inside-out](http://blog.confluent.io/2015/03/04/turning-the-database-inside-out-with-apache-samza/) 啟發我的心；
+* [Developing ClojureScript with Figwheel](http://www.youtube.com/watch?v=j-kj2qwJa_E) 說服我，讓我重新評估這應該「可行」；
+* [Webpack](https://github.com/webpack/docs/wiki/hot-module-replacement-with-webpack) 的 Hot Module Replacement；
+* [Flummox](https://github.com/acdlite/flummox) 教我如何不使用 boilerplate 和 singletons 來達成 Flux；
+* [disto](https://github.com/threepointone/disto) 證明了 Stores 是 hot reloadable 的概念；
+* [NuclearJS](https://github.com/optimizely/nuclear-js) 證明這個架構可以有很好的效能；
+* [Om](https://github.com/omcljs/om) 推廣單一原子化 state 的想法；
+* [Cycle](https://github.com/staltz/cycle) 展示 function 往往是最好的工具；
+* [React](https://github.com/facebook/react) 實際的創新。
 
 特別感謝 [Jamie Paton](http://jdpaton.github.io) 它移交了 `redux` NPM 套件名稱給我們。
 

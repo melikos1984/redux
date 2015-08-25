@@ -18,7 +18,7 @@ React.render(
 );
 ```
 
-## Action Creators and Constants
+## Action Creators 和常數
 
 #### `actions.js`
 

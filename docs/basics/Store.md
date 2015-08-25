@@ -5,13 +5,13 @@
 **Store** 是 brings them together 的物件。store 有以下的責任：
 
 * 掌管應用程式狀態；
-* Allows access to state via [`getState()`](../api/Store.md#getState);
-* Allows state to be updated via [`dispatch(action)`](../api/Store.md#dispatch);
-* Registers listeners via [`subscribe(listener)`](../api/Store.md#subscribe).
+* 允許藉由 [`getState()`](../api/Store.md#getState) 獲取 state；
+* 允許藉由 [`dispatch(action)`](../api/Store.md#dispatch) 來更新 state；
+* 藉由 [`subscribe(listener)`](../api/Store.md#subscribe) 註冊 listeners。
 
 It’s important to note that you’ll only have a single store in a Redux application. When you want to split your data handling logic, you’ll use [reducer composition](Reducers.md#splitting-reducers) instead of many stores.
 
-It’s easy to create a store if you have a reducer. In the [previous section](Reducers.md), we used [`combineReducers()`](../api/combineReducers.md) to combine several reducers into one. We will now import it, and pass it to [`createStore()`](../api/createStore.md).
+如果你已經有一個 reducer，要建立 store 非常簡單。 在[前面的章節](Reducers.md)，我們使用 [`combineReducers()`](../api/combineReducers.md) 來把一些 reducers 合併成一個。我們現在要 import 它，並把它傳進 [`createStore()`](../api/createStore.md)。
 
 ```js
 import { createStore } from 'redux';
