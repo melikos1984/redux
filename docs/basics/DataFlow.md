@@ -95,7 +95,7 @@ The data lifecycle in any Redux app follows these 4 steps:
 
   Now, the UI can be updated to reflect the new state. If you use bindings like [React Redux](https://github.com/gaearon/react-redux), this is the point at which `component.setState(newState)` is called.
 
-## Next Steps
+## 下一步
 
 Now that you know how Redux works, let’s [connect it to a React app](UsageWithReact.md).
 

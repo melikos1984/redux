@@ -1,15 +1,15 @@
 # Reducers
 
-[Actions](./Actions.md) describe the fact that *something happened*, but don’t specify how the application’s state changes in response. This is the job of a reducer.
+[Actions](./Actions.md) 描述 the fact that *something happened*，but don’t specify how the 應用程式的 state changes in response。這是 reducer 的工作。
 
-## Designing the State Shape
+## 設計 State 形狀
 
-In Redux, all application state is stored as a single object. It’s a good idea to think of its shape before writing any code. What’s the minimal representation of your app’s state as an object?
+In Redux, 所有的應用程式 state is stored as a single object. It’s a good idea to think of its shape before writing any code。 What’s the minimal representation of your app’s state as an object？
 
-For our todo app, we want to store two different things:
+For our todo 應用程式，我們想要儲存兩個不同的東西：
 
-* The currently selected visibility filter;
-* The actual list of todos.
+* The currently selected visibility filter；
+* 實際的 todos 清單。
 
 You’ll often find that you need to store some data, as well as some UI state, in the state tree. This is fine, but try to keep the data separate from the UI state.
 
@@ -152,7 +152,7 @@ case COMPLETE_TODO:
 
 Because we want to update a specific item in the array without resorting to mutations, we have to slice it before and after the item. If you find yourself often writing such operations, it’s a good idea to use a helper like [React.addons.update](https://facebook.github.io/react/docs/update.html), [updeep](https://github.com/substantial/updeep), or even a library like [Immutable](http://facebook.github.io/immutable-js/) that has native support for deep updates. Just remember to never assign to anything inside the `state` unless you clone it first.
 
-## Splitting Reducers
+## 拆分 Reducers
 
 Here is our code so far. It is rather verbose:
 
@@ -186,7 +186,7 @@ function todoApp(state = initialState, action) {
 }
 ```
 
-Is there a way to make it easier to comprehend? It seems like `todos` and `visibilityFilter` are updated completely independently. Sometimes state fields depend on one another and more consideration is required, but in our case we can easily split updating `todos` into a separate function:
+有方法讓它更容易理解嗎？It seems like `todos` and `visibilityFilter` are updated completely independently. Sometimes state fields depend on one another and more consideration is required, but in our case we can easily split updating `todos` into a separate function:
 
 ```js
 function todos(state = [], action) {
@@ -344,7 +344,7 @@ All [`combineReducers()`](../api/combineReducers.md) does is generate a function
 >
 >Because `import *` is still new syntax, we don’t use it anymore in the documentation to avoid [confusion](https://github.com/rackt/redux/issues/428#issuecomment-129223274), but you may encounter it in some community examples.
 
-## Source Code
+## 原始碼
 
 #### `reducers.js`
 
@@ -392,4 +392,4 @@ export default todoApp;
 
 ## 下一步
 
-Next, we’ll explore how to [create a Redux store](Store.md) that holds the state and takes care of calling your reducer when you dispatch an action.
+接下來，we’ll explore how to [create a Redux store](Store.md) that holds the state and takes care of calling your reducer when you dispatch an action.
