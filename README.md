@@ -30,7 +30,7 @@ Redux 是個給 JavaScript 應用程式所使用的可預測 state 容器。
 
 ### 受到的影響
 
-Redux 從 [Flux](https://facebook.github.io/flux) 的概念發展而來，不過藉由從 [Elm](http://elm-lang.org/guide/architecture) 獲取線索來避免它的複雜度。
+Redux 從 [Flux](https://facebook.github.io/flux) 的概念發展而來，不過藉由從 [Elm](https://github.com/evancz/elm-architecture-tutorial/) 獲取線索來避免它的複雜度。
 不管你以前有沒有用過它們，只需要花幾分鐘就能入門 Redux。
 
 ### 安裝

@@ -19,6 +19,10 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 * [redux-batched-updates](https://github.com/acdlite/redux-batched-updates) — 讓 Redux dispatches 的結果批次發生 React 更新
 * [redux-logger](https://github.com/fcomb/redux-logger) — 記錄每一個 Redux action 和下一個 state
 
+## Components
+
+* [redux-form](https://github.com/erikras/redux-form) — Keep React form state in Redux
+
 ## Utilities
 
 * [reselect](https://github.com/faassen/reselect) — 有效地獲取資料選擇器，靈感來自 NuclearJS

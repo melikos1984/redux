@@ -1,6 +1,6 @@
 # Middleware
 
-如果你使用過一些伺服器端的 libraries，像是 [Express](http://expressjs.com/) 或是 [Koa](http://koajs.com/)，你應該對 *middleware* 的概念很熟悉。In these frameworks, middleware is some code you can put between the framework receiving a request, and framework generating a response. For example, Express or Koa middleware may add CORS headers, logging, compression, and more. The best feature of middleware is that it’s composable in a chain. You can use multiple independent third-party middleware in a single project.
+如果你使用過一些伺服器端的 libraries，像是 [Express](http://expressjs.com/) 或是 [Koa](http://koajs.com/)，你應該對 *middleware* 的概念很熟悉。在這些框架裡，middleware is some code you can put between the framework receiving a request, and framework generating a response. For example, Express or Koa middleware may add CORS headers, logging, compression, and more. The best feature of middleware is that it’s composable in a chain. You can use multiple independent third-party middleware in a single project.
 
 Redux middleware solves different problems than Express or Koa middleware, but in a conceptually similar way. **It provides a third-party extension point between dispatching an action, and the moment it reaches the store.** People use Redux middleware for logging, crash reporting, talking to an asynchronous API, routing, and more.
 

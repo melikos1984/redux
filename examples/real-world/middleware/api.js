@@ -11,7 +11,7 @@ function getNextPageUrl(response) {
     return null;
   }
 
-  const nextLink = link.split(',').filter(s => s.indexOf('rel="next"') > -1)[0];
+  const nextLink = link.split(',').find(s => s.indexOf('rel="next"') > -1);
   if (!nextLink) {
     return null;
   }
@@ -32,7 +32,7 @@ function callApi(endpoint, schema) {
 
   return fetch(endpoint)
     .then(response =>
-      response.json().then(json => ({ json, response}))
+      response.json().then(json => ({ json, response }))
     ).then(({ json, response }) => {
       if (!response.ok) {
         return Promise.reject(json);
@@ -94,7 +94,7 @@ export default store => next => action => {
   }
 
   let { endpoint } = callAPI;
-  const { schema, types, bailout } = callAPI;
+  const { schema, types } = callAPI;
 
   if (typeof endpoint === 'function') {
     endpoint = endpoint(store.getState());
@@ -111,13 +111,6 @@ export default store => next => action => {
   }
   if (!types.every(type => typeof type === 'string')) {
     throw new Error('Expected action types to be strings.');
-  }
-  if (typeof bailout !== 'undefined' && typeof bailout !== 'function') {
-    throw new Error('Expected bailout to either be undefined or a function.');
-  }
-
-  if (bailout && bailout(store.getState())) {
-    return Promise.resolve();
   }
 
   function actionWith(data) {
