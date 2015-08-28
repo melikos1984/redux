@@ -35,7 +35,7 @@ class AsyncApp extends Component {
     dispatch(fetchPostsIfNeeded(selectedReddit));
   }
 
-  render () {
+  render() {
     const { selectedReddit, posts, isFetching, lastUpdated } = this.props;
     return (
       <div>
@@ -50,7 +50,7 @@ class AsyncApp extends Component {
             </span>
           }
           {!isFetching &&
-            <a href='#'
+            <a href="#"
                onClick={this.handleRefreshClick}>
               Refresh
             </a>

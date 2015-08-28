@@ -24,7 +24,9 @@
 * [Recipes](/docs/recipes/README.md)
   * [遷移到 Redux](/docs/recipes/MigratingToRedux.md)
   * [減少 Boilerplate](/docs/recipes/ReducingBoilerplate.md)
-  * Server Rendering
+  * [Server Rendering](/docs/recipes/ServerRendering.md)
+  * [Migrating to Redux](/docs/recipes/MigratingToRedux.md)
+  * [Reducing Boilerplate](/docs/recipes/ReducingBoilerplate.md)
   * [Computing Derived Data](/docs/recipes/ComputingDerivedData.md)
   * [撰寫測試](/docs/recipes/WritingTests.md)
 * [疑難排解](/docs/Troubleshooting.md)

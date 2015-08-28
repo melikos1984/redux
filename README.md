@@ -48,6 +48,10 @@ npm install --save react-redux
 npm install --save-dev redux-devtools
 ```
 
+This assumes that you’re using [npm](http://npmjs.com/) package manager with a module bundler like [Webpack](http://webpack.github.io) or [Browserify](http://browserify.org/) to consume [CommonJS modules](http://webpack.github.io/docs/commonjs.html).
+
+If you don’t yet use [npm](http://npmjs.com/) or a modern module bundler, and would rather prefer a single-file [UMD](https://github.com/umdjs/umd) build that makes `Redux` available as a global object, you can grab a pre-built version from [cdnjs](https://cdnjs.com/libraries/redux). We *don’t* recommend this approach for any serious application, as most of the libraries complementary to Redux are only available on [npm](http://npmjs.com/).
+
 ### 程式碼片段
 
 你的應用程式的完整 state 被以一個 object tree 的形式儲存在單一一個的 *store* 裡面。

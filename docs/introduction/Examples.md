@@ -63,6 +63,26 @@ open http://localhost:3000/
 * 快取回應並在抓取資料時顯示一個 spinner；
 * 讓快取的資料失效。
 
+## Universal
+
+Run the [Universal](https://github.com/rackt/redux/tree/master/examples/universal) example:
+
+```
+git clone https://github.com/rackt/redux.git
+
+cd redux/examples/universal
+npm install
+npm start & npm run client
+
+open http://localhost:3000/
+```
+
+It covers:
+
+* [Universal rendering](/docs/recipes/ServerRendering.md) with Redux and React
+* Prefetching state based on input and via asynchronous fetches.
+* Passing state from the server to the client
+
 ## Real World
 
 執行 [Real World](https://github.com/rackt/redux/tree/master/examples/real-world) 範例：
