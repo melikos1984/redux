@@ -4,14 +4,14 @@
 
 ## 設計 State 形狀
 
-In Redux, 所有的應用程式 state is stored as a single object. It’s a good idea to think of its shape before writing any code。 What’s the minimal representation of your app’s state as an object？
+在 Redux 中，所有的應用程式 state 被儲存為一個單一物件。在撰寫任何程式碼之前先思考它的形狀是個好主意。 What’s the minimal representation of your app’s state as 一個物件？
 
 For our todo 應用程式，我們想要儲存兩個不同的東西：
 
 * The currently selected visibility filter；
 * 實際的 todos 清單。
 
-You’ll often find that you need to store some data, as well as some UI state, in the state tree. This is fine, but try to keep the data separate from the UI state.
+You’ll often find that you need to store some data, as well as some UI state, in the state tree。 This is fine, but try to keep the data separate from the UI state。
 
 ```js
 {
@@ -28,9 +28,9 @@ You’ll often find that you need to store some data, as well as some UI state, 
 
 >##### Note on Relationships
 
->In a more complex app, you’re going to want different entities to reference each other. We suggest that you keep your state as normalized as possible, without any nesting. Keep every entity in an object stored with an ID as a key, and use IDs to reference it from other entities, or lists. Think of the app’s state as a database. This approach is described in [normalizr's](https://github.com/gaearon/normalizr) documentation in detail. For example, keeping `todosById: { id -> todo }` and `todos: array<id>` inside the state would be a better idea in a real app, but we’re keeping the example simple.
+>在更複雜的應用程式中，you’re going to want different entities to reference each other. We suggest that you keep your state as normalized as possible, without any nesting. Keep every entity in an object stored with an ID as a key, and use IDs to reference it from other entities, or lists. Think of the app’s state as a database. 這個方法詳細的描述在 [normalizr 的](https://github.com/gaearon/normalizr) 文件中。例如，keeping `todosById: { id -> todo }` and `todos: array<id>` inside the state would be a better idea in a real app, but we’re keeping the example simple.
 
-## Handling Actions
+## 處理 Actions
 
 Now that we’ve decided what our state object looks like, we’re ready to write a reducer for it. The reducer is a pure function that takes the previous state and an action, and returns the next state.
 
@@ -40,10 +40,10 @@ Now that we’ve decided what our state object looks like, we’re ready to writ
 
 It’s called a reducer because it’s the type of function you would pass to [`Array.prototype.reduce(reducer, ?initialValue)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce). It’s very important that the reducer stays pure. Things you should **never** do inside a reducer:
 
-* Mutate its arguments;
+* 改變它的參數；
 * Perform side effects like API calls and routing transitions.
 
-We’ll explore how to perform side effects in the [advanced walkthrough](../advanced/README.md). For now, just remember that the reducer must be pure. **Given the same arguments, it should calculate the next state and return it. No surprises. No side effects. No API calls. No mutations. Just a calculation.**
+我們將會探索 how to perform side effects in the [advanced walkthrough](../advanced/README.md). For now, just remember that the reducer must be pure. **Given the same arguments, it should calculate the next state and return it. No surprises. No side effects. No API calls. No mutations. Just a calculation.**
 
 With this out of the way, let’s start writing our reducer by gradually teaching it to understand the [actions](Actions.md) we defined earlier.
 
@@ -62,8 +62,8 @@ function todoApp(state, action) {
     return initialState;
   }
 
-  // For now, don’t handle any actions
-  // and just return the state given to us.
+  // 在現在，不要處理俵處理任何 actions
+  // 而只是回傳給我們的 state。
   return state;
 }
 ```
@@ -93,13 +93,13 @@ function todoApp(state = initialState, action) {
 }
 ```
 
-Note that:
+注意這幾點：
 
 1. **We don’t mutate the `state`.** We create a copy with [`Object.assign()`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign). `Object.assign(state, { visibilityFilter: action.filter })` is also wrong: it will mutate the first argument. You **must** supply an empty object as the first parameter. You can also enable the experimental [object spread syntax](https://github.com/sebmarkbage/ecmascript-rest-spread) proposed for ES7 to write `{ ...state, ...newState }` instead.
 
 2. **We return the previous `state` in the `default` case.** It’s important to return the previous `state` for any unknown action.
 
->##### Note on `Object.assign`
+>##### 關於 `Object.assign` 的附註
 
 >[`Object.assign()`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) is a part of ES6, but is not implemented by most browsers yet. You’ll need to either use a polyfill, a [Babel plugin](https://github.com/babel-plugins/babel-plugin-object-assign), or a helper from another library like [`_.assign()`](https://lodash.com/docs#assign).
 
@@ -109,7 +109,7 @@ Note that:
 
 >It’s unfortunate that many still choose a framework based on whether it uses `switch` statements in the documentation. If you don’t like `switch`, you can use a custom `createReducer` function that accepts a handler map, as shown in [“reducing boilerplate”](../recipes/ReducingBoilerplate.md#reducers).
 
-## Handling More Actions
+## 處理更多 Actions
 
 We have two more actions to handle! Let’s extend our reducer to handle `ADD_TODO`.
 
@@ -154,7 +154,7 @@ Because we want to update a specific item in the array without resorting to muta
 
 ## 拆分 Reducers
 
-Here is our code so far. It is rather verbose:
+這是我們到目前的程式碼。這相當的詳細：
 
 ```js
 function todoApp(state = initialState, action) {
