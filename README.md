@@ -48,9 +48,9 @@ npm install --save react-redux
 npm install --save-dev redux-devtools
 ```
 
-This assumes that you’re using [npm](http://npmjs.com/) package manager with a module bundler like [Webpack](http://webpack.github.io) or [Browserify](http://browserify.org/) to consume [CommonJS modules](http://webpack.github.io/docs/commonjs.html).
+這裡假設你是使用 [npm](http://npmjs.com/) 套件管理與一個模組 bundler，像是 [Webpack](http://webpack.github.io) 或是 [Browserify](http://browserify.org/) 來使用 [CommonJS 模組](http://webpack.github.io/docs/commonjs.html)。
 
-If you don’t yet use [npm](http://npmjs.com/) or a modern module bundler, and would rather prefer a single-file [UMD](https://github.com/umdjs/umd) build that makes `Redux` available as a global object, you can grab a pre-built version from [cdnjs](https://cdnjs.com/libraries/redux). We *don’t* recommend this approach for any serious application, as most of the libraries complementary to Redux are only available on [npm](http://npmjs.com/).
+如果你還沒有使用 [npm](http://npmjs.com/) 或任何一個現代的模組 bundler，而且寧願使用可以讓 `Redux` 作為一個全域物件使用的單檔 [UMD](https://github.com/umdjs/umd) 編譯，你可以從 [cdnjs](https://cdnjs.com/libraries/redux) 取得一個預先編譯好的版本。對於任何重要的應用程式，我們*不*建議使用這個方法，因為大部份與 Redux 互補的 libraries 都只能在 [npm](http://npmjs.com/) 上取得。
 
 ### 程式碼片段
 

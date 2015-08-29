@@ -21,7 +21,7 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 
 ## Components
 
-* [redux-form](https://github.com/erikras/redux-form) — Keep React form state in Redux
+* [redux-form](https://github.com/erikras/redux-form) — 把 React 表單 state 保存在 Redux 裡
 
 ## Utilities
 

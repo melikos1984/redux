@@ -65,7 +65,7 @@ open http://localhost:3000/
 
 ## Universal
 
-Run the [Universal](https://github.com/rackt/redux/tree/master/examples/universal) example:
+執行 [Universal](https://github.com/rackt/redux/tree/master/examples/universal) 範例：
 
 ```
 git clone https://github.com/rackt/redux.git
@@ -77,11 +77,11 @@ npm start & npm run client
 open http://localhost:3000/
 ```
 
-It covers:
+它涵蓋了：
 
-* [Universal rendering](/docs/recipes/ServerRendering.md) with Redux and React
-* Prefetching state based on input and via asynchronous fetches.
-* Passing state from the server to the client
+* 使用 Redux 和 React 來做 [Universal rendering](/docs/recipes/ServerRendering.md)
+* 基於 input 並藉由非同步查詢來提前取得 state
+* 從伺服器傳遞 state 到客戶端
 
 ## Real World
 
