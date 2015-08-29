@@ -371,6 +371,6 @@ export default connect(select)(App);
 
 That’s it! The tiny todo app now functions correctly.
 
-## Next Steps
+## 下一步
 
 Read the [complete source code for this tutorial](ExampleTodoList.md) to better internalize the knowledge you have gained. Then, head straight to the [advanced tutorial](../advanced/README.md) to learn how to handle network requests and routing!

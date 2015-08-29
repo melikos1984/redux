@@ -1,17 +1,17 @@
 # Reducers
 
-[Actions](./Actions.md) 描述 the fact that *something happened*，but don’t specify how the 應用程式的 state changes in response。這是 reducer 的工作。
+[Actions](./Actions.md) 描述實際*發生一些事*，不過並不指定應用程式的 state 要如何去應對改變。這是 reducer 的工作。
 
 ## 設計 State 形狀
 
-在 Redux 中，所有的應用程式 state 被儲存為一個單一物件。在撰寫任何程式碼之前先思考它的形狀是個好主意。 What’s the minimal representation of your app’s state as 一個物件？
+在 Redux 中，所有的應用程式 state 被儲存為一個單一物件。在撰寫任何程式碼之前先思考它的形狀是個好主意。如何把你的應用程式的 state 描述成一個最簡單形式的物件？
 
-For our todo 應用程式，我們想要儲存兩個不同的東西：
+以我們的 todo 應用程式來說，我們想要儲存兩個不同的東西：
 
-* The currently selected visibility filter；
+* 現在被選擇的可見度過濾條件；
 * 實際的 todos 清單。
 
-You’ll often find that you need to store some data, as well as some UI state, in the state tree。 This is fine, but try to keep the data separate from the UI state。
+你常常會發現需要儲存一些資料，以及一些 UI 狀態在 state tree 中。這沒問題，不過僅盡量讓資料和 UI 狀態分離。
 
 ```js
 {
@@ -26,13 +26,13 @@ You’ll often find that you need to store some data, as well as some UI state, 
 }
 ```
 
->##### Note on Relationships
+>##### 關於 Relationships 的附註
 
->在更複雜的應用程式中，you’re going to want different entities to reference each other. We suggest that you keep your state as normalized as possible, without any nesting. Keep every entity in an object stored with an ID as a key, and use IDs to reference it from other entities, or lists. Think of the app’s state as a database. 這個方法詳細的描述在 [normalizr 的](https://github.com/gaearon/normalizr) 文件中。例如，keeping `todosById: { id -> todo }` and `todos: array<id>` inside the state would be a better idea in a real app, but we’re keeping the example simple.
+>在更複雜的應用程式中，你會希望不同的實體可以呼香參考到其他實體。我們建議你盡量保持 state 正規化，不要有任何的巢狀。讓儲存在物件的每個實體都用一個 ID 作為 key，並且使用 IDs 來從其他實體或清單參考它。把應用程式的 state 想成是一個資料庫。這個方法詳細的描述在 [normalizr 的](https://github.com/gaearon/normalizr) 文件中。例如，在一個真實的應用程式中，同時把 `todosById: { id -> todo }` 和 `todos: array<id>` 保存在 state 裡面會是比較好的方式，不過我們會盡量讓範例簡單。
 
 ## 處理 Actions
 
-Now that we’ve decided what our state object looks like, we’re ready to write a reducer for it. The reducer is a pure function that takes the previous state and an action, and returns the next state.
+現在我們已經決定 state 物件要長什麼樣子，我們已經準備好幫它撰寫一個 reducer。reducer 是一個 pure function，它接收先前的 state and 和一個 action，然後回傳下一個 state。
 
 ```js
 (previousState, action) => newState
@@ -78,7 +78,7 @@ function todoApp(state = initialState, action) {
 }
 ```
 
-Now let’s handle `SET_VISIBILITY_FILTER`. All it needs to do is to change `visibilityFilter` on the state. Easy:
+現在讓我們來處理 `SET_VISIBILITY_FILTER`。All it needs to do is to change `visibilityFilter` on the state。簡單的：
 
 ```js
 function todoApp(state = initialState, action) {
@@ -95,23 +95,23 @@ function todoApp(state = initialState, action) {
 
 注意這幾點：
 
-1. **We don’t mutate the `state`.** We create a copy with [`Object.assign()`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign). `Object.assign(state, { visibilityFilter: action.filter })` is also wrong: it will mutate the first argument. You **must** supply an empty object as the first parameter. You can also enable the experimental [object spread syntax](https://github.com/sebmarkbage/ecmascript-rest-spread) proposed for ES7 to write `{ ...state, ...newState }` instead.
+1. **我們不改變 `state`.** 我們用 [`Object.assign()`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) 複製一份。`Object.assign(state, { visibilityFilter: action.filter })` 也是錯的：它會改變第一個參數。你**必須**提供一個空物件作為第一個參數。你也可以啟用實驗性的 ES7 [object spread syntax](https://github.com/sebmarkbage/ecmascript-rest-spread) 提案，就可以寫 `{ ...state, ...newState }` 作為取代。
 
-2. **We return the previous `state` in the `default` case.** It’s important to return the previous `state` for any unknown action.
+2. **我們在 `default` case 回傳先前的 `state`。**針對任何未知的 action 回傳先前的 `state` 非常重要。
 
 >##### 關於 `Object.assign` 的附註
 
->[`Object.assign()`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) is a part of ES6, but is not implemented by most browsers yet. You’ll need to either use a polyfill, a [Babel plugin](https://github.com/babel-plugins/babel-plugin-object-assign), or a helper from another library like [`_.assign()`](https://lodash.com/docs#assign).
+>[`Object.assign()`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) 是 ES6 的一部分，不過大部份瀏覽器尚未實作。你會需要使用一個 polyfill，[Babel plugin](https://github.com/babel-plugins/babel-plugin-object-assign) 或是從其他 library 來的 helper 像是 [`_.assign()`](https://lodash.com/docs#assign)。
 
->##### Note on `switch` and Boilerplate
+>##### 關於 `switch` 和 Boilerplate 的附註
 
 >The `switch` statement is *not* the real boilerplate. The real boilerplate of Flux is conceptual: the need to emit an update, the need to register the Store with a Dispatcher, the need for the Store to be an object (and the complications that arise when you want a universal app). Redux solves these problems by using pure reducers instead of event emitters.
 
->It’s unfortunate that many still choose a framework based on whether it uses `switch` statements in the documentation. If you don’t like `switch`, you can use a custom `createReducer` function that accepts a handler map, as shown in [“reducing boilerplate”](../recipes/ReducingBoilerplate.md#reducers).
+>It’s unfortunate that many still choose a framework based on whether it uses `switch` statements in the documentation. If you don’t like `switch`, you can use a custom `createReducer` function that accepts a handler map, as shown in [「減少 boilerplate」](../recipes/ReducingBoilerplate.md#reducers).
 
 ## 處理更多 Actions
 
-We have two more actions to handle! Let’s extend our reducer to handle `ADD_TODO`.
+我們有兩個以上的 actions 要處理！讓我們來擴充 reducer 以處理 `ADD_TODO`。
 
 ```js
 function todoApp(state = initialState, action) {
@@ -133,7 +133,7 @@ function todoApp(state = initialState, action) {
 }
 ```
 
-Just like before, we never write directly to `state` or its fields, and instead we return new objects. The new `todos` is equal to the old `todos` concatenated with a single new item at the end. The fresh todo was constructed using the data from the action.
+就像之前一樣，we never write directly to `state` or its fields, and instead we return new objects. The new `todos` is equal to the old `todos` concatenated with a single new item at the end. The fresh todo was constructed using the data from the action.
 
 Finally, the implementation of the `COMPLETE_TODO` handler shouldn’t come as a complete surprise:
 
@@ -329,9 +329,9 @@ function reducer(state, action) {
 }
 ```
 
-All [`combineReducers()`](../api/combineReducers.md) does is generate a function that calls your reducers **with the slices of state selected according to their keys**, and combining their results into a single object again. [It’s not magic.](https://github.com/rackt/redux/issues/428#issuecomment-129223274)
+All [`combineReducers()`](../api/combineReducers.md) does is generate a function that calls your reducers **with the slices of state selected according to their keys**, and combining their results into a single object again. [它不是魔法。](https://github.com/rackt/redux/issues/428#issuecomment-129223274)
 
->##### Note for ES6 Savvy Users
+>##### 給理解 ES6 的使用者們的附註
 
 >Because `combineReducers` expects an object, we can put all top-level reducers into a separate file, `export` each reducer function, and use `import * as reducers` to get them as an object with their names as the keys:
 
@@ -342,7 +342,7 @@ All [`combineReducers()`](../api/combineReducers.md) does is generate a function
 >const todoApp = combineReducers(reducers);
 >```
 >
->Because `import *` is still new syntax, we don’t use it anymore in the documentation to avoid [confusion](https://github.com/rackt/redux/issues/428#issuecomment-129223274), but you may encounter it in some community examples.
+>因為 `import *` 還是一個新的語法，我們今後不會在文件中使用它以避免[困惑](https://github.com/rackt/redux/issues/428#issuecomment-129223274)，不過你可能會在一些社群的範例中遇到它。
 
 ## 原始碼
 
@@ -392,4 +392,4 @@ export default todoApp;
 
 ## 下一步
 
-接下來，we’ll explore how to [create a Redux store](Store.md) that holds the state and takes care of calling your reducer when you dispatch an action.
+接下來，我們將探索如何[建立 Redux store](Store.md)，它會掌管 state 並在你 dispatch 一個 action 時幫忙呼叫 reducer。

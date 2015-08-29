@@ -1,4 +1,4 @@
-# Server Rendering
+# 伺服器 Rendering
 
 The most common use case for server-side rendering is to handle the _initial render_ when a user (or search engine crawler) first requests our app.  When the server receives the request, it renders the required component(s) into an HTML string, and then sends it as a response to the client.  From that point on, the client takes over rendering duties.
 
@@ -15,7 +15,7 @@ To send the data down to the client, we need to:
 * pull the state out of store;
 * and then pass the state along to the client.
 
-On the client side, a new Redux store will be created and initialized with the state provided from the server.  
+On the client side, a new Redux store will be created and initialized with the state provided from the server.
 Redux’s **_only_** job on the server side is to provide the **initial state** of our app.
 
 ## Setting Up

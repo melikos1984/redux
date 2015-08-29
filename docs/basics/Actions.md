@@ -19,7 +19,7 @@ Actions 是一般的 JavaScript 物件。慣例上，actions 應該有一個字�
 import { ADD_TODO, REMOVE_TODO } from '../actionTypes';
 ```
 
->##### 關於 Boilerplate 的提醒
+>##### 關於 Boilerplate 的附註
 
 >你不需要定義 action type 常數在一個單獨的檔案，或甚至完全不需要定義它們。對小專案來說，直接使用字面字串當作 action types 可能更簡單一些。不過，在較大的程式庫中明確的定義常數有一些好處。閱讀[減少 Boilerplate](../recipes/ReducingBoilerplate.md) 來了解更多讓你的程式庫保持乾淨的實用技巧。
 
@@ -139,5 +139,5 @@ export function setVisibilityFilter(filter) {
 
 現在讓我們來[定義一些 reducers](Reducers.md) 以指定當你 dispatch 這些 actions 時，state 要如何更新！
 
->##### 給進階使用者的提醒
+>##### 給進階使用者的附註
 >如果你已經熟悉基本的概念而且之前已經看完了這份教學，請不要忘記查看在[進階教學](../advanced/README.md)中的 [async actions](../advanced/AsyncActions.md)，以學習如何處理 AJAX 回應和組合 action creators 到非同步控制流程中。
