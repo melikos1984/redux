@@ -2,7 +2,7 @@
 
 Redux 暴露出來的 API 非常少。Redux 定義一系列的介面給你去實作 (例如 [reducers](../Glossary.md#reducer)) 並提供少數的 helper functions 來把這些介面綁在一起。
 
-這個章節把 Redux API 完整的文件化。Keep in mind that Redux is only concerned with managing the state. In a real app, you’ll also want to use UI bindings like [react-redux](https://github.com/gaearon/react-redux).
+這個章節把 Redux API 完整的文件化。請謹記於心，Redux 只關注管理 state。在一個實際的應用程式中，你也會想要使用像是 [react-redux](https://github.com/gaearon/react-redux) 之類的 UI  綁定。
 
 ### 頂層 Exports
 
@@ -23,7 +23,7 @@ Redux 暴露出來的 API 非常少。Redux 定義一系列的介面給你去實
 
 ### Importing
 
-Every function described above is a top-level export. You can import any of them like this:
+描述在上面的每個都是頂層 export 的 function。你可以像這樣 import 它們之中任何一個：
 
 #### ES6
 
