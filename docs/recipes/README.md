@@ -6,4 +6,4 @@
 * [減少 Boilerplate](ReducingBoilerplate.md)
 * [伺服器 Rendering](ServerRendering.md)
 * [撰寫測試](WritingTests.md)
-* [Computing Derived Data](ComputingDerivedData.md)
+* [計算衍生資料](ComputingDerivedData.md)

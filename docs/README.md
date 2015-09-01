@@ -25,7 +25,7 @@
   * [遷移到 Redux](/docs/recipes/MigratingToRedux.md)
   * [減少 Boilerplate](/docs/recipes/ReducingBoilerplate.md)
   * [伺服器 Rendering](/docs/recipes/ServerRendering.md)
-  * [Computing Derived Data](/docs/recipes/ComputingDerivedData.md)
+  * [計算衍生資料](/docs/recipes/ComputingDerivedData.md)
   * [撰寫測試](/docs/recipes/WritingTests.md)
 * [疑難排解](/docs/Troubleshooting.md)
 * [術語表](/docs/Glossary.md)
