@@ -18,7 +18,6 @@ Redux 暴露出來的 API 非常少。Redux 定義一系列的介面給你去實
   * [getState()](Store.md#getState)
   * [dispatch(action)](Store.md#dispatch)
   * [subscribe(listener)](Store.md#subscribe)
-  * [getReducer()](Store.md#getReducer)
   * [replaceReducer(nextReducer)](Store.md#replaceReducer)
 
 ### Importing
