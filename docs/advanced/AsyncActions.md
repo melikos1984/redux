@@ -40,7 +40,7 @@ Or you can define separate types for them:
 
 Choosing whether to use a single action type with flags, or multiple action types, is up to you. It’s a convention you need to decide with your team. Multiple types leave less room for a mistake, but this is not an issue if you generate action creators and reducers with a helper library like [redux-actions](https://github.com/acdlite/redux-actions).
 
-Whatever convention you choose, stick with it throughout the application.  
+Whatever convention you choose, stick with it throughout the application.
 We’ll use separate types in this tutorial.
 
 ## Synchronous Action Creators
@@ -507,6 +507,6 @@ store.dispatch(fetchPostsIfNeeded('reactjs')).then(() =>
 
 Dispatching async actions is no different from dispatching synchronous actions, so we won’t discuss this in detail. See [Usage with React](../basics/UsageWithReact.md) for an introduction into using Redux from React components. See [Example: Reddit API](ExampleRedditAPI.md) for the complete source code discussed in this example.
 
-## Next Steps
+## 下一步
 
 Read [Async Flow](AsyncFlow.md) to recap how async actions fit into the Redux flow.

@@ -1,87 +1,87 @@
 # 搭配 React 運用
 
-From the very beginning, we need to stress that Redux has no relation to React. You can write Redux apps with React, Angular, Ember, jQuery, or vanilla JavaScript.
+在一開始，我們必須強調，Redux 跟 React 並沒有關係。你可以用 React、Angular、Ember、jQuery 或甚至原生 JavaScript 來撰寫 Redux 應用程式。
 
-That said, Redux works especially well with frameworks like [React](http://facebook.github.io/react/) and [Deku](https://github.com/dekujs/deku) because they let you describe UI as a function of state, and Redux emits state updates in response to actions.
+不過，Redux 與像是 [React](http://facebook.github.io/react/) 和 [Deku](https://github.com/dekujs/deku) 之類的框架一起運作的特別好，因為它們讓你把 UI 描述成一個 state 的 function，而 Redux 對應 actions 來發出 state 更新。
 
-We will use React to build our simple todo app.
+我們將會使用 React 來建置我們的簡易 todo 應用程式。
 
 ## 安裝 React Redux
 
-[React bindings](https://github.com/gaearon/react-redux) are not included in Redux by default. You need to install them explicitly:
+預設上，[React 綁定](https://github.com/gaearon/react-redux) 不包含在 Redux 中。你需要明確地安裝它：
 
 ```
 npm install --save react-redux
 ```
 
-## Smart and Dumb Components
+## Smart 和 Dumb Components
 
-React bindings for Redux embrace the idea of [separating “smart” and “dumb” components](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0).
+Redux 的 React 綁定擁抱了[分離「smart」和「dumb」components](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0) 的概念。
 
-It is advisable that only top-level components of your app (such as route handlers) are aware of Redux. Components below them should be “dumb” and receive all data via props.
+只讓應用程式的頂層 components (像是 route handlers) 意識到 Redux 是比較明智的。在它們下面的 Components 應該是「dumb」的並借由 props 接收所有的資料。
 
 <center>
 <table>
     <thead>
         <tr>
             <th></th>
-            <th>Location</th>
-            <th>Aware of Redux</th>
-            <th>To read data</th>
-            <th>To change data</th>
+            <th>位置</th>
+            <th>意識到 Redux</th>
+            <th>取得資料</th>
+            <th>改變資料</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-          <td>“Smart” Components</td>
-          <td>Top level, route handlers</td>
-          <td>Yes</th>
-          <td>Subscribe to Redux state</td>
+          <td>「Smart」Components</td>
+          <td>頂層、route handlers</td>
+          <td>是</th>
+          <td>訂閱 Redux state</td>
           <td>Dispatch Redux actions</td>
         </tr>
         <tr>
-          <td>“Dumb” Components</td>
-          <td>Middle and leaf components</td>
-          <td>No</th>
-          <td>Read data from props</td>
-          <td>Invoke callbacks from props</td>
+          <td>「Dumb」Components</td>
+          <td>中間或分支末端的 components</td>
+          <td>否</th>
+          <td>從 props 讀取資料</td>
+          <td>從 props 呼叫 callbacks</td>
         </tr>
     </tbody>
 </table>
 </center>
 
-In this todo app, we will only have a single “smart” component at the top of our view hierarchy. In more complex apps, you might have several of them. While you may nest “smart” components, we suggest that you pass props down whenever possible.
+在這個 todo 應用程式中，我們將會只有一個「smart」component 在我們視圖階層的最上面。在更複雜的應用程式中，你可能會有幾個。當你可能會嵌套「smart」components 時，我們建議只要有可能就用傳遞 props 下去的方式。
 
-## Designing Component Hierarchy
+## 設計 Component 階層
 
-Remember how we [designed the shape of the root state object](Reducers.md)? It’s time we design the UI hierarchy to match it. This is not a Redux-specific task. [Thinking in React](https://facebook.github.io/react/docs/thinking-in-react.html) is a great tutorial that explains the process.
+記得我們如何[設計 root state 物件的形狀](Reducers.md)的嗎？是時候來設計符合它的 UI 階層了。這不是個 Redux 特有的任務。[Thinking in React](https://facebook.github.io/react/docs/thinking-in-react.html) 是個解釋了這個過程的偉大教學。
 
-Our design brief is simple. We want to show a list of todo items. On click, a todo item is crossed out as completed. We want to show a field where the user may add a new todo. In the footer, we want to show a toggle to show all / only completed / only incomplete todos.
+我們的設計概要很簡單。我們想要顯示一個 todo 項目的清單。在點擊的時候，todo 項目被劃掉當作已完成。我們想要顯示一個使用者可以添加新 todo 的欄位。在 footer，我們想要顯示一個開關來切換 全部/只有已完成的/只有未完成的 todos。
 
-I see the following components (and their props) emerge from this brief:
+我從這份概要中看到有下述 components (和它們的 props) 出現：
 
-* **`AddTodo`** is an input field with a button.
-  - `onAddClick(text: string)` is a callback to invoke when a button is pressed.
-* **`TodoList`** is a list showing visible todos.
-  - `todos: Array` is an array of todo items with `{ text, completed }` shape.
-  - `onTodoClick(index: number)` is a callback to invoke when a todo is clicked.
-* **`Todo`** is a single todo item.
-  - `text: string` is the text to show.
-  - `completed: boolean` is whether todo should appear crossed out.
-  - `onClick()` is a callback to invoke when a todo is clicked.
-* **`Footer`** is a component where we let user change visible todo filter.
-  - `filter: string` is the current filter: `'SHOW_ALL'`, `'SHOW_COMPLETED'` or `'SHOW_ACTIVE'`.
-  - `onFilterChange(nextFilter: string)`: Callback to invoke when user chooses a different filter.
+* **`AddTodo`** 是一個有一個按鈕的輸入欄位。
+  - `onAddClick(text: string)` 是一個當按鈕被按下去時呼叫的 callback。
+* **`TodoList`** 是一個顯示可見 todos 的清單。
+  - `todos: Array` 是一個有著 `{ text, completed }` 形狀的 todo 項目的陣列。
+  - `onTodoClick(index: number)` 是一個當 todo 被點擊時呼叫的 callback。
+* **`Todo`** 是單一一個 todo 項目。
+  - `text: string` 是要顯示的文字。
+  - `completed: boolean` 是 todo 是否應該顯示為被劃掉。
+  - `onClick()` 是一個當 todo 被點擊時呼叫的 callback。
+* **`Footer`** 是一個我們讓使用者改變可見 todo 過濾條件的 component。
+  - `filter: string` 是現在的的過濾條件：`'SHOW_ALL'`、`'SHOW_COMPLETED'` 或是 `'SHOW_ACTIVE'`。
+  - `onFilterChange(nextFilter: string)`：當使用者選擇不同的過濾條件要呼叫的 Callback。
 
-These are all “dumb” components. They don’t know *where* the data comes from, or *how* to change it. They only render what’s given to them.
+它們都是「dumb」 components。它們不知道資料從*哪裡*來，或是要*如何*改變它。它們只 render 給它們的東西。
 
-If you migrate from Redux to something else, you’ll be able to keep all these components exactly the same. They have no dependency on Redux.
+如果你從 Redux 遷移到其他東西上，你將會可以讓這所有的 components 完全保持一樣。它們不依賴在 Redux 上。
 
-Let’s write them! We don’t need to think about binding to Redux yet. You can just give them fake data while you experiment until they render correctly.
+讓我們來撰寫它們！我們還不需要思考有關綁定到 Redux 的部分。當你實驗的時候，你可以只是給它們假資料直到他們正常的 render 為止。
 
 ## Dumb Components
 
-These are all normal React components, so we won’t stop to examine them in detail. Here they go:
+它們都是一般的 React components，所以我們不會停下來詳細介紹它們。直接開始：
 
 #### `components/AddTodo.js`
 
@@ -216,7 +216,7 @@ Footer.propTypes = {
 };
 ```
 
-That’s it! We can verify that they work correctly by writing a dummy `App` to render them:
+就這樣！我們可以藉由撰寫一個假的 `App` 來 render 它們，驗證它們正確的運作：
 
 #### `containers/App.js`
 
@@ -256,17 +256,17 @@ export default class App extends Component {
 }
 ```
 
-This is what I see when I render `<App />`:
+這就是我在我 render `<App />` 時看到的:
 
 <img src='http://i.imgur.com/lj4QTfD.png' width='40%'>
 
-By itself, it’s not very interesting. Let’s connect it to Redux!
+就它本身而言，不是非常有趣。讓我們來把它連結到 Redux！
 
-## Connecting to Redux
+## 連結 Redux
 
-We need to make two changes to connect our `App` component to Redux and make it dispatch actions and read state from the Redux store.
+我們需要做兩個改變以把我們的 `App` component 連結到 Redux，並讓它 dispatch actions 還有從 Redux store 讀取 state。
 
-First, we need to import `Provider` from [`react-redux`](http://github.com/gaearon/react-redux), which we installed earlier, and **wrap the root component in `<Provider>`** before rendering.
+首先，我們需要從我們前面安裝的 [`react-redux`](http://github.com/gaearon/react-redux) import `Provider`，並在 rendering 之前把 **root component 包在 `<Provider>` 中** 。
 
 #### `index.js`
 
@@ -281,8 +281,8 @@ let store = createStore(todoApp);
 
 let rootElement = document.getElementById('root');
 React.render(
-  // The child must be wrapped in a function
-  // to work around an issue in React 0.13.
+  // child 必須被包在一個 function 裡面
+  // 以避開 React 0.13 裡面的一個問題。
   <Provider store={store}>
     {() => <App />}
   </Provider>,
@@ -290,13 +290,13 @@ React.render(
 );
 ```
 
-This makes our store instance available to the components below. (Internally, this is done via React's [undocumented “context” feature](http://www.youtube.com/watch?v=H7vlH-wntD4), but it’s not exposed directly in the API so don’t worry about it.)
+這使我們的 store 實體可以在下面的 components 中取得。(在內部，這是透過 React [沒有被記載在文件上的「context」功能](http://www.youtube.com/watch?v=H7vlH-wntD4)完成，不過它沒有直接暴露在 API 中，所以不用擔心。)
 
-Then, we **wrap the components we want to connect to Redux with the `connect()` function from [`react-redux`](http://github.com/gaearon/react-redux)**. Try to only do this for a top-level component, or route handlers. While technically you can `connect()` any component in your app to Redux store, avoid doing this too deeply, because it will make the data flow harder to trace.
+接著，我們**把想要連結到 Redux 的 components 用來自 [`react-redux`](http://github.com/gaearon/react-redux) 的 `connect()` function 包起來**。請試著只對頂層 component、或是 route handlers 做這件事。雖然技術上你可以 `connect()` 你的應用程式中的任何 component 到 Redux store，請避免在太深的地方做這件事，因為這會讓資料流比較難追蹤。
 
-**Any component wrapped with `connect()` call will receive a [`dispatch`](../api/Store.md#dispatch) function as a prop, and any state it needs from the global state.** The only argument to `connect()` is a function we call a **selector**. This function takes the global Redux store’s state, and returns the props you need for the component. In the simplest case, you can just return the `state` given to you, but you may also wish to transform it first.
+**用 `connect()` 呼叫包覆的任何 component 都會接收一個 [`dispatch`](../api/Store.md#dispatch) function ，和來自全域 state 中任何它需要的 state 作為 prop。** 傳遞給 `connect()` 的唯一參數是一個我們稱作 **selector** 的 function。這個 function 取得全域 Redux store 的 state，然後回傳你需要的 props 給 component。在最簡單的案例中，你可以直接回傳給你的 `state`，不過你也可能希望先轉換它。
 
-To make performant memoized transformations with composable selectors, check out [reselect](https://github.com/faassen/reselect). In this example, we won’t use it, but it works great for larger apps.
+要用可組合的 selectors 來產生會自動記憶的高效能轉換，請查看 [reselect](https://github.com/faassen/reselect)。在這個範例中，我們不會使用它，不過它在比較大的應用程式中運作得很棒。
 
 #### `containers/App.js`
 
@@ -310,7 +310,7 @@ import Footer from '../components/Footer';
 
 class App extends Component {
   render() {
-    // Injected by connect() call:
+    // 藉由 connect() 呼叫注入：
     const { dispatch, visibleTodos, visibilityFilter } = this.props;
     return (
       <div>
@@ -356,8 +356,8 @@ function selectTodos(todos, filter) {
   }
 }
 
-// Which props do we want to inject, given the global state?
-// Note: use https://github.com/faassen/reselect for better performance.
+// 我們想要從給定的全域 state 注入哪些 props？
+// 附註：使用 https://github.com/faassen/reselect 可以獲得更好的效能。
 function select(state) {
   return {
     visibleTodos: selectTodos(state.todos, state.visibilityFilter),
@@ -365,12 +365,12 @@ function select(state) {
   };
 }
 
-// Wrap the component to inject dispatch and state into it
+// 把 component 包起來以注入 dispatch 和 state 進去
 export default connect(select)(App);
 ```
 
-That’s it! The tiny todo app now functions correctly.
+就這樣！這個小型的 todo 應用程式現在可以正確的運作了。
 
 ## 下一步
 
-Read the [complete source code for this tutorial](ExampleTodoList.md) to better internalize the knowledge you have gained. Then, head straight to the [advanced tutorial](../advanced/README.md) to learn how to handle network requests and routing!
+閱讀[這份教學的完整原始碼](ExampleTodoList.md)以更好地內化已獲得的知識。接著，直接前往[進階教學](../advanced/README.md)學習如何處理網路請求和 routing！

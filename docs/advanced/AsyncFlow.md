@@ -10,4 +10,4 @@
 
 ## 下一步
 
-現在你已經知道關於 Redux 應用程式中資料流的所有事情！請查看[非同步範例的原始碼](ExampleRedditAPI.md)，或是 閱讀有關 [React Router 整合](UsageWithReactRouter.md) 的章節。
+現在你已經知道關於 Redux 應用程式中資料流的所有事情！請查看[非同步範例的原始碼](ExampleRedditAPI.md)，或是 閱讀有關 [React Router 整合](UsageWithReactRouter.md)的章節。

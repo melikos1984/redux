@@ -109,7 +109,7 @@ store 是個保存應用程式 state tree 的物件。
 - [`subscribe(listener)`](api/Store.md#subscribe) 註冊一個會在 state 改變時被呼叫的 function。
 - [`replaceReducer(nextReducer)`](api/Store.md#replaceReducer) 可以被用來實作 hot reloading 與 code splitting。你很有可能不會使用到它們。
 
-查看完整的 [store API reference](api/Store.md#dispatch) 來了解細節。
+查看完整的 [store API 參考](api/Store.md#dispatch)來了解細節。
 
 ## Store creator
 
