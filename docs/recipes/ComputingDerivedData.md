@@ -1,10 +1,10 @@
 # 計算衍生資料
 
-[Reselect](https://github.com/faassen/reselect.git) is a simple library for creating memoized, composable **selector** functions. Reselect selectors can be used to efficiently compute derived data from the Redux store.
+[Reselect](https://github.com/faassen/reselect.git) 是一個簡單的 library for creating memoized, composable **selector** functions。Reselect selectors can be used to efficiently compute derived data from the Redux store。
 
 ### Motivation for Memoized Selectors
 
-Let's revisit the [Todos List example](../basics/UsageWithReact.md):
+Let's revisit the [Todos 清單的範例](../basics/UsageWithReact.md)：
 
 #### `containers/App.js`
 
@@ -75,7 +75,7 @@ function select(state) {
 export default connect(select)(App);
 ```
 
-In the above example, `select` calls `selectTodos` to calculate `visibleTodos`. This works great, but there is a drawback: `visibleTodos` is calculated every time the component is updated. If the state tree is large, or the calculation expensive, repeating the calculation on every update may cause performance problems. Reselect can help to avoid these unnecessary recalculations.
+在上面的範例中，`select` calls `selectTodos` to calculate `visibleTodos`. This works great, but there is a drawback: `visibleTodos` is calculated every time the component is updated. If the state tree is large, or the calculation expensive, repeating the calculation on every update may cause performance problems. Reselect can help to avoid these unnecessary recalculations.
 
 ### Creating a Memoized Selector
 
@@ -116,9 +116,9 @@ export const visibleTodosSelector = createSelector(
 );
 ```
 
-In the example above, `visibilityFilterSelector` and `todosSelector` are input-selectors. They are created as ordinary non-memoized selector functions because they do not transform the data they select. `visibleTodosSelector` on the other hand is a memoized selector. It takes `visibilityFilterSelector` and `todosSelector` as input-selectors, and a transform function that calculates the filtered todos list.
+在上面的範例中，`visibilityFilterSelector` and `todosSelector` are input-selectors. They are created as ordinary non-memoized selector functions because they do not transform the data they select. `visibleTodosSelector` on the other hand is a memoized selector. It takes `visibilityFilterSelector` and `todosSelector` as input-selectors, and a transform function that calculates the filtered todos list.
 
-### Composing Selectors
+### 組合 Selectors
 
 A memoized selector can itself be an input-selector to another memoized selector. Here is `visibleTodosSelector` being used as an input-selector to a selector that further filters the todos by keyword:
 
@@ -135,7 +135,7 @@ const keywordFilterSelector = createSelector(
 
 ### Connecting a Selector to the Redux Store
 
-If you are using react-redux, you connect a memoized selector to the Redux store using `connect`:
+如果你是使用 react-redux，you connect a memoized selector to the Redux store using `connect`：
 
 #### `containers/App.js`
 
@@ -150,7 +150,7 @@ import { visibleTodosSelector } from '../selectors/todoSelectors.js';
 
 class App extends Component {
   render() {
-    // Injected by connect() call:
+    // 藉由 connect() 呼叫注入：
     const { dispatch, visibleTodos, visibilityFilter } = this.props;
     return (
       <div>
@@ -185,7 +185,7 @@ App.propTypes = {
   ]).isRequired
 };
 
-// Pass the selector to the connect component
+// 傳遞 selector 到 connect component
 export default connect(visibleTodosSelector)(App);
 ```
 
