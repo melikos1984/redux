@@ -20,35 +20,37 @@ Redux 的 React 綁定擁抱了[分離「smart」和「dumb」components](https:
 
 只讓應用程式的頂層 components (像是 route handlers) 意識到 Redux 是比較明智的。在它們下面的 Components 應該是「dumb」的並借由 props 接收所有的資料。
 
-<center>
 <table>
     <thead>
         <tr>
             <th></th>
-            <th>位置</th>
-            <th>意識到 Redux</th>
-            <th>取得資料</th>
-            <th>改變資料</th>
+            <th scope="col" style="text-align:left">「Smart」Components</th>
+            <th scope="col" style="text-align:left">「Dumb」Components</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-          <td>「Smart」Components</td>
+          <th scope="row" style="text-align:right">位置</th>
           <td>頂層、route handlers</td>
-          <td>是</th>
-          <td>訂閱 Redux state</td>
-          <td>Dispatch Redux actions</td>
+          <td>中間或分支末端的 components</td>
         </tr>
         <tr>
-          <td>「Dumb」Components</td>
-          <td>中間或分支末端的 components</td>
+          <th scope="row" style="text-align:right">意識到 Redux</th>
+          <td>是</th>
           <td>否</th>
+        </tr>
+        <tr>
+          <th scope="row" style="text-align:right">取得資料</th>
+          <td>訂閱 Redux state</td>
           <td>從 props 讀取資料</td>
+        </tr>
+        <tr>
+          <th scope="row" style="text-align:right">改變資料</th>
+          <td>Dispatch Redux actions</td>
           <td>從 props 呼叫 callbacks</td>
         </tr>
     </tbody>
 </table>
-</center>
 
 在這個 todo 應用程式中，我們將會只有一個「smart」component 在我們視圖階層的最上面。在更複雜的應用程式中，你可能會有幾個。當你可能會嵌套「smart」components 時，我們建議只要有可能就用傳遞 props 下去的方式。
 

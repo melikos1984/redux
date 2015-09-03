@@ -20,8 +20,8 @@ open http://localhost:3000/
 
 它涵蓋了：
 
-* 基礎的 Redux 資料流；
-* 測試。
+* 基礎的 Redux 資料流
+* 測試
 
 ## TodoMVC
 
@@ -39,9 +39,9 @@ open http://localhost:3000/
 
 它涵蓋了：
 
-* 伴隨著兩個 reducers 的 Redux 資料流；
-* 更新巢狀資料；
-* 測試。
+* 伴隨著兩個 reducers 的 Redux 資料流
+* 更新巢狀資料
+* 測試
 
 ## Async
 
@@ -59,9 +59,9 @@ open http://localhost:3000/
 
 它涵蓋了：
 
-* 使用 [redux-thunk](https://github.com/gaearon/redux-thunk) 處理基礎的 async Redux 資料流；
-* 快取回應並在抓取資料時顯示一個 spinner；
-* 讓快取的資料失效。
+* 使用 [redux-thunk](https://github.com/gaearon/redux-thunk) 處理基礎的非同步 Redux 資料流
+* 快取回應並在抓取資料時顯示一個 spinner
+* 讓快取的資料失效
 
 ## Universal
 
@@ -99,12 +99,12 @@ open http://localhost:3000/
 
 它涵蓋了：
 
-* 真實世界的 async Redux 資料流；
-* 保存 entities 在一個正規化的 entity 快取裡；
-* 給 API 呼叫用的自訂 middleware;
-* 快取回應並在抓取資料時顯示一個 spinner；
-* Pagination；
-* Routing。
+* 真實世界的非同步 Redux 資料流
+* 保存 entities 在一個正規化的 entity 快取裡
+* 給 API 呼叫用的客製化 middleware
+* 快取回應並在抓取資料時顯示一個 spinner
+* Pagination
+* Routing
 
 ## 更多範例
 

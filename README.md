@@ -120,6 +120,8 @@ store.dispatch({ type: 'DECREMENT' });
 * [術語表](http://rackt.github.io/redux/docs/Glossary.html)
 * [API 參考](http://rackt.github.io/redux/docs/api/index.html)
 
+想要輸出成 PDF、ePub 和 MOBI 以方便離線閱讀的話，關於如何產生它們的說明，請參閱：[paulwittmann/redux-offline-docs](https://github.com/paulwittmann/redux-offline-docs)。
+
 ### 範例
 
 * [Counter](http://rackt.github.io/redux/docs/introduction/Examples.html#counter) ([原始碼](https://github.com/rackt/redux/tree/master/examples/counter))
