@@ -8,6 +8,8 @@
 
 當最後一個在鏈中的 middleware 要 dispatches action 時，action 必須是個一般物件。這就是[同步的 Redux 資料流](../basics/DataFlow.md)開始的地方。
 
+請查看[非同步範例完整的原始碼](ExampleRedditAPI.md)。
+
 ## 下一步
 
-現在你已經知道關於 Redux 應用程式中資料流的所有事情！請查看[非同步範例的原始碼](ExampleRedditAPI.md)，或是 閱讀有關 [React Router 整合](UsageWithReactRouter.md)的章節。
+現在你已經看過一個 middleware 在 Redux 中可以做到什麼的範例了，是時候來學習它實際上如何運作，還有你可以如何建立你自己的 middleware。前進到下一個章節有 [Middleware](Middleware.md) 相關的詳細內容。

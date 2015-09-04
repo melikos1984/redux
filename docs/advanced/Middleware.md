@@ -1,18 +1,10 @@
 # Middleware
 
-如果你使用過一些伺服器端的 libraries，像是 [Express](http://expressjs.com/) 或是 [Koa](http://koajs.com/)，你應該對 *middleware* 的概念很熟悉。在這些框架裡，middleware is some code you can put between the framework receiving a request, and framework generating a response. For example, Express or Koa middleware may add CORS headers, logging, compression, and more. The best feature of middleware is that it’s composable in a chain. You can use multiple independent third-party middleware in a single project.
+你已經在 [Async Actions](/docs/advanced/AsyncActions.md) 的範例中看過 middleware 的實際運用。如果你使用過一些伺服器端的 libraries，像是 [Express](http://expressjs.com/) 或是 [Koa](http://koajs.com/)，你應該對 *middleware* 的概念很熟悉。在這些框架裡，middleware is some code you can put between the framework receiving a request, and framework generating a response. For example, Express or Koa middleware may add CORS headers, logging, compression, and more. The best feature of middleware is that it’s composable in a chain. You can use multiple independent third-party middleware in a single project.
 
 Redux middleware solves different problems than Express or Koa middleware, but in a conceptually similar way. **It provides a third-party extension point between dispatching an action, and the moment it reaches the reducer.** People use Redux middleware for logging, crash reporting, talking to an asynchronous API, routing, and more.
 
 This article is divided into an in-depth intro to help you grok the concept, and [a few practical examples](#seven-examples) to show the power of middleware at the very end. You may find it helpful to switch back and forth between them, as you flip between feeling bored and inspired.
-
->##### Note for the Impatient
-
->You will find some practical advice on using middleware for asynchronous actions [in the next section](AsyncActions.md). However we strongly advise you to resist the urge to skip this section.
-
->Middleware is the most “magical” part of Redux you are likely to encounter. Learning how it works and how to write your own is the best investment you can make into your productivity using Redux.
-
->If you’re really impatient, skip ahead to [seven examples](#seven-examples) and come back.
 
 ## 了解 Middleware
 

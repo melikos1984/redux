@@ -15,9 +15,9 @@
   * [搭配 React 運用](/docs/basics/UsageWithReact.md)
   * [範例：Todo 清單](/docs/basics/ExampleTodoList.md)
 * [進階](/docs/advanced/README.md)
-  * [Middleware](/docs/advanced/Middleware.md)
   * [Async Actions](/docs/advanced/AsyncActions.md)
   * [非同步資料流](/docs/advanced/AsyncFlow.md)
+  * [Middleware](/docs/advanced/Middleware.md)
   * Usage with React Router
   * [範例：Reddit API](/docs/advanced/ExampleRedditAPI.md)
   * Next Steps
