@@ -2,7 +2,7 @@
 
 Redux 是個給 JavaScript 應用程式所使用的可預測 state 容器。
 
-他幫助你撰寫行為一致的應用程式，可以在不同的環境下執行 (客戶端、伺服器、原生應用程式)，並且易於測試。在這之上，它提供一個很棒的開發體驗，例如 [程式碼即時編輯與時間旅行除錯器結合](https://github.com/gaearon/redux-devtools)。
+他幫助你撰寫行為一致的應用程式，可以在不同的環境下執行 (客戶端、伺服器、原生應用程式)，並且易於測試。在這之上，它提供一個很棒的開發體驗，例如[把程式碼即時編輯與時間旅行除錯器結合](https://github.com/gaearon/redux-devtools)。
 
 你可以使用 Redux 結合 [React](https://facebook.github.io/react/)，或結合其他任何的 view library。
 它非常小 (2kB) 並且沒有任何依賴套件。
