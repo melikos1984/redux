@@ -1,14 +1,14 @@
 # Middleware
 
-你已經在 [Async Actions](../advanced/AsyncActions.md) 的範例中看過 middleware 的實際運用了。如果你使用過一些伺服器端的 libraries，像是 [Express](http://expressjs.com/) 或是 [Koa](http://koajs.com/)，你應該對 *middleware* 的概念很熟悉。在這些框架裡，middleware 是一些你可以放到框架 接收請求和框架產生回應之間的程式碼。舉例來說，Express 和 Koa 的 middleware 可以添加 CORS 標頭、logging、壓縮，還有其他更多的功能。The best feature of middleware is that it’s composable in a chain。你可以在一個專案中使用多個獨立的第三方 middleware。
+你已經在 [Async Actions](../advanced/AsyncActions.md) 的範例中看過 middleware 的實際運用了。如果你使用過一些伺服器端的 libraries，像是 [Express](http://expressjs.com/) 或是 [Koa](http://koajs.com/)，你應該對 *middleware* 的概念很熟悉。在這些框架裡，middleware 是一些你可以放到框架 接收請求和框架產生回應之間的程式碼。舉例來說，Express 和 Koa 的 middleware 可以添加 CORS 標頭、logging、壓縮，還有其他更多的功能。middleware 的最大特點在於它可以在鏈上組合串接。你可以在一個專案中使用多個獨立的第三方 middleware。
 
-Redux middleware 解決了跟 Express 和 Koa middleware 不同的問題，不過概念上是類似的。**它在 dispatching action 和它到達 reducer 的時間點之間提供了一個第三方擴充點。**人們使用 Redux middleware 來 logging、回報當機、跟非同步 API 溝通、routing，還有其他更多的功能。
+Redux middleware 解決了跟 Express 和 Koa middleware 不同的問題，不過概念上是類似的。**它在 dispatching action 和 action 到達 reducer 的時間點之間提供了一個第三方的擴充點。**人們可以使用 Redux middleware 來 logging、回報當機、跟非同步 API 溝通、routing，還有其他更多的功能。
 
 這篇文章被分成深入的介紹以幫助你理解概念，和在最後面有[幾個實際的範例](#seven-examples)以展示 middleware 的力量。你可能會發現當你在感到無聊與有靈感之間翻轉時，在它們之間前後切換很有幫助。
 
 ## 了解 Middleware
 
-While middleware can be used for a variety of things，including 非同步的 API 呼叫，it’s really important that you understand where it comes from。我們將會引導你 through the thought process leading to middleware，藉由使用 logging 和當機回報作為範例。
+雖然 middleware 可以用於許多不同種類的事情，包括非同步的 API 呼叫，但是了解它從何而來真的非常重要。我們將會引導你 through the thought process leading to middleware，藉由使用 logging 和當機回報作為範例。
 
 ### 問題：Logging
 
@@ -22,11 +22,11 @@ Wouldn’t it be nice 如果我們 logged 發生在應用程式中的每個 acti
 
 ### 嘗試 #1：手動地 Logging
 
-最天真的解决方案是 just log action 和 next state yourself every time you call [`store.dispatch(action)`](../api/Store.md#dispatch)。這不算是一個真正的解決方案，只是我們理解問題的第一步。
+最天真的解决方案就是你在每次呼叫 [`store.dispatch(action)`](../api/Store.md#dispatch) 的時候自己 log action 和下一個 state。這不算是一個真正的解決方案，只是我們理解問題的第一步而已。
 
 >##### 附註
 
->If you’re using [react-redux](https://github.com/gaearon/react-redux) or similar bindings, you likely won’t have direct access to the store instance in your components。在接下來幾個段落，就直接假設 你把 explicitly store 傳遞下去 。
+>如果你是使用 [react-redux](https://github.com/gaearon/react-redux) 或是類似的綁定，you likely won’t have 在你的 components 裡面直接存取 store 實體。在接下來幾個段落，就直接假設 你把 explicitly store 傳遞下去 。
 
 假如說，你在建立一個 todo 的時候呼叫了這個：
 
@@ -58,7 +58,7 @@ function dispatchAndLog(store, action) {
 }
 ```
 
-你可以 then use it everywhere instead of `store.dispatch()`：
+你接著可以在每個地方使用它取代 `store.dispatch()`：
 
 ```js
 dispatchAndLog(store, addTodo('Use Redux'));
@@ -86,13 +86,13 @@ store.dispatch = function dispatchAndLog(action) {
 
 那如果我們想要使用**超過一個**這樣的 transformation 到 `dispatch` 上呢？
 
-A different useful transformation that comes to my mind is reporting JavaScript errors in production。 The global `window.onerror` event is not reliable because it doesn’t provide stack information in some older browsers, which is crucial to understand why an error is happening。
+A different useful transformation that comes to my mind is reporting JavaScript errors in production。全域的 `window.onerror` 事件並不可靠，因為它在一些舊的瀏覽器中沒有提供堆疊資訊，而這是了解為什麼會發生錯誤的關鍵。
 
 Wouldn’t it be useful if, any time an error is thrown as a result of dispatching an action, we would send it to a crash reporting service like [Sentry](https://getsentry.com/welcome/) with the stack trace, the action that caused the error, and the current state? This way it’s much easier to reproduce the error in development。
 
-However, it is important that we keep logging and crash reporting separate。 Ideally we want them to be different modules, potentially in different packages。 Otherwise we can’t have an ecosystem of such utilities。 (Hint：we’re slowly getting to what middleware is！)
+However, it is important that we keep logging and crash reporting separate。Ideally we want them to be different modules, potentially in different packages。 Otherwise we can’t have an ecosystem of such utilities。(Hint：we’re slowly getting to what middleware is！)
 
-If logging and crash reporting are separate utilities, they might look like this：
+如果 logging 和當機回報是 separate utilities，它們可能會這起來像這樣：
 
 ```js
 function patchStoreToAddLogging(store) {
@@ -135,7 +135,7 @@ patchStoreToAddCrashReporting(store);
 
 ### 嘗試 #4：Hiding Monkeypatching
 
-Monkeypatching is a hack。「Replace any method you like」，what kind of API is that？Let’s figure out the essence of it instead。Previously, our functions replaced `store.dispatch`. What if they *returned* the new `dispatch` function instead？
+Monkeypatching 是一種 hack。「Replace any method you like」，what kind of API is that？Let’s figure out the essence of it instead。Previously, our functions replaced `store.dispatch`. What if they *returned* the new `dispatch` function instead？
 
 ```js
 function logger(store) {
@@ -153,7 +153,7 @@ function logger(store) {
 }
 ```
 
-我們可以在 Redux 裡面提供一個 helper，that would apply the actual monkeypatching as an implementation detail：
+我們可以在 Redux 裡面提供一個 helper，that would apply the actual monkeypatching as an 實作細節：
 
 ```js
 function applyMiddlewareByMonkeypatching(store, middlewares) {
@@ -167,7 +167,7 @@ function applyMiddlewareByMonkeypatching(store, middlewares) {
 }
 ```
 
-We could use it to apply multiple middleware like this：
+我們可以像這樣使用它來啟用多個 middleware：
 
 ```js
 applyMiddlewareByMonkeypatching(store, [logger, crashReporter]);
@@ -248,8 +248,8 @@ Now middleware takes the `next()` dispatch function, and returns a dispatch func
 Instead of `applyMiddlewareByMonkeypatching()`, we could write `applyMiddleware()` that first obtains the final, fully wrapped `dispatch()` function, and returns a copy of the store using it:
 
 ```js
-// Warning: Naïve implementation!
-// That's *not* Redux API.
+// 警告：Naïve implementation！
+// 這*不*是 Redux 的 API。
 
 function applyMiddleware(store, middlewares) {
   middlewares = middlewares.slice();
@@ -264,7 +264,7 @@ function applyMiddleware(store, middlewares) {
 }
 ```
 
-The implementation of [`applyMiddleware()`](../api/applyMiddleware.md) that ships with Redux is similar, but **different in three important aspects**:
+[`applyMiddleware()`](../api/applyMiddleware.md) 的實作 that ships with Redux is similar, but **different in three important aspects**:
 
 * It only exposes a subset of the [store API](../api/Store.md) to the middleware: [`dispatch(action)`](../api/Store.md#dispatch) and [`getState()`](../api/Store.
 md#getState).
@@ -275,7 +275,7 @@ md#getState).
 
 ### The Final Approach
 
-Given this middleware we just wrote:
+Given this middleware we just wrote：
 
 ```js
 const logger = store => next => action => {
@@ -301,7 +301,7 @@ const crashReporter = store => next => action => {
 }
 ```
 
-Here’s how to apply it to a Redux store:
+Here’s how to apply it to a Redux store：
 
 ```js
 import { createStore, combineReducers, applyMiddleware } from 'redux';
