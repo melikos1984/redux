@@ -1,6 +1,6 @@
 # Store
 
-在前面的章節，我們定義了代表實際上「發生了什麼」的 [actions](Action.md)，和依據這些 actions 更新 state 的 [reducers](Reducers.md)。
+在前面的章節，我們定義了代表實際上「發生了什麼」的 [actions](Actions.md)，和依據這些 actions 更新 state 的 [reducers](Reducers.md)。
 
 **Store** 是把它們結合在一起的物件。store 有以下的責任：
 
