@@ -13,7 +13,7 @@
 }
 ```
 
-Actions 是一般的 JavaScript 物件。慣例上，actions 應該有一個字串 `type` 屬性，它代表被執行的 action 的類型。Types 通常應該被定義成字串常數。一旦你的應用程式夠大了，你能會想把它們移進一個單獨的 module。
+Actions 是一般的 JavaScript 物件。actions 必須有一個 `type` 屬性，它代表被執行的 action 的類型。Types 通常應該被定義成字串常數。一旦你的應用程式夠大了，你能會想把它們移進一個單獨的 module。
 
 ```js
 import { ADD_TODO, REMOVE_TODO } from '../actionTypes';

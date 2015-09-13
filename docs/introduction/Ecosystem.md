@@ -18,10 +18,15 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 * [redux-rx](https://github.com/acdlite/redux-rx) — Redux 的 RxJS utilities，包含一個 Observable 的 middleware
 * [redux-batched-updates](https://github.com/acdlite/redux-batched-updates) — 讓 Redux dispatches 的結果批次發生 React 更新
 * [redux-logger](https://github.com/fcomb/redux-logger) — 記錄每一個 Redux action 和下一個 state
+* [redux-immutable-state-invariant](https://github.com/leoasis/redux-immutable-state-invariant) — 偵測 redux 在 dispatches 之間與外部的 state 改變。只適合開發上使用。
 
 ## Components
 
 * [redux-form](https://github.com/erikras/redux-form) — 把 React 表單 state 保存在 Redux 裡
+
+## Store enhancers
+
+* [redux-batched-subscribe](https://github.com/tappleby/redux-batched-subscribe) — Batch calls to subscribe handlers with a custom function, including debouncing or React batched updates.
 
 ## Utilities
 
@@ -29,6 +34,7 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 * [normalizr](https://github.com/gaearon/normalizr) — 正規化巢狀的 API 回應讓 reducers 易於處理
 * [redux-actions](https://github.com/acdlite/redux-actions) — 減少撰寫 reducers 和 action creators 的 boilerplate
 * [redux-transducers](https://github.com/acdlite/redux-transducers) — Redux 的 Transducer utilities
+* [redux-immutablejs](https://github.com/indexiatech/redux-immutablejs) - Redux & [ImmutableJs](https://github.com/facebook/immutable-js/) 之間的整合工具
 
 ## 開發者工具
 
