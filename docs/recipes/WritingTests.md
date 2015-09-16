@@ -1,17 +1,17 @@
 # 撰寫測試
 
-Because most of the Redux code you write are functions, and many of them are pure, they are easy test without mocking.
+大部份你撰寫的 Redux 程式碼都是 functions，而且它們之中有很多是 pure 的，它們不需要 mocking 就能簡單測試。
 
-### Setting Up
+### 設置
 
 我們推薦用 [Mocha](http://mochajs.org/) 作為測試引擎。
-Note that it runs in a Node environment, so you won’t have access to DOM.
+注意，因為它運行在 Node 環境中，所以你不會存取到 DOM。
 
 ```
 npm install --save-dev mocha
 ```
 
-To use it together with [Babel](http://babeljs.io), add this to `scripts` in your `package.json`:
+要結合 [Babel](http://babeljs.io) 一起使用的話，必須把這個加到你的 `package.json` 的 `scripts`：
 
 ```js
 {
@@ -25,11 +25,11 @@ To use it together with [Babel](http://babeljs.io), add this to `scripts` in you
 }
 ```
 
-and run `npm test` to run it once, or `npm run test:watch` to test on every file change.
+然後執行 `npm test` 來跑一次測試，或是 `npm run test:watch` 來在每一次檔案變更時測試。
 
 ### Action Creators
 
-In Redux, action creators are functions which return plain objects. When testing action creators we want to test whether the correct action creator was called and also whether the right action was returned.
+在 Redux 中，action creators 是回傳一般物件的 functions。在測試 action creators 的時候，我們想要測試是否呼叫了正確的 action creator，還有是否回傳了正確的 action。
 
 #### 範例
 
@@ -41,7 +41,7 @@ export function addTodo(text) {
   };
 }
 ```
-can be tested like:
+可以像這樣測試：
 
 ```js
 import expect from 'expect';
@@ -62,7 +62,7 @@ describe('actions', () => {
 
 ### Reducers
 
-A reducer should return the new state after applying the action to the previous state, and that’s the behavior tested below.
+reducer 應該把 action 應用到先前的 state，然後回傳新的 state，而這就是下面所測試的行為。
 
 #### 範例
 
@@ -89,7 +89,7 @@ export default function todos(state = initialState, action) {
   }
 }
 ```
-can be tested like:
+可以像這樣測試：
 
 ```js
 import expect from 'expect';
@@ -143,11 +143,11 @@ describe('todos reducer', () => {
 
 ### Components
 
-A nice thing about React components is that they are usually small and only rely on their props. That makes them easy to test.
+React components 的其中一個優點是它們通常都很小，而且只依賴它們的 props。這使它們容易測試。
 
-To test the components we make a `setup()` helper that passes the stubbed callbacks as props and renders the component with [React shallow renderer](https://facebook.github.io/react/docs/test-utils.html#shallow-rendering). This lets individual tests assert on whether the callbacks were called when expected.
+為了測試 components，我們寫了一個 `setup()` helper，它會傳遞 stubbed callbacks 作為 props 並使用 [React shallow renderer](https://facebook.github.io/react/docs/test-utils.html#shallow-rendering) 來 renders component。這讓獨立的測試在預期 callbacks 會被呼叫時，可以 assert 是否 callbacks 有被呼叫。
 
-#### Example
+#### 範例
 
 ```js
 import React, { PropTypes, Component } from 'react';
@@ -179,7 +179,7 @@ Header.propTypes = {
 export default Header;
 ```
 
-can be tested like:
+可以像這樣測試：
 
 ```js
 import expect from 'expect';
@@ -238,15 +238,15 @@ describe('components', () => {
 });
 ```
 
-#### Fixing Broken `setState()`
+#### 修復壞掉的 `setState()`
 
-Shallow rendering currently [throws an error if `setState` is called](https://github.com/facebook/react/issues/4019). React seems to expect that, if you use `setState`, DOM is available. To work around the issue, we use jsdom so React doesn’t throw the exception when DOM isn’t available. Here’s how to set it up:
+Shallow rendering 現在[如果呼叫 `setState` 會拋出一個錯誤](https://github.com/facebook/react/issues/4019)。React 貌似預期你有用 `setState` 時，DOM 是可以使用的。為了避開這個問題，我們使用 jsdom 讓 React 在 DOM 不能使用時也不會拋出 exception。以下是設置它的方法：
 
 ```
 npm install --save-dev jsdom mocha-jsdom
 ```
 
-Then add a `jsdomReact()` helper function that looks like this:
+接著添加一個像這樣子的 `jsdomReact()` helper function：
 
 ```js
 import ExecutionEnvironment from 'react/lib/ExecutionEnvironment';
@@ -258,13 +258,13 @@ export default function jsdomReact() {
 }
 ```
 
-Call it before running any component tests. Note this is a dirty workaround, and it can be removed once [facebook/react#4019](https://github.com/facebook/react/issues/4019) is fixed.
+在執行任何 component 測試之前呼叫它。記住這是一個不乾淨的解決方法，一旦 [facebook/react#4019](https://github.com/facebook/react/issues/4019) 被修好了就可以移除它。
 
-### Connected Components
+### 已連結的 Components
 
-If you use a library like [React Redux](https://github.com/rackt/react-redux), you might be using [higher-order components](https://medium.com/@dan_abramov/mixins-are-dead-long-live-higher-order-components-94a0d2f9e750) like [`connect()`](https://github.com/rackt/react-redux#connectmapstatetoprops-mapdispatchtoprops-mergeprops). This lets you inject Redux state into a regular React component.
+如果你使用一個類似 [React Redux](https://github.com/rackt/react-redux) 的 library，你可能正在使用像是 [`connect()`](https://github.com/rackt/react-redux#connectmapstatetoprops-mapdispatchtoprops-mergeprops) 之類的 [higher-order components](https://medium.com/@dan_abramov/mixins-are-dead-long-live-higher-order-components-94a0d2f9e750)。它讓你把 Redux state 注入一個正規的 React component 裡。
 
-Consider the following `App` component:
+試想下面的 `App` component：
 
 ```js
 import { connect } from 'react-redux';
@@ -274,56 +274,56 @@ class App extends Component { /* ... */ }
 export default connect(mapStateToProps)(App);
 ```
 
-In a unit test, you would normally import the `App` component like this:
+在單元測試中，你通常會像這樣 import `App` component：
 
 ```js
 import App from './App';
 ```
 
-However when you import it, you’re actually holding the wrapper component returned by `connect()`, and not the `App` component itself. If you want to test its interaction with Redux, this is good news: you can wrap it in a [`<Provider>`](https://github.com/rackt/react-redux#provider-store) with a store created specifically for this unit test. But sometimes you want to test just the rendering of the component, without a Redux store.
+但是當你 import 它，你實際上拿到的是 `connect()` 回傳的包裝過後的 component，而不是 `App` component 本身。如果你想要測試它與 Redux 的互動，這是個好消息：你可以把它跟特別為這個單元測試建立的 store 包在一個 [`<Provider>`](https://github.com/rackt/react-redux#provider-store) 中。但是有時你只是想要測試 component 的 rendering，而不想測試 Redux store。
 
-In order to be able to test the App component itself without having to deal with the decorator, we recommend you to also export the undecorated component:
+為了能夠不處理 decorator 即可測試 App component 本身，我們也建議你 export 沒有被 decorated 的 component：
 
 ```js
 import { connect } from 'react-redux';
 
-// Use named export for unconnected component (for tests)
+// 使用 named export 處理未連結的 component (測試用)
 export class App extends Component { /* ... */ }
 
-// Use default export for the connected component (for app)
+// 使用 default export 處理已連結的 component (應用程式用)
 export default connect(mapDispatchToProps)(App);
 ```
 
-Since the default export is still the decorated component, the import statement pictured above will work as before so you won’t have to change your application code. However, you can now import the undecorated `App` components in your test file like this:
+因為 default export 仍然是個 decorated component，上面出現的 import 語句會像之前一樣運作，所以你不需要變動應用程式中的程式碼。不過，你現在可以在你的測試檔像這樣 import 沒有被 decorate 的 `App` components：
 
 ```js
-// Note the curly brances: grab the named export instead of default export
+// 注意大括號：抓取 named export 來取代 default export
 import { App } from './App';
 ```
 
-And if you need both:
+而如果你兩個都需要：
 
 ```js
 import ConnectedApp, { App } from './App';
 ```
 
-In the app itself, you would still import it normally:
+在應用程式裡面，你仍然可以像一般一樣 import 它：
 
 ```js
 import App from './App';
 ```
 
-You would only use the named export for tests.
+你應該只會在測試使用 named export。
 
->##### A Note on Mixing ES6 Modules and CommonJS
+>##### 關於混合使用 ES6 模組和 CommonJS 的附註
 
->If you are using ES6 in your application source, but write your tests in ES5, you should know that Babel handles the interchangeable use of ES6 `import` and CommonJS `require` through its [interop](http://babeljs.io/docs/usage/modules/#interop) capability to run two module formats side-by-side, but the behavior is [slightly different](https://github.com/babel/babel/issues/2047). If you add a second export beside your default export, you can no longer import the default using `require('./App')`. Instead you have to use `require('./App').default`.
+>如果你有在應用程式的原始碼裡面使用 ES6，不過是用 ES5 撰寫你的測試，你必須知道 Babel 處理了 ES6 `import` 和 CommonJS `require` 之間的互相使用，透過它的 [interop](http://babeljs.io/docs/usage/modules/#interop) 功能就可以讓兩種模組格式一起運作，但行為[有一點點不一樣](https://github.com/babel/babel/issues/2047)。如果你在 default export 旁邊添加了第二個 export，。你就不再能直接使用 `require('./App')` 來 import default。而你必須使用 `require('./App').default`。
 
 ### Middleware
 
-Middleware functions wrap behavior of `dispatch` calls in Redux, so to test this modified behavior we need to mock the behavior of the `dispatch` call.
+Middleware functions 包裝了 Redux 中 `dispatch` 呼叫的行為，所以要測試這個修改後的行為我們必須 mock `dispatch` 呼叫的行為。
 
-#### Example
+#### 範例
 
 ```js
 import expect from 'expect';
@@ -370,8 +370,8 @@ describe('middleware', () => {
 
 ### 術語表
 
-- [React Test Utils](http://facebook.github.io/react/docs/test-utils.html): Test utilities that ship with React.
+- [React Test Utils](http://facebook.github.io/react/docs/test-utils.html)：React 附帶的測試 utilities。
 
-- [jsdom](https://github.com/tmpvar/jsdom): A plain JavaScript implementation of the DOM API. jsdom allows us to run the tests without browser.
+- [jsdom](https://github.com/tmpvar/jsdom)：一個 DOM API 的純 JavaScript 實作。jsdom 讓我們可以不使用瀏覽器就能執行測試。
 
-- [Shallow rendering](http://facebook.github.io/react/docs/test-utils.html#shallow-rendering): Shallow rendering lets you instantiate a component and get the result of its `render` method just a single level deep instead of rendering components recursively to a DOM. The result of shallow rendering is a [ReactElement](https://facebook.github.io/react/docs/glossary.html#react-elements). That means it is possible to access its children, props and test if it works as expected. This also means that you changing a child component won’t affect the tests for parent component.
+- [Shallow rendering](http://facebook.github.io/react/docs/test-utils.html#shallow-rendering)：Shallow rendering 讓你可以實體化一個 component 並取得它的 `render` method 的回傳結果，它只會 render 一層的深度而不會遞迴地把 components render 成 DOM。shallow rendering 的結果是一個 [ReactElement](https://facebook.github.io/react/docs/glossary.html#react-elements)。這表示可以存取它的 children、props 並測試它是否如預期運作。這也意味你改變 child component 不會影響到 parent component 的測試。
