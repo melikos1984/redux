@@ -79,7 +79,7 @@ open http://localhost:3000/
 
 它涵蓋了：
 
-* 使用 Redux 和 React 來做 [Universal rendering](/docs/recipes/ServerRendering.md)
+* 使用 Redux 和 React 來做 [Universal rendering](../recipes/ServerRendering.md)
 * 基於 input 並藉由非同步查詢來提前取得 state
 * 從伺服器傳遞 state 到客戶端
 

@@ -150,6 +150,11 @@ store.dispatch({ type: 'DECREMENT' });
 
 特別感謝 [Jamie Paton](http://jdpaton.github.io) 它移交了 `redux` NPM 套件名稱給我們。
 
+### 變更日誌
+
+這個專案依照 [Semantic Versioning](http://semver.org/)。
+每一個釋出版本都會伴隨它的遷移說明，被記錄在 Github [Releases](https://github.com/rackt/redux/releases) 頁面上。
+
 ### 贊助者
 
 在 Redux 的工作是[由社群出資](https://www.patreon.com/reactdx)。

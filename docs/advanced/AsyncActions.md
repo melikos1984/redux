@@ -295,7 +295,7 @@ export default rootReducer;
 
 最後，我們要如何一起使用我們[之前定義的](#synchronous-action-creators)同步的 action creators 和網路請求呢？用 Redux 要做到這個的標準方式是使用 [Redux Thunk middleware](https://github.com/gaearon/redux-thunk)。它屬於一個獨立的套件，叫做 `redux-thunk`。我們[晚點](Middleware.md)會解釋 middleware 一般來說是如何運作的；現在，你只有一件重要的事必需知道：藉由使用這個特定的 middleware，action creator 可以回傳一個 function 來取代 action 物件。這樣的話，function creator 就變成一個 [thunk](https://en.wikipedia.org/wiki/Thunk)。
 
-當一個 function creator 回傳一個 function 的時候，這個 function 將會被 Redux Thunk middleware 執行。這個 function 不需要是 pure 的；因此它被允許一些有 side effects 的動作，包括執行非同步的 API 呼叫。這個 function 也可以 dispatch actions—像是那些我們之前定義的同步 actions。
+當一個 action creator 回傳一個 function 的時候，這個 function 將會被 Redux Thunk middleware 執行。這個 function 不需要是 pure 的；因此它被允許一些有 side effects 的動作，包括執行非同步的 API 呼叫。這個 function 也可以 dispatch actions—像是那些我們之前定義的同步 actions。
 
 我們仍然可以把 這些特別的 thunk action creators 定義在我們的 `actions.js` 檔案中：
 
@@ -355,7 +355,7 @@ export function fetchPosts(reddit) {
         dispatch(receivePosts(reddit, json))
       );
 
-      // 注意：在一個真實世界中的應用程式，你也會想要
+      // 在一個真實世界中的應用程式，你也會想要
       // 捕捉任何網路呼叫中的錯誤。
   };
 }
@@ -390,15 +390,11 @@ import { createStore, applyMiddleware } from 'redux';
 import { selectReddit, fetchPosts } from './actions';
 import rootReducer from './reducers';
 
-const logger = createLogger({
-  level: 'info',
-  collapsed: true,
-  predicate (getState, action) => action.type
-});
+const loggerMiddleware = createLogger();
 
 const createStoreWithMiddleware = applyMiddleware(
   thunkMiddleware, // 讓我們來 dispatch() functions
-  logger // 巧妙的 middleware，用來 logs actions
+  loggerMiddleware // 巧妙的 middleware，用來 logs actions
 )(createStore);
 
 const store = createStoreWithMiddleware(rootReducer);
