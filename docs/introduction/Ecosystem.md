@@ -18,7 +18,7 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 * [redux-rx](https://github.com/acdlite/redux-rx) — Redux 的 RxJS utilities，包含一個 Observable 的 middleware
 * [redux-batched-updates](https://github.com/acdlite/redux-batched-updates) — 讓 Redux dispatches 的結果批次發生 React 更新
 * [redux-logger](https://github.com/fcomb/redux-logger) — 記錄每一個 Redux action 和下一個 state
-* [redux-immutable-state-invariant](https://github.com/leoasis/redux-immutable-state-invariant) — 偵測 redux 在 dispatches 之間與外部的 state 改變。只適合開發上使用。
+* [redux-immutable-state-invariant](https://github.com/leoasis/redux-immutable-state-invariant) — 在開發時，警告 state 的變更
 
 ## Components
 
@@ -26,7 +26,7 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 
 ## Store enhancers
 
-* [redux-batched-subscribe](https://github.com/tappleby/redux-batched-subscribe) — Batch calls to subscribe handlers with a custom function, including debouncing or React batched updates.
+* [redux-batched-subscribe](https://github.com/tappleby/redux-batched-subscribe) — 客製化 batching 以及 debouncing 的呼叫給 store 的訂閱者
 
 ## Utilities
 
@@ -34,7 +34,7 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 * [normalizr](https://github.com/gaearon/normalizr) — 正規化巢狀的 API 回應讓 reducers 易於處理
 * [redux-actions](https://github.com/acdlite/redux-actions) — 減少撰寫 reducers 和 action creators 的 boilerplate
 * [redux-transducers](https://github.com/acdlite/redux-transducers) — Redux 的 Transducer utilities
-* [redux-immutablejs](https://github.com/indexiatech/redux-immutablejs) - Redux & [ImmutableJs](https://github.com/facebook/immutable-js/) 之間的整合工具
+* [redux-immutablejs](https://github.com/indexiatech/redux-immutablejs) - Redux & [Immutable](https://github.com/facebook/immutable-js/) 之間的整合工具
 
 ## 開發者工具
 
@@ -43,8 +43,9 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 ## 教學和文章
 
 * [redux-tutorial](https://github.com/happypoulp/redux-tutorial) — 一步一步的學習如何使用 redux
-* [What the Flux?! Let’s Redux.](https://blog.andyet.com/2015/08/06/what-the-flux-lets-redux)
-* [Handcrafting an Isomorphic Redux Application (With Love)](https://medium.com/@bananaoomarang/handcrafting-an-isomorphic-redux-application-with-love-40ada4468af4)
+* [What the Flux?! Let’s Redux.](https://blog.andyet.com/2015/08/06/what-the-flux-lets-redux) — 一個 Redux 的介紹
+* [Handcrafting an Isomorphic Redux Application (With Love)](https://medium.com/@bananaoomarang/handcrafting-an-isomorphic-redux-application-with-love-40ada4468af4) — 一個隨著資料抓取與 routing 建立 universal 應用程式的教學
+* [Full-Stack Redux Tutorial](http://teropa.info/blog/2015/09/10/full-stack-redux-tutorial.html) — 一個使用 Redux、React 與 Immutable 進行測試先行開發的詳盡指南
 
 ## 更多
 
