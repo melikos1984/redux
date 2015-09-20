@@ -1,21 +1,21 @@
 # `compose(...functions)`
 
-Composes functions from right to left.
+把 functions 從右到左組合起來。
 
-This is a functional programming utility, and is included in Redux as a convenience.  
-You might want to use it to apply several [store enhancers](../Glossary.md#store-enhancer) in a row.
+這是一個 functional programming 的 utility，並為了方便而直接被放在 Redux 裡。
+你可能會想要使用它來在一行中使用幾個 [store enhancers](../Glossary.md#store-enhancer)。
 
-#### Arguments
+#### 參數
 
-1. (*arguments*): The functions to compose. Each function is expected to accept a single parameter. Its return value will be provided as an argument to the function standing to the left, and so on.
+1. (*arguments*)：要組合的 functions。每個 function 都預期會接收一個參數。它的回傳值將會作為在它左邊的 function 的參數，以此類推。
 
-#### Returns
+#### 回傳
 
-(*Function*): The final function obtained by composing the given functions from right to left.
+(*Function*)：藉由從右到左組合給定的 functions 而獲得的最終 function。
 
-#### Example
+#### 範例
 
-This example demonstrates how to use `compose` to enhance a [store](Store.md) with [`applyMiddleware`](applyMiddleware.md) and a few developer tools from the [redux-devtools](https://github.com/gaearon/redux-devtools) package.
+這個範例展示了要如何使用 `compose` 藉由 [`applyMiddleware`](applyMiddleware.md) 與幾個來自 [redux-devtools](https://github.com/gaearon/redux-devtools) 套件的開發工具來增強一個 [store](Store.md)。
 
 ```js
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
@@ -27,9 +27,9 @@ let middleware = [thunk];
 
 let finalCreateStore;
 
-// In production, we want to use just the middleware.
-// In development, we want to use some store enhancers from redux-devtools.
-// UglifyJS will eliminate the dead code depending on the build environment.
+// 在產品環境中，我們只想要使用 the middleware。
+// 而在開發環境中，我們想要使用一些來自 redux-devtools 的 store enhancers。
+// UglifyJS 會依照建置環境刪除用不到的程式碼。
 
 if (process.env.NODE_ENV === 'production') {
   finalCreateStore = applyMiddleware(...middleware)(createStore);
@@ -42,7 +42,7 @@ if (process.env.NODE_ENV === 'production') {
     )
   )(createStore);
 
-  // Same code without the `compose` helper:
+  // 不使用 `compose` helper 的同等程式碼：
   //
   // finalCreateStore = applyMiddleware(middleware)(
   //   require('redux-devtools').devTools()(
@@ -54,6 +54,6 @@ if (process.env.NODE_ENV === 'production') {
 let store = finalCreateStore(reducer);
 ```
 
-#### Tips
+#### 提示
 
-* All `compose` does is let you write deeply nested function transformations without the rightward drift of the code. Don’t give it too much credit!
+* `compose` 做的只是讓你不需要把程式碼往右縮進，就能撰寫深度巢狀的 function 轉換。不要把它想得太複雜！
