@@ -275,17 +275,17 @@ export default rootReducer;
 
 * 我們使用 ES6 computed property 語法，所以我們可以把 `state[action.reddit]` 和 `Object.assign()` 更新成一個更簡潔的方式。這樣：
 
-    ```js
-    return Object.assign({}, state, {
-      [action.reddit]: posts(state[action.reddit], action)
-    });
-    ```
+  ```js
+  return Object.assign({}, state, {
+    [action.reddit]: posts(state[action.reddit], action)
+  });
+  ```
   等同於：
 
   ```js
-    let nextState = {};
-    nextState[action.reddit] = posts(state[action.reddit], action);
-    return Object.assign({}, state, nextState);
+  let nextState = {};
+  nextState[action.reddit] = posts(state[action.reddit], action);
+  return Object.assign({}, state, nextState);
   ```
 * 我們把 `posts(state, action)` 抽出來管理具體的 post 清單的 state。這只是 [reducer composition](../basics/Reducers.md#splitting-reducers)！這是我們選擇用來把 reducer 拆分成更小的 reducers 的方式，而在這個案例中，我們把在物件中更新項目的工作委派給 `posts` reducer。[real world example](../introduction/Examples.html#real-world) 更進一步，展示了如何建立一個 reducer factory 來參數化 pagination reducers。
 

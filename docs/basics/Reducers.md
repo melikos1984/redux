@@ -42,6 +42,7 @@
 
 * 改變它的參數；
 * 執行有 side effects 的動作，像是呼叫 API 和 routing 轉換。
+* 呼叫不是 pure 的 functions，像是 `Date.now()` 或是 `Math.random()`。
 
 我們將會在[進階教學](../advanced/README.md)中探索如何執行有 side effects 的動作。現在，只要記得 reducer 必須是 pure 的就好。**給定一樣的參數，他必須一樣計算下一個 state 並回傳它。沒有驚喜。沒有 side effects。沒有 API 呼叫。沒有變更。只是一個計算。**
 

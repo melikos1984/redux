@@ -101,14 +101,22 @@ export function addTodo(text) {
 
 ### 產生 Action Creators
 
-一些像是 [Flummox](https://github.com/acdlite/flummox) 的框架會自動從 action creator function 的定義產生 action type 常數。它的想法是你不需要同時定義 `ADD_TODO` 常數和 `addTodo()` action creator。在這背後，這樣的方法還是會產生 action type 常數，不過它們是暗地中被建立，所以這是一個間接層。
+一些像是 [Flummox](https://github.com/acdlite/flummox) 的框架會自動從 action creator function 的定義產生 action type 常數。它的想法是你不需要同時定義 `ADD_TODO` 常數和 `addTodo()` action creator。在這背後，這樣的方法還是會產生 action type 常數，不過它們是暗地中被建立，所以這是一個間接層並可能導致困惑。我們建議明確地建立你的 action type 常數。
 
-我們不推薦這個方法。如果你對撰寫一些像是這樣簡單的 action creators 感到厭煩的話：
+撰寫簡單的 action creators 可能很煩人並常常最後產生多餘的 boilerplate 程式碼：
 
 ```js
 export function addTodo(text) {
   return {
     type: 'ADD_TODO',
+    text
+  };
+}
+
+export function editTodo(id, text) {
+  return {
+    type: 'EDIT_TODO',
+    id,
     text
   };
 }
@@ -134,14 +142,15 @@ function makeActionCreator(type, ...argNames) {
   }
 }
 
-export const addTodo = makeActionCreator('ADD_TODO', 'todo');
-export const removeTodo = makeActionCreator('REMOVE_TODO', 'id');
+const ADD_TODO = 'ADD_TODO';
+const EDIT_TODO = 'EDIT_TODO';
+const REMOVE_TODO = 'REMOVE_TODO';
+
+export const addTodo = makeActionCreator(ADD_TODO, 'todo');
+export const editTodo = makeActionCreator(EDIT_TODO, 'id', 'todo');
+export const removeTodo = makeActionCreator(REMOVE_TODO, 'id');
 ```
-
-請看 [redux-action-utils](https://github.com/insin/redux-action-utils) 和 [redux-actions](https://github.com/acdlite/redux-actions) 來作為這類 utilities 的例子。
-
-請記住，這樣的 utilities 會添加一些魔法到你的程式碼中。
-避免少數幾行額外的程式碼真的有價值多添加這些魔法跟間接操作嗎？
+也有一些 utility libraries 可以幫助產生 action creators，像是 [redux-action-utils](https://github.com/insin/redux-action-utils) 和 [redux-actions](https://github.com/acdlite/redux-actions)。這些可以幫助減少你的 boilerplate 程式碼並遵守像是 [Flux Standard Action (FSA)](https://github.com/acdlite/flux-standard-action) 的標準。
 
 ## 非同步的 Action Creators
 
