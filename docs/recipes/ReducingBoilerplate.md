@@ -1,14 +1,14 @@
 # 減少 Boilerplate
 
-Redux is in part [inspired by Flux](../introduction/PriorArt.md), and the most common complaint about Flux is how it makes you write a lot of boilerplate. In this recipe, we will consider how Redux lets us choose how verbose we’d like our code to be, depending on personal style, team preferences, longer term maintainability, and so on.
+Redux 的一部分是[受到 Flux 啟發](../introduction/PriorArt.md)，而 Flux 最常見的抱怨是它使你必須寫一大堆的 boilerplate。在這份 recipe 中，我們將會思考 Redux 如何讓我們依照個人風格、團隊喜好、長期可維護性，等等，來選擇我們希望程式碼要多冗長。
 
 ## Actions
 
-Actions are plain objects describing what happened in the app, and serve as the sole way to describe an intention to mutate the data. It’s important that **actions being objects you have to dispatch is not boilerplate, but one of the [fundamental design choices](../introduction/ThreePrinciples.md) of Redux**.
+Actions 是描述應用程式中生了什麼事的一般物件，並且作為描述改變資料意圖的唯一方式。重要的是，**你必須 dispatch 的這些 actions 物件並不是 boilerplate，而是 Redux 的[基本設計決策](../introduction/ThreePrinciples.md) 其中之一**。
 
-There are frameworks claiming to be similar to Flux, but without a concept of action objects. In terms of being predictable, this is a step backwards from Flux or Redux. If there are no serializable plain object actions, it is impossible to record and replay user sessions, or to implement [hot reloading with time travel](https://www.youtube.com/watch?v=xsSnOQynTHs). If you’d rather modify data directly, you don’t need Redux.
+有一些框架宣稱與 Flux 類似，但沒有 action 物件的觀念。在可預測性方面，這是從 Flux 或是 Redux 的一種退步。如果沒有可以 serialize 的一般物件 actions，就不可能紀錄並重播使用者的操作狀態，或是實現 [hot reloading 與時間旅行](https://www.youtube.com/watch?v=xsSnOQynTHs)。如果你仍然希望直接改變資料，那你不需要使用 Redux。
 
-Actions look like this:
+Actions 看起來像這樣：
 
 ```js
 { type: 'ADD_TODO', text: 'Use Redux' }
@@ -16,9 +16,10 @@ Actions look like this:
 { type: 'LOAD_ARTICLE', response: { ... } }
 ```
 
-It is a common convention that actions have a constant type that helps reducers (or Stores in Flux) identify them. We recommend that you use strings and not [Symbols](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Symbol) for action types, because strings are serializable, and by using Symbols you make recording and replaying harder than it needs to be.
+actions 通常會有一個常數的 type 屬性來幫助 reducers (或是 Flux 裡面的 Stores) 來辨識它們，這是一個常見的慣例。我們建議你使用字串而不要使用 [Symbols](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Symbol) 來當作 action types，因為字串可以 serialize，而使用 Symbols 的話，你會讓記錄和重播比想像中更困難。
 
-In Flux, it is traditionally thought that you would define every action type as a string constant:
+在傳統 Flux 中，你會把每個 action type 定義為一個字串常數：
+
 
 ```js
 const ADD_TODO = 'ADD_TODO';
@@ -26,30 +27,30 @@ const REMOVE_TODO = 'REMOVE_TODO';
 const LOAD_ARTICLE = 'LOAD_ARTICLE';
 ```
 
-Why is this beneficial? **It is often claimed that constants are unnecessary, and for small projects, this might be correct.** For larger projects, there are some benefits to defining action types as constants:
+為什麼這個是有好處的呢？**常數常常被認為是不必要的，而對小專案來說，這或許是對的。**但對大一點的專案來說，把 action types 定義成常數有一些好處：
 
-* It helps keep the naming consistent because all action types are gathered in a single place.
-* Sometimes you want to see all existing actions before working on a new feature. It may be that the action you need was already added by somebody on the team, but you didn’t know.
-* The list of action types that were added, removed, and changed in a Pull Request helps everyone on the team keep track of scope and implementation of new features.
-* If you make a typo when importing an action constant, you will get `undefined`. Redux will immediately throw when dispatching such an action, and you’ll find the mistake sooner.
+* 它有助於保持命名的一致性，因為所有的 action types 都被聚集在同一個地方。
+* 有時候你會想要在你開始做新功能之前，先看到所有存在的 actions。有可能你需要的 action 已經被團隊其他人加進來了，但你並不知道。
+* 在 Pull Request 裡面被添加、移除、變更的 action types 清單，有助於團隊裡的每一個人跟上現在的進度並實作新功能。
+* 如果你在 import 一個 action 常數時打錯字，你會得到 `undefined`。Redux 會在 dispatch 這樣的 action 時立刻拋出錯誤，你將會很快找到錯誤。
 
-It is up to you to choose the conventions for your project. You may start by using inline strings, and later transition to constants, and maybe later group them into a single file. Redux does not have any opinion here, so use your best judgment.
+要在你的專案選擇怎樣的慣例完全取決於你。你可以從使用行內字串開始，在之後轉換成使用常數，在更後面可以把他們分進一個單獨的檔案。Redux 在這裡沒有任何意見，所以請使用你的最佳判斷。
 
 ## Action Creators
 
-It is another common convention that, instead of creating action objects inline in the places where you dispatch the actions, you would create functions generating them.
+另一種常見的慣例是，不要在你 dispatch actions 的地方建立行內 action 物件，而是建立 functions 產生它們。
 
-For example, instead of calling `dispatch` with an object literal:
+例如，取代這個使用字面物件的 `dispatch` 呼叫：
 
 ```js
-// somewhere in an event handler
+// 在某處的 event handler 中
 dispatch({
   type: 'ADD_TODO',
   text: 'Use Redux'
 });
 ```
 
-you might write an action creator in a separate file, and import it from your component:
+你可以在一個單獨的檔案中撰寫一個 action creator，並從你的 component import 它：
 
 #### `actionCreators.js`
 
@@ -67,13 +68,13 @@ export function addTodo(text) {
 ```js
 import { addTodo } from './actionCreators';
 
-// somewhere in an event handler
+// 在某處的 event handler 中
 dispatch(addTodo('Use Redux'))
 ```
 
-Action creators have often been criticized as boilerplate. Well, you don’t have to write them! **You can use object literals if you feel this better suits your project.** There are, however, some benefits for writing action creators you should know about.
+Action creators 常常被批評為 boilerplate。沒關係，你並不需要撰寫他們！**如果你覺得字面物件比較適合你的專案，你也可以使用它。**然而，撰寫 action creators 有一些好處你應該要知道。
 
-Let’s say a designer comes back to us after reviewing our prototype, and tells that we need to allow three todos maximum. We can enforce this by rewriting our action creator to a callback form with [redux-thunk](https://github.com/gaearon/redux-thunk) middleware and adding an early exit:
+比如說，設計師在檢視了我們的原型之後回來找我們，並告訴我們需要限制三個的 todos 上限。我們可以藉由把我們的 action creator 用 [redux-thunk](https://github.com/gaearon/redux-thunk) middleware 重寫成 callback 形式，並添加一個提早中斷來達成這個：
 
 ```js
 function addTodoWithoutCheck(text) {
@@ -84,11 +85,11 @@ function addTodoWithoutCheck(text) {
 }
 
 export function addTodo(text) {
-  // This form is allowed by Redux Thunk middleware
-  // described below in “Async Action Creators” section.
+  // 這種形式是被 Redux Thunk middleware 所允許，
+  // 描述在下面的「非同步的 Action Creators」章節。
   return function (dispatch, getState) {
     if (getState().todos.length === 3) {
-      // Exit early
+      // 提早中斷
       return;
     }
 
@@ -96,14 +97,13 @@ export function addTodo(text) {
   }
 }
 ```
+我們只是修改了 `addTodo` action creator 如何產生行為，呼叫的程式碼完全看不到差別。**我們不需要擔心需要查看每個添加 todos 的地方，來確保它們有做這個檢查。**Action creators 讓你解開了 dispatch action 的額外邏輯與 components 實際發送這些 actions 之間的耦合。在應用程式處於很積極開發且需求常常改變的狀態下這非常方便。
 
-We just modified how `addTodo` action creator behaves, completely invisible to the calling code. **We don’t have to worry about looking at each place where todos are being added, to make sure they have this check.** Action creators let you decouple additional logic around dispatching an action, from the actual components emitting those actions. It’s very handy when the application is under heavy development, and the requirements change often.
+### 產生 Action Creators
 
-### Generating Action Creators
+一些像是 [Flummox](https://github.com/acdlite/flummox) 的框架會自動從 action creator function 的定義產生 action type 常數。它的想法是你不需要同時定義 `ADD_TODO` 常數和 `addTodo()` action creator。在這背後，這樣的方法還是會產生 action type 常數，不過它們是暗地中被建立，所以這是一個間接層。
 
-Some frameworks like [Flummox](https://github.com/acdlite/flummox) generate action type constants automatically from the action creator function definitions. The idea is that you don’t need to both define `ADD_TODO` constant and `addTodo()` action creator. Under the hood, such solutions still generate action type constants, but they’re created implicitly so it’s a level of indirection.
-
-We don’t recommend this approach. If you’re tired of writing simple action creators like:
+我們不推薦這個方法。如果你對撰寫一些像是這樣簡單的 action creators 感到厭煩的話：
 
 ```js
 export function addTodo(text) {
@@ -121,7 +121,7 @@ export function removeTodo(id) {
 }
 ```
 
-you can always write a function that generates an action creator:
+你還是可以撰寫一個產生 action creator 的 function：
 
 ```js
 function makeActionCreator(type, ...argNames) {
@@ -138,16 +138,16 @@ export const addTodo = makeActionCreator('ADD_TODO', 'todo');
 export const removeTodo = makeActionCreator('REMOVE_TODO', 'id');
 ```
 
-See [redux-action-utils](https://github.com/insin/redux-action-utils) and [redux-actions](https://github.com/acdlite/redux-actions) for examples of such utilities.
+請看 [redux-action-utils](https://github.com/insin/redux-action-utils) 和 [redux-actions](https://github.com/acdlite/redux-actions) 來作為這類 utilities 的例子。
 
-Note that such utilities add magic to your code.
-Are magic and indirection really worth it to avoid a few extra lines of code?
+請記住，這樣的 utilities 會添加一些魔法到你的程式碼中。
+避免少數幾行額外的程式碼真的有價值多添加這些魔法跟間接操作嗎？
 
-## Async Action Creators
+## 非同步的 Action Creators
 
-[Middleware](../Glossary.html#middleware) lets you inject custom logic that interprets every action object before it is dispatched. Async actions are the most common use case for middleware.
+[Middleware](../Glossary.html#middleware) 讓你注入自訂的邏輯，在每一個 action 物件被 dispatch 之前轉譯它。Async actions 是 middleware 最常見的使用案例。
 
-Without any middleware, [`dispatch`](../api/Store.md#dispatch) only accepts a plain object, so we have to perform AJAX calls inside our components:
+沒有任何 middleware 的話，[`dispatch`](../api/Store.md#dispatch) 只接受一個一般的物件，所以我們必須在 components 裡面執行 AJAX 呼叫：
 
 #### `actionCreators.js`
 
@@ -185,19 +185,19 @@ import { loadPostsRequest, loadPostsSuccess, loadPostsFailure } from './actionCr
 
 class Posts extends Component {
   loadData(userId) {
-    // Injected into props by React Redux `connect()` call:
+    // 藉由 React Redux `connect()` 呼叫注入進去 props：
     let { dispatch, posts } = this.props;
 
     if (posts[userId]) {
-      // There is cached data! Don't do anything.
+      // 這是已經被快取的資料！不要做任何事情。
       return;
     }
 
-    // Reducer can react to this action by setting
-    // `isFetching` and thus letting us show a spinner.
+    // Reducer 可以藉由設定 `isFetching` 來應對這個 action，
+    // 並因此讓我們可以顯示一個 spinner。
     dispatch(loadPostsRequest(userId));
 
-    // Reducer can react to these actions by filling the `users`.
+    // Reducer 可以藉由填入`users` 來應對這些 actions。
     fetch(`http://myapi.com/users/${userId}/posts`).then(
       response => dispatch(loadPostsSuccess(userId, response)),
       error => dispatch(loadPostsFailure(userId, error))
@@ -232,27 +232,27 @@ export default connect(state => ({
 }))(Posts);
 ```
 
-However, this quickly gets repetitive because different components request data from the same API endpoints. Moreover, we want to reuse some of this logic (e.g., early exit when there is cached data available) from many components.
+不過，這很快就會重複，因為不同的 components 會需要從一樣的 API 端點請求資料。除此之外，我們想要從許多的 components 來重用一部分的邏輯 (例如，當有被快取的資料可以使用時提早中斷)。
 
-**Middleware lets us write more expressive, potentially async action creators.** It lets us dispatch something other than plain objects, and interprets the values. For example, middleware can “catch” dispatched Promises and turn them into a pair of request and success/failure actions.
+**Middleware 讓我們撰寫更有表達性、有能力非同步的 action creators。**它讓我們能 dispatch 一些不是一般物件的東西，並轉譯它的值。例如，middleware 可以「catch」被 dispatch 的 Promises，並把他們轉換成成對的請求和成功/失敗的 actions。
 
-The simplest example of middleware is [redux-thunk](https://github.com/gaearon/redux-thunk). **“Thunk” middleware lets you write action creators as “thunks”, that is, functions returning functions.** This inverts the control: you will get `dispatch` as an argument, so you can write an action creator that dispatches many times.
+最簡單的 middleware 例子就是 [redux-thunk](https://github.com/gaearon/redux-thunk)。**「Thunk」 middleware 讓你把 action creators 寫成「thunks」，它就是一個回傳 functions 的 functions。**這反轉了控制：你會拿到 `dispatch` 作為一個參數，所以你可以寫一個 dispatch 很多次的 action creator。
 
->##### Note
+>##### 附註
 
->Thunk middleware is just one example of middleware. Middleware is not about “letting you dispatch functions”: it’s about letting you dispatch anything that the particular middleware you use knows how to handle. Thunk middleware adds a specific behavior when you dispatch functions, but it really depends on the middleware you use.
+>Thunk middleware 只是一個 middleware 的例子。Middleware 不是「讓你 dispatch functions」：它讓你 dispatch 任何你使用的特定 middleware 知道要如何處理的東西。Thunk middleware 在你 dispatch functions 的時候添加了一個特定的行為，不過實際上這取決於你使用的 middleware。
 
-Consider the code above rewritten with [redux-thunk](https://github.com/gaearon/redux-thunk):
+試想把上面的程式碼用 [redux-thunk](https://github.com/gaearon/redux-thunk) 來重寫：
 
 #### `actionCreators.js`
 
 ```js
 export function loadPosts(userId) {
-  // Interpreted by the thunk middleware:
+  // 被 thunk middleware 所轉譯：
   return function (dispatch, getState) {
     let { posts } = getState();
     if (posts[userId]) {
-      // There is cached data! Don't do anything.
+      // 這是已經被快取的資料！不要做任何事情。
       return;
     }
 
@@ -261,7 +261,7 @@ export function loadPosts(userId) {
       userId
     });
 
-    // Dispatch vanilla actions asynchronously
+    // 非同步的 Dispatch 原生的 actions
     fetch(`http://myapi.com/users/${userId}/posts`).then(
       response => dispatch({
         type: 'LOAD_POSTS_SUCCESS',
@@ -314,26 +314,26 @@ export default connect(state => ({
 }))(Posts);
 ```
 
-This is much less typing! If you’d like, you can still have “vanilla” action creators like `loadPostsSuccess` which you’d use from a “smart” `loadPosts` action creator.
+這樣打的字更少了！如果你想要，你還是可以使用「原生的」action creators 像是 `loadPostsSuccess`，你會從「smart」的 `loadPosts` action creator 中來使用它。
 
-**Finally, you can write your own middleware.** Let’s say you want to generalize the pattern above and describe your async action creators like this instead:
+**最後，你可以寫自己的 middleware。**比如说，你想要歸納前面的模式並用像這樣的方式來描述非同步的 action creators：
 
 ```js
 export function loadPosts(userId) {
   return {
-    // Types of actions to emit before and after
+    // 要在之前和之後發送的 actions types
     types: ['LOAD_POSTS_REQUEST', 'LOAD_POSTS_SUCCESS', 'LOAD_POSTS_FAILURE'],
-    // Check the cache (optional):
+    // 檢查快取 (可選擇的):
     shouldCallAPI: (state) => !state.users[userId],
-    // Perform the fetching:
+    // 執行抓取資料：
     callAPI: () => fetch(`http://myapi.com/users/${userId}/posts`),
-    // Arguments to inject in begin/end actions
+    // 要在開始/結束 actions 注入的參數
     payload: { userId }
   };
 }
 ```
 
-The middleware that interprets such actions could look like this:
+可以轉譯這些 actions 的 middleware 看起來像這樣：
 
 ```js
 function callAPIMiddleware({ dispatch, getState }) {
@@ -347,7 +347,7 @@ function callAPIMiddleware({ dispatch, getState }) {
       } = action;
 
       if (!types) {
-        // Normal action: pass it on
+        // 普通的 action：把它傳遞下去
         return next(action);
       }
 
@@ -388,7 +388,7 @@ function callAPIMiddleware({ dispatch, getState }) {
 }
 ```
 
-After passing it once to [`applyMiddleware(...middlewares)`](../api/applyMiddleware.md), you can write all your API-calling action creators the same way:
+一旦把它傳遞到 [`applyMiddleware(...middlewares)`](../api/applyMiddleware.md) 之後，你就可以用同樣的方式撰寫全部的 API 呼叫 action creators：
 
 ```js
 export function loadPosts(userId) {
@@ -427,9 +427,9 @@ export function addComment(postId, message) {
 
 ## Reducers
 
-Redux reduces the boilerplate of Flux stores considerably by describing the update logic as a function. A function is simpler than an object, and much simpler than a class.
+Redux 透過把更新邏輯描述成 function 來減少許多 Flux stores 的 boilerplate。function 比物件更簡單 ，也比 class 更簡單。
 
-Consider this Flux store:
+試想這個 Flux store：
 
 ```js
 let _todos = [];
@@ -450,7 +450,7 @@ AppDispatcher.register(function (action) {
 });
 ```
 
-With Redux, the same update logic can be described as a reducing function:
+藉由 Redux，一樣的更新邏輯可以被描述成一個 reducing function：
 
 ```js
 export function todos(state = [], action) {
@@ -464,13 +464,13 @@ export function todos(state = [], action) {
 }
 ```
 
-The `switch` statement is *not* the real boilerplate. The real boilerplate of Flux is conceptual: the need to emit an update, the need to register the Store with a Dispatcher, the need for the Store to be an object (and the complications that arise when you want a universal app).
+`switch` 語句*不*算真實的 boilerplate。真實的 Flux boilerplate 是概念性的：需要發送更新、需要註冊 Store 到 Dispatcher、Store 需要是一個物件 (並在你想要一個 universal 應用程式的時候出現併發症)。
 
-It’s unfortunate that many still choose Flux framework based on whether it uses `switch` statements in the documentation. If you don’t like `switch`, you can solve this with a single function, as we show below.
+不幸的事，許多人仍然依照它是不是在文件中使用 `switch` 語句來選擇框架。如果你不喜歡 `switch`，你可以用一個單一的 function 來解決這個問題，就像我們下面所展示的。
 
-### Generating Reducers
+### 產生 Reducers
 
-Let’s write a function that lets us express reducers as an object mapping from action types to handlers. For example, if we want our `todos` reducers to be defined like this:
+讓我們來寫一個 function，它可以讓我們把 reducers 表達成一個從 action types 到 handler 的物件映射。例如，如果我們想要像這樣定義 `todos` reducers：
 
 ```js
 export const todos = createReducer([], {
@@ -481,7 +481,7 @@ export const todos = createReducer([], {
 }
 ```
 
-We can write the following helper to accomplish this:
+我們可以撰寫下面的 helper 來完成這個：
 
 ```js
 function createReducer(initialState, handlers) {
@@ -495,6 +495,6 @@ function createReducer(initialState, handlers) {
 }
 ```
 
-This wasn’t difficult, was it? Redux doesn’t provide such a helper function by default because there are many ways to write it. Maybe you want it to automatically convert plain JS objects to Immutable objects to hydrate the server state. Maybe you want to merge the returned state with the current state. There may be different approaches to a “catch all” handler. All of this depends on the conventions you choose for your team on a specific project.
+這並不難，對吧？Redux 不預設提供這個 helper function，因為有太多方式可以實作它了。你可能會希望它能自動的把一般 JS 物件轉換成 Immutable 物件來 hydrate 來自伺服器的 state。你可能會希望把被回傳的 state 和當下的 state 合併。可能有許多不同的方法可以實作一個「catch all」handler。這一切都取決於你為團隊在特定專案所選擇的慣例。
 
-The Redux reducer API is `(state, action) => state`, but how you create those reducers is up to you.
+Redux 的 reducer API 是 `(state, action) => state`，不過你要如何建立這些 reducers 完全取決於你。

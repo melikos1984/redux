@@ -105,7 +105,7 @@ function todoApp(state = initialState, action) {
 
 >##### 關於 `switch` 和 Boilerplate 的附註
 
->`switch` 語句*不*算真實的 boilerplate。真實的 Flux boilerplate 是概念性的：需要發送更新 update、需要註冊 Store 到 Dispatcher、Store 需要是一個物件 (並在你想要一個 universal 應用程式的時候出現併發症)。Redux 藉由使用 pure reducers 取代 event emitters 解決了這些問題。
+>`switch` 語句*不*算真實的 boilerplate。真實的 Flux boilerplate 是概念性的：需要發送更新、需要註冊 Store 到 Dispatcher、Store 需要是一個物件 (並在你想要一個 universal 應用程式的時候出現併發症)。Redux 藉由使用 pure reducers 取代 event emitters 解決了這些問題。
 
 >不幸的事，許多人仍然依照它是不是在文件中使用 `switch` 語句來選擇框架。如果你不喜歡 `switch`，你可以使用一個接收 handler map 的自訂 `createReducer` function，如[「減少 boilerplate」](../recipes/ReducingBoilerplate.md#reducers)中所示。
 
