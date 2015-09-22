@@ -20,7 +20,7 @@ type Action = Object;
 
 *action* 是個一般的 JavaScript 物件，它代表一個改變 state 的意圖。Actions 是讓 data 進到 store 的唯一方式。任何 data，無論是從 UI 事件、網路 callbacks、或其他來源，像是 WebSockets 最後都需要作為 actions 被 dispatch。
 
-慣例上，actions 應該有一個 `type` 屬性，它代表被執行的 action 的類型。Types 可以被定義成常數並從其他 module import。使用字串作為 `type` 會比使用 [Symbols](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Symbol) 好，因為字串是 serializable 的。
+Actions 必須有一個 `type` 屬性，它代表被執行的 action 的類型。Types 可以被定義成常數並從其他 module import。使用字串作為 `type` 會比使用 [Symbols](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Symbol) 好，因為字串是 serializable 的。
 
 除了 `type` 以外，action 物件的結構完全取決於你。如果你有興趣，請查看 [Flux Standard Action](https://github.com/acdlite/flux-standard-action) 上有關應該如何建構 actions 的建議。
 
