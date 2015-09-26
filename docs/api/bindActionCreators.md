@@ -1,24 +1,24 @@
 # `bindActionCreators(actionCreators, dispatch)`
 
-Turns an object whose values are [action creators](../Glossary.md#action-creator), into an object with the same keys, but with every action creator wrapped into a [`dispatch`](Store.md#dispatch) call so they may be invoked directly.
+把一個每個值都是 [action creators](../Glossary.md#action-creator) 的物件轉換成另一個有同樣的 keys 的物件，不過每個 action creator 都被包進一個 [`dispatch`](Store.md#dispatch) 呼叫裡面，所以它們可以直接被呼叫。
 
-Normally you should just call [`dispatch`](Store.md#dispatch) directly on your [`Store`](Store.md) instance. If you use Redux with React, [react-redux](https://github.com/gaearon/react-redux) will provide you with the [`dispatch`](Store.md#dispatch) function so you can call it directly, too.
+通常你應該只需要直接在你的 [`Store`](Store.md) 實體上呼叫 [`dispatch`](Store.md#dispatch)。如果你結合 Redux 和 React 一起使用，[react-redux](https://github.com/gaearon/react-redux) 將會提供你 [`dispatch`](Store.md#dispatch) function，所以你也一樣可以直接地呼叫它。
 
-The only use case for `bindActionCreators` is when you want to pass some action creators down to a component that isn’t aware of Redux, and you don’t want to pass [`dispatch`](Store.md#dispatch) or the Redux store to it.
+`bindActionCreators` 唯一的使用情境是，當你希望傳遞一些 action creators 下去一個不知道 Redux 存在的 component，而你不希望把 [`dispatch`](Store.md#dispatch) 或是 Redux 的 store 傳遞給它。
 
-For convenience, you can also pass a single function as the first argument, and get a function in return.
+為方便起見，你也可以傳遞單一一個 function 作為第一個參數，並在回傳中得到一個 function。
 
-#### Parameters
+#### 參數
 
-1. `actionCreators` (*Function* or *Object*): An [action creator](../Glossary.md#action-creator), or an object whose values action creators.
+1. `actionCreators` (*Function* 或 *Object*)：一個 [action creator](../Glossary.md#action-creator)，或一個每個值都是 action creators 的物件。
 
-2. `dispatch` (*Function*): A [`dispatch`](Store.md#dispatch) function available on the [`Store`](Store.md) instance.
+2. `dispatch` (*Function*)：一個在 [`Store`](Store.md) 實體上可以取用的 [`dispatch`](Store.md#dispatch) function。
 
-#### Returns
+#### 回傳
 
-(*Function* or *Object*): An object mimicking the original object, but with each function immediately dispatching the action returned by the corresponding action creator. If you passed a function as `actionCreators`, the return value will also be a single function.
+(*Function* 或 *Object*)：一個模仿原始物件的物件，但是每個 function 都會立刻 dispatch 對應的 action creator 所回傳的 action。如果你傳遞一個 function 作為 `actionCreators`，回傳的值也會是單一一個 function。
 
-#### Example
+#### 範例
 
 #### `TodoActionCreators.js`
 
@@ -54,26 +54,26 @@ console.log(TodoActionCreators);
 
 class TodoListContainer extends Component {
   componentDidMount() {
-    // Injected by react-redux:
+    // 藉由 react-redux 注入：
     let { dispatch } = this.props;
 
-    // Note: this won’t work:
+    // 附註：這樣是不可行的：
     // TodoActionCreators.addTodo('Use Redux');
 
-    // You’re just calling a function that creates an action.
-    // You must dispatch the action, too!
+    // 你只是呼叫一個會建立一個 action 的 function。
+    // 你也必須 dispatch 這個 action！
 
-    // This will work:
+    // 這將會正常運作：
     let action = TodoActionCreators.addTodo('Use Redux');
     dispatch(action);
   }
 
   render() {
-    // Injected by react-redux:
+    // 藉由 react-redux 注入：
     let { todos, dispatch } = this.props;
 
-    // Here’s a good use case for bindActionCreators:
-    // You want a child component to be completely unaware of Redux.
+    // 這裡是一個 bindActionCreators 極佳的使用情境：
+    // 你希望 child component 完全不知道 Redux 的存在。
 
     let boundActionCreators = bindActionCreators(TodoActionCreators, dispatch);
     console.log(boundActionCreators);
@@ -87,9 +87,9 @@ class TodoListContainer extends Component {
                 {...boundActionCreators} />
     );
 
-    // An alternative to bindActionCreators is to pass
-    // just the dispatch function down, but then your child component
-    // needs to import action creators and know about them.
+    // 除了 bindActionCreators 之外的另一種選擇是
+    // 把 dispatch function 傳遞下去，不過接著你的 child component
+    // 需要 import action creators 並了解它們。
 
     // return <TodoList todos={todos} dispatch={dispatch} />;
   }
@@ -101,8 +101,8 @@ export default connect(
 )
 ```
 
-#### Tips
+#### 提示
 
-* You might ask: why don’t we bind the action creators to the store instance right away, like in classical Flux? The problem is that this won’t work well with universal apps that need to render on the server. Most likely you want to have a separate store instance per request so you can prepare them with different data, but binding action creators during their definition means you’re stuck with a single store instance for all requests.
+* 你可能會問：為什麼我們不像傳統的 Flux 直接把 action creators 綁定到 store 實體上呢？問題是這在需要在伺服器 render 的 universal 應用程式上不會運作得很好。你很可能想要對每個請求擁有一個獨立的 store 實體，這讓你可以使用不同的資料來準備它們，但是在 action creators 定義時就綁定它們意味著你不得不對所有請求使用同一個 store 實體。
 
-* If you use ES5, instead of `import * as` syntax you can just pass `require('./TodoActionCreators')` to `bindActionCreators` as the first argument. The only thing it cares about is that the values of the `actionCreators` arguments are functions. The module system doesn’t matter.
+* 如果你使用 ES5，你可以把 `require('./TodoActionCreators')` 作為第一個參數傳遞到 `bindActionCreators` 來取代 `import * as` 語法。它唯一在意的事情是 `actionCreators` 參數的值是 functions。module 系統並不重要。

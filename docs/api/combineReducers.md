@@ -7,21 +7,21 @@ reducing function you can pass to [`createStore`](createStore.md).
 
 The resulting reducer calls every child reducer, and gather their results into a single state object. The shape of the state object matches the keys of the passed `reducers`.
 
-> ##### A Note for Flux Users
+> ##### 給 Flux 使用者的附註
 
 > This function helps you organize your reducers to manage their own slices of state, similar to how you would have different Flux Stores to manage different state. With Redux, there is just one store, but `combineReducers` helps you keep the same logical division between reducers.
 
-#### Arguments
+#### 參數
 
 1. `reducers` (*Object*): An object whose values correspond to different reducing functions that need to be combined into one. See the notes below for some rules every passed reducer must follow.
 
 > Earlier documentation suggested the use of the ES6 `import * as reducers` syntax to obtain the reducers object. This was the source of a lot of confusion, which is why we now recommend exporting a single reducer obtained using `combineReducers()` from `reducers/index.js` instead. An example is included below.
 
-#### Returns
+#### 回傳
 
 (*Function*): A reducer that invokes every reducer inside the `reducers` object, and constructs a state object with the same shape.
 
-#### Notes
+#### 附註
 
 This function is mildly opinionated and is skewed towards helping beginners avoid common pitfalls. This is why it attempts to enforce some rules that you don’t have to follow if you write the root reducer manually.
 
@@ -35,7 +35,7 @@ Any reducer passed to `combineReducers` must satisfy these rules:
 
 While `combineReducers` attempts to check that your reducers conform to some of these rules, you should remember them, and do your best to follow them.
 
-#### Example
+#### 範例
 
 #### `reducers/todos.js`
 
@@ -102,7 +102,7 @@ console.log(store.getState());
 // }
 ```
 
-#### Tips
+#### 提示
 
 * This helper is just a convenience! You can write your own `combineReducers` that [works differently](https://github.com/acdlite/reduce-reducers), or even assemble the state object from the child reducers manually and write a root reducing function explicitly, like you would write any other function.
 
