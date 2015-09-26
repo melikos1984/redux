@@ -487,7 +487,7 @@ export const todos = createReducer([], {
     let text = action.text.trim();
     return [...state, text];
   }
-}
+})
 ```
 
 我們可以撰寫下面的 helper 來完成這個：

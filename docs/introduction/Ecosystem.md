@@ -10,6 +10,7 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 
 * [react-redux](https://github.com/gaearon/react-redux) — React
 * [ng-redux](https://github.com/wbuchwalter/ng-redux) — Angular
+* [ng2-redux](https://github.com/wbuchwalter/ng2-redux) — Angular 2
 
 ## Middleware
 
@@ -35,6 +36,8 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 * [redux-actions](https://github.com/acdlite/redux-actions) — 減少撰寫 reducers 和 action creators 的 boilerplate
 * [redux-transducers](https://github.com/acdlite/redux-transducers) — Redux 的 Transducer utilities
 * [redux-immutablejs](https://github.com/indexiatech/redux-immutablejs) - Redux & [Immutable](https://github.com/facebook/immutable-js/) 之間的整合工具
+* [redux-undo](https://github.com/omnidan/redux-undo) — 輕鬆的 undo/redo 並在你的 reducers 的歷史間活動
+* [redux-tcomb](https://github.com/gcanti/redux-tcomb) — Immutable 與給 Redux 用的 type-checked state 和 actions
 
 ## 開發者工具
 

@@ -13,7 +13,7 @@ Redux 不是一個整體的框架，而是一系列的介面和[一些可以讓�
 
 你的流程會看起來像這樣：
 
-* 建立一個叫做 `createFluxStore(reducer)` 的 function，它用來從 reducer function 建立一個相容於你現存應用程式的 Flux store。從 Redux 內部來說，它可能看起來很像 [`createStore`](../api/createStore.md) 的實作。它的 dispatch handler 應該只針對 action 去呼叫 `reducer`、儲存 state 變化、並發送 change 事件。
+* 建立一個叫做 `createFluxStore(reducer)` 的 function，它用來從 reducer function 建立一個相容於你現存應用程式的 Flux store。從 Redux 內部來說，它可能看起來很像 [`createStore`](../api/createStore.md) ([原始碼](https://github.com/rackt/redux/blob/master/src/createStore.js)) 的實作。它的 dispatch handler 應該只針對 action 去呼叫 `reducer`、儲存 state 變化、並發送 change 事件。
 
 * 這讓你可以漸漸的把應用程式中的每一個 Flux Store 改寫成 reducer，但仍然 export `createFluxStore(reducer)`，所以應用程式的剩餘部分並不會察覺到有什麼事發生，也只會看到 Flux stores。
 

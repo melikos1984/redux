@@ -66,8 +66,8 @@ describe('Utils', () => {
       );
     });
 
-    it('should throw an error if a reducer returns undefined initializing', () => {
-      expect(() => combineReducers({
+    it('should throw an error on first call if a reducer returns undefined initializing', () => {
+      const reducer = combineReducers({
         counter(state, action) {
           switch (action.type) {
           case 'increment':
@@ -78,8 +78,20 @@ describe('Utils', () => {
             return state;
           }
         }
-      })).toThrow(
+      });
+      expect(() => reducer({})).toThrow(
         /"counter".*initialization/
+      );
+    });
+
+    it('should catch error thrown in reducer when initializing and re-throw', () => {
+      const reducer = combineReducers({
+        throwingReducer() {
+          throw new Error('Error thrown in reducer');
+        }
+      });
+      expect(() => reducer({})).toThrow(
+        /Error thrown in reducer/
       );
     });
 
@@ -100,8 +112,8 @@ describe('Utils', () => {
       expect(reducer({counter: 0}, { type: increment }).counter).toEqual(1);
     });
 
-    it('should throw an error if a reducer attempts to handle a private action', () => {
-      expect(() => combineReducers({
+    it('should throw an error on first call if a reducer attempts to handle a private action', () => {
+      const reducer = combineReducers({
         counter(state, action) {
           switch (action.type) {
           case 'increment':
@@ -115,7 +127,8 @@ describe('Utils', () => {
             return undefined;
           }
         }
-      })).toThrow(
+      });
+      expect(() => reducer()).toThrow(
         /"counter".*private/
       );
     });

@@ -43,9 +43,28 @@ open http://localhost:3000/
 * 更新巢狀資料
 * 測試
 
+## Todos with Undo
+
+執行 [todos-with-undo](https://github.com/rackt/redux/tree/master/examples/todos-with-undo) 範例：
+
+```
+git clone https://github.com/rackt/redux.git
+
+cd redux/examples/todos-with-undo
+npm install
+npm start
+
+open http://localhost:3000/
+```
+
+它涵蓋了：
+
+* 有兩個 reducers 的 Redux 資料流
+* 在 Redux 中使用 [redux-undo](https://github.com/omnidan/redux-undo) 達成的 Undo/Redo 功能
+
 ## Async
 
-執行 [Async](https://github.com/rackt/redux/tree/master/examples/async) 範例：
+執行 [Async](https://github.com/rackt/redux/tree/master/examples/async)
 
 ```
 git clone https://github.com/rackt/redux.git
@@ -72,7 +91,7 @@ git clone https://github.com/rackt/redux.git
 
 cd redux/examples/universal
 npm install
-npm start & npm run client
+npm start
 
 open http://localhost:3000/
 ```

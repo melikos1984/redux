@@ -120,13 +120,15 @@ store.dispatch({ type: 'DECREMENT' });
 * [術語表](http://rackt.github.io/redux/docs/Glossary.html)
 * [API 參考](http://rackt.github.io/redux/docs/api/index.html)
 
-想要輸出成 PDF、ePub 和 MOBI 以方便離線閱讀的話，關於如何產生它們的說明，請參閱：[paulwittmann/redux-offline-docs](https://github.com/paulwittmann/redux-offline-docs)。
+想要輸出成 PDF、ePub 和 MOBI 以方便離線閱讀的話，關於如何產生它們的說明，請參閱：[paulkogel/redux-offline-docs](https://github.com/paulkogel/redux-offline-docs)。
 
 ### 範例
 
 * [Counter](http://rackt.github.io/redux/docs/introduction/Examples.html#counter) ([原始碼](https://github.com/rackt/redux/tree/master/examples/counter))
 * [TodoMVC](http://rackt.github.io/redux/docs/introduction/Examples.html#todomvc) ([原始碼](https://github.com/rackt/redux/tree/master/examples/todomvc))
+* [Todos with Undo](http://rackt.github.io/redux/docs/introduction/Examples.html#todos-with-undo) ([原始碼](https://github.com/rackt/redux/tree/master/examples/todos-with-undo))
 * [Async](http://rackt.github.io/redux/docs/introduction/Examples.html#async) ([原始碼](https://github.com/rackt/redux/tree/master/examples/async))
+* [Universal](http://rackt.github.io/redux/docs/introduction/Examples.html#universal) ([原始碼](https://github.com/rackt/redux/tree/master/examples/universal))
 * [Real World](http://rackt.github.io/redux/docs/introduction/Examples.html#real-world) ([原始碼](https://github.com/rackt/redux/tree/master/examples/real-world))
 
 如果你不熟悉 NPM 生態系並在讓專案運作起來時遇到了困難，或是你不確定要在哪裡貼上上面的程式碼片段，請查看 [simplest-redux-example](https://github.com/jackielii/simplest-redux-example)，它把 Redux 和 React、Browserify 結合在一起。
