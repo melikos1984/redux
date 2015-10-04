@@ -7,8 +7,12 @@
 這是一個 action 的例子，它代表添加一個新的 todo 項目：
 
 ```js
+const ADD_TODO = 'ADD_TODO';
+```
+
+```js
 {
-  type: 'ADD_TODO',
+  type: ADD_TODO,
   text: 'Build my first Redux app'
 }
 ```

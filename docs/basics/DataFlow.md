@@ -10,7 +10,7 @@ Redux 架構圍繞著**嚴格的單向資料流**。
 
 1. **你呼叫** [`store.dispatch(action)`](../api/Store.md#dispatch)。
 
-  action 是一個描述*發生什麼事*的一般物件。例如：
+  [action](Actions.md) 是一個描述*發生什麼事*的一般物件。例如：
 
     ```js
     { type: 'LIKE_ARTICLE', articleId: 42 };
@@ -24,7 +24,7 @@ Redux 架構圍繞著**嚴格的單向資料流**。
 
 2. **Redux store 呼叫你給它的 reducer function。**
 
-  store 會傳遞兩個參數到 reducer，現在的 state tree 和 action。例如，在 todo 應用程式中，root reducer 可能會收到像這樣的東西：
+  [store](Store.md) 會傳遞兩個參數到 [reducer](Reducers.md)，現在的 state tree 和 action。例如，在 todo 應用程式中，root reducer 可能會收到像這樣的東西：
 
     ```js
     // 現在的應用程式 state (todos 清單和挑選的過濾條件)
