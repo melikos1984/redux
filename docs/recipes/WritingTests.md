@@ -64,6 +64,8 @@ describe('actions', () => {
 
 針對使用 [Redux Thunk](https://github.com/gaearon/redux-thunk) 或其他的 middleware 的 async action creators，為了測試，完全的 mock Redux store 是最好的。你仍然可以如下面所示使用 [`applyMiddleware()`](../api/applyMiddleware.md) 以及一個 mock store。你也可以使用 [nock](https://github.com/pgte/nock) 來 mock HTTP 請求。
 
+#### Example
+
 ```js
 function fetchTodosRequest() {
   return {
