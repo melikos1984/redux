@@ -5,6 +5,6 @@
 * [Async Actions](AsyncActions.md)
 * [非同步資料流](AsyncFlow.md)
 * [Middleware](Middleware.md)
-* [Usage with React Router](UsageWithReactRouter.md)
+* [搭配 React Router 運用](UsageWithReactRouter.md)
 * [範例：Reddit API](ExampleRedditAPI.md)
-* [Next Steps](NextSteps.md)
+* [接下來](NextSteps.md)

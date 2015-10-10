@@ -1,4 +1,4 @@
-# Next Steps
+# 接下來
 
-Sorry, but we’re still writing this doc.  
-Stay tuned, it will appear in a day or two.
+抱歉，我們還在撰寫這份文件。
+敬請關注，它將會在幾天後出現。
