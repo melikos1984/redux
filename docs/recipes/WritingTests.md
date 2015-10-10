@@ -60,6 +60,111 @@ describe('actions', () => {
 });
 ```
 
+### Async Action Creators
+
+針對使用 [Redux Thunk](https://github.com/gaearon/redux-thunk) 或其他的 middleware 的 async action creators，為了測試，完全的 mock Redux store 是最好的。你仍然可以如下面所示使用 [`applyMiddleware()`](../api/applyMiddleware.md) 以及一個 mock store。你也可以使用 [nock](https://github.com/pgte/nock) 來 mock HTTP 請求。
+
+```js
+function fetchTodosRequest() {
+  return {
+    type: ADD_TODOS_REQUEST
+  };
+}
+
+function fetchTodosSuccess(body) {
+  return {
+    type: ADD_TODOS_SUCCESS,
+    body
+  };
+}
+
+function fetchTodosFailure(ex) {
+  return {
+    type: ADD_TODOS_FAILURE,
+    ex
+  };
+}
+
+export function fetchTodos(data) {
+  return dispatch => {
+    dispatch(fetchTodosRequest());
+    return fetch('http://example.com/todos')
+      .then(res => res.json())
+      .then(json => dispatch(addTodosSuccess(json.body)))
+      .catch(ex => dispatch(addTodosFailure(ex)));
+  };
+}
+```
+
+可以像這樣測試：
+
+```js
+import expect from 'expect';
+import { applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import * as actions from '../../actions/counter';
+import * as types from '../../constants/ActionTypes';
+import nock from 'nock';
+
+const middlewares = [thunk];
+
+/**
+ * 用 middleware 建立一個 Redux store 的 mock。
+ */
+function mockStore(getState, expectedActions, onLastAction) {
+  if (!Array.isArray(expectedActions)) {
+    throw new Error('expectedActions should be an array of expected actions.');
+  }
+  if (typeof onLastAction !== 'undefined' && typeof onLastAction !== 'function') {
+    throw new Error('onLastAction should either be undefined or function.');
+  }
+
+  function mockStoreWithoutMiddleware() {
+    return {
+      getState() {
+        return typeof getState === 'function' ?
+          getState() :
+          getState;
+      },
+
+      dispatch(action) {
+        const expectedAction = expectedActions.shift();
+        expect(action).toEqual(expectedAction);
+        if (onLastAction && !expectedActions.length) {
+          onLastAction();
+        }
+        return action;
+      }
+    }
+  }
+
+  const mockStoreWithMiddleware = applyMiddleware(
+    ...middlewares
+  )(mockStoreWithoutMiddleware);
+
+  return mockStoreWithMiddleware();
+}
+
+describe('async actions', () => {
+  afterEach(() => {
+    nock.cleanAll();
+  });
+
+  it('creates FETCH_TODO_SUCCESS when fetching todos has been done', (done) => {
+    nock('http://example.com/')
+      .get('/todos')
+      .reply(200, { todos: ['do something'] });
+
+    const expectedActions = [
+      { type: types.FETCH_TODO_REQUEST },
+      { type: types.FETCH_TODO_SUCCESS, body: { todos: ['do something']  } }
+    ]
+    const store = mockStore({ todos: [] }, expectedActions, done);
+    store.dispatch(actions.fetchTodos());
+  });
+});
+```
+
 ### Reducers
 
 reducer 應該把 action 應用到先前的 state，然後回傳新的 state，而這就是下面所測試的行為。

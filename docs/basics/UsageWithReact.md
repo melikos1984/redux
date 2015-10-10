@@ -292,7 +292,7 @@ React.render(
 );
 ```
 
-這使我們的 store 實體可以在下面的 components 中取得。(在內部，這是透過 React [沒有被記載在文件上的「context」功能](http://www.youtube.com/watch?v=H7vlH-wntD4)完成，不過它沒有直接暴露在 API 中，所以不用擔心。)
+這使我們的 store 實體可以在下面的 components 中取得。(在內部，這是透過 React 的[「context」功能](http://facebook.github.io/react/docs/context.html)完成。)
 
 接著，我們**把想要連結到 Redux 的 components 用來自 [`react-redux`](http://github.com/gaearon/react-redux) 的 `connect()` function 包起來**。請試著只對頂層 component、或是 route handlers 做這件事。雖然技術上你可以 `connect()` 你的應用程式中的任何 component 到 Redux store，請避免在太深的地方做這件事，因為這會讓資料流比較難追蹤。
 
