@@ -40,7 +40,7 @@ import { ADD_TODO, REMOVE_TODO } from '../actionTypes';
 
 盡量讓每個 action 中傳遞的資料越少越好。舉例來說，傳遞 `index` 比傳遞整個 todo 物件來得好。
 
-最後，們再添加一個 action type 來改變現在顯示的 todos。
+最後，我們再添加一個 action type 來改變現在顯示的 todos。
 
 ```js
 {
