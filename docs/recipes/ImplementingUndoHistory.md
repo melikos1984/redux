@@ -1,31 +1,31 @@
 # 實作 Undo 歷史
 
-Building an Undo and Redo functionality into an app has traditionally required conscious effort from the developer. It is not an easy problem with classical MVC frameworks because you need to keep track of every past state by cloning all relevant models. In addition, you need to be mindful of the undo stack because the user-initiated changes should be undoable.
+建構 Undo 和 Redo 的功能到應用程式裡面以往需要開發者特意的努力。使用傳統的 MVC 框架時這不是一個簡單的問題，因為你需要藉由複製所有相關的 models 來持續追蹤每一個過去的 state。此外，你需要留心在 undo 的堆疊上，因為使用者造成的變動必須是可以被 undo 的。
 
-This means that implementing Undo and Redo in an MVC application usually forces you to rewrite parts of your application to use a specific data mutation pattern like [Command](https://en.wikipedia.org/wiki/Command_pattern).
+這代表在一個 MVC 應用程式中實作 Undo 和 Redo 時常迫使你必須改寫你的應用程式的一部份以使用像是 [Command](https://en.wikipedia.org/wiki/Command_pattern) 之類特定的資料變動模式。
 
-With Redux, however, implementing undo history is a breeze. There are three reasons for this:
+但是用 Redux 的話，實作 undo 歷史是一件輕而易舉的事。這有三個理由：
 
-* There are no multiple models—just a state subtree that you want to keep track of.
-* The state is already immutable, and mutations are already described as discrete actions, which is close to the undo stack mental model.
-* The reducer `(state, action) => state` signature makes it natural to implement generic “reducer enhancers” or “higher order reducers”. They are functions that take your reducer and enhance it with some additional functionality while preserving its signature. Undo history is exactly such a case.
+* 沒有許多個 models—只是一個你想要持續追蹤的 state subtree。
+* state 已經是 immutable 的，而變動已經被描述為獨立的 actions，它很接近 undo 堆疊的心智模型。
+* reducer 的 `(state, action) => state` signature 讓它可以很自然的實作一般的「reducer enhancers」或「higher order reducers」。它們是接收你的 reducer 並用一些額外的功能來增強它且維持一樣 signature 的 function。Undo 歷史正是一個這樣的範例。
 
-Before proceeding, make sure you have worked through the [basics tutorial](../basics/README.md) and understand [reducer composition](../basics/Reducers.md) well. This recipe will build on top of the example described in the [basics tutorial](../basics/README.md).
+在開始之前，請確保你已經完成了[基礎教學](../basics/README.md)並對 [reducer composition](../basics/Reducers.md) 有很好的了解。這份 recipe 將會基於描述在[基礎教學](../basics/README.md)中的範例上去建構。
 
-In the first part of this recipe, we will explain the underlying concepts that make Undo and Redo possible to implement in a generic way.
+在這份 recipe 的第一部份，我們將會解釋使 Undo 和 Redo 可以用一般通用的方式來實作的背後概念。
 
-In the second part of this recipe, we will show how to use [Redux Undo](https://github.com/omnidan/redux-undo) package that provides this functionality out of the box.
+在這份 recipe 的第二部份，我們將會展示如何使用 [Redux Undo](https://github.com/omnidan/redux-undo) 套件來提供這個功能讓它立即可用。
 
 [![demo of todos-with-undo](http://i.imgur.com/lvDFHkH.gif)](https://twitter.com/dan_abramov/status/647038407286390784)
 
 
-## Understanding Undo History
+## 了解 Undo 歷史
 
-### Designing the State Shape
+### 設計 State 形狀
 
-Undo history is also part of your app’s state, and there is no reason why we should approach it differently. Regardless of the type of the state changing over time, when you implement Undo and Redo, you want to keep track of the *history* of this state at different points in time.
+Undo 歷史也是你應用程式的一部份 state，我們沒有理由用不同的方式處理它。無論隨著時間改變的 state 是什麼類型，當你在實做 Undo 和 Redo 時，你會想要在不同的時間點持續追蹤這個 state 的*歷史*。
 
-For example, the state shape of a counter app might look like this:
+例如，一個 counter 的 state 形狀看起來可能像這樣：
 
 ```js
 {
@@ -33,13 +33,13 @@ For example, the state shape of a counter app might look like this:
 }
 ```
 
-If we wanted to implement Undo and Redo in such an app, we’d need to store more state so we can answer the following questions:
+如果我們想要在這樣一個應用程式中實作 Undo 和 Redo，我們會需要儲存更多的 state，這樣我們才能回答下列問題：
 
-* Is there anything left to undo or redo?
-* What is the current state?
-* What are the past (and future) states in the undo stack?
+* 有什麼東西可以 undo 或 redo？
+* 現在的 state 是什麼？
+* 在 undo 的堆疊中，過去 (以及未來) 的 states 是什麼？
 
-It is reasonable to suggest that our state shape should change to answer these questions:
+合理建議，我們應該改變 state 的形狀來回答這些問題：
 
 ```js
 {
@@ -51,7 +51,7 @@ It is reasonable to suggest that our state shape should change to answer these q
 }
 ```
 
-Now, if user presses “Undo”, we want it to change to move into the past:
+現在，如果使用者按下「Undo」，我們想要它變更往 past 移動：
 
 ```js
 {
@@ -63,7 +63,7 @@ Now, if user presses “Undo”, we want it to change to move into the past:
 }
 ```
 
-And further yet:
+而進一步還可以：
 
 ```js
 {
@@ -75,7 +75,7 @@ And further yet:
 }
 ```
 
-When the user presses “Redo”, we want to move one step back into the future:
+當使用者按下「Redo」，我們想要它移動一步回到 future：
 
 ```js
 {
@@ -87,7 +87,7 @@ When the user presses “Redo”, we want to move one step back into the future:
 }
 ```
 
-Finally, if the user performs an action (e.g. decrement the counter) while we’re in the middle of the undo stack, we’re going to discard the existing future:
+最後，如果使用者執行一個 action (舉例來說，對 counter 遞減)，而剛好我們在 undo 堆疊的中間時，我們必須捨棄掉已存在的 future：
 
 ```js
 {
@@ -99,7 +99,7 @@ Finally, if the user performs an action (e.g. decrement the counter) while we’
 }
 ```
 
-The interesting part here is that it does not matter whether we want to keep an undo stack of numbers, strings, arrays, or objects. The structure will always be the same:
+這裡有趣的是我們想要保存數字、字串、陣列、或是物件的 undo 堆疊並不重要。它們的結構總是會一樣：
 
 ```js
 {
@@ -127,7 +127,7 @@ The interesting part here is that it does not matter whether we want to keep an 
 }
 ```
 
-In general, it looks like this:
+一般來說，它看起來像這樣：
 
 ```js
 {
@@ -137,7 +137,7 @@ In general, it looks like this:
 }
 ```
 
-It is also up to us whether to keep a single top-level history:
+我們也可以自行決定是否要保存單一一個頂層的歷史：
 
 ```js
 {
@@ -151,7 +151,7 @@ It is also up to us whether to keep a single top-level history:
 }
 ```
 
-Or many granular histories so user can undo and redo actions in them independently:
+或是保存許多不同部分的歷史讓使用者可以獨立的在它們上使用 undo 或 redo actions：
 
 ```js
 {
@@ -168,11 +168,11 @@ Or many granular histories so user can undo and redo actions in them independent
 }
 ```
 
-We will see later how the approach we take lets us choose how granular Undo and Redo need to be.
+我們將會在之後看到我們採取的方式如何讓我們選擇 Undo 和 Redo 會影響多大的部分。
 
-### Designing the Algorithm
+### 設計演算法
 
-Regardless of the specific data type, the shape of the undo history state is the same:
+不論具體的資料型別，undo 歷史的 state 形狀都一樣：
 
 ```js
 {
@@ -182,32 +182,32 @@ Regardless of the specific data type, the shape of the undo history state is the
 }
 ```
 
-Let’s talk through the algorithm to manipulate the state shape described above. We can define two actions to operate on this state: `UNDO` and `REDO`. In our reducer, we will do the following steps to handle these actions:
+讓我們來探討演算法以操作在上面描述過的 state 形狀。我們可以定義兩個 actions 來在這個 state 上操作：`UNDO` 和 `REDO`。在我們的 reducer 中，我們將會做以下的步驟來處理這些 actions：
 
-#### Handling Undo
+#### 處理 Undo
 
-* Remove the *last* element from the `past`.
-* Set the `present` to the element we removed in the previous step.
-* Insert the old `present` state at the *beginning* of the `future`.
+* 從 `past` 移除*最後一個*元素。
+* 把 `present` 設成我們在前一個步驟移除的元素。
+* 在 `future` *開頭*插入原本的 `present` state。
 
-#### Handling Redo
+#### 處理 Redo
 
-* Remove the *first* element from the `future`.
-* Set the `present` to the element we removed in the previous step.
-* Insert the old `present` state at the *end* of the `past`.
+* 從 `future` 移除*第一個*元素。
+* 把 `present` 設成我們在前一個步驟移除的元素。
+* 在 `past` *尾端*插入原本的 `present` state。
 
-#### Handling Other Actions
+#### 處理其他 Actions
 
-* Insert the `present` at the end of the `past`.
-* Set the `present` to the new state after handling the action.
-* Clear the `future`.
+* 把 `present` 插入在 `past` 尾端。
+* 把 `present` 設成處理完 action 後的新 state。
+* 清除 `future`。
 
-### First Attempt: Writing a Reducer
+### 第一個嘗試：寫一個 Reducer
 
 ```js
 const initialState = {
   past: [],
-  present: null, // (?) How do we initialize the present?
+  present: null, // (?) 我們要如何初始化 present?
   future: []
 };
 
@@ -232,44 +232,44 @@ function undoable(state = initialState, action) {
       future: newFuture
     };
   default:
-    // (?) How do we handle other actions?
+    // (?) 我們要如何處理其他 actions？
     return state;
   }
 }
 ````
 
-This implementation isn’t usable because it leaves out three important questions:
+這份實作並不能使用，因為它忽略了三個重要的問題：
 
-* Where do we get the initial `present` state from? We don’t seem to know it beforehand.
-* Where do we react to the external actions to save the `present` to the `past`?
-* How do we actually delegate the control over the `present` state to a custom reducer?
+* 我們要從哪裡拿到初始的 `present` state？我們似乎無法事先知道它。
+* 我們要在哪裡對外部的 actions 做出反應來把 `present` 存到 `past`？
+* 我們要如何實際的把對 `present` state 的控制委託給一個自定的 reducer？
 
-It seems that reducer isn’t the right abstraction, but we’re very close.
+似乎 reducer 不是正確的抽象，不過我們非常接近了。
 
-### Meet Reducer Enhancers
+### 認識 Reducer Enhancers
 
-You might be familiar with [higher order functions](https://en.wikipedia.org/wiki/Higher-order_function). If you use React, you might be familiar with [higher order components](https://medium.com/@dan_abramov/mixins-are-dead-long-live-higher-order-components-94a0d2f9e750). Here is a variation on the same pattern, applied to reducers.
+你可能已經熟悉了 [higher order functions](https://en.wikipedia.org/wiki/Higher-order_function)。如果你使用 React，你可能對 [higher order components](https://medium.com/@dan_abramov/mixins-are-dead-long-live-higher-order-components-94a0d2f9e750) 也很熟悉。這是同一種模式的變化，適用於 reducers。
 
-A *reducer enhancer* (or a *higher order reducer*) is a function that takes a reducer, and returns a new reducer that is able to handle new actions, or to hold more state, delegating control to the inner reducer for the actions it doesn’t understand. This isn’t a new pattern—technically, [`combineReducers()`](../api/combineReducers.md) is also a reducer enhancer because it takes reducers and returns a new reducer.
+*reducer enhancer* (或稱作 *higher order reducer*) 是一個接收 reducer，並回傳一個新的 reducer 的 function，新的 reducer 可以處理新的 actions、或保存更多的 state，並把它不了解的 actions 委託給裡面的 reducer 來控制。這不是一個新模式—技術上來說，[`combineReducers()`](../api/combineReducers.md) 也是一個 reducer enhancer，因為它接受數個 reducers 並回傳一個新的 reducer。
 
-A reducer enhancer that doesn’t do anything looks like this:
+一個什麼事都不做的 reducer enhancer 看起來像這樣：
 
 ```js
 function doNothingWith(reducer) {
   return function (state, action) {
-    // Just call the passed reducer
+    // 只是呼叫傳遞進去的 reducer
     return reducer(state, action);
   };
 }
 ```
 
-A reducer enhancer that combines other reducers might look like this:
+一個用來合併其他 reducers 的 reducer enhancer 看起來可能像這樣：
 
 ```js
 function combineReducers(reducers) {
   return function (state = {}, action) {
     return Object.keys(reducers).reduce((nextState, key) => {
-      // Call every reducer with the part of the state it manages
+      // 用每個 reducer 管理的一部份 state 來呼叫它們
       nextState[key] = reducers[key](state[key], action);
       return nextState;
     }, {});
@@ -277,20 +277,20 @@ function combineReducers(reducers) {
 }
 ```
 
-### Second Attempt: Writing a Reducer Enhancer
+### 第二個嘗試：寫一個 Reducer Enhancer
 
-Now that we have a better understanding of reducer enhancers, we can see that this is exactly what `undoable` should have been:
+現在我們對 reducer enhancers 有比較好的了解了，我們可以看到 `undoable` 確實應該要是個 reducer enhancer：
 
 ```js
 function undoable(reducer) {
-  // Call the reducer with empty action to populate the initial state
+  // 用空的 action 呼叫這個 reducer 來放入初始的 state
   const initialState = {
     past: [],
     present: reducer(undefined, {}),
     future: []
   };
 
-  // Return a reducer that handles undo and redo
+  // 回傳一個處理 undo 跟 redo 的 reducer
   return function (state = initialState, action) {
     const { past, present, future } = state;
 
@@ -312,7 +312,7 @@ function undoable(reducer) {
         future: newFuture
       };
     default:
-      // Delegate handling the action to the passed reducer
+      // 委託傳進來的 reducer 來處理 action
       const newPresent = reducer(present, action);
       if (present === newPresent) {
         return state;
@@ -327,15 +327,15 @@ function undoable(reducer) {
 }
 ```
 
-We can now wrap any reducer into `undoable` reducer enhancer to teach it to react to `UNDO` and `REDO` actions.
+現在我們可以把任何的 reducer 包進 `undoable` reducer enhancer 來教它對 `UNDO` 和 `REDO` actions 做出反應。
 
 ```js
-// This is a reducer
+// 這是一個 reducer
 function todos(state = [], action) {
   /* ... */
 }
 
-// This is also a reducer!
+// 這也是一個 reducer!
 const undoableTodos = undoable(todos);
 
 import { createStore } from 'redux';
@@ -356,29 +356,29 @@ store.dispatch({
 });
 ```
 
-There is an important gotcha: you need to remember to append `.present` to the current state when you retrieve it. You may also check `.past.length` and `.future.length` to determine whether to enable or to disable the Undo and Redo buttons, respectively.
+有一個需要注意的地方：在你要取用他的時候，你必須記得添加 `.present` 到當下的 state。你也可以分別檢查 `.past.length` 和 `.future.length` 來決定是否要啟用或禁用 Undo 和 Redo 按鈕。
 
-You might have heard that Redux was influenced by [Elm Architecture](https://github.com/evancz/elm-architecture-tutorial/). It shouldn’t come as a surprise that this example is very similar to [elm-undo-redo package](http://package.elm-lang.org/packages/TheSeamau5/elm-undo-redo/2.0.0).
+你可能已經聽過 Redux 受到 [Elm 架構](https://github.com/evancz/elm-architecture-tutorial/)的影響。所以這個範例與 [elm-undo-redo 套件](http://package.elm-lang.org/packages/TheSeamau5/elm-undo-redo/2.0.0)非常相似並不令人感到訝異。
 
-## Using Redux Undo
+## 使用 Redux Undo
 
-This was all very informative, but can’t we just drop a library and use it instead of implementing `undoable` ourselves? Sure, we can! Meet [Redux Undo](https://github.com/omnidan/redux-undo), a library that provides simple Undo and Redo functionality for any part of your Redux tree.
+前面提供了許多有用的資訊，但是我們不能只是下載一個 library 使用它而不要自己實作 `undoable` 嗎？我們當然可以！認識 [Redux Undo](https://github.com/omnidan/redux-undo)，一個提供簡單的 Undo 和 Redo 功能給你的 Redux tree 任何部分的 library。
 
-In this part of the recipe, you will learn how to make the [Todo List example](http://rackt.github.io/redux/docs/basics/ExampleTodoList.html) undoable. You can find the full source of this recipe in the [`todos-with-undo` example that comes with Redux](https://github.com/rackt/redux/tree/master/examples/todos-with-undo).
+在這部分的 recipe 中，你將會學到如何讓 [Todo List 範例](http://rackt.github.io/redux/docs/basics/ExampleTodoList.html) 變成是 undoable 的。你可以在 [Redux 附帶的 `todos-with-undo` 範例](https://github.com/rackt/redux/tree/master/examples/todos-with-undo) 中找到這份 recipe 的完整原始碼。
 
-### Installation
+### 安裝
 
-First of all, you need to run
+首先，你需要執行
 
 ```
 npm install --save redux-undo
 ```
 
-This installs the package that provides the `undoable` reducer enhancer.
+這會安裝提供了 `undoable` reducer enhancer 的套件。
 
-### Wrapping the Reducer
+### 包裝 Reducer
 
-You will need to the reducer you wish to enhance with `undoable` function. For example, if you use [`combineReducers()`](../api/combineReducers.md), your code might look like this:
+你需要把你想要增強的 reducer 用 `undoable` function 包起來。例如，如果你使用 [`combineReducers()`](../api/combineReducers.md)，你的程式碼看起來可能像這樣：
 
 #### `reducers.js`
 
@@ -393,13 +393,13 @@ const todoApp = combineReducers({
 });
 ```
 
-The `distinctState()` filter serves to ignore the actions that didn’t result in a state change. There are [many other options](https://github.com/omnidan/redux-undo#configuration) to configure your undoable reducer, like setting the action type for Undo and Redo actions.
+`distinctState()` filter 用來忽略沒有導致 state 改變的 actions。有[許多其他的選項](https://github.com/omnidan/redux-undo#configuration)可以用來設定你的 undoable reducer，例如設定 Undo 和 Redo actions 的 action type。
 
-You may wrap one or more reducers in `undoable` at any level of the reducer composition hierarchy. We choose to wrap `todos` instead of the top-level combined reducer so that changes to `visibilityFilter` are not reflected in the undo history.
+你可以在任何的 reducer composition 層級把一個或更多個 reducers 包進 `undoable` 中。我們選擇包裝 `todos` 而不是頂層 combined reducer，這樣的話對 `visibilityFilter` 的變更不會進到 undo 歷史中。
 
-### Updating the Selectors
+### 更新 Selectors
 
-Now the `todos` part of the state looks like this:
+現在 `todos` 那部份的 state 看起來像這樣：
 
 ```js
 {
@@ -418,8 +418,7 @@ Now the `todos` part of the state looks like this:
 }
 ```
 
-This means you need to access your state with `state.todos.present` instead of
-just `state.todos`:
+這意味著你需要用 `state.todos.present` 來存取你的 state 而不是 `state.todos`：
 
 #### `containers/App.js`
 
@@ -433,7 +432,7 @@ function select(state) {
 }
 ```
 
-In order to disable the Undo and Redo buttons when there is nothing to undo or redo, you need to check whether the `past` and `future` arrays are empty:
+為了要在沒有東西可以 undo 或 redo 時讓 Undo 和 Redo 按鈕失效，你需要檢查 `past` 和 `future` 陣列是不是空的：
 
 #### `containers/App.js`
 
@@ -448,11 +447,11 @@ function select(state) {
 }
 ```
 
-### Adding the Buttons
+### 添加按鈕
 
-Now all you need to do is add the buttons for the Undo and Redo actions.
+現在你只需要添加按鈕給 Undo 和 Redo actions。
 
-First of all, you need to import `ActionCreators` from `redux-undo` and pass their bound versions to the `Footer` component:
+首先，你需要從 `redux-undo` import `ActionCreators` 並把綁定好的版本傳遞到 `Footer` component：
 
 #### `containers/App.js`
 
@@ -480,7 +479,7 @@ class App extends Component {
 }
 ```
 
-Now you can render the buttons in the footer:
+現在你可以在 footer render 這些按鈕：
 
 #### `components/Footer.js`
 
@@ -509,4 +508,4 @@ export default class Footer extends Component {
 }
 ```
 
-This is it! Run `npm install` and `npm start` in the [example folder](https://github.com/rackt/redux/tree/master/examples/todos-with-undo) and try it out!
+就這樣了！在[範例資料夾](https://github.com/rackt/redux/tree/master/examples/todos-with-undo)中執行 `npm install` 和 `npm start` 並嘗試一下！
