@@ -1,9 +1,7 @@
 import expect from 'expect';
-import jsdomReact from '../jsdomReact';
-import React from 'react/addons';
+import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 import TodoTextInput from '../../components/TodoTextInput';
-
-const { TestUtils } = React.addons;
 
 function setup(propOverrides) {
   const props = Object.assign({
@@ -32,8 +30,6 @@ function setup(propOverrides) {
 }
 
 describe('components', () => {
-  jsdomReact();
-
   describe('TodoTextInput', () => {
     it('should render correctly', () => {
       const { output } = setup();

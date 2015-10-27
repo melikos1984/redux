@@ -1,10 +1,8 @@
 import expect from 'expect';
-import jsdomReact from '../jsdomReact';
-import React from 'react/addons';
+import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 import TodoItem from '../../components/TodoItem';
 import TodoTextInput from '../../components/TodoTextInput';
-
-const { TestUtils } = React.addons;
 
 function setup( editing = false ) {
   const props = {
@@ -40,8 +38,6 @@ function setup( editing = false ) {
 }
 
 describe('components', () => {
-  jsdomReact();
-
   describe('TodoItem', () => {
     it('initial render', () => {
       const { output } = setup();

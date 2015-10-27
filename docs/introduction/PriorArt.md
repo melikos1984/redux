@@ -35,7 +35,7 @@ Immutable 和大部份類似的 library 跟 Redux 是互補的。請自由的結
 
 ### Baobab
 
-[Baobab](https://github.com/Yomguithereal/baobab) 是另一個實作了 immutable API 用來更新一般的 JavaScript 物件的知名 library。雖然你可以使用它來結合 Redux，不過它們結合在一起只有一點好處。
+[Baobab](https://github.com/Yomguithereal/baobab) 是另一個實作了 immutable API 用來更新一般的 JavaScript 物件的知名 library。雖然你可以使用它來結合 Redux，不過一起使用它們只有一點點好處。
 
 大多數 Baobab 提供的功能涉及使用 cursors 來更新資料，但是 Redux 強制讓更新資料的唯一方式是 dispatch 一個 action。因此它們用不同的方式解決同一個問題，而不是互補。
 

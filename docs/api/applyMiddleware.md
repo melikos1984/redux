@@ -173,10 +173,12 @@ function makeSandwichesForEverybody() {
 // 這對服器端 render 非常有用，因為我可以等到
 // 資料準備好，接著同步的 render 應用程式。
 
+import { renderToString } from 'react-dom/server';
+
 store.dispatch(
   makeSandwichesForEverybody()
 ).then(() =>
-  response.send(React.renderToString(<MyApp store={store} />))
+  response.send(renderToString(<MyApp store={store} />))
 );
 
 // 我也可以從 component dispatch 一個 thunk async action

@@ -21,14 +21,14 @@ Immutability 是讓 [react-redux](https://github.com/gaearon/react-redux) 能有
 function todos(state = [], action) {
   switch (action.type) {
   case 'ADD_TODO':
-    // 錯了！這變動了 state.actions。
-    state.actions.push({
+    // 錯了！這變動了 state
+    state.push({
       text: action.text,
       completed: false
     });
   case 'COMPLETE_TODO':
-    // 錯了！這變動了 state.actions[action.index]。
-    state.actions[action.index].completed = true;
+    // 錯了！這變動了 state[action.index]。
+    state[action.index].completed = true;
   }
 
   return state;
@@ -188,5 +188,5 @@ export default connect()(AddTodo);
 
 ## 其他不能正常運作的原因
 
-在 **#redux** [Reactiflux](http://reactiflux.com/) Slack 頻道上詢問，或是[開一個 issue](https://github.com/rackt/redux/issues)。
+在 **#redux** [Reactiflux](http://reactiflux.com/) Discord 頻道上詢問，或是[開一個 issue](https://github.com/rackt/redux/issues)。
 如果你搞清楚了，請[編輯這份文件](https://github.com/rackt/redux/edit/master/docs/Troubleshooting.md) 作為好意給下一個遇到同樣問題的人。

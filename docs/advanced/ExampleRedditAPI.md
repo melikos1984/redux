@@ -10,9 +10,10 @@
 import 'babel-core/polyfill';
 
 import React from 'react';
+import { render } from 'react-dom';
 import Root from './containers/Root';
 
-React.render(
+render(
   <Root />,
   document.getElementById('root')
 );
@@ -66,7 +67,7 @@ function fetchPosts(reddit) {
     return fetch(`http://www.reddit.com/r/${reddit}.json`)
       .then(req => req.json())
       .then(json => dispatch(receivePosts(reddit, json)));
-  }
+  };
 }
 
 function shouldFetchPosts(state, reddit) {
@@ -195,7 +196,7 @@ export default class Root extends Component {
   render() {
     return (
       <Provider store={store}>
-        {() => <AsyncApp />}
+        <AsyncApp />
       </Provider>
     );
   }

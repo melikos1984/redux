@@ -1,10 +1,8 @@
 import expect from 'expect';
-import jsdomReact from '../jsdomReact';
-import React from 'react/addons';
+import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 import Header from '../../components/Header';
 import TodoTextInput from '../../components/TodoTextInput';
-
-const { TestUtils } = React.addons;
 
 function setup() {
   const props = {
@@ -23,8 +21,6 @@ function setup() {
 }
 
 describe('components', () => {
-  jsdomReact();
-
   describe('Header', () => {
     it('should render correctly', () => {
       const { output } = setup();
@@ -42,7 +38,7 @@ describe('components', () => {
       expect(input.props.placeholder).toBe('What needs to be done?');
     });
 
-    it('should call call addTodo if length of text is greater than 0', () => {
+    it('should call addTodo if length of text is greater than 0', () => {
       const { output, props } = setup();
       const input = output.props.children[1];
       input.props.onSave('');

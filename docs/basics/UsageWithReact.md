@@ -88,7 +88,7 @@ Redux 的 React 綁定擁抱了[分離「smart」和「dumb」components](https:
 #### `components/AddTodo.js`
 
 ```js
-import React, { findDOMNode, Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 export default class AddTodo extends Component {
   render() {
@@ -103,7 +103,7 @@ export default class AddTodo extends Component {
   }
 
   handleClick(e) {
-    const node = findDOMNode(this.refs.input);
+    const node = this.refs.input;
     const text = node.value.trim();
     this.props.onAddClick(text);
     node.value = '';
@@ -274,6 +274,7 @@ export default class App extends Component {
 
 ```js
 import React from 'react';
+import { render } from 'react-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import App from './containers/App';
@@ -282,11 +283,9 @@ import todoApp from './reducers';
 let store = createStore(todoApp);
 
 let rootElement = document.getElementById('root');
-React.render(
-  // child 必須被包在一個 function 裡面
-  // 以避開 React 0.13 裡面的一個問題。
+render(
   <Provider store={store}>
-    {() => <App />}
+    <App />
   </Provider>,
   rootElement
 );
@@ -296,7 +295,7 @@ React.render(
 
 接著，我們**把想要連結到 Redux 的 components 用來自 [`react-redux`](http://github.com/gaearon/react-redux) 的 `connect()` function 包起來**。請試著只對頂層 component、或是 route handlers 做這件事。雖然技術上你可以 `connect()` 你的應用程式中的任何 component 到 Redux store，請避免在太深的地方做這件事，因為這會讓資料流比較難追蹤。
 
-**用 `connect()` 呼叫包覆的任何 component 都會接收一個 [`dispatch`](../api/Store.md#dispatch) function ，和來自全域 state 中任何它需要的 state 作為 prop。** 傳遞給 `connect()` 的唯一參數是一個我們稱作 **selector** 的 function。這個 function 取得全域 Redux store 的 state，然後回傳你需要的 props 給 component。在最簡單的案例中，你可以直接回傳給你的 `state`，不過你也可能希望先轉換它。
+**用 `connect()` 呼叫包覆的任何 component 都會接收一個 [`dispatch`](../api/Store.md#dispatch) function ，和來自全域 state 中任何它需要的 state 作為 prop。**在大部份的情況下，你只需要傳遞第一個參數給 `connect()`， 而它是一個我們稱作 **selector** 的 function。這個 function 取得全域 Redux store 的 state，然後回傳你需要的 props 給 component。在最簡單的案例中，你可以直接回傳給你的 `state`，不過你也可能希望先轉換它。
 
 要用可組合的 selectors 來產生會自動記憶的高效能轉換，請查看 [reselect](https://github.com/faassen/reselect)。在這個範例中，我們不會使用它，不過它在比較大的應用程式中運作得很棒。
 

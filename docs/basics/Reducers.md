@@ -151,7 +151,7 @@ case COMPLETE_TODO:
   });
 ```
 
-因為我們想要更新陣列中的一個特定項目而不採用改變的方式，所以我們必須從項目的前後把它切下來。如果你發覺自己時常撰寫這樣的操作，使用像是 [React.addons.update](https://facebook.github.io/react/docs/update.html)、[updeep](https://github.com/substantial/updeep) 之類的 helper、或甚至像是 [Immutable](http://facebook.github.io/immutable-js/) 之類有原生支援深層更新的 library 是個好主意。要記住永遠不要 assign 到任何 `state` 裡面的東西，除非你先 clone 它。
+因為我們想要更新陣列中的一個特定項目而不採用改變的方式，所以我們必須從項目的前後把它切下來。如果你發覺自己時常撰寫這樣的操作，使用像是 [react-addons-update](https://facebook.github.io/react/docs/update.html)、[updeep](https://github.com/substantial/updeep) 之類的 helper、或甚至像是 [Immutable](http://facebook.github.io/immutable-js/) 之類有原生支援深層更新的 library 是個好主意。要記住永遠不要 assign 到任何 `state` 裡面的東西，除非你先 clone 它。
 
 ## 拆分 Reducers
 

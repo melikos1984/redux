@@ -64,36 +64,36 @@ describe('actions', () => {
 
 針對使用 [Redux Thunk](https://github.com/gaearon/redux-thunk) 或其他的 middleware 的 async action creators，為了測試，完全的 mock Redux store 是最好的。你仍然可以如下面所示使用 [`applyMiddleware()`](../api/applyMiddleware.md) 以及一個 mock store。你也可以使用 [nock](https://github.com/pgte/nock) 來 mock HTTP 請求。
 
-#### Example
+#### 範例
 
 ```js
 function fetchTodosRequest() {
   return {
-    type: ADD_TODOS_REQUEST
+    type: FETCH_TODOS_REQUEST
   };
 }
 
 function fetchTodosSuccess(body) {
   return {
-    type: ADD_TODOS_SUCCESS,
+    type: FETCH_TODOS_SUCCESS,
     body
   };
 }
 
 function fetchTodosFailure(ex) {
   return {
-    type: ADD_TODOS_FAILURE,
+    type: FETCH_TODOS_FAILURE,
     ex
   };
 }
 
-export function fetchTodos(data) {
+export function fetchTodos() {
   return dispatch => {
     dispatch(fetchTodosRequest());
     return fetch('http://example.com/todos')
       .then(res => res.json())
-      .then(json => dispatch(addTodosSuccess(json.body)))
-      .catch(ex => dispatch(addTodosFailure(ex)));
+      .then(json => dispatch(fetchTodosSuccess(json.body)))
+      .catch(ex => dispatch(fetchTodosFailure(ex)));
   };
 }
 ```
@@ -113,12 +113,12 @@ const middlewares = [thunk];
 /**
  * 用 middleware 建立一個 Redux store 的 mock。
  */
-function mockStore(getState, expectedActions, onLastAction) {
+function mockStore(getState, expectedActions, done) {
   if (!Array.isArray(expectedActions)) {
     throw new Error('expectedActions should be an array of expected actions.');
   }
-  if (typeof onLastAction !== 'undefined' && typeof onLastAction !== 'function') {
-    throw new Error('onLastAction should either be undefined or function.');
+  if (typeof done !== 'undefined' && typeof done !== 'function') {
+    throw new Error('done should either be undefined or function.');
   }
 
   function mockStoreWithoutMiddleware() {
@@ -131,11 +131,16 @@ function mockStore(getState, expectedActions, onLastAction) {
 
       dispatch(action) {
         const expectedAction = expectedActions.shift();
-        expect(action).toEqual(expectedAction);
-        if (onLastAction && !expectedActions.length) {
-          onLastAction();
+
+        try {
+          expect(action).toEqual(expectedAction);
+          if (done && !expectedActions.length) {
+            done();
+          }
+          return action;
+        } catch (e) {
+          done(e);
         }
-        return action;
       }
     }
   }
@@ -152,14 +157,14 @@ describe('async actions', () => {
     nock.cleanAll();
   });
 
-  it('creates FETCH_TODO_SUCCESS when fetching todos has been done', (done) => {
+  it('creates FETCH_TODOS_SUCCESS when fetching todos has been done', (done) => {
     nock('http://example.com/')
       .get('/todos')
       .reply(200, { todos: ['do something'] });
 
     const expectedActions = [
-      { type: types.FETCH_TODO_REQUEST },
-      { type: types.FETCH_TODO_SUCCESS, body: { todos: ['do something']  } }
+      { type: types.FETCH_TODOS_REQUEST },
+      { type: types.FETCH_TODOS_SUCCESS, body: { todos: ['do something']  } }
     ]
     const store = mockStore({ todos: [] }, expectedActions, done);
     store.dispatch(actions.fetchTodos());
@@ -252,6 +257,12 @@ describe('todos reducer', () => {
 
 React components 的其中一個優點是它們通常都很小，而且只依賴它們的 props。這使它們容易測試。
 
+首先，我們會先安裝 [React Test Utilities](https://facebook.github.io/react/docs/test-utils.html)：
+
+```
+npm install --save-dev react-addons-test-utils
+```
+
 為了測試 components，我們寫了一個 `setup()` helper，它會傳遞 stubbed callbacks 作為 props 並使用 [React shallow renderer](https://facebook.github.io/react/docs/test-utils.html#shallow-rendering) 來 renders component。這讓獨立的測試在預期 callbacks 會被呼叫時，可以 assert 是否 callbacks 有被呼叫。
 
 #### 範例
@@ -290,12 +301,10 @@ export default Header;
 
 ```js
 import expect from 'expect';
-import jsdomReact from '../jsdomReact';
-import React from 'react/addons';
+import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 import Header from '../../components/Header';
 import TodoTextInput from '../../components/TodoTextInput';
-
-const { TestUtils } = React.addons;
 
 function setup() {
   let props = {
@@ -314,8 +323,6 @@ function setup() {
 }
 
 describe('components', () => {
-  jsdomReact();
-
   describe('Header', () => {
     it('should render correctly', () => {
       const { output } = setup();
@@ -347,25 +354,34 @@ describe('components', () => {
 
 #### 修復壞掉的 `setState()`
 
-Shallow rendering 現在[如果呼叫 `setState` 會拋出一個錯誤](https://github.com/facebook/react/issues/4019)。React 貌似預期你有用 `setState` 時，DOM 是可以使用的。為了避開這個問題，我們使用 jsdom 讓 React 在 DOM 不能使用時也不會拋出 exception。以下是設置它的方法：
+Shallow rendering 現在[如果呼叫 `setState` 會拋出一個錯誤](https://github.com/facebook/react/issues/4019)。React 貌似預期你有用 `setState` 時，DOM 是可以使用的。為了避開這個問題，我們使用 jsdom 讓 React 在 DOM 不能使用時也不會拋出 exception。以下是[設置它](https://github.com/facebook/react/issues/5046#issuecomment-146222515)的方法：
 
 ```
-npm install --save-dev jsdom mocha-jsdom
+npm install --save-dev jsdom
 ```
 
-接著添加一個像這樣子的 `jsdomReact()` helper function：
+接著在你的測試目錄中建立一個 `setup.js` 檔案：
 
 ```js
-import ExecutionEnvironment from 'react/lib/ExecutionEnvironment';
-import jsdom from 'mocha-jsdom';
+import { jsdom } from 'jsdom';
 
-export default function jsdomReact() {
-  jsdom();
-  ExecutionEnvironment.canUseDOM = true;
-}
+global.document = jsdom('<!doctype html><html><body></body></html>');
+global.window = document.defaultView;
+global.navigator = global.window.navigator;
 ```
 
-在執行任何 component 測試之前呼叫它。記住這是一個不乾淨的解決方法，一旦 [facebook/react#4019](https://github.com/facebook/react/issues/4019) 被修好了就可以移除它。
+讓這段程式碼在 React 被 import *之前*執行非常重要。為了確保這件事，調整你的 `mocha` 指令在 `package.json` 的選項中加入 `--require ./test/setup.js`：
+
+```js
+{
+  ...
+  "scripts": {
+    ...
+    "test": "mocha --compilers js:babel/register --recursive --require ./test/setup.js",
+  },
+  ...
+}
+```
 
 ### 已連結的 Components
 
@@ -387,7 +403,7 @@ export default connect(mapStateToProps)(App);
 import App from './App';
 ```
 
-但是當你 import 它，你實際上拿到的是 `connect()` 回傳的包裝過後的 component，而不是 `App` component 本身。如果你想要測試它與 Redux 的互動，這是個好消息：你可以把它跟特別為這個單元測試建立的 store 包在一個 [`<Provider>`](https://github.com/rackt/react-redux#provider-store) 中。但是有時你只是想要測試 component 的 rendering，而不想測試 Redux store。
+但是當你 import 它時，你實際上拿到的是 `connect()` 回傳的包裝過後的 component，而不是 `App` component 本身。如果你想要測試它與 Redux 的互動，這是個好消息：你可以把它跟特別為這個單元測試建立的 store 包在一個 [`<Provider>`](https://github.com/rackt/react-redux#provider-store) 中。但是有時你只是想要測試 component 的 rendering，而不想測試 Redux store。
 
 為了能夠不處理 decorator 即可測試 App component 本身，我們也建議你 export 沒有被 decorated 的 component：
 
@@ -477,7 +493,7 @@ describe('middleware', () => {
 
 ### 術語表
 
-- [React Test Utils](http://facebook.github.io/react/docs/test-utils.html)：React 附帶的測試 utilities。
+- [React Test Utils](http://facebook.github.io/react/docs/test-utils.html)：React 的測試 Utilities。
 
 - [jsdom](https://github.com/tmpvar/jsdom)：一個 DOM API 的純 JavaScript 實作。jsdom 讓我們可以不使用瀏覽器就能執行測試。
 

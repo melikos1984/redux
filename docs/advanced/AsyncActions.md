@@ -47,6 +47,8 @@
 
 讓我們開始定義幾個在範例應用程式中需要的同步 action types 和 action creators。在這裡，使用者可以選擇顯示一個 reddit：
 
+#### `actions.js`
+
 ```js
 export const SELECT_REDDIT = 'SELECT_REDDIT';
 

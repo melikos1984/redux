@@ -379,8 +379,9 @@ const timeoutScheduler = store => next => action => {
 };
 
 /**
- * 用 { meta: { raf: true } } 來排程 actions 讓它在 rAF 迴圈中被 dispatched。
- * 在這個案例中，讓 `dispatch` 回傳一個 function 來從佇列中移除這個 action。
+ * 用 { meta: { raf: true } } 來排程 actions，
+ * 讓它在 rAF 迴圈中被 dispatched。在這個案例中，
+ * 讓 `dispatch` 回傳一個 function 來從佇列中移除這個 action。
  */
 const rafScheduler = store => next => {
   let queuedActions = [];
