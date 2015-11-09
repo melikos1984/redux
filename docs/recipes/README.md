@@ -4,7 +4,7 @@
 
 * [遷移到 Redux](MigratingToRedux.md)
 * [減少 Boilerplate](ReducingBoilerplate.md)
-* [伺服器 Rendering](ServerRendering.md)
+* [伺服器 Render](ServerRendering.md)
 * [撰寫測試](WritingTests.md)
 * [計算衍生資料](ComputingDerivedData.md)
 * [實作 Undo 歷史](ImplementingUndoHistory.md)
