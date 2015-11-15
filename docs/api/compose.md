@@ -18,21 +18,21 @@
 這個範例展示了要如何使用 `compose` 藉由 [`applyMiddleware`](applyMiddleware.md) 與幾個來自 [redux-devtools](https://github.com/gaearon/redux-devtools) 套件的開發工具來增強一個 [store](Store.md)。
 
 ```js
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
-import * as reducers from '../reducers/index';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
+import thunk from 'redux-thunk'
+import * as reducers from '../reducers/index'
 
-let reducer = combineReducers(reducers);
-let middleware = [thunk];
+let reducer = combineReducers(reducers)
+let middleware = [ thunk ]
 
-let finalCreateStore;
+let finalCreateStore
 
 // 在產品環境中，我們只想要使用 the middleware。
 // 而在開發環境中，我們想要使用一些來自 redux-devtools 的 store enhancers。
 // UglifyJS 會依照建置環境刪除用不到的程式碼。
 
 if (process.env.NODE_ENV === 'production') {
-  finalCreateStore = applyMiddleware(...middleware)(createStore);
+  finalCreateStore = applyMiddleware(...middleware)(createStore)
 } else {
   finalCreateStore = compose(
     applyMiddleware(...middleware),
@@ -40,7 +40,7 @@ if (process.env.NODE_ENV === 'production') {
     require('redux-devtools').persistState(
       window.location.href.match(/[?&]debug_session=([^&]+)\b/)
     )
-  )(createStore);
+  )(createStore)
 
   // 不使用 `compose` helper 的同等程式碼：
   //
@@ -50,10 +50,10 @@ if (process.env.NODE_ENV === 'production') {
   //       window.location.href.match(/[?&]debug_session=([^&]+)\b/)
   //     )(createStore)
   //   )
-  // );
+  // )
 }
 
-let store = finalCreateStore(reducer);
+let store = finalCreateStore(reducer)
 ```
 
 #### 提示

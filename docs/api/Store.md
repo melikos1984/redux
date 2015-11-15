@@ -61,18 +61,18 @@ Middleware 是由社群所創造且不會預設附帶在 Redux 裡。你需要�
 #### 範例
 
 ```js
-import { createStore } from 'redux';
-let store = createStore(todos, ['Use Redux']);
+import { createStore } from 'redux'
+let store = createStore(todos, [ 'Use Redux' ])
 
 function addTodo(text) {
   return {
     type: 'ADD_TODO',
     text
-  };
+  }
 }
 
-store.dispatch(addTodo('Read the docs'));
-store.dispatch(addTodo('Read about the middleware'));
+store.dispatch(addTodo('Read the docs'))
+store.dispatch(addTodo('Read about the middleware'))
 ```
 
 <hr>
@@ -97,21 +97,21 @@ store.dispatch(addTodo('Read about the middleware'));
 
 ```js
 function select(state) {
-  return state.some.deep.property;
+  return state.some.deep.property
 }
 
-let currentValue;
+let currentValue
 function handleChange() {
-  let previousValue = currentValue;
-  currentValue = select(store.getState());
+  let previousValue = currentValue
+  currentValue = select(store.getState())
 
   if (previousValue !== currentValue) {
-    console.log('Some deep nested property changed from', previousValue, 'to', currentValue);
+    console.log('Some deep nested property changed from', previousValue, 'to', currentValue)
   }
 }
 
-let unsubscribe = store.subscribe(handleChange);
-handleChange();
+let unsubscribe = store.subscribe(handleChange)
+handleChange()
 ```
 
 <hr>

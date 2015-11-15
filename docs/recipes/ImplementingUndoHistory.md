@@ -44,7 +44,7 @@ Undo 歷史也是你應用程式的一部份 state，我們沒有理由用不同
 ```js
 {
   counter: {
-    past: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    past: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ],
     present: 10,
     future: []
   }
@@ -56,9 +56,9 @@ Undo 歷史也是你應用程式的一部份 state，我們沒有理由用不同
 ```js
 {
   counter: {
-    past: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+    past: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ],
     present: 9,
-    future: [10]
+    future: [ 10 ]
   }
 }
 ```
@@ -68,9 +68,9 @@ Undo 歷史也是你應用程式的一部份 state，我們沒有理由用不同
 ```js
 {
   counter: {
-    past: [0, 1, 2, 3, 4, 5, 6, 7],
+    past: [ 0, 1, 2, 3, 4, 5, 6, 7 ],
     present: 8,
-    future: [9, 10]
+    future: [ 9, 10 ]
   }
 }
 ```
@@ -80,9 +80,9 @@ Undo 歷史也是你應用程式的一部份 state，我們沒有理由用不同
 ```js
 {
   counter: {
-    past: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+    past: [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ],
     present: 9,
-    future: [10]
+    future: [ 10 ]
   }
 }
 ```
@@ -92,7 +92,7 @@ Undo 歷史也是你應用程式的一部份 state，我們沒有理由用不同
 ```js
 {
   counter: {
-    past: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    past: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ],
     present: 8,
     future: []
   }
@@ -104,9 +104,9 @@ Undo 歷史也是你應用程式的一部份 state，我們沒有理由用不同
 ```js
 {
   counter: {
-    past: [0, 1, 2],
+    past: [ 0, 1, 2 ],
     present: 3,
-    future: [4]
+    future: [ 4 ]
   }
 }
 ```
@@ -116,12 +116,12 @@ Undo 歷史也是你應用程式的一部份 state，我們沒有理由用不同
   todos: {
     past: [
       [],
-      [{ text: 'Use Redux' }],
-      [{ text: 'Use Redux', complete: true }]
+      [ { text: 'Use Redux' } ],
+      [ { text: 'Use Redux', complete: true } ]
     ],
-    present: [{ text: 'Use Redux', complete: true }, { text: 'Implement Undo' }],
+    present: [ { text: 'Use Redux', complete: true }, { text: 'Implement Undo' } ],
     future: [
-      [{ text: 'Use Redux', complete: true }, { text: 'Implement Undo', complete: true }]
+      [ { text: 'Use Redux', complete: true }, { text: 'Implement Undo', complete: true } ]
     ]
   }
 }
@@ -156,12 +156,12 @@ Undo 歷史也是你應用程式的一部份 state，我們沒有理由用不同
 ```js
 {
   counterA: {
-    past: [1, 0],
+    past: [ 1, 0 ],
     present: 2,
     future: []
   },
   counterB: {
-    past: [0],
+    past: [ 0 ],
     present: 1,
     future: []
   }
@@ -209,31 +209,31 @@ const initialState = {
   past: [],
   present: null, // (?) 我們要如何初始化 present?
   future: []
-};
+}
 
 function undoable(state = initialState, action) {
-  const { past, present, future } = state;
+  const { past, present, future } = state
 
   switch (action.type) {
-  case 'UNDO':
-    const previous = past[past.length - 1];
-    const newPast = past.slice(0, past.length - 1);
-    return {
-      past: newPast,
-      present: previous,
-      future: [present, ...future]
-    };
-  case 'REDO':
-    const next = future[0];
-    const newFuture = future.slice(1);
-    return {
-      past: [...past, present],
-      present: next,
-      future: newFuture
-    };
-  default:
-    // (?) 我們要如何處理其他 actions？
-    return state;
+    case 'UNDO':
+      const previous = past[past.length - 1]
+      const newPast = past.slice(0, past.length - 1)
+      return {
+        past: newPast,
+        present: previous,
+        future: [ present, ...future ]
+      }
+    case 'REDO':
+      const next = future[0]
+      const newFuture = future.slice(1)
+      return {
+        past: [ ...past, present ],
+        present: next,
+        future: newFuture
+      }
+    default:
+      // (?) 我們要如何處理其他 actions？
+      return state
   }
 }
 ````
@@ -258,8 +258,8 @@ function undoable(state = initialState, action) {
 function doNothingWith(reducer) {
   return function (state, action) {
     // 只是呼叫傳遞進去的 reducer
-    return reducer(state, action);
-  };
+    return reducer(state, action)
+  }
 }
 ```
 
@@ -270,10 +270,10 @@ function combineReducers(reducers) {
   return function (state = {}, action) {
     return Object.keys(reducers).reduce((nextState, key) => {
       // 用每個 reducer 管理的一部份 state 來呼叫它們
-      nextState[key] = reducers[key](state[key], action);
-      return nextState;
-    }, {});
-  };
+      nextState[key] = reducers[key](state[key], action)
+      return nextState
+    }, {})
+  }
 }
 ```
 
@@ -288,42 +288,42 @@ function undoable(reducer) {
     past: [],
     present: reducer(undefined, {}),
     future: []
-  };
+  }
 
   // 回傳一個處理 undo 跟 redo 的 reducer
   return function (state = initialState, action) {
-    const { past, present, future } = state;
+    const { past, present, future } = state
 
     switch (action.type) {
-    case 'UNDO':
-      const previous = past[past.length - 1];
-      const newPast = past.slice(0, past.length - 1);
-      return {
-        past: newPast,
-        present: previous,
-        future: [present, ...future]
-      };
-    case 'REDO':
-      const next = future[0];
-      const newFuture = future.slice(1);
-      return {
-        past: [...past, present],
-        present: next,
-        future: newFuture
-      };
-    default:
-      // 委託傳進來的 reducer 來處理 action
-      const newPresent = reducer(present, action);
-      if (present === newPresent) {
-        return state;
-      }
-      return {
-        past: [...past, present],
-        present: newPresent,
-        future: []
-      };
+      case 'UNDO':
+        const previous = past[past.length - 1]
+        const newPast = past.slice(0, past.length - 1)
+        return {
+          past: newPast,
+          present: previous,
+          future: [ present, ...future ]
+        }
+      case 'REDO':
+        const next = future[0]
+        const newFuture = future.slice(1)
+        return {
+          past: [ ...past, present ],
+          present: next,
+          future: newFuture
+        }
+      default:
+        // 委託傳進來的 reducer 來處理 action
+        const newPresent = reducer(present, action)
+        if (present === newPresent) {
+          return state
+        }
+        return {
+          past: [ ...past, present ],
+          present: newPresent,
+          future: []
+        }
     }
-  };
+  }
 }
 ```
 
@@ -336,24 +336,24 @@ function todos(state = [], action) {
 }
 
 // 這也是一個 reducer!
-const undoableTodos = undoable(todos);
+const undoableTodos = undoable(todos)
 
-import { createStore } from 'redux';
-const store = createStore(undoableTodos);
+import { createStore } from 'redux'
+const store = createStore(undoableTodos)
 
 store.dispatch({
   type: 'ADD_TODO',
   text: 'Use Redux'
-});
+})
 
 store.dispatch({
   type: 'ADD_TODO',
   text: 'Implement Undo'
-});
+})
 
 store.dispatch({
   type: 'UNDO'
-});
+})
 ```
 
 有一個需要注意的地方：在你要取用他的時候，你必須記得添加 `.present` 到當下的 state。你也可以分別檢查 `.past.length` 和 `.future.length` 來決定是否要啟用或禁用 Undo 和 Redo 按鈕。
@@ -383,14 +383,14 @@ npm install --save redux-undo
 #### `reducers.js`
 
 ```js
-import undoable, { distinctState } from 'redux-undo';
+import undoable, { distinctState } from 'redux-undo'
 
 /* ... */
 
 const todoApp = combineReducers({
   visibilityFilter,
   todos: undoable(todos, { filter: distinctState() })
-});
+})
 ```
 
 `distinctState()` filter 用來忽略沒有導致 state 改變的 actions。有[許多其他的選項](https://github.com/omnidan/redux-undo#configuration)可以用來設定你的 undoable reducer，例如設定 Undo 和 Redo actions 的 action type。
@@ -407,12 +407,12 @@ const todoApp = combineReducers({
   todos: {
     past: [
       [],
-      [{ text: 'Use Redux' }],
-      [{ text: 'Use Redux', complete: true }]
+      [ { text: 'Use Redux' } ],
+      [ { text: 'Use Redux', complete: true } ]
     ],
-    present: [{ text: 'Use Redux', complete: true }, { text: 'Implement Undo' }],
+    present: [ { text: 'Use Redux', complete: true }, { text: 'Implement Undo' } ],
     future: [
-      [{ text: 'Use Redux', complete: true }, { text: 'Implement Undo', complete: true }]
+      [ { text: 'Use Redux', complete: true }, { text: 'Implement Undo', complete: true } ]
     ]
   }
 }
@@ -424,11 +424,11 @@ const todoApp = combineReducers({
 
 ```js
 function select(state) {
-  const presentTodos = state.todos.present;
+  const presentTodos = state.todos.present
   return {
     visibleTodos: selectTodos(presentTodos, state.visibilityFilter),
     visibilityFilter: state.visibilityFilter
-  };
+  }
 }
 ```
 
@@ -456,13 +456,13 @@ function select(state) {
 #### `containers/App.js`
 
 ```js
-import { ActionCreators } from 'redux-undo';
+import { ActionCreators } from 'redux-undo'
 
 /* ... */
 
 class App extends Component {
   render() {
-    const { dispatch, visibleTodos, visibilityFilter } = this.props;
+    const { dispatch, visibleTodos, visibilityFilter } = this.props
     return (
       <div>
         {/* ... */}
@@ -474,7 +474,7 @@ class App extends Component {
           undoDisabled={this.props.undoDisabled}
           redoDisabled={this.props.redoDisabled} />
       </div>
-    );
+    )
   }
 }
 ```
@@ -494,7 +494,7 @@ export default class Footer extends Component {
         <button onClick={this.props.onUndo} disabled={this.props.undoDisabled}>Undo</button>
         <button onClick={this.props.onRedo} disabled={this.props.redoDisabled}>Redo</button>
       </p>
-    );
+    )
   }
 
   render() {
@@ -503,7 +503,7 @@ export default class Footer extends Component {
         {this.renderFilters()}
         {this.renderUndo()}
       </div>
-    );
+    )
   }
 }
 ```

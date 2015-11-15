@@ -25,13 +25,13 @@ function todos(state = [], action) {
     state.push({
       text: action.text,
       completed: false
-    });
+    })
   case 'COMPLETE_TODO':
     // 錯了！這變動了 state[action.index]。
-    state[action.index].completed = true;
+    state[action.index].completed = true
   }
 
-  return state;
+  return state
 }
 ```
 
@@ -40,24 +40,27 @@ function todos(state = [], action) {
 ```js
 function todos(state = [], action) {
   switch (action.type) {
-  case 'ADD_TODO':
-    // 回傳一個新的陣列
-    return [...state, {
-      text: action.text,
-      completed: false
-    }];
-  case 'COMPLETE_TODO':
-    // 回傳一個新的陣列
-    return [
-      ...state.slice(0, action.index),
-      // 在變動之前先複製物件
-      Object.assign({}, state[action.index], {
-        completed: true
-      }),
-      ...state.slice(action.index + 1)
-    ];
-  default:
-    return state;
+    case 'ADD_TODO':
+      // 回傳一個新的陣列
+      return [
+        ...state,
+        {
+          text: action.text,
+          completed: false
+        }
+      ]
+    case 'COMPLETE_TODO':
+      // 回傳一個新的陣列
+      return [
+        ...state.slice(0, action.index),
+        // 在變動之前先複製物件
+        Object.assign({}, state[action.index], {
+          completed: true
+        }),
+        ...state.slice(action.index + 1)
+      ]
+    default:
+      return state
   }
 }
 ```
@@ -81,7 +84,7 @@ return update(state, {
       $set: true
     }
   }
-});
+})
 ```
 
 最後，要更新物件你會需要一些像是 Underscore 的 `_.extend` 的東西，或甚至更好的，一個 [`Object.assign`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) 的 polyfill。
@@ -119,20 +122,20 @@ return [
 
 ```js
 export function addTodo(text) {
-  return { type: 'ADD_TODO', text };
+  return { type: 'ADD_TODO', text }
 }
 ```
 
 #### `AddTodo.js`
 
 ```js
-import React, { Component } from 'react';
-import { addTodo } from './TodoActions';
+import React, { Component } from 'react'
+import { addTodo } from './TodoActions'
 
 class AddTodo extends Component {
   handleClick() {
     // 不會正常運作！
-    addTodo('Fix the issue');
+    addTodo('Fix the issue')
   }
 
   render() {
@@ -140,7 +143,7 @@ class AddTodo extends Component {
       <button onClick={() => this.handleClick()}>
         Add
       </button>
-    );
+    )
   }
 }
 ```
@@ -152,7 +155,7 @@ class AddTodo extends Component {
 ```js
 handleClick() {
   // 正常運作！(不過無論如何你需要抓得到 store)
-  store.dispatch(addTodo('Fix the issue'));
+  store.dispatch(addTodo('Fix the issue'))
 }
 ```
 
@@ -161,14 +164,14 @@ handleClick() {
 修復後的程式碼看起來像這樣：
 #### `AddTodo.js`
 ```js
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { addTodo } from './TodoActions';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { addTodo } from './TodoActions'
 
 class AddTodo extends Component {
   handleClick() {
     // 正常運作！
-    this.props.dispatch(addTodo('Fix the issue'));
+    this.props.dispatch(addTodo('Fix the issue'))
   }
 
   render() {
@@ -176,12 +179,12 @@ class AddTodo extends Component {
       <button onClick={() => this.handleClick()}>
         Add
       </button>
-    );
+    )
   }
 }
 
 // 除了 state 以外，`connect` 還把 `dispatch` 放到我們的 props 裡。
-export default connect()(AddTodo);
+export default connect()(AddTodo)
 ```
 
 如果你想要的話，你可以接著手動的把 `dispatch` 傳下去給其他的 components。

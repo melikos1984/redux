@@ -5,7 +5,7 @@
 ## State
 
 ```js
-type State = any;
+type State = any
 ```
 
 *State* (也稱作 *state tree*) 是一個廣義的詞彙，不過在 Redux API 中，它通常是指被 store 所管理的單一狀態值並藉由 [`getState()`](api/Store.md#getState) 來回傳。它代表 Redux 應用程式的完整狀態，通常是一個多層的巢狀物件。
@@ -15,7 +15,7 @@ type State = any;
 ## Action
 
 ```js
-type Action = Object;
+type Action = Object
 ```
 
 *action* 是個一般的 JavaScript 物件，它代表一個改變 state 的意圖。Actions 是讓 data 進到 store 的唯一方式。任何 data，無論是從 UI 事件、網路 callbacks、或其他來源，像是 WebSockets 最後都需要作為 actions 被 dispatch。
@@ -29,7 +29,7 @@ Actions 必須有一個 `type` 屬性，它代表被執行的 action 的類型�
 ## Reducer
 
 ```js
-type Reducer<S, A> = (state: S, action: A) => S;
+type Reducer<S, A> = (state: S, action: A) => S
 ```
 
 *reducer* (也稱作 *reducing function*) 是一個 function，它接收累積值和一個值並回傳新的累積值。它們通常被用來把一組值 reduce down 成一個單一值。
@@ -45,8 +45,8 @@ Reducers 是 Redux 中最重要的概念。
 ## Dispatching Function
 
 ```js
-type BaseDispatch = (a: Action) => Action;
-type Dispatch = (a: Action | AsyncAction) => any;
+type BaseDispatch = (a: Action) => Action
+type Dispatch = (a: Action | AsyncAction) => any
 ```
 
 *dispatching function* (或簡稱為 *dispatch function*) 是接收一個 action 或一個 [async action](#async-action) 的 function；接著它可能會 dispatch 一個或更多 actions 到 store，也可能不會。
@@ -60,7 +60,7 @@ type Dispatch = (a: Action | AsyncAction) => any;
 ## Action Creator
 
 ```js
-type ActionCreator = (...args: any) => Action | AsyncAction;
+type ActionCreator = (...args: any) => Action | AsyncAction
 ```
 
 *action creator* 是個產生 actions 的 function，非常的簡單。請不要混淆這兩個詞—重複一次，action 是個資訊 payload，而 action creator 是個產生 action 的 factory。
@@ -72,7 +72,7 @@ type ActionCreator = (...args: any) => Action | AsyncAction;
 ## Async Action
 
 ```js
-type AsyncAction = any;
+type AsyncAction = any
 ```
 
 *async action* 是一個被送到 dispatching function 的值，但是尚未準備好要讓 reducer 消耗。它將會在被送到基本的 [`dispatch()`](api/Store.md#dispatch) function 之前，被 [middleware](#middleware) 轉換成一個 action (或一連串的 actions)。取決於你使用的 middleware，Async actions 可以有不同的種類。它們時常是一些基本的非同步類型，像是 Promise 或是 thunk，它們不會立即被傳遞到 reducer，而是在一個操作完成之後觸發 action dispatches。
@@ -80,8 +80,8 @@ type AsyncAction = any;
 ## Middleware
 
 ```js
-type MiddlewareAPI = { dispatch: Dispatch, getState: () => State };
-type Middleware = (api: MiddlewareAPI) => (next: Dispatch) => Dispatch;
+type MiddlewareAPI = { dispatch: Dispatch, getState: () => State }
+type Middleware = (api: MiddlewareAPI) => (next: Dispatch) => Dispatch
 ```
 
 middleware 是一個 higher-order function，它把一個 [dispatch function](#dispatching-function) 拿去組合以回傳一個新的 dispatch function。它時常用來把 [async actions](#async-action) 轉換成 actions。
@@ -94,11 +94,11 @@ Middleware 可以藉由 function composition 來組合。有利於紀錄 actions
 
 ```js
 type Store = {
-  dispatch: Dispatch;
-  getState: () => State;
-  subscribe: (listener: () => void) => () => void;
-  replaceReducer: (reducer: Reducer) => void;
-};
+  dispatch: Dispatch
+  getState: () => State
+  subscribe: (listener: () => void) => () => void
+  replaceReducer: (reducer: Reducer) => void
+}
 ```
 
 store 是個保存應用程式 state tree 的物件。
@@ -114,7 +114,7 @@ store 是個保存應用程式 state tree 的物件。
 ## Store creator
 
 ```js
-type StoreCreator = (reducer: Reducer, initialState: ?State) => Store;
+type StoreCreator = (reducer: Reducer, initialState: ?State) => Store
 ```
 
 store creator 是個用來建立一個 Redux store 的 function。就像 dispatching function 一樣，我們必須區分從 Redux 套件 exported 的基本的 store creator [`createStore(reducer, initialState)`](api/createStore.md)，與從 store enhancers 回傳的 store creators。
@@ -122,7 +122,7 @@ store creator 是個用來建立一個 Redux store 的 function。就像 dispatc
 ## Store enhancer
 
 ```js
-type StoreEnhancer = (next: StoreCreator) => StoreCreator;
+type StoreEnhancer = (next: StoreCreator) => StoreCreator
 ```
 
 store enhancer 是個 higher-order function，它組合 store creator 以回傳一個新的、強化的 store creator。這與 middleware 類似，它也讓你可以用組合的方式改變 store 的介面。

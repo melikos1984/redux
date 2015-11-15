@@ -31,17 +31,17 @@ Redux 的其中一個好處是可以讓 state 的改變變成可預測且透明�
 假如說，你在建立一個 todo 的時候呼叫了這個：
 
 ```js
-store.dispatch(addTodo('Use Redux'));
+store.dispatch(addTodo('Use Redux'))
 ```
 
 為了要 log action 和 state，你可以把它改成像是這樣：
 
 ```js
-let action = addTodo('Use Redux');
+let action = addTodo('Use Redux')
 
-console.log('dispatching', action);
-store.dispatch(action);
-console.log('next state', store.getState());
+console.log('dispatching', action)
+store.dispatch(action)
+console.log('next state', store.getState())
 ```
 
 這會產生你所希望的效果，不過你不會想要每次都做這些事。
@@ -52,16 +52,16 @@ console.log('next state', store.getState());
 
 ```js
 function dispatchAndLog(store, action) {
-  console.log('dispatching', action);
-  store.dispatch(action);
-  console.log('next state', store.getState());
+  console.log('dispatching', action)
+  store.dispatch(action)
+  console.log('next state', store.getState())
 }
 ```
 
 接著，你可以在每個地方使用它來取代 `store.dispatch()`：
 
 ```js
-dispatchAndLog(store, addTodo('Use Redux'));
+dispatchAndLog(store, addTodo('Use Redux'))
 ```
 
 我們可以選擇在這裡結束，但是每次都要 import 一個特別的 function 還不是非常方便。
@@ -71,13 +71,13 @@ dispatchAndLog(store, addTodo('Use Redux'));
 那如果我們直接置換掉 store 實體上的 `dispatch` function 呢？Redux 的 store 只是一個有[幾個 methods](../api/Store.md) 的一般物件，而且我們正在寫 JavaScript，所以我們可以直接 monkeypatch `dispatch` 的實作：
 
 ```js
-let next = store.dispatch;
+let next = store.dispatch
 store.dispatch = function dispatchAndLog(action) {
-  console.log('dispatching', action);
-  let result = next(action);
-  console.log('next state', store.getState());
-  return result;
-};
+  console.log('dispatching', action)
+  let result = next(action)
+  console.log('next state', store.getState())
+  return result
+}
 ```
 
 這已經跟我們想要的東西更接近了！無論我們在哪裡 dispatch action，都保證會被 logged 下來。Monkeypatching 的感覺總是不對，不過我們現在已經可以藉由它達成目標了。
@@ -96,39 +96,39 @@ store.dispatch = function dispatchAndLog(action) {
 
 ```js
 function patchStoreToAddLogging(store) {
-  let next = store.dispatch;
+  let next = store.dispatch
   store.dispatch = function dispatchAndLog(action) {
-    console.log('dispatching', action);
-    let result = next(action);
-    console.log('next state', store.getState());
-    return result;
-  };
+    console.log('dispatching', action)
+    let result = next(action)
+    console.log('next state', store.getState())
+    return result
+  }
 }
 
 function patchStoreToAddCrashReporting(store) {
-  let next = store.dispatch;
+  let next = store.dispatch
   store.dispatch = function dispatchAndReportErrors(action) {
     try {
-      return next(action);
+      return next(action)
     } catch (err) {
-      console.error('Caught an exception!', err);
+      console.error('Caught an exception!', err)
       Raven.captureException(err, {
         extra: {
           action,
           state: store.getState()
         }
-      });
-      throw err;
+      })
+      throw err
     }
-  };
+  }
 }
 ```
 
 如果把這些 functions 作為獨立的模組發佈，我們可以在之後使用它們來 patch 我們的 store：
 
 ```js
-patchStoreToAddLogging(store);
-patchStoreToAddCrashReporting(store);
+patchStoreToAddLogging(store)
+patchStoreToAddCrashReporting(store)
 ```
 
 但這依舊不夠好。
@@ -139,17 +139,17 @@ Monkeypatching 是一種 hack。「置換掉任何你中意的 method」，那 A
 
 ```js
 function logger(store) {
-  let next = store.dispatch;
+  let next = store.dispatch
 
   // 先前：
   // store.dispatch = function dispatchAndLog(action) {
 
   return function dispatchAndLog(action) {
-    console.log('dispatching', action);
-    let result = next(action);
-    console.log('next state', store.getState());
-    return result;
-  };
+    console.log('dispatching', action)
+    let result = next(action)
+    console.log('next state', store.getState())
+    return result
+  }
 }
 ```
 
@@ -157,20 +157,20 @@ function logger(store) {
 
 ```js
 function applyMiddlewareByMonkeypatching(store, middlewares) {
-  middlewares = middlewares.slice();
-  middlewares.reverse();
+  middlewares = middlewares.slice()
+  middlewares.reverse()
 
   // Transform dispatch function with each middleware.
   middlewares.forEach(middleware =>
     store.dispatch = middleware(store)
-  );
+  )
 }
 ```
 
 我們可以像這樣使用它來啟用多個 middleware：
 
 ```js
-applyMiddlewareByMonkeypatching(store, [logger, crashReporter]);
+applyMiddlewareByMonkeypatching(store, [ logger, crashReporter ])
 ```
 
 不過，這仍然是 monkeypatching。
@@ -183,14 +183,14 @@ applyMiddlewareByMonkeypatching(store, [logger, crashReporter]);
 ```js
 function logger(store) {
   // 必須指向前面的 middleware 回傳的 function：
-  let next = store.dispatch;
+  let next = store.dispatch
 
   return function dispatchAndLog(action) {
-    console.log('dispatching', action);
-    let result = next(action);
-    console.log('next state', store.getState());
-    return result;
-  };
+    console.log('dispatching', action)
+    let result = next(action)
+    console.log('next state', store.getState())
+    return result
+  }
 }
 ```
 
@@ -204,11 +204,11 @@ function logger(store) {
 function logger(store) {
   return function wrapDispatchToAddLogging(next) {
     return function dispatchAndLog(action) {
-      console.log('dispatching', action);
-      let result = next(action);
-      console.log('next state', store.getState());
-      return result;
-    };
+      console.log('dispatching', action)
+      let result = next(action)
+      console.log('next state', store.getState())
+      return result
+    }
   }
 }
 ```
@@ -217,24 +217,24 @@ function logger(store) {
 
 ```js
 const logger = store => next => action => {
-  console.log('dispatching', action);
-  let result = next(action);
-  console.log('next state', store.getState());
-  return result;
-};
+  console.log('dispatching', action)
+  let result = next(action)
+  console.log('next state', store.getState())
+  return result
+}
 
 const crashReporter = store => next => action => {
   try {
-    return next(action);
+    return next(action)
   } catch (err) {
-    console.error('Caught an exception!', err);
+    console.error('Caught an exception!', err)
     Raven.captureException(err, {
       extra: {
         action,
         state: store.getState()
       }
-    });
-    throw err;
+    })
+    throw err
   }
 }
 ```
@@ -252,22 +252,21 @@ const crashReporter = store => next => action => {
 // 這*不*是 Redux 的 API。
 
 function applyMiddleware(store, middlewares) {
-  middlewares = middlewares.slice();
-  middlewares.reverse();
+  middlewares = middlewares.slice()
+  middlewares.reverse()
 
-  let dispatch = store.dispatch;
+  let dispatch = store.dispatch
   middlewares.forEach(middleware =>
     dispatch = middleware(store)(dispatch)
-  );
+  )
 
-  return Object.assign({}, store, { dispatch });
+  return Object.assign({}, store, { dispatch })
 }
 ```
 
 這跟 Redux 中附帶的 [`applyMiddleware()`](../api/applyMiddleware.md) 的實作很類似，但是**有三個重要的地方不同**：
 
-* 它只暴露了一個 [store API](../api/Store.md) 的子集給 middleware：[`dispatch(action)`](../api/Store.md#dispatch) 和 [`getState()`](../api/Store.
-md#getState)。
+* 它只暴露了一個 [store API](../api/Store.md) 的子集給 middleware：[`dispatch(action)`](../api/Store.md#dispatch) 和 [`getState()`](../api/Store.md#getState)。
 
 * 它用了一個很巧妙的手段來確保你是從你的 middleware 呼叫 `store.dispatch(action)` 而不是呼叫 `next(action)`，這個 action 將會實際的再次通過整個 middleware 鏈，也包括發出 action 當下的 middleware。這對非同步的 middleware 非常有用，正如我們[先前](AsyncActions.md)所看到的。
 
@@ -279,24 +278,24 @@ md#getState)。
 
 ```js
 const logger = store => next => action => {
-  console.log('dispatching', action);
-  let result = next(action);
-  console.log('next state', store.getState());
-  return result;
-};
+  console.log('dispatching', action)
+  let result = next(action)
+  console.log('next state', store.getState())
+  return result
+}
 
 const crashReporter = store => next => action => {
   try {
-    return next(action);
+    return next(action)
   } catch (err) {
-    console.error('Caught an exception!', err);
+    console.error('Caught an exception!', err)
     Raven.captureException(err, {
       extra: {
         action,
         state: store.getState()
       }
-    });
-    throw err;
+    })
+    throw err
   }
 }
 ```
@@ -304,22 +303,22 @@ const crashReporter = store => next => action => {
 以下是要如何把它運用到 Redux store 中：
 
 ```js
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux'
 
 // applyMiddleware 接收 createStore() 並回傳
 // 一個包含相容的 API 的 function。
-let createStoreWithMiddleware = applyMiddleware(logger, crashReporter)(createStore);
+let createStoreWithMiddleware = applyMiddleware(logger, crashReporter)(createStore)
 
 // 像你使用 createStore() 一般使用它
-let todoApp = combineReducers(reducers);
-let store = createStoreWithMiddleware(todoApp);
+let todoApp = combineReducers(reducers)
+let store = createStoreWithMiddleware(todoApp)
 ```
 
 就是這樣！現在任何被 dispatched 到 store 實體的 actions 都將經過 `logger` 和 `crashReporter`：
 
 ```js
 // 將經過 logger 和 crashReporter 兩個 middleware！
-store.dispatch(addTodo('Use Redux'));
+store.dispatch(addTodo('Use Redux'))
 ```
 
 ## 七個範例
@@ -333,29 +332,29 @@ store.dispatch(addTodo('Use Redux'));
  * 在 actions 被 dispatched 之後，Logs 所有的 actions 和 states。
  */
 const logger = store => next => action => {
-  console.group(action.type);
-  console.info('dispatching', action);
-  let result = next(action);
-  console.log('next state', store.getState());
-  console.groupEnd(action.type);
-  return result;
-};
+  console.group(action.type)
+  console.info('dispatching', action)
+  let result = next(action)
+  console.log('next state', store.getState())
+  console.groupEnd(action.type)
+  return result
+}
 
 /**
  * 在 state 被更新且 listeners 被通知之後傳送當機回報。
  */
 const crashReporter = store => next => action => {
   try {
-    return next(action);
+    return next(action)
   } catch (err) {
-    console.error('Caught an exception!', err);
+    console.error('Caught an exception!', err)
     Raven.captureException(err, {
       extra: {
         action,
         state: store.getState()
       }
-    });
-    throw err;
+    })
+    throw err
   }
 }
 
@@ -365,18 +364,18 @@ const crashReporter = store => next => action => {
  */
 const timeoutScheduler = store => next => action => {
   if (!action.meta || !action.meta.delay) {
-    return next(action);
+    return next(action)
   }
 
   let timeoutId = setTimeout(
     () => next(action),
     action.meta.delay
-  );
+  )
 
   return function cancel() {
-    clearTimeout(timeoutId);
-  };
-};
+    clearTimeout(timeoutId)
+  }
+}
 
 /**
  * 用 { meta: { raf: true } } 來排程 actions，
@@ -384,39 +383,39 @@ const timeoutScheduler = store => next => action => {
  * 讓 `dispatch` 回傳一個 function 來從佇列中移除這個 action。
  */
 const rafScheduler = store => next => {
-  let queuedActions = [];
-  let frame = null;
+  let queuedActions = []
+  let frame = null
 
   function loop() {
-    frame = null;
+    frame = null
     try {
       if (queuedActions.length) {
-        next(queuedActions.shift());
+        next(queuedActions.shift())
       }
     } finally {
-      maybeRaf();
+      maybeRaf()
     }
   }
 
   function maybeRaf() {
     if (queuedActions.length && !frame) {
-      frame = requestAnimationFrame(loop);
+      frame = requestAnimationFrame(loop)
     }
   }
 
   return action => {
     if (!action.meta || !action.meta.raf) {
-      return next(action);
+      return next(action)
     }
 
-    queuedActions.push(action);
-    maybeRaf();
+    queuedActions.push(action)
+    maybeRaf()
 
     return function cancel() {
       queuedActions = queuedActions.filter(a => a !== action)
-    };
-  };
-};
+    }
+  }
+}
 
 /**
  * 讓你除了 actions 以外還可以 dispatch promises。
@@ -425,11 +424,11 @@ const rafScheduler = store => next => {
  */
 const vanillaPromise = store => next => action => {
   if (typeof action.then !== 'function') {
-    return next(action);
+    return next(action)
   }
 
-  return Promise.resolve(action).then(store.dispatch);
-};
+  return Promise.resolve(action).then(store.dispatch)
+}
 
 /**
  * 讓你可以 dispatch 有 { promise } 屬性的特殊 actions。
@@ -445,17 +444,17 @@ const readyStatePromise = store => next => action => {
   }
 
   function makeAction(ready, data) {
-    let newAction = Object.assign({}, action, { ready }, data);
-    delete newAction.promise;
-    return newAction;
+    let newAction = Object.assign({}, action, { ready }, data)
+    delete newAction.promise
+    return newAction
   }
 
-  next(makeAction(false));
+  next(makeAction(false))
   return action.promise.then(
     result => next(makeAction(true, { result })),
     error => next(makeAction(true, { error }))
-  );
-};
+  )
+}
 
 /**
  * 讓你可以 dispatch 一個 function 來取代 action。
@@ -469,7 +468,7 @@ const readyStatePromise = store => next => action => {
 const thunk = store => next => action =>
   typeof action === 'function' ?
     action(store.dispatch, store.getState) :
-    next(action);
+    next(action)
 
 
 // 你可以使用全部！(這不意味你應該這樣做。)
@@ -481,7 +480,7 @@ let createStoreWithMiddleware = applyMiddleware(
   readyStatePromise,
   logger,
   crashReporter
-)(createStore);
-let todoApp = combineReducers(reducers);
-let store = createStoreWithMiddleware(todoApp);
+)(createStore)
+let todoApp = combineReducers(reducers)
+let store = createStoreWithMiddleware(todoApp)
 ```

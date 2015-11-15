@@ -50,26 +50,26 @@
 #### `actions.js`
 
 ```js
-export const SELECT_REDDIT = 'SELECT_REDDIT';
+export const SELECT_REDDIT = 'SELECT_REDDIT'
 
 export function selectReddit(reddit) {
   return {
     type: SELECT_REDDIT,
     reddit
-  };
+  }
 }
 ```
 
 他們也可以按下「刷新」按鈕來更新它：
 
 ```js
-export const INVALIDATE_REDDIT = 'INVALIDATE_REDDIT';
+export const INVALIDATE_REDDIT = 'INVALIDATE_REDDIT'
 
 export function invalidateReddit(reddit) {
   return {
     type: INVALIDATE_REDDIT,
     reddit
-  };
+  }
 }
 ```
 
@@ -78,13 +78,13 @@ export function invalidateReddit(reddit) {
 當該是時候針對 reddit 抓取 posts 時，我們會 dispatch 一個 `REQUEST_POSTS` action：
 
 ```js
-export const REQUEST_POSTS = 'REQUEST_POSTS';
+export const REQUEST_POSTS = 'REQUEST_POSTS'
 
 export function requestPosts(reddit) {
   return {
     type: REQUEST_POSTS,
     reddit
-  };
+  }
 }
 ```
 
@@ -93,7 +93,7 @@ export function requestPosts(reddit) {
 最後，當網路請求傳回來時，我們會 dispatch `RECEIVE_POSTS`：
 
 ```js
-export const RECEIVE_POSTS = 'RECEIVE_POSTS';
+export const RECEIVE_POSTS = 'RECEIVE_POSTS'
 
 export function receivePosts(reddit, json) {
   return {
@@ -101,7 +101,7 @@ export function receivePosts(reddit, json) {
     reddit,
     posts: json.data.children.map(child => child.data),
     receivedAt: Date.now()
-  };
+  }
 }
 ```
 
@@ -134,13 +134,16 @@ export function receivePosts(reddit, json) {
       isFetching: false,
       didInvalidate: false,
       lastUpdated: 1439478405547,
-      items: [{
-        id: 42,
-        title: 'Confusion about Flux and Relay'
-      }, {
-        id: 500,
-        title: 'Creating a Simple Application Using React JS and Flux Architecture'
-      }]
+      items: [
+        {
+          id: 42,
+          title: 'Confusion about Flux and Relay'
+        },
+        {
+          id: 500,
+          title: 'Creating a Simple Application Using React JS and Flux Architecture'
+        }
+      ]
     }
   }
 }
@@ -191,7 +194,7 @@ export function receivePosts(reddit, json) {
 >       isFetching: false,
 >       didInvalidate: false,
 >       lastUpdated: 1439478405547,
->       items: [42, 100]
+>       items: [ 42, 100 ]
 >     }
 >   }
 > }
@@ -210,19 +213,19 @@ export function receivePosts(reddit, json) {
 #### `reducers.js`
 
 ```js
-import { combineReducers } from 'redux';
+import { combineReducers } from 'redux'
 import {
   SELECT_REDDIT, INVALIDATE_REDDIT,
   REQUEST_POSTS, RECEIVE_POSTS
-} from '../actions';
+} from '../actions'
 
 function selectedReddit(state = 'reactjs', action) {
   switch (action.type) {
-  case SELECT_REDDIT:
-    return action.reddit;
-  default:
-    return state;
-  }
+    case SELECT_REDDIT:
+      return action.reddit
+    default:
+      return state
+    }
 }
 
 function posts(state = {
@@ -234,43 +237,43 @@ function posts(state = {
   case INVALIDATE_REDDIT:
     return Object.assign({}, state, {
       didInvalidate: true
-    });
+    })
   case REQUEST_POSTS:
     return Object.assign({}, state, {
       isFetching: true,
       didInvalidate: false
-    });
+    })
   case RECEIVE_POSTS:
     return Object.assign({}, state, {
       isFetching: false,
       didInvalidate: false,
       items: action.posts,
       lastUpdated: action.receivedAt
-    });
+    })
   default:
-    return state;
+    return state
   }
 }
 
 function postsByReddit(state = {}, action) {
   switch (action.type) {
-  case INVALIDATE_REDDIT:
-  case RECEIVE_POSTS:
-  case REQUEST_POSTS:
-    return Object.assign({}, state, {
-      [action.reddit]: posts(state[action.reddit], action)
-    });
-  default:
-    return state;
+    case INVALIDATE_REDDIT:
+    case RECEIVE_POSTS:
+    case REQUEST_POSTS:
+      return Object.assign({}, state, {
+        [action.reddit]: posts(state[action.reddit], action)
+      })
+    default:
+      return state
   }
 }
 
 const rootReducer = combineReducers({
   postsByReddit,
   selectedReddit
-});
+})
 
-export default rootReducer;
+export default rootReducer
 ```
 
 在這份程式碼中，有兩個有趣的部分：
@@ -280,14 +283,14 @@ export default rootReducer;
   ```js
   return Object.assign({}, state, {
     [action.reddit]: posts(state[action.reddit], action)
-  });
+  })
   ```
   等同於：
 
   ```js
-  let nextState = {};
-  nextState[action.reddit] = posts(state[action.reddit], action);
-  return Object.assign({}, state, nextState);
+  let nextState = {}
+  nextState[action.reddit] = posts(state[action.reddit], action)
+  return Object.assign({}, state, nextState)
   ```
 * 我們把 `posts(state, action)` 抽出來管理具體的 post 清單的 state。這只是 [reducer composition](../basics/Reducers.md#splitting-reducers)！這是我們選擇用來把 reducer 拆分成更小的 reducers 的方式，而在這個案例中，我們把在物件中更新項目的工作委派給 `posts` reducer。[real world example](../introduction/Examples.html#real-world) 更進一步，展示了如何建立一個 reducer factory 來參數化 pagination reducers。
 
@@ -304,14 +307,14 @@ export default rootReducer;
 #### `actions.js`
 
 ```js
-import fetch from 'isomorphic-fetch';
+import fetch from 'isomorphic-fetch'
 
-export const REQUEST_POSTS = 'REQUEST_POSTS';
+export const REQUEST_POSTS = 'REQUEST_POSTS'
 function requestPosts(reddit) {
   return {
     type: REQUEST_POSTS,
     reddit
-  };
+  }
 }
 
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
@@ -321,12 +324,12 @@ function receivePosts(reddit, json) {
     reddit,
     posts: json.data.children.map(child => child.data),
     receivedAt: Date.now()
-  };
+  }
 }
 
 // 迎接我們的第一個 thunk action creator！
 // 雖然它裡面不一樣，不過你可以就像其他的 action creator 一般使用它：
-// store.dispatch(fetchPosts('reactjs'));
+// store.dispatch(fetchPosts('reactjs'))
 
 export function fetchPosts(reddit) {
 
@@ -339,7 +342,7 @@ export function fetchPosts(reddit) {
     // 第一個 dispatch：更新應用程式 state 以告知
     // API 呼叫開始了。
 
-    dispatch(requestPosts(reddit));
+    dispatch(requestPosts(reddit))
 
     // 被 thunk middleware 呼叫的 function 可以回傳一個值，
     // 那會被傳遞作為 dispatch method 的回傳值。
@@ -355,11 +358,11 @@ export function fetchPosts(reddit) {
         // 在這裡，我們用 API 呼叫的結果來更新應用程式的 state。
 
         dispatch(receivePosts(reddit, json))
-      );
+      )
 
       // 在一個真實世界中的應用程式，你也會想要
       // 捕捉任何網路呼叫中的錯誤。
-  };
+  }
 }
 ```
 
@@ -369,7 +372,7 @@ export function fetchPosts(reddit) {
 
 >```js
 // 在每一個你使用 `fetch` 的檔案做這個
->import fetch from 'isomorphic-fetch';
+>import fetch from 'isomorphic-fetch'
 >```
 
 >內部機制中，它在客戶端上會使用 [`whatwg-fetch` polyfill](https://github.com/github/fetch)，而在伺服器上會使用 [`node-fetch`](https://github.com/bitinn/node-fetch)，所以如果你把應用程式改變成 [universal](https://medium.com/@mjackson/universal-javascript-4761051b7ae9) 的，不需要改變任何的 API 呼叫。
@@ -378,7 +381,7 @@ export function fetchPosts(reddit) {
 
 >```js
 >// 在你的應用程式任何其他的程式碼之前做一次這個
->import 'babel-core/polyfill';
+>import 'babel-core/polyfill'
 >```
 
 我們要如何把 Redux Thunk middleware 加進 dispatch 機制裡？我們使用 Redux 裡的 [`applyMiddleware()`](../api/applyMiddleware.md) method，如下所示：
@@ -386,25 +389,25 @@ export function fetchPosts(reddit) {
 #### `index.js`
 
 ```js
-import thunkMiddleware from 'redux-thunk';
-import createLogger from 'redux-logger';
-import { createStore, applyMiddleware } from 'redux';
-import { selectReddit, fetchPosts } from './actions';
-import rootReducer from './reducers';
+import thunkMiddleware from 'redux-thunk'
+import createLogger from 'redux-logger'
+import { createStore, applyMiddleware } from 'redux'
+import { selectReddit, fetchPosts } from './actions'
+import rootReducer from './reducers'
 
-const loggerMiddleware = createLogger();
+const loggerMiddleware = createLogger()
 
 const createStoreWithMiddleware = applyMiddleware(
   thunkMiddleware, // 讓我們來 dispatch() functions
   loggerMiddleware // 巧妙的 middleware，用來 logs actions
-)(createStore);
+)(createStore)
 
-const store = createStoreWithMiddleware(rootReducer);
+const store = createStoreWithMiddleware(rootReducer)
 
-store.dispatch(selectReddit('reactjs'));
+store.dispatch(selectReddit('reactjs'))
 store.dispatch(fetchPosts('reactjs')).then(() =>
   console.log(store.getState())
-);
+)
 ```
 
 有關 thunks 的好處是，它們可以 dispatch 其他 thunk 的結果：
@@ -412,14 +415,14 @@ store.dispatch(fetchPosts('reactjs')).then(() =>
 #### `actions.js`
 
 ```js
-import fetch from 'isomorphic-fetch';
+import fetch from 'isomorphic-fetch'
 
-export const REQUEST_POSTS = 'REQUEST_POSTS';
+export const REQUEST_POSTS = 'REQUEST_POSTS'
 function requestPosts(reddit) {
   return {
     type: REQUEST_POSTS,
     reddit
-  };
+  }
 }
 
 export const RECEIVE_POSTS = 'RECEIVE_POSTS'
@@ -429,26 +432,26 @@ function receivePosts(reddit, json) {
     reddit,
     posts: json.data.children.map(child => child.data),
     receivedAt: Date.now()
-  };
+  }
 }
 
 function fetchPosts(reddit) {
   return dispatch => {
-    dispatch(requestPosts(reddit));
+    dispatch(requestPosts(reddit))
     return fetch(`http://www.reddit.com/r/${reddit}.json`)
       .then(response => response.json())
-      .then(json => dispatch(receivePosts(reddit, json)));
-  };
+      .then(json => dispatch(receivePosts(reddit, json)))
+  }
 }
 
 function shouldFetchPosts(state, reddit) {
-  const posts = state.postsByReddit[reddit];
+  const posts = state.postsByReddit[reddit]
   if (!posts) {
-    return true;
+    return true
   } else if (posts.isFetching) {
-    return false;
+    return false
   } else {
-    return posts.didInvalidate;
+    return posts.didInvalidate
   }
 }
 
@@ -463,12 +466,12 @@ export function fetchPostsIfNeeded(reddit) {
   return (dispatch, getState) => {
     if (shouldFetchPosts(getState(), reddit)) {
       // 從 thunk Dispatch 一個 thunk！
-      return dispatch(fetchPosts(reddit));
+      return dispatch(fetchPosts(reddit))
     } else {
       // 讓呼叫的程式碼知道沒有東西要等待了。
-      return Promise.resolve();
+      return Promise.resolve()
     }
-  };
+  }
 }
 ```
 
@@ -478,8 +481,8 @@ export function fetchPostsIfNeeded(reddit) {
 
 ```js
 store.dispatch(fetchPostsIfNeeded('reactjs')).then(() =>
-  console.log(store.getState());
-);
+  console.log(store.getState())
+)
 ```
 
 >##### 關於伺服器 Rendering 的附註

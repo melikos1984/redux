@@ -9,17 +9,17 @@
 #### `containers/App.js`
 
 ```js
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { addTodo, completeTodo, setVisibilityFilter, VisibilityFilters } from '../actions';
-import AddTodo from '../components/AddTodo';
-import TodoList from '../components/TodoList';
-import Footer from '../components/Footer';
+import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { addTodo, completeTodo, setVisibilityFilter, VisibilityFilters } from '../actions'
+import AddTodo from '../components/AddTodo'
+import TodoList from '../components/TodoList'
+import Footer from '../components/Footer'
 
 class App extends Component {
   render() {
     // 藉由 connect() 呼叫來注入：
-    const { dispatch, visibleTodos, visibilityFilter } = this.props;
+    const { dispatch, visibleTodos, visibilityFilter } = this.props
     return (
       <div>
         <AddTodo
@@ -37,7 +37,7 @@ class App extends Component {
             dispatch(setVisibilityFilter(nextFilter))
           } />
       </div>
-    );
+    )
   }
 }
 
@@ -51,16 +51,16 @@ App.propTypes = {
     'SHOW_COMPLETED',
     'SHOW_ACTIVE'
   ]).isRequired
-};
+}
 
 function selectTodos(todos, filter) {
   switch (filter) {
-  case VisibilityFilters.SHOW_ALL:
-    return todos;
-  case VisibilityFilters.SHOW_COMPLETED:
-    return todos.filter(todo => todo.completed);
-  case VisibilityFilters.SHOW_ACTIVE:
-    return todos.filter(todo => !todo.completed);
+    case VisibilityFilters.SHOW_ALL:
+      return todos
+    case VisibilityFilters.SHOW_COMPLETED:
+      return todos.filter(todo => todo.completed)
+    case VisibilityFilters.SHOW_ACTIVE:
+      return todos.filter(todo => !todo.completed)
   }
 }
 
@@ -68,11 +68,11 @@ function select(state) {
   return {
     visibleTodos: selectTodos(state.todos, state.visibilityFilter),
     visibilityFilter: state.visibilityFilter
-  };
+  }
 }
 
 // 把 component 包起來以注入 dispatch 和 state 進去
-export default connect(select)(App);
+export default connect(select)(App)
 ```
 
 在上面的範例中，`select` 呼叫 `selectTodos` 以計算 `visibleTodos`。這運作得很好，不過有一個缺點：在每次 component 更新的時候都會計算 `visibleTodos`。如果 state tree 很大，或是計算的代價很大，在每次更新的時候重複計算可能會造成效能問題。Reselect 可以幫助我們避免這些不需要的重複計算。
@@ -85,35 +85,35 @@ Reselect 提供一個 `createSelector` function 來建立 memoized selectors。`
 
 讓我們來定義一個叫做 `visibleTodosSelector` 的 memoized selector 來取代 `select`：
 
-#### `selectors/TodoSelectors.js`
+#### `selectors/todoSelectors.js`
 
 ```js
-import { createSelector } from 'reselect';
-import { VisibilityFilters } from './actions';
+import { createSelector } from 'reselect'
+import { VisibilityFilters } from './actions'
 
 function selectTodos(todos, filter) {
   switch (filter) {
-  case VisibilityFilters.SHOW_ALL:
-    return todos;
-  case VisibilityFilters.SHOW_COMPLETED:
-    return todos.filter(todo => todo.completed);
-  case VisibilityFilters.SHOW_ACTIVE:
-    return todos.filter(todo => !todo.completed);
+    case VisibilityFilters.SHOW_ALL:
+      return todos
+    case VisibilityFilters.SHOW_COMPLETED:
+      return todos.filter(todo => todo.completed)
+    case VisibilityFilters.SHOW_ACTIVE:
+      return todos.filter(todo => !todo.completed)
   }
 }
 
-const visibilityFilterSelector = (state) => state.visibilityFilter;
-const todosSelector = (state) => state.todos;
+const visibilityFilterSelector = (state) => state.visibilityFilter
+const todosSelector = (state) => state.todos
 
 export const visibleTodosSelector = createSelector(
-  [visibilityFilterSelector, todosSelector],
+  [ visibilityFilterSelector, todosSelector ],
   (visibilityFilter, todos) => {
     return {
       visibleTodos: selectTodos(todos, visibilityFilter),
       visibilityFilter
-    };
+    }
   }
-);
+)
 ```
 
 在上面的範例中，`visibilityFilterSelector` 和 `todosSelector` 就是 input-selectors。因為它們沒有轉換它們選擇的資料，所以被建立成普通的非 memoized selector functions。而另一方面，`visibleTodosSelector` 是一個 memoized selector。它接收 `visibilityFilterSelector` 和 `todosSelector` 作為 input-selectors，以及一個計算過濾後的 todos 清單的轉換 function。
@@ -123,14 +123,14 @@ export const visibleTodosSelector = createSelector(
 一個 memoized selector 可以是另一個 memoized selector 的 input-selector。這裡 `visibleTodosSelector` 被用來當作 selector 的 input-selector，以藉由 keyword 進一步的過濾 todos：
 
 ```js
-const keywordSelector = (state) => state.keyword;
+const keywordSelector = (state) => state.keyword
 
 const keywordFilterSelector = createSelector(
-  [visibleTodosSelector, keywordSelector],
+  [ visibleTodosSelector, keywordSelector ],
   (visibleTodos, keyword) => visibleTodos.filter(
     todo => todo.indexOf(keyword) > -1
   )
-);
+)
 ```
 
 ### 把 Selector 連結到 Redux Store
@@ -140,18 +140,18 @@ const keywordFilterSelector = createSelector(
 #### `containers/App.js`
 
 ```js
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { addTodo, completeTodo, setVisibilityFilter } from '../actions';
-import AddTodo from '../components/AddTodo';
-import TodoList from '../components/TodoList';
-import Footer from '../components/Footer';
-import { visibleTodosSelector } from '../selectors/todoSelectors.js';
+import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { addTodo, completeTodo, setVisibilityFilter } from '../actions'
+import AddTodo from '../components/AddTodo'
+import TodoList from '../components/TodoList'
+import Footer from '../components/Footer'
+import { visibleTodosSelector } from '../selectors/todoSelectors'
 
 class App extends Component {
   render() {
     // 藉由 connect() 呼叫注入：
-    const { dispatch, visibleTodos, visibilityFilter } = this.props;
+    const { dispatch, visibleTodos, visibilityFilter } = this.props
     return (
       <div>
         <AddTodo
@@ -169,7 +169,7 @@ class App extends Component {
             dispatch(setVisibilityFilter(nextFilter))
           } />
       </div>
-    );
+    )
   }
 }
 
@@ -183,9 +183,9 @@ App.propTypes = {
     'SHOW_COMPLETED',
     'SHOW_ACTIVE'
   ]).isRequired
-};
+}
 
 // 傳遞 selector 到 connect component
-export default connect(visibleTodosSelector)(App);
+export default connect(visibleTodosSelector)(App)
 ```
 

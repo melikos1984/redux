@@ -27,5 +27,4 @@ Redux 不是一個整體的框架，而是一系列的介面和[一些可以讓�
 
 ## 從 Backbone
 
-抱歉，你需要重寫你的 model layer。
-他們的方式差太多了！
+Backbone 的 model 層跟 Redux 有很大的差異，所以我們不建議把它們混在一起。如果可能的話，最好從頭開始重寫你的應用程式的 model 層而不是把 Backbone 連接到 Redux。然而，如果重寫是不可行的，那你可以使用 [backbone-redux](https://github.com/redbooth/backbone-redux) 來漸漸的遷移，並維持 Redux store 跟 Backbone models 和 collections 之間的同步。

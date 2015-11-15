@@ -7,7 +7,7 @@
 這是一個 action 的例子，它代表添加一個新的 todo 項目：
 
 ```js
-const ADD_TODO = 'ADD_TODO';
+const ADD_TODO = 'ADD_TODO'
 ```
 
 ```js
@@ -20,7 +20,7 @@ const ADD_TODO = 'ADD_TODO';
 Actions 是一般的 JavaScript 物件。actions 必須有一個 `type` 屬性，它代表被執行的 action 的類型。Types 通常應該被定義成字串常數。一旦你的應用程式夠大了，你能會想把它們移進一個單獨的 module。
 
 ```js
-import { ADD_TODO, REMOVE_TODO } from '../actionTypes';
+import { ADD_TODO, REMOVE_TODO } from '../actionTypes'
 ```
 
 >##### 關於 Boilerplate 的附註
@@ -60,8 +60,8 @@ function addTodoWithDispatch(text) {
   const action = {
     type: ADD_TODO,
     text
-  };
-  dispatch(action);
+  }
+  dispatch(action)
 }
 ```
 
@@ -72,29 +72,29 @@ function addTodo(text) {
   return {
     type: ADD_TODO,
     text
-  };
+  }
 }
 ```
 
 這使它們更具有可攜性並更容易測試。要實際地啟動一個 dispatch，必須傳遞回傳值給 `dispatch()` function：
 
 ```js
-dispatch(addTodo(text));
-dispatch(completeTodo(index));
+dispatch(addTodo(text))
+dispatch(completeTodo(index))
 ```
 
-或是建立會自動地 dispatches 的 **bound action creator**：
+或者，你可以建立會自動地 dispatches 的 **bound action creator**：
 
 ```js
-const boundAddTodo = (text) => dispatch(addTodo(text));
-const boundCompleteTodo = (index) => dispatch(completeTodo(index));
+const boundAddTodo = (text) => dispatch(addTodo(text))
+const boundCompleteTodo = (index) => dispatch(completeTodo(index))
 ```
 
-你將可以直接去呼叫它們：
+現在你將可以直接去呼叫它們：
 
 ```
-boundAddTodo(text);
-boundCompleteTodo(index);
+boundAddTodo(text)
+boundCompleteTodo(index)
 ```
 
 `dispatch()` function 可以藉由 [`store.dispatch()`](../api/Store.md#dispatch) 直接地從 store 取用，不過你將更可能會藉由 helper 來取用它，例如 [react-redux](http://github.com/gaearon/react-redux) 的 `connect()`。你可以使用 [`bindActionCreators()`](../api/bindActionCreators.md) 來自動綁定許多 action creators 到一個 `dispatch()` function。
@@ -108,9 +108,9 @@ boundCompleteTodo(index);
  * action types
  */
 
-export const ADD_TODO = 'ADD_TODO';
-export const COMPLETE_TODO = 'COMPLETE_TODO';
-export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER';
+export const ADD_TODO = 'ADD_TODO'
+export const COMPLETE_TODO = 'COMPLETE_TODO'
+export const SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER'
 
 /*
  * 其他常數
@@ -120,22 +120,22 @@ export const VisibilityFilters = {
   SHOW_ALL: 'SHOW_ALL',
   SHOW_COMPLETED: 'SHOW_COMPLETED',
   SHOW_ACTIVE: 'SHOW_ACTIVE'
-};
+}
 
 /*
  * action creators
  */
 
 export function addTodo(text) {
-  return { type: ADD_TODO, text };
+  return { type: ADD_TODO, text }
 }
 
 export function completeTodo(index) {
-  return { type: COMPLETE_TODO, index };
+  return { type: COMPLETE_TODO, index }
 }
 
 export function setVisibilityFilter(filter) {
-  return { type: SET_VISIBILITY_FILTER, filter };
+  return { type: SET_VISIBILITY_FILTER, filter }
 }
 ```
 

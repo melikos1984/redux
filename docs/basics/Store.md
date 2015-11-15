@@ -14,16 +14,15 @@
 如果你已經有一個 reducer，要建立 store 非常簡單。在[前面的章節](Reducers.md)，我們使用 [`combineReducers()`](../api/combineReducers.md) 來把一些 reducers 合併成一個。我們現在要 import 它，並把它傳進 [`createStore()`](../api/createStore.md)。
 
 ```js
-import { createStore } from 'redux';
-import todoApp from './reducers';
-
-let store = createStore(todoApp);
+import { createStore } from 'redux'
+import todoApp from './reducers'
+let store = createStore(todoApp)
 ```
 
 你可以選擇性的指定初始 state 作為第二個參數傳遞給 [`createStore()`](../api/createStore.md)。這對 hydrating 客戶端的 state 以符合運行在伺服器上的 Redux 應用程式的 state 非常有用。
 
 ```js
-let store = createStore(todoApp, window.STATE_FROM_SERVER);
+let store = createStore(todoApp, window.STATE_FROM_SERVER)
 ```
 
 ## Dispatching Actions
@@ -31,26 +30,26 @@ let store = createStore(todoApp, window.STATE_FROM_SERVER);
 現在我們已經建立了一個 store，讓我們來驗證程式可以運作！即使沒有任何的 UI，我們也已經可以測試更新邏輯。
 
 ```js
-import { addTodo, completeTodo, setVisibilityFilter, VisibilityFilters } from './actions';
+import { addTodo, completeTodo, setVisibilityFilter, VisibilityFilters } from './actions'
 
 // 記錄初始 state
-console.log(store.getState());
+console.log(store.getState())
 
 // 每次 state 變更，就記錄它
 let unsubscribe = store.subscribe(() =>
   console.log(store.getState())
-);
+)
 
 // Dispatch 一些 actions
-store.dispatch(addTodo('Learn about actions'));
-store.dispatch(addTodo('Learn about reducers'));
-store.dispatch(addTodo('Learn about store'));
-store.dispatch(completeTodo(0));
-store.dispatch(completeTodo(1));
-store.dispatch(setVisibilityFilter(VisibilityFilters.SHOW_COMPLETED));
+store.dispatch(addTodo('Learn about actions'))
+store.dispatch(addTodo('Learn about reducers'))
+store.dispatch(addTodo('Learn about store'))
+store.dispatch(completeTodo(0))
+store.dispatch(completeTodo(1))
+store.dispatch(setVisibilityFilter(VisibilityFilters.SHOW_COMPLETED))
 
 // 停止監聽 state 的更新
-unsubscribe();
+unsubscribe()
 ```
 
 你可以看到這如何造成 store 掌管的 state 改變：
@@ -64,10 +63,10 @@ unsubscribe();
 #### `index.js`
 
 ```js
-import { createStore } from 'redux';
-import todoApp from './reducers';
+import { createStore } from 'redux'
+import todoApp from './reducers'
 
-let store = createStore(todoApp);
+let store = createStore(todoApp)
 ```
 
 ## 下一步

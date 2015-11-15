@@ -11,6 +11,9 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 * [react-redux](https://github.com/gaearon/react-redux) — React
 * [ng-redux](https://github.com/wbuchwalter/ng-redux) — Angular
 * [ng2-redux](https://github.com/wbuchwalter/ng2-redux) — Angular 2
+* [backbone-redux](https://github.com/redbooth/backbone-redux) — Backbone
+* [redux-falcor](https://github.com/ekosz/redux-falcor) — Falcor
+* [deku-redux](https://github.com/troch/deku-redux) — Deku
 
 ## Middleware
 
@@ -21,6 +24,7 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 * [redux-logger](https://github.com/fcomb/redux-logger) — 記錄每一個 Redux action 和下一個 state
 * [redux-immutable-state-invariant](https://github.com/leoasis/redux-immutable-state-invariant) — 在開發時，警告 state 的變更
 * [redux-analytics](https://github.com/markdalgleish/redux-analytics) — Redux 的分析用 middleware
+* [redux-gen](https://github.com/weo-edu/redux-gen) — Redux 的 Generator middleware
 
 ## Components
 
@@ -48,6 +52,7 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 * [redux-immutablejs](https://github.com/indexiatech/redux-immutablejs) - Redux & [Immutable](https://github.com/facebook/immutable-js/) 之間的整合工具
 * [redux-undo](https://github.com/omnidan/redux-undo) — 輕鬆的 undo/redo 並在你的 reducers 的歷史間活動
 * [redux-tcomb](https://github.com/gcanti/redux-tcomb) — Immutable 與給 Redux 用的 type-checked state 和 actions
+* [redux-mock-store](https://github.com/arnaudbenard/redux-mock-store) - Mock redux store 以測試你的應用程式
 
 ## 開發者工具
 

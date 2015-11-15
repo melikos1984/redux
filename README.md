@@ -20,7 +20,7 @@ Redux 是個給 JavaScript 應用程式所使用的可預測 state 容器。
 >Jing Chen，Flux 作者
 
 >[「我在 FB 的內部 JS 討論群組尋求對 Redux 的評論，並獲得了普遍的好評。真的做得非常棒。」](https://twitter.com/fisherwebdev/status/616286955693682688)
->Bill Fisher，Flux 作者
+>Bill Fisher，Flux 文件的作者
 
 >[「這很酷，你藉由完全不做 Flux 來發明了一個更好的 Flux。」](https://twitter.com/andrestaltz/status/616271392930201604)
 >André Staltz，Cycle 作者
@@ -31,7 +31,7 @@ Redux 是個給 JavaScript 應用程式所使用的可預測 state 容器。
 
 ### 受到的影響
 
-Redux 從 [Flux](https://facebook.github.io/flux) 的概念發展而來，不過藉由從 [Elm](https://github.com/evancz/elm-architecture-tutorial/) 獲取線索來避免它的複雜度。
+Redux 從 [Flux](http://facebook.github.io/flux/) 的概念發展而來，不過藉由從 [Elm](https://github.com/evancz/elm-architecture-tutorial/) 獲取線索來避免它的複雜度。
 不管你以前有沒有用過它們，只需要花幾分鐘就能入門 Redux。
 
 ### 安裝
@@ -42,16 +42,16 @@ Redux 從 [Flux](https://facebook.github.io/flux) 的概念發展而來，不過
 npm install --save redux
 ```
 
-大多數情況，你也會需要 [React 的綁定](http://github.com/gaearon/react-redux)和[開發者工具](http://github.com/gaearon/redux-devtools)。
+大多數情況，你也會需要 [React 的綁定](https://github.com/rackt/react-redux)和[開發者工具](https://github.com/gaearon/redux-devtools)。
 
 ```
 npm install --save react-redux
 npm install --save-dev redux-devtools
 ```
 
-這裡假設你是使用 [npm](http://npmjs.com/) 套件管理與一個模組 bundler，像是 [Webpack](http://webpack.github.io) 或是 [Browserify](http://browserify.org/) 來使用 [CommonJS 模組](http://webpack.github.io/docs/commonjs.html)。
+這裡假設你是使用 [npm](https://www.npmjs.com/) 套件管理與一個模組 bundler，像是 [Webpack](http://webpack.github.io) 或是 [Browserify](http://browserify.org/) 來使用 [CommonJS 模組](http://webpack.github.io/docs/commonjs.html)。
 
-如果你還沒有使用 [npm](http://npmjs.com/) 或任何一個現代的模組 bundler，而且寧願使用可以讓 `Redux` 作為一個全域物件使用的單檔 [UMD](https://github.com/umdjs/umd) 編譯，你可以從 [cdnjs](https://cdnjs.com/libraries/redux) 取得一個預先編譯好的版本。對於任何重要的應用程式，我們*不*建議使用這個方法，因為大部份與 Redux 互補的 libraries 都只能在 [npm](http://npmjs.com/) 上取得。
+如果你還沒有使用 [npm](https://www.npmjs.com/) 或任何一個現代的模組 bundler，而且寧願使用可以讓 `Redux` 作為一個全域物件使用的單檔 [UMD](https://github.com/umdjs/umd) 編譯，你可以從 [cdnjs](https://cdnjs.com/libraries/redux) 取得一個預先編譯好的版本。對於任何重要的應用程式，我們*不*建議使用這個方法，因為大部份與 Redux 互補的 libraries 都只能在 [npm](https://www.npmjs.com/) 上取得。
 
 ### 程式碼片段
 
@@ -62,7 +62,7 @@ npm install --save-dev redux-devtools
 就這樣！
 
 ```js
-import { createStore } from 'redux';
+import { createStore } from 'redux'
 
 /**
  * 這是一個 reducer，一個有 (state, action) => state signature 的 pure function。
@@ -78,30 +78,30 @@ import { createStore } from 'redux';
 function counter(state = 0, action) {
   switch (action.type) {
   case 'INCREMENT':
-    return state + 1;
+    return state + 1
   case 'DECREMENT':
-    return state - 1;
+    return state - 1
   default:
-    return state;
+    return state
   }
 }
 
 // 建立一個 Redux store 來掌管你的應用程式的 state。
 // 它的 API 是 { subscribe, dispatch, getState }。
-let store = createStore(counter);
+let store = createStore(counter)
 
 // 你可以手動的去訂閱更新，或是使用跟你的 view layer 之間的綁定。
 store.subscribe(() =>
   console.log(store.getState())
-);
+)
 
 // 變更內部 state 的唯一方法是 dispatch 一個 action。
 // actions 可以被 serialized、logged 或是儲存並在之後重播。
-store.dispatch({ type: 'INCREMENT' });
+store.dispatch({ type: 'INCREMENT' })
 // 1
-store.dispatch({ type: 'INCREMENT' });
+store.dispatch({ type: 'INCREMENT' })
 // 2
-store.dispatch({ type: 'DECREMENT' });
+store.dispatch({ type: 'DECREMENT' })
 // 1
 ```
 
@@ -131,24 +131,25 @@ store.dispatch({ type: 'DECREMENT' });
 * [Async](http://rackt.github.io/redux/docs/introduction/Examples.html#async) ([原始碼](https://github.com/rackt/redux/tree/master/examples/async))
 * [Universal](http://rackt.github.io/redux/docs/introduction/Examples.html#universal) ([原始碼](https://github.com/rackt/redux/tree/master/examples/universal))
 * [Real World](http://rackt.github.io/redux/docs/introduction/Examples.html#real-world) ([原始碼](https://github.com/rackt/redux/tree/master/examples/real-world))
+* [Shopping Cart](http://rackt.github.io/redux/docs/introduction/Examples.html#shopping-cart) ([原始碼](https://github.com/rackt/redux/tree/master/examples/shopping-cart))
 
 如果你不熟悉 NPM 生態系並在讓專案運作起來時遇到了困難，或是你不確定要在哪裡貼上上面的程式碼片段，請查看 [simplest-redux-example](https://github.com/jackielii/simplest-redux-example)，它把 Redux 和 React、Browserify 結合在一起。
 
 ### 討論
 
-加入 [Reactiflux](http://reactiflux.com) Discord 社群的 [#redux](https://discord.gg/0ZcbPKXt5bZ6au5t) 頻道。
+加入 [Reactiflux](http://www.reactiflux.com) Discord 社群的 [#redux](https://discord.gg/0ZcbPKXt5bZ6au5t) 頻道。
 
 ### 致謝
 
 * [Elm 架構](https://github.com/evancz/elm-architecture-tutorial) 關於如何用 reducers 來更新 state 的偉大介紹；
-* [Turning the database inside-out](http://blog.confluent.io/2015/03/04/turning-the-database-inside-out-with-apache-samza/) 啟發我的心；
+* [Turning the database inside-out](http://www.confluent.io/blog/turning-the-database-inside-out-with-apache-samza/) 啟發我的心；
 * [Developing ClojureScript with Figwheel](http://www.youtube.com/watch?v=j-kj2qwJa_E) 說服我，讓我重新評估這應該「可行」；
 * [Webpack](https://github.com/webpack/docs/wiki/hot-module-replacement-with-webpack) 的 Hot Module Replacement；
 * [Flummox](https://github.com/acdlite/flummox) 教我如何不使用 boilerplate 和 singletons 來達成 Flux；
 * [disto](https://github.com/threepointone/disto) 證明了 Stores 是 hot reloadable 的概念；
 * [NuclearJS](https://github.com/optimizely/nuclear-js) 證明這個架構可以有很好的效能；
 * [Om](https://github.com/omcljs/om) 推廣單一原子化 state 的想法；
-* [Cycle](https://github.com/staltz/cycle) 展示 function 往往是最好的工具；
+* [Cycle](https://github.com/cyclejs/cycle-core) 展示 function 往往是最好的工具；
 * [React](https://github.com/facebook/react) 實際的創新。
 
 特別感謝 [Jamie Paton](http://jdpaton.github.io) 它移交了 `redux` NPM 套件名稱給我們。
@@ -163,7 +164,7 @@ store.dispatch({ type: 'DECREMENT' });
 在 Redux 的工作是[由社群出資](https://www.patreon.com/reactdx)。
 遇到一些卓越的公司使這可以成真：
 
-* [Webflow](http://webflow.com/)
+* [Webflow](https://webflow.com/)
 * [Chess iX](http://www.chess-ix.com/)
 
 [查看完整的 Redux 贊助者清單。](PATRONS.md)

@@ -125,6 +125,33 @@ open http://localhost:3000/
 * Pagination
 * Routing
 
+## Shopping Cart
+
+執行 [Shopping Cart](https://github.com/rackt/redux/tree/master/examples/shopping-cart) 範例：
+
+```
+git clone https://github.com/rackt/redux.git
+
+cd redux/examples/shopping-cart
+npm install
+npm start
+
+open http://localhost:3000/
+```
+
+這是一個慣用的 Redux 開發模式的範例。
+
+它涵蓋了：
+
+* 正規化的 state
+* 清楚的 entity ID 追蹤
+* Reducer 組合
+* 查詢跟 reducers 定義在一起
+* 在失敗時 rollback 的範例
+* 安全的條件式 action dispatching
+* 只使用 [React Redux](https://github.com/rackt/react-redux) 來綁定 action creators
+* 條件式 middleware (logging 範例)
+
 ## 更多範例
 
-你可以在  [Awesome Redux](https://github.com/xgrommx/awesome-redux) 找到更多範例。
+你可以在 [Awesome Redux](https://github.com/xgrommx/awesome-redux) 找到更多範例。

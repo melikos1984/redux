@@ -27,26 +27,26 @@ export function addTodo(text) {
   return {
     type: 'ADD_TODO',
     text
-  };
+  }
 }
 
 export function removeTodo(id) {
   return {
     type: 'REMOVE_TODO',
     id
-  };
+  }
 }
 ```
 
 #### `SomeComponent.js`
 
 ```js
-import { Component } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
+import { Component } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
-import * as TodoActionCreators from './TodoActionCreators';
-console.log(TodoActionCreators);
+import * as TodoActionCreators from './TodoActionCreators'
+console.log(TodoActionCreators)
 // {
 //   addTodo: Function,
 //   removeTodo: Function
@@ -55,28 +55,28 @@ console.log(TodoActionCreators);
 class TodoListContainer extends Component {
   componentDidMount() {
     // 藉由 react-redux 注入：
-    let { dispatch } = this.props;
+    let { dispatch } = this.props
 
-    // 附註：這樣是不可行的：
-    // TodoActionCreators.addTodo('Use Redux');
+    // 附註：這樣是無法運作的：
+    // TodoActionCreators.addTodo('Use Redux')
 
     // 你只是呼叫一個會建立一個 action 的 function。
     // 你也必須 dispatch 這個 action！
 
     // 這將會正常運作：
-    let action = TodoActionCreators.addTodo('Use Redux');
-    dispatch(action);
+    let action = TodoActionCreators.addTodo('Use Redux')
+    dispatch(action)
   }
 
   render() {
     // 藉由 react-redux 注入：
-    let { todos, dispatch } = this.props;
+    let { todos, dispatch } = this.props
 
     // 這裡是一個 bindActionCreators 極佳的使用情境：
     // 你希望 child component 完全不知道 Redux 的存在。
 
-    let boundActionCreators = bindActionCreators(TodoActionCreators, dispatch);
-    console.log(boundActionCreators);
+    let boundActionCreators = bindActionCreators(TodoActionCreators, dispatch)
+    console.log(boundActionCreators)
     // {
     //   addTodo: Function,
     //   removeTodo: Function
@@ -85,19 +85,19 @@ class TodoListContainer extends Component {
     return (
       <TodoList todos={todos}
                 {...boundActionCreators} />
-    );
+    )
 
     // 除了 bindActionCreators 之外的另一種選擇是
     // 把 dispatch function 傳遞下去，不過接著你的 child component
     // 需要 import action creators 並了解它們。
 
-    // return <TodoList todos={todos} dispatch={dispatch} />;
+    // return <TodoList todos={todos} dispatch={dispatch} />
   }
 }
 
 export default connect(
   state => ({ todos: state.todos })
-)(TodoListContainer);
+)(TodoListContainer)
 ```
 
 #### 提示

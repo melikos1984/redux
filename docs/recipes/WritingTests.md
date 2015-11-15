@@ -18,7 +18,7 @@ npm install --save-dev mocha
   ...
   "scripts": {
     ...
-    "test": "mocha --compilers js:babel/register --recursive",
+    "test": "mocha --compilers js:babel-core/register --recursive",
     "test:watch": "npm test -- --watch",
   },
   ...
@@ -38,31 +38,31 @@ export function addTodo(text) {
   return {
     type: 'ADD_TODO',
     text
-  };
+  }
 }
 ```
 可以像這樣測試：
 
 ```js
-import expect from 'expect';
-import * as actions from '../../actions/TodoActions';
-import * as types from '../../constants/ActionTypes';
+import expect from 'expect'
+import * as actions from '../../actions/TodoActions'
+import * as types from '../../constants/ActionTypes'
 
 describe('actions', () => {
   it('should create an action to add a todo', () => {
-    const text = 'Finish docs';
+    const text = 'Finish docs'
     const expectedAction = {
       type: types.ADD_TODO,
       text
-    };
-    expect(actions.addTodo(text)).toEqual(expectedAction);
-  });
-});
+    }
+    expect(actions.addTodo(text)).toEqual(expectedAction)
+  })
+})
 ```
 
 ### Async Action Creators
 
-針對使用 [Redux Thunk](https://github.com/gaearon/redux-thunk) 或其他的 middleware 的 async action creators，為了測試，完全的 mock Redux store 是最好的。你仍然可以如下面所示使用 [`applyMiddleware()`](../api/applyMiddleware.md) 以及一個 mock store。你也可以使用 [nock](https://github.com/pgte/nock) 來 mock HTTP 請求。
+針對使用 [Redux Thunk](https://github.com/gaearon/redux-thunk) 或其他的 middleware 的 async action creators，為了測試，完全的 mock Redux store 是最好的。你仍然可以如下面所示使用 [`applyMiddleware()`](../api/applyMiddleware.md) 以及一個 mock store (你可以在 [redux-mock-store](https://github.com/arnaudbenard/redux-mock-store) 找到下面的程式碼)。你也可以使用 [nock](https://github.com/pgte/nock) 來 mock HTTP 請求。
 
 #### 範例
 
@@ -70,55 +70,55 @@ describe('actions', () => {
 function fetchTodosRequest() {
   return {
     type: FETCH_TODOS_REQUEST
-  };
+  }
 }
 
 function fetchTodosSuccess(body) {
   return {
     type: FETCH_TODOS_SUCCESS,
     body
-  };
+  }
 }
 
 function fetchTodosFailure(ex) {
   return {
     type: FETCH_TODOS_FAILURE,
     ex
-  };
+  }
 }
 
 export function fetchTodos() {
   return dispatch => {
-    dispatch(fetchTodosRequest());
+    dispatch(fetchTodosRequest())
     return fetch('http://example.com/todos')
       .then(res => res.json())
       .then(json => dispatch(fetchTodosSuccess(json.body)))
-      .catch(ex => dispatch(fetchTodosFailure(ex)));
-  };
+      .catch(ex => dispatch(fetchTodosFailure(ex)))
+  }
 }
 ```
 
 可以像這樣測試：
 
 ```js
-import expect from 'expect';
-import { applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import * as actions from '../../actions/counter';
-import * as types from '../../constants/ActionTypes';
-import nock from 'nock';
+import expect from 'expect'
+import { applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
+import * as actions from '../../actions/counter'
+import * as types from '../../constants/ActionTypes'
+import nock from 'nock'
 
-const middlewares = [thunk];
+const middlewares = [ thunk ]
 
 /**
  * 用 middleware 建立一個 Redux store 的 mock。
  */
 function mockStore(getState, expectedActions, done) {
   if (!Array.isArray(expectedActions)) {
-    throw new Error('expectedActions should be an array of expected actions.');
+    throw new Error('expectedActions should be an array of expected actions.')
   }
   if (typeof done !== 'undefined' && typeof done !== 'function') {
-    throw new Error('done should either be undefined or function.');
+    throw new Error('done should either be undefined or function.')
   }
 
   function mockStoreWithoutMiddleware() {
@@ -126,20 +126,20 @@ function mockStore(getState, expectedActions, done) {
       getState() {
         return typeof getState === 'function' ?
           getState() :
-          getState;
+          getState
       },
 
       dispatch(action) {
-        const expectedAction = expectedActions.shift();
+        const expectedAction = expectedActions.shift()
 
         try {
-          expect(action).toEqual(expectedAction);
+          expect(action).toEqual(expectedAction)
           if (done && !expectedActions.length) {
-            done();
+            done()
           }
-          return action;
+          return action
         } catch (e) {
-          done(e);
+          done(e)
         }
       }
     }
@@ -147,29 +147,29 @@ function mockStore(getState, expectedActions, done) {
 
   const mockStoreWithMiddleware = applyMiddleware(
     ...middlewares
-  )(mockStoreWithoutMiddleware);
+  )(mockStoreWithoutMiddleware)
 
-  return mockStoreWithMiddleware();
+  return mockStoreWithMiddleware()
 }
 
 describe('async actions', () => {
   afterEach(() => {
-    nock.cleanAll();
-  });
+    nock.cleanAll()
+  })
 
   it('creates FETCH_TODOS_SUCCESS when fetching todos has been done', (done) => {
     nock('http://example.com/')
       .get('/todos')
-      .reply(200, { todos: ['do something'] });
+      .reply(200, { todos: ['do something'] })
 
     const expectedActions = [
       { type: types.FETCH_TODOS_REQUEST },
       { type: types.FETCH_TODOS_SUCCESS, body: { todos: ['do something']  } }
     ]
-    const store = mockStore({ todos: [] }, expectedActions, done);
-    store.dispatch(actions.fetchTodos());
-  });
-});
+    const store = mockStore({ todos: [] }, expectedActions, done)
+    store.dispatch(actions.fetchTodos())
+  })
+})
 ```
 
 ### Reducers
@@ -179,45 +179,52 @@ reducer 應該把 action 應用到先前的 state，然後回傳新的 state，�
 #### 範例
 
 ```js
-import { ADD_TODO } from '../constants/ActionTypes';
+import { ADD_TODO } from '../constants/ActionTypes'
 
-const initialState = [{
-  text: 'Use Redux',
-  completed: false,
-  id: 0
-}];
+const initialState = [
+  {
+    text: 'Use Redux',
+    completed: false,
+    id: 0
+  }
+]
 
 export default function todos(state = initialState, action) {
   switch (action.type) {
-  case ADD_TODO:
-    return [{
-      id: state.reduce((maxId, todo) => Math.max(todo.id, maxId), -1) + 1,
-      completed: false,
-      text: action.text
-    }, ...state];
+    case ADD_TODO:
+      return [
+        {
+          id: state.reduce((maxId, todo) => Math.max(todo.id, maxId), -1) + 1,
+          completed: false,
+          text: action.text
+        },
+        ...state
+      ]
 
-  default:
-    return state;
+    default:
+      return state
   }
 }
 ```
 可以像這樣測試：
 
 ```js
-import expect from 'expect';
-import reducer from '../../reducers/todos';
-import * as types from '../../constants/ActionTypes';
+import expect from 'expect'
+import reducer from '../../reducers/todos'
+import * as types from '../../constants/ActionTypes'
 
 describe('todos reducer', () => {
   it('should return the initial state', () => {
     expect(
       reducer(undefined, {})
-    ).toEqual([{
-      text: 'Use Redux',
-      completed: false,
-      id: 0
-    }]);
-  });
+    ).toEqual([
+      {
+        text: 'Use Redux',
+        completed: false,
+        id: 0
+      }
+    ])
+  })
 
   it('should handle ADD_TODO', () => {
     expect(
@@ -225,32 +232,46 @@ describe('todos reducer', () => {
         type: types.ADD_TODO,
         text: 'Run the tests'
       })
-    ).toEqual([{
-      text: 'Run the tests',
-      completed: false,
-      id: 0
-    }]);
+    ).toEqual(
+      [
+        {
+          text: 'Run the tests',
+          completed: false,
+          id: 0
+        }
+      ]
+    )
 
     expect(
-      reducer([{
-        text: 'Use Redux',
-        completed: false,
-        id: 0
-      }], {
-        type: types.ADD_TODO,
-        text: 'Run the tests'
-      })
-    ).toEqual([{
-      text: 'Run the tests',
-      completed: false,
-      id: 1
-    }, {
-      text: 'Use Redux',
-      completed: false,
-      id: 0
-    }]);
-  });
-});
+      reducer(
+        [
+          {
+            text: 'Use Redux',
+            completed: false,
+            id: 0
+          }
+        ],
+        {
+          type: types.ADD_TODO,
+          text: 'Run the tests'
+        }
+      )
+    ).toEqual(
+      [
+        {
+          text: 'Run the tests',
+          completed: false,
+          id: 1
+        },
+        {
+          text: 'Use Redux',
+          completed: false,
+          id: 0
+        }
+      ]
+    )
+  })
+})
 ```
 
 ### Components
@@ -268,13 +289,13 @@ npm install --save-dev react-addons-test-utils
 #### 範例
 
 ```js
-import React, { PropTypes, Component } from 'react';
-import TodoTextInput from './TodoTextInput';
+import React, { PropTypes, Component } from 'react'
+import TodoTextInput from './TodoTextInput'
 
 class Header extends Component {
   handleSave(text) {
     if (text.length !== 0) {
-      this.props.addTodo(text);
+      this.props.addTodo(text)
     }
   }
 
@@ -286,70 +307,70 @@ class Header extends Component {
                          onSave={this.handleSave.bind(this)}
                          placeholder='What needs to be done?' />
       </header>
-    );
+    )
   }
 }
 
 Header.propTypes = {
   addTodo: PropTypes.func.isRequired
-};
+}
 
-export default Header;
+export default Header
 ```
 
 可以像這樣測試：
 
 ```js
-import expect from 'expect';
-import React from 'react';
-import TestUtils from 'react-addons-test-utils';
-import Header from '../../components/Header';
-import TodoTextInput from '../../components/TodoTextInput';
+import expect from 'expect'
+import React from 'react'
+import TestUtils from 'react-addons-test-utils'
+import Header from '../../components/Header'
+import TodoTextInput from '../../components/TodoTextInput'
 
 function setup() {
   let props = {
     addTodo: expect.createSpy()
-  };
+  }
 
-  let renderer = TestUtils.createRenderer();
-  renderer.render(<Header {...props} />);
-  let output = renderer.getRenderOutput();
+  let renderer = TestUtils.createRenderer()
+  renderer.render(<Header {...props} />)
+  let output = renderer.getRenderOutput()
 
   return {
     props,
     output,
     renderer
-  };
+  }
 }
 
 describe('components', () => {
   describe('Header', () => {
     it('should render correctly', () => {
-      const { output } = setup();
+      const { output } = setup()
 
-      expect(output.type).toBe('header');
-      expect(output.props.className).toBe('header');
+      expect(output.type).toBe('header')
+      expect(output.props.className).toBe('header')
 
-      let [h1, input] = output.props.children;
+      let [ h1, input ] = output.props.children
 
-      expect(h1.type).toBe('h1');
-      expect(h1.props.children).toBe('todos');
+      expect(h1.type).toBe('h1')
+      expect(h1.props.children).toBe('todos')
 
-      expect(input.type).toBe(TodoTextInput);
-      expect(input.props.newTodo).toBe(true);
-      expect(input.props.placeholder).toBe('What needs to be done?');
-    });
+      expect(input.type).toBe(TodoTextInput)
+      expect(input.props.newTodo).toBe(true)
+      expect(input.props.placeholder).toBe('What needs to be done?')
+    })
 
     it('should call addTodo if length of text is greater than 0', () => {
-      const { output, props } = setup();
-      let input = output.props.children[1];
-      input.props.onSave('');
-      expect(props.addTodo.calls.length).toBe(0);
-      input.props.onSave('Use Redux');
-      expect(props.addTodo.calls.length).toBe(1);
-    });
-  });
-});
+      const { output, props } = setup()
+      let input = output.props.children[1]
+      input.props.onSave('')
+      expect(props.addTodo.calls.length).toBe(0)
+      input.props.onSave('Use Redux')
+      expect(props.addTodo.calls.length).toBe(1)
+    })
+  })
+})
 ```
 
 #### 修復壞掉的 `setState()`
@@ -363,11 +384,11 @@ npm install --save-dev jsdom
 接著在你的測試目錄中建立一個 `setup.js` 檔案：
 
 ```js
-import { jsdom } from 'jsdom';
+import { jsdom } from 'jsdom'
 
-global.document = jsdom('<!doctype html><html><body></body></html>');
-global.window = document.defaultView;
-global.navigator = global.window.navigator;
+global.document = jsdom('<!doctype html><html><body></body></html>')
+global.window = document.defaultView
+global.navigator = global.window.navigator
 ```
 
 讓這段程式碼在 React 被 import *之前*執行非常重要。為了確保這件事，調整你的 `mocha` 指令在 `package.json` 的選項中加入 `--require ./test/setup.js`：
@@ -390,17 +411,17 @@ global.navigator = global.window.navigator;
 試想下面的 `App` component：
 
 ```js
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 
 class App extends Component { /* ... */ }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps)(App)
 ```
 
 在單元測試中，你通常會像這樣 import `App` component：
 
 ```js
-import App from './App';
+import App from './App'
 ```
 
 但是當你 import 它時，你實際上拿到的是 `connect()` 回傳的包裝過後的 component，而不是 `App` component 本身。如果你想要測試它與 Redux 的互動，這是個好消息：你可以把它跟特別為這個單元測試建立的 store 包在一個 [`<Provider>`](https://github.com/rackt/react-redux#provider-store) 中。但是有時你只是想要測試 component 的 rendering，而不想測試 Redux store。
@@ -408,32 +429,32 @@ import App from './App';
 為了能夠不處理 decorator 即可測試 App component 本身，我們也建議你 export 沒有被 decorated 的 component：
 
 ```js
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'
 
 // 使用 named export 處理未連結的 component (測試用)
 export class App extends Component { /* ... */ }
 
-// 使用 default export 處理已連結的 component (應用程式用)
-export default connect(mapDispatchToProps)(App);
+// 使用 default export 來處理已連結的 component (應用程式用)
+export default connect(mapDispatchToProps)(App)
 ```
 
 因為 default export 仍然是個 decorated component，上面出現的 import 語句會像之前一樣運作，所以你不需要變動應用程式中的程式碼。不過，你現在可以在你的測試檔像這樣 import 沒有被 decorate 的 `App` components：
 
 ```js
-// 注意大括號：抓取 named export 來取代 default export
-import { App } from './App';
+// 注意大括號：抓取 named export 而不是 default export
+import { App } from './App'
 ```
 
 而如果你兩個都需要：
 
 ```js
-import ConnectedApp, { App } from './App';
+import ConnectedApp, { App } from './App'
 ```
 
 在應用程式裡面，你仍然可以像一般一樣 import 它：
 
 ```js
-import App from './App';
+import App from './App'
 ```
 
 你應該只會在測試使用 named export。
@@ -449,46 +470,46 @@ Middleware functions 包裝了 Redux 中 `dispatch` 呼叫的行為，所以要�
 #### 範例
 
 ```js
-import expect from 'expect';
-import * as types from '../../constants/ActionTypes';
-import singleDispatch from '../../middleware/singleDispatch';
+import expect from 'expect'
+import * as types from '../../constants/ActionTypes'
+import singleDispatch from '../../middleware/singleDispatch'
 
 const createFakeStore = fakeData => ({
   getState() {
-    return fakeData;
+    return fakeData
   }
-});
+})
 
 const dispatchWithStoreOf = (storeData, action) => {
-  let dispatched = null;
-  const dispatch = singleDispatch(createFakeStore(storeData))(actionAttempt => dispatched = actionAttempt);
-  dispatch(action);
-  return dispatched;
+  let dispatched = null
+  const dispatch = singleDispatch(createFakeStore(storeData))(actionAttempt => dispatched = actionAttempt)
+  dispatch(action)
+  return dispatched
 };
 
 describe('middleware', () => {
   it('should dispatch if store is empty', () => {
     const action = {
       type: types.ADD_TODO
-    };
+    }
 
     expect(
       dispatchWithStoreOf({}, action)
-    ).toEqual(action);
-  });
+    ).toEqual(action)
+  })
 
   it('should not dispatch if store already has type', () => {
     const action = {
       type: types.ADD_TODO
-    };
+    }
 
     expect(
       dispatchWithStoreOf({
         [types.ADD_TODO]: 'dispatched'
       }, action)
-    ).toNotExist();
-  });
-});
+    ).toNotExist()
+  })
+})
 ```
 
 ### 術語表

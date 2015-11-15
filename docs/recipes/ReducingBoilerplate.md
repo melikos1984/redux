@@ -22,9 +22,9 @@ actions 通常會有一個常數的 type 屬性來幫助 reducers (或是 Flux �
 
 
 ```js
-const ADD_TODO = 'ADD_TODO';
-const REMOVE_TODO = 'REMOVE_TODO';
-const LOAD_ARTICLE = 'LOAD_ARTICLE';
+const ADD_TODO = 'ADD_TODO'
+const REMOVE_TODO = 'REMOVE_TODO'
+const LOAD_ARTICLE = 'LOAD_ARTICLE'
 ```
 
 為什麼這個是有好處的呢？**常數常常被認為是不必要的，而對小專案來說，這或許是對的。**但對大一點的專案來說，把 action types 定義成常數有一些好處：
@@ -47,7 +47,7 @@ const LOAD_ARTICLE = 'LOAD_ARTICLE';
 dispatch({
   type: 'ADD_TODO',
   text: 'Use Redux'
-});
+})
 ```
 
 你可以在一個單獨的檔案中撰寫一個 action creator，並從你的 component import 它：
@@ -59,14 +59,14 @@ export function addTodo(text) {
   return {
     type: 'ADD_TODO',
     text
-  };
+  }
 }
 ```
 
 #### `AddTodo.js`
 
 ```js
-import { addTodo } from './actionCreators';
+import { addTodo } from './actionCreators'
 
 // 在某處的 event handler 中
 dispatch(addTodo('Use Redux'))
@@ -81,7 +81,7 @@ function addTodoWithoutCheck(text) {
   return {
     type: 'ADD_TODO',
     text
-  };
+  }
 }
 
 export function addTodo(text) {
@@ -90,10 +90,10 @@ export function addTodo(text) {
   return function (dispatch, getState) {
     if (getState().todos.length === 3) {
       // 提早中斷
-      return;
+      return
     }
 
-    dispatch(addTodoWithoutCheck(text));
+    dispatch(addTodoWithoutCheck(text))
   }
 }
 ```
@@ -110,7 +110,7 @@ export function addTodo(text) {
   return {
     type: 'ADD_TODO',
     text
-  };
+  }
 }
 
 export function editTodo(id, text) {
@@ -118,14 +118,14 @@ export function editTodo(id, text) {
     type: 'EDIT_TODO',
     id,
     text
-  };
+  }
 }
 
 export function removeTodo(id) {
   return {
     type: 'REMOVE_TODO',
     id
-  };
+  }
 }
 ```
 
@@ -134,21 +134,21 @@ export function removeTodo(id) {
 ```js
 function makeActionCreator(type, ...argNames) {
   return function(...args) {
-    let action = { type };
+    let action = { type }
     argNames.forEach((arg, index) => {
-      action[argNames[index]] = args[index];
-    });
-    return action;
+      action[argNames[index]] = args[index]
+    })
+    return action
   }
 }
 
-const ADD_TODO = 'ADD_TODO';
-const EDIT_TODO = 'EDIT_TODO';
-const REMOVE_TODO = 'REMOVE_TODO';
+const ADD_TODO = 'ADD_TODO'
+const EDIT_TODO = 'EDIT_TODO'
+const REMOVE_TODO = 'REMOVE_TODO'
 
-export const addTodo = makeActionCreator(ADD_TODO, 'todo');
-export const editTodo = makeActionCreator(EDIT_TODO, 'id', 'todo');
-export const removeTodo = makeActionCreator(REMOVE_TODO, 'id');
+export const addTodo = makeActionCreator(ADD_TODO, 'todo')
+export const editTodo = makeActionCreator(EDIT_TODO, 'id', 'todo')
+export const removeTodo = makeActionCreator(REMOVE_TODO, 'id')
 ```
 也有一些 utility libraries 可以幫助產生 action creators，像是 [redux-action-utils](https://github.com/insin/redux-action-utils) 和 [redux-actions](https://github.com/acdlite/redux-actions)。這些可以幫助減少你的 boilerplate 程式碼並遵守像是 [Flux Standard Action (FSA)](https://github.com/acdlite/flux-standard-action) 的標準。
 
@@ -166,7 +166,7 @@ export function loadPostsSuccess(userId, response) {
     type: 'LOAD_POSTS_SUCCESS',
     userId,
     response
-  };
+  }
 }
 
 export function loadPostsFailure(userId, error) {
@@ -174,71 +174,71 @@ export function loadPostsFailure(userId, error) {
     type: 'LOAD_POSTS_FAILURE',
     userId,
     error
-  };
+  }
 }
 
 export function loadPostsRequest(userId) {
   return {
     type: 'LOAD_POSTS_REQUEST',
     userId
-  };
+  }
 }
 ```
 
 #### `UserInfo.js`
 
 ```js
-import { Component } from 'react';
-import { connect } from 'react-redux';
-import { loadPostsRequest, loadPostsSuccess, loadPostsFailure } from './actionCreators';
+import { Component } from 'react'
+import { connect } from 'react-redux'
+import { loadPostsRequest, loadPostsSuccess, loadPostsFailure } from './actionCreators'
 
 class Posts extends Component {
   loadData(userId) {
     // 藉由 React Redux `connect()` 呼叫注入進去 props：
-    let { dispatch, posts } = this.props;
+    let { dispatch, posts } = this.props
 
     if (posts[userId]) {
       // 這是已經被快取的資料！不要做任何事情。
-      return;
+      return
     }
 
     // Reducer 可以藉由設定 `isFetching` 來應對這個 action，
     // 並因此讓我們可以顯示一個 spinner。
-    dispatch(loadPostsRequest(userId));
+    dispatch(loadPostsRequest(userId))
 
     // Reducer 可以藉由填入`users` 來應對這些 actions。
     fetch(`http://myapi.com/users/${userId}/posts`).then(
       response => dispatch(loadPostsSuccess(userId, response)),
       error => dispatch(loadPostsFailure(userId, error))
-    );
+    )
   }
 
   componentDidMount() {
-    this.loadData(this.props.userId);
+    this.loadData(this.props.userId)
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.userId !== this.props.userId) {
-      this.loadData(nextProps.userId);
+      this.loadData(nextProps.userId)
     }
   }
 
   render() {
     if (this.props.isFetching) {
-      return <p>Loading...</p>;
+      return <p>Loading...</p>
     }
 
     let posts = this.props.posts.map(post =>
       <Post post={post} key={post.id} />
-    );
+    )
 
-    return <div>{posts}</div>;
+    return <div>{posts}</div>
   }
 }
 
 export default connect(state => ({
   posts: state.posts
-}))(Posts);
+}))(Posts)
 ```
 
 不過，這很快就會重複，因為不同的 components 會需要從一樣的 API 端點請求資料。除此之外，我們想要從許多的 components 來重用一部分的邏輯 (例如，當有被快取的資料可以使用時提早中斷)。
@@ -259,16 +259,16 @@ export default connect(state => ({
 export function loadPosts(userId) {
   // 被 thunk middleware 所轉譯：
   return function (dispatch, getState) {
-    let { posts } = getState();
+    let { posts } = getState()
     if (posts[userId]) {
       // 這是已經被快取的資料！不要做任何事情。
-      return;
+      return
     }
 
     dispatch({
       type: 'LOAD_POSTS_REQUEST',
       userId
-    });
+    })
 
     // 非同步的 Dispatch 原生的 actions
     fetch(`http://myapi.com/users/${userId}/posts`).then(
@@ -282,7 +282,7 @@ export function loadPosts(userId) {
         userId,
         error
       })
-    );
+    )
   }
 }
 ```
@@ -290,40 +290,40 @@ export function loadPosts(userId) {
 #### `UserInfo.js`
 
 ```js
-import { Component } from 'react';
-import { connect } from 'react-redux';
-import { loadPosts } from './actionCreators';
+import { Component } from 'react'
+import { connect } from 'react-redux'
+import { loadPosts } from './actionCreators'
 
 class Posts extends Component {
   componentDidMount() {
-    this.props.dispatch(loadPosts(this.props.userId));
+    this.props.dispatch(loadPosts(this.props.userId))
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.userId !== this.props.userId) {
-      this.props.dispatch(loadPosts(nextProps.userId));
+      this.props.dispatch(loadPosts(nextProps.userId))
     }
   }
 
   render() {
     if (this.props.isFetching) {
-      return <p>Loading...</p>;
+      return <p>Loading...</p>
     }
 
     let posts = this.props.posts.map(post =>
       <Post post={post} key={post.id} />
-    );
+    )
 
-    return <div>{posts}</div>;
+    return <div>{posts}</div>
   }
 }
 
 export default connect(state => ({
   posts: state.posts
-}))(Posts);
+}))(Posts)
 ```
 
-這樣打的字更少了！如果你想要，你還是可以使用「原生的」action creators 像是 `loadPostsSuccess`，你會從「smart」的 `loadPosts` action creator 中來使用它。
+這樣打的字更少了！如果你想要，你還是可以使用「原生的」action creators 像是 `loadPostsSuccess`，你會從 container 的 `loadPosts` action creator 中來使用它。
 
 **最後，你可以寫自己的 middleware。**比如说，你想要歸納前面的模式並用像這樣的方式來描述非同步的 action creators：
 
@@ -338,7 +338,7 @@ export function loadPosts(userId) {
     callAPI: () => fetch(`http://myapi.com/users/${userId}/posts`),
     // 要在開始/結束 actions 注入的參數
     payload: { userId }
-  };
+  }
 }
 ```
 
@@ -353,11 +353,11 @@ function callAPIMiddleware({ dispatch, getState }) {
         callAPI,
         shouldCallAPI = () => true,
         payload = {}
-      } = action;
+      } = action
 
       if (!types) {
         // 普通的 action：把它傳遞下去
-        return next(action);
+        return next(action)
       }
 
       if (
@@ -365,22 +365,22 @@ function callAPIMiddleware({ dispatch, getState }) {
         types.length !== 3 ||
         !types.every(type => typeof type === 'string')
       ) {
-        throw new Error('Expected an array of three string types.');
+        throw new Error('Expected an array of three string types.')
       }
 
       if (typeof callAPI !== 'function') {
-        throw new Error('Expected fetch to be a function.');
+        throw new Error('Expected fetch to be a function.')
       }
 
       if (!shouldCallAPI(getState())) {
-        return;
+        return
       }
 
-      const [requestType, successType, failureType] = types;
+      const [ requestType, successType, failureType ] = types
 
       dispatch(Object.assign({}, payload, {
         type: requestType
-      }));
+      }))
 
       return callAPI().then(
         response => dispatch(Object.assign({}, payload, {
@@ -391,9 +391,9 @@ function callAPIMiddleware({ dispatch, getState }) {
           error: error,
           type: failureType
         }))
-      );
-    };
-  };
+      )
+    }
+  }
 }
 ```
 
@@ -406,7 +406,7 @@ export function loadPosts(userId) {
     shouldCallAPI: (state) => !state.users[userId],
     callAPI: () => fetch(`http://myapi.com/users/${userId}/posts`),
     payload: { userId }
-  };
+  }
 }
 
 export function loadComments(postId) {
@@ -415,7 +415,7 @@ export function loadComments(postId) {
     shouldCallAPI: (state) => !state.posts[postId],
     callAPI: () => fetch(`http://myapi.com/posts/${postId}/comments`),
     payload: { postId }
-  };
+  }
 }
 
 export function addComment(postId, message) {
@@ -430,7 +430,7 @@ export function addComment(postId, message) {
       body: JSON.stringify({ message })
     }),
     payload: { postId, message }
-  };
+  }
 }
 ```
 
@@ -441,22 +441,24 @@ Redux 透過把更新邏輯描述成 function 來減少許多 Flux stores 的 bo
 試想這個 Flux store：
 
 ```js
-let _todos = [];
+let _todos = []
 
-export default const TodoStore = assign({}, EventEmitter.prototype, {
+const TodoStore = Object.assign({}, EventEmitter.prototype, {
   getAll() {
-    return _todos;
+    return _todos
   }
-});
+})
 
 AppDispatcher.register(function (action) {
   switch (action.type) {
-  case ActionTypes.ADD_TODO:
-    let text = action.text.trim();
-    _todos.push(text);
-    TodoStore.emitChange();
+    case ActionTypes.ADD_TODO:
+      let text = action.text.trim()
+      _todos.push(text)
+      TodoStore.emitChange()
   }
-});
+})
+
+export default TodoStore
 ```
 
 藉由 Redux，一樣的更新邏輯可以被描述成一個 reducing function：
@@ -465,10 +467,10 @@ AppDispatcher.register(function (action) {
 export function todos(state = [], action) {
   switch (action.type) {
   case ActionTypes.ADD_TODO:
-    let text = action.text.trim();
-    return [...state, text];
+    let text = action.text.trim()
+    return [ ...state, text ]
   default:
-    return state;
+    return state
   }
 }
 ```
@@ -484,8 +486,8 @@ export function todos(state = [], action) {
 ```js
 export const todos = createReducer([], {
   [ActionTypes.ADD_TODO](state, action) {
-    let text = action.text.trim();
-    return [...state, text];
+    let text = action.text.trim()
+    return [ ...state, text ]
   }
 })
 ```
@@ -496,9 +498,9 @@ export const todos = createReducer([], {
 function createReducer(initialState, handlers) {
   return function reducer(state = initialState, action) {
     if (handlers.hasOwnProperty(action.type)) {
-      return handlers[action.type](state, action);
+      return handlers[action.type](state, action)
     } else {
-      return state;
+      return state
     }
   }
 }

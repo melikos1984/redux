@@ -14,18 +14,18 @@
 npm install --save react-redux
 ```
 
-## Smart 和 Dumb Components
+## Container 和 Presentational Components
 
-Redux 的 React 綁定擁抱了[分離「smart」和「dumb」components](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0) 的概念。
+Redux 的 React 綁定擁抱了[分離 container 和 presentational components](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0) 的概念。
 
-只讓應用程式的頂層 components (像是 route handlers) 意識到 Redux 是比較明智的。在它們下面的 Components 應該是「dumb」的並借由 props 接收所有的資料。
+只讓應用程式的頂層 components (像是 route handlers) 意識到 Redux 是比較明智的。在它們下面的 Components 應該是 presentational 的並借由 props 接收所有的資料。
 
 <table>
     <thead>
         <tr>
             <th></th>
-            <th scope="col" style="text-align:left">「Smart」Components</th>
-            <th scope="col" style="text-align:left">「Dumb」Components</th>
+            <th scope="col" style="text-align:left">Container Components</th>
+            <th scope="col" style="text-align:left">Presentational Components</th>
         </tr>
     </thead>
     <tbody>
@@ -52,7 +52,7 @@ Redux 的 React 綁定擁抱了[分離「smart」和「dumb」components](https:
     </tbody>
 </table>
 
-在這個 todo 應用程式中，我們將會只有一個「smart」component 在我們視圖階層的最上面。在更複雜的應用程式中，你可能會有幾個。當你可能會嵌套「smart」components 時，我們建議只要有可能就用傳遞 props 下去的方式。
+在這個 todo 應用程式中，我們將會只有一個 container component 在我們視圖階層的最上面。在更複雜的應用程式中，你可能會有幾個。當你可能會嵌套 container components 時，我們建議只要有可能就用傳遞 props 下去的方式。
 
 ## 設計 Component 階層
 
@@ -75,20 +75,20 @@ Redux 的 React 綁定擁抱了[分離「smart」和「dumb」components](https:
   - `filter: string` 是現在的的過濾條件：`'SHOW_ALL'`、`'SHOW_COMPLETED'` 或是 `'SHOW_ACTIVE'`。
   - `onFilterChange(nextFilter: string)`：當使用者選擇不同的過濾條件要呼叫的 Callback。
 
-它們都是「dumb」 components。它們不知道資料從*哪裡*來，或是要*如何*改變它。它們只 render 給它們的東西。
+它們都是 presentational components。它們不知道資料從*哪裡*來，或是要*如何*改變它。它們只 render 給它們的東西。
 
 如果你從 Redux 遷移到其他東西上，你將會可以讓這所有的 components 完全保持一樣。它們不依賴在 Redux 上。
 
 讓我們來撰寫它們！我們還不需要思考有關綁定到 Redux 的部分。當你實驗的時候，你可以只是給它們假資料直到他們正常的 render 為止。
 
-## Dumb Components
+## Presentational Components
 
 它們都是一般的 React components，所以我們不會停下來詳細介紹它們。直接開始：
 
 #### `components/AddTodo.js`
 
 ```js
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react'
 
 export default class AddTodo extends Component {
   render() {
@@ -99,26 +99,26 @@ export default class AddTodo extends Component {
           Add
         </button>
       </div>
-    );
+    )
   }
 
   handleClick(e) {
-    const node = this.refs.input;
-    const text = node.value.trim();
-    this.props.onAddClick(text);
-    node.value = '';
+    const node = this.refs.input
+    const text = node.value.trim()
+    this.props.onAddClick(text)
+    node.value = ''
   }
 }
 
 AddTodo.propTypes = {
   onAddClick: PropTypes.func.isRequired
-};
+}
 ```
 
 #### `components/Todo.js`
 
 ```js
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react'
 
 export default class Todo extends Component {
   render() {
@@ -131,7 +131,7 @@ export default class Todo extends Component {
         }}>
         {this.props.text}
       </li>
-    );
+    )
   }
 }
 
@@ -139,14 +139,14 @@ Todo.propTypes = {
   onClick: PropTypes.func.isRequired,
   text: PropTypes.string.isRequired,
   completed: PropTypes.bool.isRequired
-};
+}
 ```
 
 #### `components/TodoList.js`
 
 ```js
-import React, { Component, PropTypes } from 'react';
-import Todo from './Todo';
+import React, { Component, PropTypes } from 'react'
+import Todo from './Todo'
 
 export default class TodoList extends Component {
   render() {
@@ -158,7 +158,7 @@ export default class TodoList extends Component {
                 onClick={() => this.props.onTodoClick(index)} />
         )}
       </ul>
-    );
+    )
   }
 }
 
@@ -168,28 +168,28 @@ TodoList.propTypes = {
     text: PropTypes.string.isRequired,
     completed: PropTypes.bool.isRequired
   }).isRequired).isRequired
-};
+}
 ```
 
 #### `components/Footer.js`
 
 ```js
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react'
 
 export default class Footer extends Component {
   renderFilter(filter, name) {
     if (filter === this.props.filter) {
-      return name;
+      return name
     }
 
     return (
       <a href='#' onClick={e => {
-        e.preventDefault();
-        this.props.onFilterChange(filter);
+        e.preventDefault()
+        this.props.onFilterChange(filter)
       }}>
         {name}
       </a>
-    );
+    )
   }
 
   render() {
@@ -204,7 +204,7 @@ export default class Footer extends Component {
         {this.renderFilter('SHOW_ACTIVE', 'Active')}
         .
       </p>
-    );
+    )
   }
 }
 
@@ -215,7 +215,7 @@ Footer.propTypes = {
     'SHOW_COMPLETED',
     'SHOW_ACTIVE'
   ]).isRequired
-};
+}
 ```
 
 就這樣！我們可以藉由撰寫一個假的 `App` 來 render 它們，驗證它們正確的運作：
@@ -223,10 +223,10 @@ Footer.propTypes = {
 #### `containers/App.js`
 
 ```js
-import React, { Component } from 'react';
-import AddTodo from '../components/AddTodo';
-import TodoList from '../components/TodoList';
-import Footer from '../components/Footer';
+import React, { Component } from 'react'
+import AddTodo from '../components/AddTodo'
+import TodoList from '../components/TodoList'
+import Footer from '../components/Footer'
 
 export default class App extends Component {
   render() {
@@ -237,13 +237,18 @@ export default class App extends Component {
             console.log('add todo', text)
           } />
         <TodoList
-          todos={[{
-            text: 'Use Redux',
-            completed: true
-          }, {
-            text: 'Learn to connect it to React',
-            completed: false
-          }]}
+          todos={
+            [
+              {
+                text: 'Use Redux',
+                completed: true
+              },
+              {
+                text: 'Learn to connect it to React',
+                completed: false
+              }
+            ]
+          }
           onTodoClick={index =>
             console.log('todo clicked', index)
           } />
@@ -253,7 +258,7 @@ export default class App extends Component {
             console.log('filter change', filter)
           } />
       </div>
-    );
+    )
   }
 }
 ```
@@ -273,22 +278,22 @@ export default class App extends Component {
 #### `index.js`
 
 ```js
-import React from 'react';
-import { render } from 'react-dom';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import App from './containers/App';
-import todoApp from './reducers';
+import React from 'react'
+import { render } from 'react-dom'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import App from './containers/App'
+import todoApp from './reducers'
 
-let store = createStore(todoApp);
+let store = createStore(todoApp)
 
-let rootElement = document.getElementById('root');
+let rootElement = document.getElementById('root')
 render(
   <Provider store={store}>
     <App />
   </Provider>,
   rootElement
-);
+)
 ```
 
 這使我們的 store 實體可以在下面的 components 中取得。(在內部，這是透過 React 的[「context」功能](http://facebook.github.io/react/docs/context.html)完成。)
@@ -302,17 +307,17 @@ render(
 #### `containers/App.js`
 
 ```js
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { addTodo, completeTodo, setVisibilityFilter, VisibilityFilters } from '../actions';
-import AddTodo from '../components/AddTodo';
-import TodoList from '../components/TodoList';
-import Footer from '../components/Footer';
+import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { addTodo, completeTodo, setVisibilityFilter, VisibilityFilters } from '../actions'
+import AddTodo from '../components/AddTodo'
+import TodoList from '../components/TodoList'
+import Footer from '../components/Footer'
 
 class App extends Component {
   render() {
     // 藉由 connect() 呼叫注入：
-    const { dispatch, visibleTodos, visibilityFilter } = this.props;
+    const { dispatch, visibleTodos, visibilityFilter } = this.props
     return (
       <div>
         <AddTodo
@@ -330,7 +335,7 @@ class App extends Component {
             dispatch(setVisibilityFilter(nextFilter))
           } />
       </div>
-    );
+    )
   }
 }
 
@@ -344,16 +349,16 @@ App.propTypes = {
     'SHOW_COMPLETED',
     'SHOW_ACTIVE'
   ]).isRequired
-};
+}
 
 function selectTodos(todos, filter) {
   switch (filter) {
-  case VisibilityFilters.SHOW_ALL:
-    return todos;
-  case VisibilityFilters.SHOW_COMPLETED:
-    return todos.filter(todo => todo.completed);
-  case VisibilityFilters.SHOW_ACTIVE:
-    return todos.filter(todo => !todo.completed);
+    case VisibilityFilters.SHOW_ALL:
+      return todos
+    case VisibilityFilters.SHOW_COMPLETED:
+      return todos.filter(todo => todo.completed)
+    case VisibilityFilters.SHOW_ACTIVE:
+      return todos.filter(todo => !todo.completed)
   }
 }
 
@@ -363,11 +368,11 @@ function select(state) {
   return {
     visibleTodos: selectTodos(state.todos, state.visibilityFilter),
     visibilityFilter: state.visibilityFilter
-  };
+  }
 }
 
 // 把 component 包起來以注入 dispatch 和 state 進去
-export default connect(select)(App);
+export default connect(select)(App)
 ```
 
 就這樣！這個小型的 todo 應用程式現在可以正確的運作了。

@@ -13,9 +13,9 @@ Redux 架構圍繞著**嚴格的單向資料流**。
   [action](Actions.md) 是一個描述*發生什麼事*的一般物件。例如：
 
     ```js
-    { type: 'LIKE_ARTICLE', articleId: 42 };
-    { type: 'FETCH_USER_SUCCESS', response: { id: 3, name: 'Megan' } };
-    { type: 'ADD_TODO', text: 'Read the Redux docs.'};
+    { type: 'LIKE_ARTICLE', articleId: 42 }
+    { type: 'FETCH_USER_SUCCESS', response: { id: 3, name: 'Mary' } }
+    { type: 'ADD_TODO', text: 'Read the Redux docs.' }
     ```
 
   把 action 想成是一個非常簡短的消息片段。「Mary liked article 42.」或是「Read the Redux docs.」被加到 todos 清單。
@@ -30,20 +30,22 @@ Redux 架構圍繞著**嚴格的單向資料流**。
     // 現在的應用程式 state (todos 清單和挑選的過濾條件)
     let previousState = {
       visibleTodoFilter: 'SHOW_ALL',
-      todos: [{
-        text: 'Read the docs.',
-        complete: false
-      }]
-    };
+      todos: [
+        {
+          text: 'Read the docs.',
+          complete: false
+        }
+      ]
+    }
 
     // 正要被執行的 action (添加一個 todo)
     let action = {
       type: 'ADD_TODO',
       text: 'Understand the flow.'
-    };
+    }
 
     // 你的 reducer 會回傳應用程式的下一個 state
-    let nextState = todoApp(previousState, action);
+    let nextState = todoApp(previousState, action)
     ```
 
     請記得 reducer 只是個 pure function。它只*計算*下一個 state。它應該是完全可以預測的：用相同的 inputs 多次呼叫它應該產生相同的 outputs。它不應該執行任何有 side effects 的動作，像是 API 呼叫或是 router transitions。這些應該在 action 被 dispatched 之前發生。
@@ -57,25 +59,25 @@ Redux 架構圍繞著**嚴格的單向資料流**。
     ```js
     function todos(state = [], action) {
       // Somehow calculate it...
-      return nextState;
+      return nextState
     }
 
     function visibleTodoFilter(state = 'SHOW_ALL', action) {
       // Somehow calculate it...
-      return nextState;
+      return nextState
     }
 
     let todoApp = combineReducers({
       todos,
       visibleTodoFilter
-    });
+    })
     ```
 
   當你發出一個 action 時，`combineReducers` 回傳的 `todoApp` 將會兩個 reducers 都呼叫：
 
     ```js
-    let nextTodos = todos(state.todos, action);
-    let nextVisibleTodoFilter = visibleTodoFilter(state.visibleTodoFilter, action);
+    let nextTodos = todos(state.todos, action)
+    let nextVisibleTodoFilter = visibleTodoFilter(state.visibleTodoFilter, action)
     ```
 
   它將會接著結合兩組結果成一個單一的 state tree：
@@ -84,7 +86,7 @@ Redux 架構圍繞著**嚴格的單向資料流**。
     return {
       todos: nextTodos,
       visibleTodoFilter: nextVisibleTodoFilter
-    };
+    }
     ```
 
   儘管 [`combineReducers()`](../api/combineReducers.md) 是個方便的 helper utility，但你不一定要使用它； 請自由的撰寫你自己的 root reducer！

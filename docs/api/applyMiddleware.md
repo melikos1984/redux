@@ -19,31 +19,31 @@ Middleware 沒有被內建在 [`createStore`](createStore.md) 裡面而且也不
 #### 範例：客製化 Logger Middleware
 
 ```js
-import { createStore, applyMiddleware } from 'redux';
-import todos from './reducers';
+import { createStore, applyMiddleware } from 'redux'
+import todos from './reducers'
 
 function logger({ getState }) {
   return (next) => (action) => {
-    console.log('will dispatch', action);
+    console.log('will dispatch', action)
 
     // 呼叫在 middleware 鏈的下一個 dispatch method。
-    let returnValue = next(action);
+    let returnValue = next(action)
 
-    console.log('state after dispatch', getState());
+    console.log('state after dispatch', getState())
 
     // 這很有可能是 action 自己，
     // 除非在鏈中更後面的 middleware 改變了它。
-    return returnValue;
-  };
+    return returnValue
+  }
 }
 
-let createStoreWithMiddleware = applyMiddleware(logger)(createStore);
-let store = createStoreWithMiddleware(todos, ['Use Redux']);
+let createStoreWithMiddleware = applyMiddleware(logger)(createStore)
+let store = createStoreWithMiddleware(todos, [ 'Use Redux' ])
 
 store.dispatch({
   type: 'ADD_TODO',
   text: 'Understand the middleware'
-});
+})
 // (這幾行將會被 middleware log：)
 // 將會 dispatch：{ type: 'ADD_TODO', text: 'Understand the middleware' }
 // 在 dispatch 之後的 state：['Use Redux', 'Understand the middleware']
@@ -52,19 +52,19 @@ store.dispatch({
 #### 範例：使用 Thunk Middleware 來處理 Async Actions
 
 ```js
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import * as reducers from './reducers';
+import { createStore, combineReducers, applyMiddleware } from 'redux'
+import thunk from 'redux-thunk'
+import * as reducers from './reducers'
 
 // applyMiddleware 會用 middleware 增強 createStore：
-let createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
+let createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
 
 // 我們可以就像使用「原生的」createStore 一般使用它。
-let reducer = combineReducers(reducers);
-let store = createStoreWithMiddleware(reducer);
+let reducer = combineReducers(reducers)
+let store = createStoreWithMiddleware(reducer)
 
 function fetchSecretSauce() {
-  return fetch('https://www.google.com/search?q=secret+sauce');
+  return fetch('https://www.google.com/search?q=secret+sauce')
 }
 
 // 有一些你到目前為止所看到的一般 action creators。
@@ -76,7 +76,7 @@ function makeASandwich(forPerson, secretSauce) {
     type: 'MAKE_SANDWICH',
     forPerson,
     secretSauce
-  };
+  }
 }
 
 function apologize(fromPerson, toPerson, error) {
@@ -85,18 +85,18 @@ function apologize(fromPerson, toPerson, error) {
     fromPerson,
     toPerson,
     error
-  };
+  }
 }
 
 function withdrawMoney(amount) {
   return {
     type: 'WITHDRAW',
     amount
-  };
+  }
 }
 
 // 即使沒有 middleware，你也可以 dispatch action：
-store.dispatch(withdrawMoney(100));
+store.dispatch(withdrawMoney(100))
 
 // 不過當你需要開始一個非同步 action 時你會怎麼做，
 // 像是一個 API 呼叫，或是一個 router transition？
@@ -115,8 +115,8 @@ function makeASandwichWithSecretSauce(forPerson) {
     return fetchSecretSauce().then(
       sauce => dispatch(makeASandwich(forPerson, sauce)),
       error => dispatch(apologize('The Sandwich Shop', forPerson, error))
-    );
-  };
+    )
+  }
 }
 
 // Thunk middleware 讓我能 dispatch thunk async actions
@@ -124,7 +124,7 @@ function makeASandwichWithSecretSauce(forPerson) {
 
 store.dispatch(
   makeASandwichWithSecretSauce('Me')
-);
+)
 
 // 它甚至會負責回傳 thunk 從 dispatch 回傳的值，
 // 所以只要我有回傳 Promises 就可以串接它。
@@ -132,8 +132,8 @@ store.dispatch(
 store.dispatch(
   makeASandwichWithSecretSauce('My wife')
 ).then(() => {
-  console.log('Done!');
-});
+  console.log('Done!')
+})
 
 // 實際上我可以撰寫 action creators，
 // 它們從其他的 action creators 來 dispatch actions 和 async actions，
@@ -146,7 +146,7 @@ function makeSandwichesForEverybody() {
       // 你不需要回傳 Promise，不過這是一個方便的慣例
       // 這樣呼叫的人總是可以在非同步 dispatch 的結果上呼叫 .then()。
 
-      return Promise.resolve();
+      return Promise.resolve()
     }
 
     // 我們可以 dispatch 一般物件的 actions 以及其他的 thunks，
@@ -166,39 +166,39 @@ function makeSandwichesForEverybody() {
         withdrawMoney(42) :
         apologize('Me', 'The Sandwich Shop')
       )
-    );
-  };
+    )
+  }
 }
 
 // 這對服器端 render 非常有用，因為我可以等到
 // 資料準備好，接著同步的 render 應用程式。
 
-import { renderToString } from 'react-dom/server';
+import { renderToString } from 'react-dom/server'
 
 store.dispatch(
   makeSandwichesForEverybody()
 ).then(() =>
   response.send(renderToString(<MyApp store={store} />))
-);
+)
 
 // 我也可以從 component dispatch 一個 thunk async action
 // 任何時候它的 props 改變就會去載入缺少的資料。
 
-import { connect } from 'react-redux';
-import { Component } from 'react';
+import { connect } from 'react-redux'
+import { Component } from 'react'
 
 class SandwichShop extends Component {
   componentDidMount() {
     this.props.dispatch(
       makeASandwichWithSecretSauce(this.props.forPerson)
-    );
+    )
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.forPerson !== this.props.forPerson) {
       this.props.dispatch(
         makeASandwichWithSecretSauce(nextProps.forPerson)
-      );
+      )
     }
   }
 
@@ -211,7 +211,7 @@ export default connect(
   state => ({
     sandwiches: state.sandwiches
   })
-)(SandwichShop);
+)(SandwichShop)
 ```
 
 #### 提示
@@ -223,11 +223,11 @@ export default connect(
 * 如果你想要條件式的啟用一個 middleware，請確保只有在需要時 import 它：
 
   ```js
-  let middleware = [a, b];
+  let middleware = [ a, b ]
   if (process.env.NODE_ENV !== 'production') {
     let c = require('some-debug-middleware');
     let d = require('another-debug-middleware');
-    middleware = [...middleware, c, d];
+    middleware = [ ...middleware, c, d ];
   }
   const createStoreWithMiddleware = applyMiddleware(...middleware)(createStore);
   ```

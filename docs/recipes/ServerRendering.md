@@ -37,25 +37,25 @@ npm install --save express react-redux
 ##### `server.js`
 
 ```js
-import path from 'path';
-import Express from 'express';
-import React from 'react';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import counterApp from './reducers';
-import App from './containers/App';
+import path from 'path'
+import Express from 'express'
+import React from 'react'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import counterApp from './reducers'
+import App from './containers/App'
 
-const app = Express();
-const port = 3000;
+const app = Express()
+const port = 3000
 
 // 這會在每次伺服器端收到請求時被呼叫
-app.use(handleRender);
+app.use(handleRender)
 
 // 我們將會在下面的章節把這些填補起來
 function handleRender(req, res) { /* ... */ }
 function renderFullPage(html, initialState) { /* ... */ }
 
-app.listen(port);
+app.listen(port)
 ```
 
 ### 處理請求
@@ -69,24 +69,24 @@ app.listen(port);
 接著藉由 [`store.getState()`](../api/Store.md#getState) 從我們的 Redux store 取得初始的 state。我們將會看到要如何把這個一起傳進我們的 `renderFullPage` function。
 
 ```js
-import { renderToString } from 'react-dom/server';
+import { renderToString } from 'react-dom/server'
 
 function handleRender(req, res) {
-	// 建立一個新的 Redux store 實體
-	const store = createStore(counterApp);
+  // 建立一個新的 Redux store 實體
+  const store = createStore(counterApp)
 
-	// 把 component Render 成字串
-	const html = renderToString(
-		<Provider store={store}>
-			<App />
-		</Provider>
-	);
+  // 把 component Render 成字串
+  const html = renderToString(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  )
 
-	// 從我們的 Redux store 取得初始的 state
-	const initialState = store.getState();
+  // 從我們的 Redux store 取得初始的 state
+  const initialState = store.getState()
 
-	// 把 render 完的頁面送回客戶端
-	res.send(renderFullPage(html, initialState));
+  // 把 render 完的頁面送回客戶端
+  res.send(renderFullPage(html, initialState))
 }
 ```
 
@@ -100,21 +100,21 @@ function handleRender(req, res) {
 
 ```js
 function renderFullPage(html, initialState) {
-	return `
-		<!doctype html>
-		<html>
-			<head>
-				<title>Redux Universal Example</title>
-			</head>
-			<body>
-				<div id="app">${html}</div>
-				<script>
-					window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};
-				</script>
-				<script src="/static/bundle.js"></script>
-			</body>
-		</html>
-		`;
+  return `
+    <!doctype html>
+    <html>
+      <head>
+        <title>Redux Universal Example</title>
+      </head>
+      <body>
+        <div id="app">${html}</div>
+        <script>
+          window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
+        </script>
+        <script src="/static/bundle.js"></script>
+      </body>
+    </html>
+    `
 }
 ```
 
@@ -131,25 +131,25 @@ function renderFullPage(html, initialState) {
 #### `client.js`
 
 ```js
-import React from 'react';
-import { render } from 'react-dom';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import App from './containers/App';
-import counterApp from './reducers';
+import React from 'react'
+import { render } from 'react-dom'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import App from './containers/App'
+import counterApp from './reducers'
 
 // 從一個被注入進去伺服器產生的 HTML 的全域變數取得 state
-const initialState = window.__INITIAL_STATE__;
+const initialState = window.__INITIAL_STATE__
 
 // 用初始的 state 來建立 Redux store
-const store = createStore(counterApp, initialState);
+const store = createStore(counterApp, initialState)
 
 render(
-	<Provider store={store}>
-		<App />
-	</Provider>,
-	document.getElementById('root')
-);
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+)
 ```
 
 你可以設置你選擇的建置工具 (Webpack、Browserify、等等) 來編譯一個 bundle 的檔案到 `dist/bundle.js`。
@@ -173,32 +173,32 @@ render(
 #### `server.js`
 
 ```js
-import qs from 'qs'; // 在檔案的最上面加上這個
-import { renderToString } from 'react-dom/server';
+import qs from 'qs' // 在檔案的最上面加上這個
+import { renderToString } from 'react-dom/server'
 
 function handleRender(req, res) {
-	// 如果有提供的話，從請求讀取 counter
-	const params = qs.parse(req.query);
-	const counter = parseInt(params.counter) || 0;
+  // 如果有提供的話，從請求讀取 counter
+  const params = qs.parse(req.query)
+  const counter = parseInt(params.counter) || 0
 
-	// 蒐集一個 initial state
-	let initialState = { counter };
+  // 蒐集一個 initial state
+  let initialState = { counter }
 
-	// 建立一個新的 Redux store 實體
-	const store = createStore(counterApp, initialState);
+  // 建立一個新的 Redux store 實體
+  const store = createStore(counterApp, initialState)
 
-	// 把 component Render 成字串
-	const html = renderToString(
-		<Provider store={store}>
-			<App />
-		</Provider>
-	);
+  // 把 component Render 成字串
+  const html = renderToString(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  )
 
-	// 從我們的 Redux store 取得初始的 state
-	const finalState = store.getState();
+  // 從我們的 Redux store 取得初始的 state
+  const finalState = store.getState()
 
-	// 把 render 完的頁面送回客戶端
-	res.send(renderFullPage(html, finalState));
+  // 把 render 完的頁面送回客戶端
+  res.send(renderFullPage(html, finalState))
 }
 ```
 
@@ -216,13 +216,13 @@ function handleRender(req, res) {
 
 ```js
 function getRandomInt(min, max) {
-	return Math.floor(Math.random() * (max - min)) + min;
+  return Math.floor(Math.random() * (max - min)) + min
 }
 
 export function fetchCounter(callback) {
-	setTimeout(() => {
-		callback(getRandomInt(1, 100));
-	}, 500);
+  setTimeout(() => {
+    callback(getRandomInt(1, 100))
+  }, 500)
 }
 ```
 
@@ -234,39 +234,39 @@ export function fetchCounter(callback) {
 
 ```js
 // 把這個加到我們的 imports
-import { fetchCounter } from './api/counter';
-import { renderToString } from 'react-dom/server';
+import { fetchCounter } from './api/counter'
+import { renderToString } from 'react-dom/server'
 
 function handleRender(req, res) {
-	// 非同步的查詢我們的 mock API
-	fetchCounter(apiResult => {
-		// 如果有提供的話，從請求讀取 counter
-		const params = qs.parse(req.query);
-		const counter = parseInt(params.counter) || apiResult || 0;
+  // 非同步的查詢我們的 mock API
+  fetchCounter(apiResult => {
+    // 如果有提供的話，從請求讀取 counter
+    const params = qs.parse(req.query)
+    const counter = parseInt(params.counter) || apiResult || 0
 
-		// 蒐集一個 initial state
-		let initialState = { counter };
+    // 蒐集一個 initial state
+    let initialState = { counter }
 
-		// 建立一個新的 Redux store 實體
-		const store = createStore(counterApp, initialState);
+    // 建立一個新的 Redux store 實體
+    const store = createStore(counterApp, initialState)
 
-		// 把 component Render 成字串
-		const html = renderToString(
-			<Provider store={store}>
-				<App />
-			</Provider>
-		);
+    // 把 component Render 成字串
+    const html = renderToString(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    )
 
-		// 從我們的 Redux store 取得初始的 state
-		const finalState = store.getState();
+    // 從我們的 Redux store 取得初始的 state
+    const finalState = store.getState()
 
-		// 把 render 完的頁面送回客戶端
-		res.send(renderFullPage(html, finalState));
-	});
+    // 把 render 完的頁面送回客戶端
+    res.send(renderFullPage(html, finalState))
+  })
 }
 ```
 
-因為我們 `res.send()` 在 callback 的裡面，伺服器將會持續開啟連線並不會送出任何資料直到 callback 執行。你會注意到每一個伺服器的請求現在被添加一個 500ms 延遲作為我們新的 API 呼叫的結果。更進階的用法會在 API 裡優雅的處理錯誤，像是一個不好的回應或是逾時。
+因為我們在 callback 的裡面呼叫 `res.send()`，伺服器將會持續開啟連線並不會送出任何資料直到 callback 執行。你會注意到每一個伺服器的請求現在被添加一個 500ms 延遲作為我們新的 API 呼叫的結果。更進階的用法會在 API 裡優雅的處理錯誤，像是一個不好的回應或是逾時。
 
 ### 安全考量
 
