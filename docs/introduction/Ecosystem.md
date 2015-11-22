@@ -26,6 +26,11 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 * [redux-analytics](https://github.com/markdalgleish/redux-analytics) — Redux 的分析用 middleware
 * [redux-gen](https://github.com/weo-edu/redux-gen) — Redux 的 Generator middleware
 
+## Routing
+
+* [redux-router](https://github.com/rackt/redux-router) —  React Router 的 Redux 綁定
+* [redux-simple-router](https://github.com/jlongster/redux-simple-router) — 用非常簡單的綁定來保持 React Router 和 Redux 同步
+
 ## Components
 
 * [redux-form](https://github.com/erikras/redux-form) — 把 React 表單 state 保存在 Redux 裡
@@ -48,6 +53,7 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 * [reselect](https://github.com/faassen/reselect) — 有效地獲取資料選擇器，靈感來自 NuclearJS
 * [normalizr](https://github.com/gaearon/normalizr) — 正規化巢狀的 API 回應讓 reducers 易於處理
 * [redux-actions](https://github.com/acdlite/redux-actions) — 減少撰寫 reducers 和 action creators 的 boilerplate
+* [redux-act](https://github.com/pauldijou/redux-act) — 一個自己用來建立 reducers 和 action creators 的 library
 * [redux-transducers](https://github.com/acdlite/redux-transducers) — Redux 的 Transducer utilities
 * [redux-immutablejs](https://github.com/indexiatech/redux-immutablejs) - Redux & [Immutable](https://github.com/facebook/immutable-js/) 之間的整合工具
 * [redux-undo](https://github.com/omnidan/redux-undo) — 輕鬆的 undo/redo 並在你的 reducers 的歷史間活動
