@@ -13,6 +13,8 @@ Redux 是個給 JavaScript 應用程式所使用的可預測 state 容器。
 [![redux channel on discord](https://img.shields.io/badge/discord-%23redux%20%40%20reactiflux-61dafb.svg?style=flat-square)](https://discord.gg/0ZcbPKXt5bZ6au5t)
 [![#rackt on freenode](https://img.shields.io/badge/irc-%23rackt%20%40%20freenode-61DAFB.svg?style=flat-square)](https://webchat.freenode.net/)
 
+>**新的東西！從 Redux 的作者學習它：
+>[Getting Started with Redux](https://egghead.io/series/getting-started-with-redux) (三十部免費影片)**
 
 ### 推薦
 
@@ -110,6 +112,31 @@ store.dispatch({ type: 'DECREMENT' })
 如果你以前使用 Flux，那你需要了解一個重要的差異。Redux 沒有 Dispatcher 也不支援多個 stores。反而是只有一個唯一的 store 和一個唯一的 root reducing function。當你的應用程式變大時，你會把 root reducer 拆分成比較小的獨立 reducers 來在 state tree 的不同部分上操作，而不是添加 stores。 這就像在 React 應用程式中只有一個 root component，但是他是由許多小的 components 組合而成。
 
 這個架構用於一個計數器應用程式可能看似有點矯枉過正，不過這個模式的美妙之處就在於它如何擴展到大型且模雜的應用程式。它也啟用了非常強大的開發工具，因為它可以追蹤每一次的變更和造成變更的 action。你可以記錄使用者的 sessions 並藉由重播每個 action 來重現它們。
+
+### 從 Redux 的作者學習它
+
+[Getting Started with Redux](https://egghead.io/series/getting-started-with-redux) 是一個由 30 部 Dan Abramov 講述的影片組成的影片課程，他是 Redux 的作者。它被設計用來補充文件的「基礎」部分，而帶來有關 immutability、測試、Redux 最佳實踐、與搭配 React 使用 Redux 的額外洞悉。**這個課程是免費的，而且是永遠的。**
+
+>[「在 egghead.io 上面由 @dan_abramov 出品的偉大課程 - 不只是展示了如何使用 #redux 給你看，它也展示了如何以及為什麼打造 redux！」](https://twitter.com/sandrinodm/status/670548531422326785)
+>Sandrino Di Mattia
+
+>[「鑽研過 @dan_abramov 'Getting Started with Redux' - 它藉由影片不知道簡化了多少觀念非常驚人。」](https://twitter.com/chrisdhanaraj/status/670328025553219584)
+>Chris Dhanaraj
+
+>[「@eggheadio 上面的這系列 @dan_abramov 出品的 Redux 影片非常的驚人！」](https://twitter.com/eddiezane/status/670333133242408960)
+>Eddie Zaneski
+
+>[「從名字炒作而來。而留下了堅若磐石的基礎。(感謝，@dan_abramov 和 @eggheadio 做的偉大的事！)」](https://twitter.com/danott/status/669909126554607617)
+>Dan
+
+>[「這系列 @dan_abramov 出品的 Redux 影片反覆的讓我留下深刻印象 - 打算做一些認真的重構」](https://twitter.com/gelatindesign/status/669658358643892224)
+>Laurence Roberts
+
+所以，你還在等什麼？
+
+#### [觀看 30 部免費影片！](https://egghead.io/series/getting-started-with-redux)
+
+如果你喜歡我的課程，請考慮藉由[購買訂閱](https://egghead.io/pricing)來支持 Egghead。訂閱者可以存取我的每一個影片中的範例的原始碼，以及無數的其他主題的進階課程，包括深入 JavaScript、React、Angular、和更多其他的。許多的 [Egghead 講師](https://egghead.io/instructors) 也是開源 library 的作者，所以購買訂閱是一個感謝他們目前所做的事的好方式。
 
 ### 文件
 
