@@ -20,18 +20,20 @@ Immutability 是讓 [react-redux](https://github.com/gaearon/react-redux) 能有
 ```js
 function todos(state = [], action) {
   switch (action.type) {
-  case 'ADD_TODO':
-    // 錯了！這變動了 state
-    state.push({
-      text: action.text,
-      completed: false
-    })
-  case 'COMPLETE_TODO':
-    // 錯了！這變動了 state[action.index]。
-    state[action.index].completed = true
+    case 'ADD_TODO':
+      // 錯了！這變動了 state
+      state.push({
+        text: action.text,
+        completed: false
+      })
+      return state
+    case 'COMPLETE_TODO':
+      // 錯了！這變動了 state[action.index]。
+      state[action.index].completed = true
+      return state
+    default:
+      return state
   }
-
-  return state
 }
 ```
 

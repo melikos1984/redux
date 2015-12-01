@@ -337,7 +337,7 @@ export function fetchPosts(reddit) {
   // 它把 dispatch method 作為參數傳遞給 function，
   // 因此讓它可以自己 dispatch actions。
 
-  return function (dispatch) {
+  return dispatch => {
 
     // 第一個 dispatch：更新應用程式 state 以告知
     // API 呼叫開始了。

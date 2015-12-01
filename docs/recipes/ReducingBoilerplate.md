@@ -332,8 +332,8 @@ export function loadPosts(userId) {
   return {
     // 要在之前和之後發送的 actions types
     types: ['LOAD_POSTS_REQUEST', 'LOAD_POSTS_SUCCESS', 'LOAD_POSTS_FAILURE'],
-    // 檢查快取 (可選擇的):
-    shouldCallAPI: (state) => !state.users[userId],
+    // 檢查快取 (可選擇的)：
+    shouldCallAPI: (state) => !state.posts[userId],
     // 執行抓取資料：
     callAPI: () => fetch(`http://myapi.com/users/${userId}/posts`),
     // 要在開始/結束 actions 注入的參數
@@ -403,7 +403,7 @@ function callAPIMiddleware({ dispatch, getState }) {
 export function loadPosts(userId) {
   return {
     types: ['LOAD_POSTS_REQUEST', 'LOAD_POSTS_SUCCESS', 'LOAD_POSTS_FAILURE'],
-    shouldCallAPI: (state) => !state.users[userId],
+    shouldCallAPI: (state) => !state.posts[userId],
     callAPI: () => fetch(`http://myapi.com/users/${userId}/posts`),
     payload: { userId }
   }
@@ -412,7 +412,7 @@ export function loadPosts(userId) {
 export function loadComments(postId) {
   return {
     types: ['LOAD_COMMENTS_REQUEST', 'LOAD_COMMENTS_SUCCESS', 'LOAD_COMMENTS_FAILURE'],
-    shouldCallAPI: (state) => !state.posts[postId],
+    shouldCallAPI: (state) => !state.comments[postId],
     callAPI: () => fetch(`http://myapi.com/posts/${postId}/comments`),
     payload: { postId }
   }
