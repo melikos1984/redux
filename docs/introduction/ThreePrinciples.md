@@ -11,6 +11,7 @@ Redux 可以用三個基本的原則來描述：
 ```js
 console.log(store.getState())
 
+/* Prints
 {
   visibilityFilter: 'SHOW_ALL',
   todos: [
@@ -24,6 +25,7 @@ console.log(store.getState())
     }
   ]
 }
+*/
 ```
 
 ### State 是唯讀的

@@ -65,7 +65,7 @@ function addTodoWithDispatch(text) {
 }
 ```
 
-相比之下，在 Redux 裡 action creators 是沒有副作用的 **pure functions**。它們簡單地回傳一個 action：
+相比之下，在 Redux 裡 action creators 簡單地回傳一個 action：
 
 ```js
 function addTodo(text) {
