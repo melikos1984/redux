@@ -47,16 +47,16 @@ store 的 reducing function 將會同步的用當下 [`getState()`](#getState) �
 
 #### 回傳
 
-(Object<sup>†</sup>)：被 dispatch 的 action。
+(Object<sup>†</sup>)：被 dispatch 的 action (請參閱附註)。
 
-#### Notes
+#### 附註
 
 <sup>†</sup> 你藉由呼叫 [`createStore`](createStore.md) 所拿到的「原生」store 實作，只支援一般物件 actions 而且會立刻被送到 reducer。
 
 但是，如果你把 [`createStore`](createStore.md) 用 [`applyMiddleware`](applyMiddleware.md) 包起來，這些 middleware 用不同的方式解釋 actions，並提供對 dispatch [async actions](../Glossary.md#async-action) 的支援。Async actions 通常是一些非同步的基礎型別，像是 Promises、Observables、或是 thunks。
 
 Middleware 是由社群所創造且不會預設附帶在 Redux 裡。你需要明確的安裝像是 [redux-thunk](https://github.com/gaearon/redux-thunk) 或是 [redux-promise](https://github.com/acdlite/redux-promise) 之類的套件以使用它。你也可以建立自己的 middleware。
-要學習如何去描述非同步的 API 呼叫、在 action creators 裡面讀取當下的 state inside、執行有 side effects 的動作、或是把它們鏈接起來按照順序執行，請查看 [`applyMiddleware`](applyMiddleware.md) 的範例。
+要學習如何去描述非同步的 API 呼叫、在 action creators 裡面讀取當下的 state、執行有 side effects 的動作、或是把它們鏈接起來按照順序執行，請查看 [`applyMiddleware`](applyMiddleware.md) 的範例。
 
 #### 範例
 
@@ -120,7 +120,7 @@ handleChange()
 
 置換 store 當下用來計算 state 使用的 reducer。
 
-這是一個進階的 API。如果你的應用程式要實作 code splitting 你可能會需要這個，因為你想要動態的載入一些 reducers。如果你要實作一個 Redux 的 hot reloading 機制，那你也可能需要這個。
+這是一個進階的 API。如果你的應用程式要實作 code splitting 你可能會需要這個，因為你想要動態的載入一些 reducers。如果你要實作一個 Redux 的 hot reload 機制，那你也可能需要這個。
 
 #### 參數
 
