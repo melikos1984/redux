@@ -62,7 +62,7 @@ describe('actions', () => {
 
 ### Async Action Creators
 
-針對使用 [Redux Thunk](https://github.com/gaearon/redux-thunk) 或其他的 middleware 的 async action creators，為了測試，完全的 mock Redux store 是最好的。你仍然可以如下面所示使用 [`applyMiddleware()`](../api/applyMiddleware.md) 以及一個 mock store (你可以在 [redux-mock-store](https://github.com/arnaudbenard/redux-mock-store) 找到下面的程式碼)。你也可以使用 [nock](https://github.com/pgte/nock) 來 mock HTTP 請求。
+針對使用 [Redux Thunk](https://github.com/gaearon/redux-thunk) 或其他的 middleware 的 async action creators，為了測試，完全的 mock Redux store 是最好的。你可以使用 [redux-mock-store](https://github.com/arnaudbenard/redux-mock-store) 來把 middleware 應用在一個 mock store 上。你也可以使用 [nock](https://github.com/pgte/nock) 來 mock HTTP 請求。
 
 #### 範例
 
@@ -101,56 +101,14 @@ export function fetchTodos() {
 可以像這樣測試：
 
 ```js
-import expect from 'expect'
-import { applyMiddleware } from 'redux'
+import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import * as actions from '../../actions/counter'
 import * as types from '../../constants/ActionTypes'
 import nock from 'nock'
 
 const middlewares = [ thunk ]
-
-/**
- * 用 middleware 建立一個 Redux store 的 mock。
- */
-function mockStore(getState, expectedActions, done) {
-  if (!Array.isArray(expectedActions)) {
-    throw new Error('expectedActions should be an array of expected actions.')
-  }
-  if (typeof done !== 'undefined' && typeof done !== 'function') {
-    throw new Error('done should either be undefined or function.')
-  }
-
-  function mockStoreWithoutMiddleware() {
-    return {
-      getState() {
-        return typeof getState === 'function' ?
-          getState() :
-          getState
-      },
-
-      dispatch(action) {
-        const expectedAction = expectedActions.shift()
-
-        try {
-          expect(action).toEqual(expectedAction)
-          if (done && !expectedActions.length) {
-            done()
-          }
-          return action
-        } catch (e) {
-          done(e)
-        }
-      }
-    }
-  }
-
-  const mockStoreWithMiddleware = applyMiddleware(
-    ...middlewares
-  )(mockStoreWithoutMiddleware)
-
-  return mockStoreWithMiddleware()
-}
+const mockStore = configureMockStore(middlewares)
 
 describe('async actions', () => {
   afterEach(() => {
@@ -160,7 +118,7 @@ describe('async actions', () => {
   it('creates FETCH_TODOS_SUCCESS when fetching todos has been done', (done) => {
     nock('http://example.com/')
       .get('/todos')
-      .reply(200, { todos: ['do something'] })
+      .reply(200, { body: { todos: ['do something'] }})
 
     const expectedActions = [
       { type: types.FETCH_TODOS_REQUEST },

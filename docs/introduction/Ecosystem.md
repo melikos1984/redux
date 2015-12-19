@@ -20,6 +20,7 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 ### 教學和文章
 
 * [Redux Tutorial](https://github.com/happypoulp/redux-tutorial) — 一步一步的學習如何使用 redux
+* [Redux Egghead Course Notes](https://github.com/tayiorbeii/egghead.io_redux_course_notes) — Redux [Egghead 影片課程](https://egghead.io/series/getting-started-with-redux) 的筆記
 * [What the Flux?! Let’s Redux.](https://blog.andyet.com/2015/08/06/what-the-flux-lets-redux) — 一個 Redux 的介紹
 * [A cartoon intro to Redux](https://code-cartoons.com/a-cartoon-intro-to-redux-3afb775501a6) — 一個視覺化的 Redux 資料流說明
 * [Understanding Redux](http://www.youhavetolearncomputers.com/blog/2015/9/15/a-conceptual-overview-of-redux-or-how-i-fell-in-love-with-a-javascript-state-container) — 學習 Redux 的基礎概念
@@ -32,6 +33,7 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 
 * [Live React: Hot Reloading and Time Travel](http://youtube.com/watch?v=xsSnOQynTHs) — 看看 Redux 強制的限制如何讓隨著時間旅行 hot reload 變得簡單
 * [Cleaning the Tar: Using React within the Firefox Developer Tools](https://www.youtube.com/watch?v=qUlRpybs7_c) — 學習如何漸漸的把既存的 MVC 應用程式遷移到 Redux
+* [Redux: Simplifying Application State](https://www.youtube.com/watch?v=okdC5gcD-dM) — Redux 架構的介紹
 
 ## 使用 Redux
 
@@ -54,6 +56,7 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 * [redux-immutable-state-invariant](https://github.com/leoasis/redux-immutable-state-invariant) — 在開發時，警告 state 的變更
 * [redux-analytics](https://github.com/markdalgleish/redux-analytics) — Redux 的分析用 middleware
 * [redux-gen](https://github.com/weo-edu/redux-gen) — Redux 的 Generator middleware
+* [redux-saga](https://github.com/yelouafi/redux-saga) — 一個 Redux 應用程式的 side effect model 方案
 
 ### Routing
 
@@ -64,18 +67,17 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 
 * [redux-form](https://github.com/erikras/redux-form) — 把 React 表單 state 保存在 Redux 裡
 
-### Store Enhancers
+### Enhancers
 
 * [redux-batched-subscribe](https://github.com/tappleby/redux-batched-subscribe) — 客製化 batching 以及 debouncing 的呼叫給 store 的訂閱者
 * [redux-history-transitions](https://github.com/johanneslumpe/redux-history-transitions) — 基於任意的 actions 來處理 History transitions
-
-### Reducer Enhancers
-
 * [redux-optimist](https://github.com/ForbesLindesay/redux-optimist) — 樂觀地使用可以在之後 commit 或 revert 的 actions
 * [redux-undo](https://github.com/omnidan/redux-undo) — 輕鬆的 undo/redo 並在你的 reducers 的歷史間活動
 * [redux-ignore](https://github.com/omnidan/redux-ignore) — 藉由陣列或是 filter function 來忽略 redux actions
 * [redux-recycle](https://github.com/omnidan/redux-recycle) — 在收到特定的 actions 時重置 redux state
 * [redux-batched-actions](https://github.com/tshelburne/redux-batched-actions) — 用只通知 subscriber 一次的方式來 Dispatch 多個 actions
+* [redux-search](https://github.com/treasure-data/redux-search) — 自動地幫資源在 web worker 中建立索引並透過非阻塞的方式搜尋它們
+* [redux-electron-store](https://github.com/samiskin/redux-electron-store) — 跨越 Electron processes 同步 Redux stores 的 Store enhancers
 
 ### Utilities
 
@@ -87,17 +89,24 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 * [redux-immutablejs](https://github.com/indexiatech/redux-immutablejs) - Redux & [Immutable](https://github.com/facebook/immutable-js/) 之間的整合工具
 * [redux-undo](https://github.com/omnidan/redux-undo) — 輕鬆的 undo/redo 並在你的 reducers 的歷史間活動
 * [redux-tcomb](https://github.com/gcanti/redux-tcomb) — Immutable 與給 Redux 用的 type-checked state 和 actions
-* [redux-mock-store](https://github.com/arnaudbenard/redux-mock-store) - Mock redux store 以測試你的應用程式
+* [redux-mock-store](https://github.com/arnaudbenard/redux-mock-store) — Mock redux store 以測試你的應用程式
 
 ### 開發者工具
 
-* [redux-devtools](http://github.com/gaearon/redux-devtools) — 一個 action 記錄器，它伴隨著 time travel UI、hot reloading 和 reducers 的錯誤處理，[在 React Europe 首次展示](https://www.youtube.com/watch?v=xsSnOQynTHs)
+* [Redux DevTools](http://github.com/gaearon/redux-devtools) — 一個 action 記錄器，它伴隨著 time travel UI、hot reload 和 reducers 的錯誤處理，[在 React Europe 首次展示](https://www.youtube.com/watch?v=xsSnOQynTHs)
+* [Redux DevTools Extension](https://github.com/zalmoxisus/redux-devtools-extension) — 一個包裝了 Redux DevTools 並提供額外功能的 Chome 擴充套件
 
 ### 社群慣例
 
 * [Flux Standard Action](https://github.com/acdlite/flux-standard-action) — 一個 Flux action 物件 的人性化標準
 * [Canonical Reducer Composition](https://github.com/gajus/canonical-reducer-composition) — 一個巢狀 reducer composition 的自訂標準
 * [Ducks: Redux Reducer Bundles](https://github.com/erikras/ducks-modular-redux) — 一個 關於包裝 reducers、action types 和 actions 的建議
+
+### 翻譯
+
+* [中文文档](http://camsong.github.io/redux-in-chinese/) — Chinese
+* [繁體中文文件](https://github.com/chentsulin/redux) — Traditional Chinese
+* [Redux in Russian](https://github.com/rajdee/redux-in-russian) — Russian
 
 ## 更多
 
