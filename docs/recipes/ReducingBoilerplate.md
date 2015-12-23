@@ -150,7 +150,7 @@ export const addTodo = makeActionCreator(ADD_TODO, 'todo')
 export const editTodo = makeActionCreator(EDIT_TODO, 'id', 'todo')
 export const removeTodo = makeActionCreator(REMOVE_TODO, 'id')
 ```
-也有一些 utility libraries 可以幫助產生 action creators，像是 [redux-action-utils](https://github.com/insin/redux-action-utils) 和 [redux-actions](https://github.com/acdlite/redux-actions)。這些可以幫助減少你的 boilerplate 程式碼並遵守像是 [Flux Standard Action (FSA)](https://github.com/acdlite/flux-standard-action) 的標準。
+也有一些 utility libraries 可以幫助產生 action creators，像是 [redux-act](https://github.com/pauldijou/redux-act) 和 [redux-actions](https://github.com/acdlite/redux-actions)。這些可以幫助減少你的 boilerplate 程式碼並遵守像是 [Flux Standard Action (FSA)](https://github.com/acdlite/flux-standard-action) 的標準。
 
 ## 非同步的 Action Creators
 

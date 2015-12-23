@@ -60,8 +60,8 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 
 ### Routing
 
-* [redux-router](https://github.com/rackt/redux-router) —  React Router 的 Redux 綁定
-* [redux-simple-router](https://github.com/jlongster/redux-simple-router) — 用非常簡單的綁定來保持 React Router 和 Redux 同步
+* [redux-simple-router](https://github.com/rackt/redux-simple-router) — 用非常簡單的綁定來保持 React Router 和 Redux 同步
+* [redux-router](https://github.com/acdlite/redux-router) — React Router 的 Redux 綁定
 
 ### Components
 

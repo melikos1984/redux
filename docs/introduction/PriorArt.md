@@ -19,7 +19,7 @@ Redux 受到幾個 Flux 的重要特質所影響。就像 Flux 一樣，Redux �
 
 ### Elm
 
-[Elm](http://elm-lang.org/) 是一個 [Evan Czaplicki](https://twitter.com/czaplic) 創造並受到 Haskell 影響的 functional programming language。它強制[一個「model view update」架構](https://github.com/evancz/elm-architecture-tutorial/)，而它的 update 有以下的 signature：`(state, action) => state`。技術上來說，Elm 的「updaters」等同於 Redux 中的 reducers。
+[Elm](http://elm-lang.org/) 是一個 [Evan Czaplicki](https://twitter.com/czaplic) 創造並受到 Haskell 影響的 functional programming language。它強制[一個「model view update」架構](https://github.com/evancz/elm-architecture-tutorial/)，而它的 update 有以下的 signature：`(action, state) => state`。Elm 的「updaters」跟 Redux 中的 reducers 有一樣目的。
 
 跟 Redux 不一樣，Elm 是一個 language，所以它能夠從許多東西獲得好處，像是：強制的 purity、靜態型別、內建 immutability、和模式匹配 (使用 `case` 表達式)。即使你沒有計劃使用 Elm，你也應該閱讀一下 Elm 的架構，並玩玩看它。有一個有趣的 [JavaScript library playground 實做了類似的想法](https://github.com/paldepind/noname-functional-frontend-framework)。我們應該在那裡為 Redux 尋找靈感！一個我們能更接近 Elm 的靜態型別的方式是藉由[使用一個漸進式的型別方案像是 Flow](https://github.com/rackt/redux/issues/290)。
 

@@ -4,7 +4,20 @@
 
 `combineReducers` helper function 把一個每個值都是不同的 reducing function 的物件轉換成一個你可以傳遞給 [`createStore`](createStore.md) 的單一 reducing function。
 
-由此產生的 reducer 會呼叫每一個 child reducer，並收集它們的結果轉換成單一一個 state 物件。state 物件的形狀會符合傳遞進去的 `reducers` 的 keys。
+由此產生的 reducer 會呼叫每一個 child reducer，並收集它們的結果轉換成單一一個 state 物件。**state 物件的形狀會符合傳遞進去的 `reducers` 的 keys**。
+
+因此，state 物件將會看起來像這樣：
+
+```
+{
+  reducer1: ...
+  reducer2: ...
+}
+```
+
+你可以藉由在傳遞進去的物件中針對 reducers 使用不同的 keys 來控制 state 的 key 的名稱。例如，你可以針對會是 `{ todos, counter }` 形狀的 state 呼叫 `combineReducers({ todos: myTodosReducer, counter: myCounterReducer })`。
+
+一個很受歡迎的慣例是用它們切分之後所管理的 state 來命名 reducers，如此一來你可以使用 ES6 property shorthand notation：`combineReducers({ counter, todos })`。這等同於撰寫 `combineReducers({ counter: counter, todos: todos })`。
 
 > ##### 給 Flux 使用者的附註
 
