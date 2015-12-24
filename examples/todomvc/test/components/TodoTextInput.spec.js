@@ -50,9 +50,9 @@ describe('components', () => {
 
     it('should update value on change', () => {
       const { output, renderer } = setup()
-      output.props.onChange({ target: { value: 'Use Radox' } })
+      output.props.onChange({ target: { value: 'Use Radux' } })
       const updated = renderer.getRenderOutput()
-      expect(updated.props.value).toEqual('Use Radox')
+      expect(updated.props.value).toEqual('Use Radux')
     })
 
     it('should call onSave on return key press', () => {
