@@ -2,7 +2,7 @@
 
 首先，讓我們來定義一些 actions。
 
-**Actions** 是從你的應用程式傳遞資料到你的 store 的資訊 payloads。它們是一個 store *唯一的*資訊來源。你藉由 [`store.dispatch()`](../api/Store.md#dispatch) 傳遞它們到 store。
+**Actions** 是從你的應用程式傳遞資料到你的 store 的資訊 payloads。它們是 store *唯一的*資訊來源。你藉由 [`store.dispatch()`](../api/Store.md#dispatch) 來把它們傳遞到 store。
 
 這是一個 action 的例子，它代表添加一個新的 todo 項目：
 
