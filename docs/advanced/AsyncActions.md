@@ -350,7 +350,7 @@ export function fetchPosts(reddit) {
     // 在這個案例中，我們回傳一個 promise 以等待。
     // 這不是 thunk middleware 所必須的，不過這樣對我們來說很方便。
 
-    return fetch(`http://www.reddit.com/r/${reddit}.json`)
+    return fetch(`https://www.reddit.com/r/${reddit}.json`)
       .then(response => response.json())
       .then(json =>
 
@@ -438,7 +438,7 @@ function receivePosts(reddit, json) {
 function fetchPosts(reddit) {
   return dispatch => {
     dispatch(requestPosts(reddit))
-    return fetch(`http://www.reddit.com/r/${reddit}.json`)
+    return fetch(`https://www.reddit.com/r/${reddit}.json`)
       .then(response => response.json())
       .then(json => dispatch(receivePosts(reddit, json)))
   }
