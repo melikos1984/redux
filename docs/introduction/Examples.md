@@ -152,6 +152,29 @@ open http://localhost:3000/
 * 只使用 [React Redux](https://github.com/rackt/react-redux) 來綁定 action creators
 * 條件式 middleware (logging 範例)
 
+## Tree View
+
+執行 [Tree View](https://github.com/rackt/redux/tree/master/examples/tree-view) 範例：
+
+```
+git clone https://github.com/rackt/redux.git
+
+cd redux/examples/tree-view
+npm install
+npm start
+
+open http://localhost:3000/
+```
+
+這一個高效能 render 的範例。
+
+它涵蓋了：
+
+* 正規化的 state
+* Reducer 組合
+* 把 State 呈現成一個樹狀 view
+* 細緻的重新 render 一個大的子樹
+
 ## 更多範例
 
 你可以在 [Awesome Redux](https://github.com/xgrommx/awesome-redux) 找到更多範例。
