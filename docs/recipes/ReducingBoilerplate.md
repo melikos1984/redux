@@ -154,7 +154,7 @@ export const removeTodo = makeActionCreator(REMOVE_TODO, 'id')
 
 ## 非同步的 Action Creators
 
-[Middleware](../Glossary.html#middleware) 讓你注入自訂的邏輯，在每一個 action 物件被 dispatch 之前轉譯它。Async actions 是 middleware 最常見的使用案例。
+[Middleware](../Glossary.md#middleware) 讓你注入自訂的邏輯，在每一個 action 物件被 dispatch 之前轉譯它。Async actions 是 middleware 最常見的使用案例。
 
 沒有任何 middleware 的話，[`dispatch`](../api/Store.md#dispatch) 只接受一個一般的物件，所以我們必須在 components 裡面執行 AJAX 呼叫：
 
