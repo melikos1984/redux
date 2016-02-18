@@ -15,7 +15,7 @@ cd redux/examples/counter-vanilla
 open index.html
 ```
 
-它不需要一個構建系統或一個 view 框架, 僅為了展示原生採用 ES5 的 Redux API.
+它不需要構建系統或是 view 的框架，僅是用來展示採用 ES5 的原生 Redux API。
 
 ## Counter
 
