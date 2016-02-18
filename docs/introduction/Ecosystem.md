@@ -92,18 +92,6 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 * [redux-tcomb](https://github.com/gcanti/redux-tcomb) — Immutable 與給 Redux 用的 type-checked state 和 actions
 * [redux-mock-store](https://github.com/arnaudbenard/redux-mock-store) — Mock redux store 以測試你的應用程式
 
-### Utilities
-
-* [reselect](https://github.com/faassen/reselect) — Efficient derived data selectors inspired by NuclearJS
-* [normalizr](https://github.com/gaearon/normalizr) — Normalize nested API responses for easier consumption by the reducers
-* [redux-actions](https://github.com/acdlite/redux-actions) — Reduces the boilerplate in writing reducers and action creators
-* [redux-act](https://github.com/pauldijou/redux-act) — An opinionated library for making reducers and action creators
-* [redux-transducers](https://github.com/acdlite/redux-transducers) — Transducer utilities for Redux
-* [redux-immutable](https://github.com/gajus/redux-immutable) — Used to create an equivalent function of Redux `combineReducers` that works with [Immutable.js](https://facebook.github.io/immutable-js/) state.
-* [redux-tcomb](https://github.com/gcanti/redux-tcomb) — Immutable and type-checked state and actions for Redux
-* [redux-mock-store](https://github.com/arnaudbenard/redux-mock-store) — Mock redux store for testing your app
->>>>>>> 9b88b3d4622cd6e0d778e4698f7df7d4d6490c9d
-
 ### 開發者工具
 
 * [Redux DevTools](http://github.com/gaearon/redux-devtools) — 一個 action 記錄器，它伴隨著 time travel UI、hot reload 和 reducers 的錯誤處理，[在 React Europe 首次展示](https://www.youtube.com/watch?v=xsSnOQynTHs)
