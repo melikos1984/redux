@@ -3,7 +3,7 @@
 在 Redux 的工作是[由社群出資](https://www.patreon.com/reactdx)。
 遇到一些卓越的公司與個人使這可以成真：
 
-* [Webflow](https://webflow.com/)
+* [Webflow](https://github.com/webflow)
 * [Chess iX](http://www.chess-ix.com/)
 * [Herman J. Radtke III](http://hermanradtke.com)
 * [Ken Wheeler](http://kenwheeler.github.io/)

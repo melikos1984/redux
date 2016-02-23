@@ -81,6 +81,12 @@ store.dispatch(addTodo('Read about the middleware'))
 
 添加一個 change listener。它將會在任何時候 action 被 dispatch 時被呼叫，而 state tree 的某部分有可能已經改變了。你可以接著呼叫 [`getState()`](#getState) 來在這個 callback 裡面讀取當下的 state。
 
+你可以從 change listener 呼叫 [`dispatch()`](#dispatch)，有以下注意事項:
+
+1. subscription 和 unsubscription 都會在 stack 上最外層的 [`dispatch()`](#dispatch) 呼叫結束後才起作用。這代表如果你在 listeners 正在被呼叫時進行 subscribe 或是 unsubscribe，subscriptions 的變更將會在最外層的 [`dispatch()`](#dispatch) 結束之後才生效。
+
+2. listener 不應該預期會看到所有的 states 變化，因為在 listener 被呼叫之前，state 可能會在巢狀的 [`dispatch()`](#dispatch) 之中被更新數次。然而，這保證所有在最外層的 [`dispatch()`](#dispatch) 開始的時候已經註冊的 subscribers 都將會在最外層的 [`dispatch()`](#dispatch) 結束的時候被用最新的 state 當作參數呼叫。
+
 這是一個低階 API。你大部份時候不會直接使用它，你會使用 React (或其他的) 綁定。如果你覺得這個 callback 需要使用當下的 state 當參數來呼叫，你可能會想要[把 store 轉換成 Observable 或寫一個客製化的 `observeStore` utility 來取代](https://github.com/rackt/redux/issues/303#issuecomment-125184409)。
 
 要取消訂閱 change listener，可以呼叫 `subscribe` 回傳的 function。

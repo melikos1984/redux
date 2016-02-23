@@ -60,7 +60,7 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 
 ### Routing
 
-* [redux-simple-router](https://github.com/rackt/redux-simple-router) — 用非常簡單的綁定來保持 React Router 和 Redux 同步
+* [react-router-redux](https://github.com/rackt/react-router-redux) — 用非常簡單的綁定來保持 React Router 和 Redux 同步
 * [redux-router](https://github.com/acdlite/redux-router) — React Router 的 Redux 綁定
 
 ### Components
@@ -78,6 +78,7 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 * [redux-batched-actions](https://github.com/tshelburne/redux-batched-actions) — 用只通知 subscriber 一次的方式來 Dispatch 多個 actions
 * [redux-search](https://github.com/treasure-data/redux-search) — 自動地幫資源在 web worker 中建立索引並透過非阻塞的方式搜尋它們
 * [redux-electron-store](https://github.com/samiskin/redux-electron-store) — 跨越 Electron processes 同步 Redux stores 的 Store enhancers
+* [redux-loop](https://github.com/raisemarketplace/redux-loop) — 由 Reducer 返回達成自然且純粹地序列 effects
 
 ### Utilities
 

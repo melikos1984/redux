@@ -4,6 +4,19 @@ Redux 是隨著一些範例在它的[原始碼](https://github.com/rackt/redux/t
 >##### 關於複製的提醒
 >如果你把 Redux 範例複製到它們的目錄外面，你可以刪除它們的 `webpack.config.js` 尾端的幾行程式碼。 它們在 「You can safely delete these lines in your project.」 註解的後面。
 
+## Counter Vanilla
+
+執行 [Counter Vanilla](https://github.com/rackt/redux/tree/master/examples/counter-vanilla) 範例：
+
+```
+git clone https://github.com/rackt/redux.git
+
+cd redux/examples/counter-vanilla
+open index.html
+```
+
+它不需要構建系統或是 view 的框架，僅是用來展示採用 ES5 的原生 Redux API。
+
 ## Counter
 
 執行 [Counter](https://github.com/rackt/redux/tree/master/examples/counter) 範例：
