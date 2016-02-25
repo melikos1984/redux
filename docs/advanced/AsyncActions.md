@@ -138,7 +138,7 @@ export function receivePosts(subreddit, json) {
         {
           id: 42,
           title: 'Confusion about Flux and Relay'
-        }, 
+        },
         {
           id: 500,
           title: 'Creating a Simple Application Using React JS and Flux Architecture'
@@ -381,10 +381,10 @@ export function fetchPosts(subreddit) {
 
 >```js
 >// 在你的應用程式任何其他的程式碼之前做一次這個
->import 'babel-core/polyfill'
+>import 'babel-polyfill'
 >```
 
-我們要如何把 Redux Thunk middleware 加進 dispatch 機制裡？我們使用 Redux 裡的 [`applyMiddleware()`](../api/applyMiddleware.md) method，如下所示：
+我們要如何把 Redux Thunk middleware 加進 dispatch 機制裡？我們使用 Redux 裡的 [`applyMiddleware()`](../api/applyMiddleware.md) store enhancer，如下所示：
 
 #### `index.js`
 
@@ -397,12 +397,13 @@ import rootReducer from './reducers'
 
 const loggerMiddleware = createLogger()
 
-const createStoreWithMiddleware = applyMiddleware(
-  thunkMiddleware, // 讓我們來 dispatch() functions
-  loggerMiddleware // 巧妙的 middleware，用來 logs actions
-)(createStore)
-
-const store = createStoreWithMiddleware(rootReducer)
+const store = createStore(
+  rootReducer,
+  applyMiddleware(
+    thunkMiddleware, // 讓我們來 dispatch() functions
+    loggerMiddleware // 巧妙的 middleware，用來 logs actions
+  )
+)
 
 store.dispatch(selectSubreddit('reactjs'))
 store.dispatch(fetchPosts('reactjs')).then(() =>

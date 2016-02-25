@@ -99,7 +99,7 @@ function todoApp(state = initialState, action) {
 
 注意這幾點：
 
-1. **我們不改變 `state`。** 我們用 [`Object.assign()`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) 複製一份。`Object.assign(state, { visibilityFilter: action.filter })` 也是錯的：它會改變第一個參數。你**必須**提供一個空物件作為第一個參數。你也可以啟用實驗性的 ES7 [object spread syntax](https://github.com/sebmarkbage/ecmascript-rest-spread) 提案，就可以寫 `{ ...state, ...newState }` 作為取代。
+1. **我們不改變 `state`。** 我們用 [`Object.assign()`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) 複製一份。`Object.assign(state, { visibilityFilter: action.filter })` 也是錯的：它會改變第一個參數。你**必須**提供一個空物件作為第一個參數。你也可以啟用 [object spread 運算子提案](../recipes/UsingObjectSpreadOperator.md)，就可以寫 `{ ...state, ...newState }` 作為取代。
 
 2. **我們在 `default` case 回傳先前的 `state`。**針對任何未知的 action 回傳先前的 `state` 非常重要。
 
@@ -345,7 +345,7 @@ function reducer(state, action) {
 }
 ```
 
-[`combineReducers()`](../api/combineReducers.md) 做的就是產生一個 function，它**以依照它們的 keys 所選擇的 state 部分來**呼叫你的 reducers，並再次把它們的結果合併成單一一個物件。[它不是魔法。](https://github.com/rackt/redux/issues/428#issuecomment-129223274)
+[`combineReducers()`](../api/combineReducers.md) 做的就是產生一個 function，它**以依照它們的 keys 所選擇的 state 部分來**呼叫你的 reducers，並再次把它們的結果合併成單一一個物件。[它不是魔法。](https://github.com/reactjs/redux/issues/428#issuecomment-129223274)
 
 >##### 給理解 ES6 的使用者們的附註
 
@@ -358,7 +358,7 @@ function reducer(state, action) {
 >const todoApp = combineReducers(reducers)
 >```
 >
->因為 `import *` 還是一個新的語法，我們今後不會在文件中使用它以避免[困惑](https://github.com/rackt/redux/issues/428#issuecomment-129223274)，不過你可能會在一些社群的範例中遇到它。
+>因為 `import *` 還是一個新的語法，我們今後不會在文件中使用它以避免[困惑](https://github.com/reactjs/redux/issues/428#issuecomment-129223274)，不過你可能會在一些社群的範例中遇到它。
 
 ## 原始碼
 

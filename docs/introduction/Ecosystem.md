@@ -14,8 +14,8 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 
 ### 應用程式範例
 
+* [Official Examples](Examples.md) — 一些涵蓋不同 Redux 技術的官方範例
 * [SoundRedux](https://github.com/andrewngu/sound-redux) — 一個用 Redux 打造的 SoundCloud 客戶端
-* [Shopping Cart (Flux Comparison)](https://github.com/voronianski/flux-comparison/tree/master/redux) — 一個從 Flux Comparison 來的購物車範例
 
 ### 教學和文章
 
@@ -27,7 +27,8 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 * [Handcrafting an Isomorphic Redux Application (With Love)](https://medium.com/@bananaoomarang/handcrafting-an-isomorphic-redux-application-with-love-40ada4468af4) — 一個藉由資料抓取與 routing 建立 universal 應用程式的教學
 * [Full-Stack Redux Tutorial](http://teropa.info/blog/2015/09/10/full-stack-redux-tutorial.html) — 一個使用 Redux、React 與 Immutable 進行測試先行開發的詳盡指南
 * [Understanding Redux Middleware](https://medium.com/@meagle/understanding-87566abcfb7a#.l033pyr02) — 實作 Redux middleware 的深入指南
-* [A Simple Way to Route with Redux](http://jlongster.com/A-Simple-Way-to-Route-with-Redux) — 一個 Redux Simple Router 的介紹
+* [Angular 2 — Introduction to Redux](https://medium.com/google-developer-experts/angular-2-introduction-to-redux-1cf18af27e6e) — 一個以 Angular 2 為範例的 Redux 基礎觀念介紹
+* [Working with VK API (in Russian)](https://www.gitbook.com/book/maxfarseer/redux-course-ru/details) — 一個示範建立 app 並使用 VK API 的俄文教學
 
 ### 演講
 
@@ -60,12 +61,12 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 
 ### Routing
 
-* [react-router-redux](https://github.com/rackt/react-router-redux) — 用非常簡單的綁定來保持 React Router 和 Redux 同步
-* [redux-router](https://github.com/acdlite/redux-router) — React Router 的 Redux 綁定
+* [react-router-redux](https://github.com/reactjs/react-router-redux) — 以極簡單的 bindings 維持 React Router 和 Redux 同步
 
 ### Components
 
 * [redux-form](https://github.com/erikras/redux-form) — 把 React 表單 state 保存在 Redux 裡
+* [react-redux-form](https://github.com/davidkpiano/react-redux-form) — 在 React 內以 Redux 簡單地建立表單
 
 ### Enhancers
 
@@ -87,15 +88,24 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 * [redux-actions](https://github.com/acdlite/redux-actions) — 減少撰寫 reducers 和 action creators 的 boilerplate
 * [redux-act](https://github.com/pauldijou/redux-act) — 一個自己用來建立 reducers 和 action creators 的 library
 * [redux-transducers](https://github.com/acdlite/redux-transducers) — Redux 的 Transducer utilities
-* [redux-immutablejs](https://github.com/indexiatech/redux-immutablejs) - Redux & [Immutable](https://github.com/facebook/immutable-js/) 之間的整合工具
-* [redux-undo](https://github.com/omnidan/redux-undo) — 輕鬆的 undo/redo 並在你的 reducers 的歷史間活動
+* [redux-immutable](https://github.com/gajus/redux-immutable) — 用來建立一個與 Redux 中 `combineReducers` 等價但使用 [Immutable.js](https://facebook.github.io/immutable-js/) state 的 function
 * [redux-tcomb](https://github.com/gcanti/redux-tcomb) — Immutable 與給 Redux 用的 type-checked state 和 actions
 * [redux-mock-store](https://github.com/arnaudbenard/redux-mock-store) — Mock redux store 以測試你的應用程式
 
-### 開發者工具
+### 開發工具
 
 * [Redux DevTools](http://github.com/gaearon/redux-devtools) — 一個 action 記錄器，它伴隨著 time travel UI、hot reload 和 reducers 的錯誤處理，[在 React Europe 首次展示](https://www.youtube.com/watch?v=xsSnOQynTHs)
 * [Redux DevTools Extension](https://github.com/zalmoxisus/redux-devtools-extension) — 一個包裝了 Redux DevTools 並提供額外功能的 Chrome 擴充套件
+
+### DevTools Monitors
+
+* [Log Monitor](https://github.com/gaearon/redux-devtools-log-monitor) — 使用樹狀 view 的 Redux DevTools 預設 monitor
+* [Dock Monitor](https://github.com/gaearon/redux-devtools-dock-monitor) — 一個讓 Redux DevTools monitors 使用的可更動大小與移動的 dock
+* [Slider Monitor](https://github.com/calesce/redux-slider-monitor) — 一個為 Redux DevTools 客製化來重複播放已紀錄之 Redux actions 的 monitor
+* [Diff Monitor](https://github.com/whetstone/redux-devtools-diff-monitor) — 一個 Redux DevTools 用來比較 Redux store 經由 actions 更動後之差異的 monitor
+* [Filterable Log Monitor](https://github.com/bvaughn/redux-devtools-filterable-log-monitor/) — Redux DevTools 的可篩選樹狀 view monitor
+* [Chart Monitor](https://github.com/romseguy/redux-devtools-chart-monitor) — 一個 Redux DevTools 表單 monitor
+* [Filter Actions](https://github.com/zalmoxisus/redux-devtools-filter-actions) — 有能力過濾 actions 地可組合 Redux DevTools monitor
 
 ### 社群慣例
 
@@ -112,3 +122,4 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 ## 更多
 
 [Awesome Redux](https://github.com/xgrommx/awesome-redux) 是一個廣泛的 Redux 相關 repositories 的清單。
+[React-Redux Links](https://github.com/markerikson/react-redux-links) 是一個 React, Redux, ES6等等的高品質文章、教學、相關內容的搜集清單。

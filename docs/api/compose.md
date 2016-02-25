@@ -7,7 +7,7 @@
 
 #### 參數
 
-1. (*arguments*)：要組合的 functions。每個 function 都預期會接收一個參數。它的回傳值將會作為在它左邊的 function 的參數，以此類推。
+1. (*arguments*)：要組合的 functions。每個 function 都預期會接收一個參數。它的回傳值將會作為在它左邊的 function 的變數，以此類推。有個例外是當為 resulting composed function 提供 signature 時， 最右邊的變數可接受多個參數。
 
 #### 回傳
 
@@ -20,40 +20,16 @@
 ```js
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
-import * as reducers from '../reducers/index'
+import DevTools from './containers/DevTools'
+import reducer from '../reducers/index'
 
-let reducer = combineReducers(reducers)
-let middleware = [ thunk ]
-
-let finalCreateStore
-
-// 在產品環境中，我們只想要使用 the middleware。
-// 而在開發環境中，我們想要使用一些來自 redux-devtools 的 store enhancers。
-// UglifyJS 會依照建置環境刪除用不到的程式碼。
-
-if (process.env.NODE_ENV === 'production') {
-  finalCreateStore = applyMiddleware(...middleware)(createStore)
-} else {
-  finalCreateStore = compose(
-    applyMiddleware(...middleware),
-    require('redux-devtools').devTools(),
-    require('redux-devtools').persistState(
-      window.location.href.match(/[?&]debug_session=([^&]+)\b/)
-    )
-  )(createStore)
-
-  // 不使用 `compose` helper 的同等程式碼：
-  //
-  // finalCreateStore = applyMiddleware(middleware)(
-  //   require('redux-devtools').devTools()(
-  //     require('redux-devtools').persistState(
-  //       window.location.href.match(/[?&]debug_session=([^&]+)\b/)
-  //     )(createStore)
-  //   )
-  // )
-}
-
-let store = finalCreateStore(reducer)
+const store = createStore(
+  reducer,
+  compose(
+    applyMiddleware(thunk),
+    DevTools.instrument()
+  )
+)
 ```
 
 #### 提示

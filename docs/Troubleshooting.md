@@ -93,7 +93,7 @@ return update(state, {
 
 請確保你有正確地使用 `Object.assign`。例如，請從你的 reducers 回傳 `Object.assign({}, state, newData)`，而不要回傳像是 `Object.assign(state, newData)` 這樣。這樣你才不會覆寫掉前面的 `state`。
 
-你也可以用 [Babel stage 1](http://babeljs.io/docs/usage/experimental/) 來啟用 [ES7 object spread 提案](https://github.com/sebmarkbage/ecmascript-rest-spread)：
+你也可以為更簡潔的語法啟用 [object spread 運算子提案](recipes/UsingObjectSpreadOperator.md)：
 
 ```js
 // 啟用之前：
@@ -113,7 +113,7 @@ return [
 ]
 ```
 
-需要注意的是，實驗性的語言功能有可能會變動，所以在大量的程式碼中依賴它們是不明智的。
+需要注意的是，實驗性的語言功能有可能會變動。
 
 #### 不要忘記呼叫 [`dispatch(action)`](api/Store.md#dispatch)
 
@@ -193,5 +193,5 @@ export default connect()(AddTodo)
 
 ## 其他不能正常運作的原因
 
-在 **#redux** [Reactiflux](http://reactiflux.com/) Discord 頻道上詢問，或是[開一個 issue](https://github.com/rackt/redux/issues)。
-如果你搞清楚了，請[編輯這份文件](https://github.com/rackt/redux/edit/master/docs/Troubleshooting.md)作為好意給下一個遇到同樣問題的人。
+在 **#redux** [Reactiflux](http://reactiflux.com/) Discord 頻道上詢問，或是[開一個 issue](https://github.com/reactjs/redux/issues)。
+如果你搞清楚了，請[編輯這份文件](https://github.com/reactjs/redux/edit/master/docs/Troubleshooting.md)作為好意給下一個遇到同樣問題的人。

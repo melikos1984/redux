@@ -97,7 +97,8 @@ export function addTodo(text) {
   }
 }
 ```
-我們只是修改了 `addTodo` action creator 如何產生行為，呼叫的程式碼完全看不到差別。**我們不需要擔心需要查看每個添加 todos 的地方，來確保它們有做這個檢查。**Action creators 讓你解開了 dispatch action 的額外邏輯與 components 實際發送這些 actions 之間的耦合。在應用程式處於很積極開發且需求常常改變的狀態下這非常方便。
+
+我們只是修改了 `addTodo` action creator 如何運作，呼叫的程式碼完全看不到差別。**我們不需要擔心需要查看每個添加 todos 的地方，來確保它們有做這個檢查。**Action creators 讓你解開了 dispatch action 的額外邏輯與 components 實際發送這些 actions 之間的耦合。在應用程式處於很積極開發且需求常常改變的狀態下這非常方便。
 
 ### 產生 Action Creators
 
@@ -150,7 +151,7 @@ export const addTodo = makeActionCreator(ADD_TODO, 'todo')
 export const editTodo = makeActionCreator(EDIT_TODO, 'id', 'todo')
 export const removeTodo = makeActionCreator(REMOVE_TODO, 'id')
 ```
-也有一些 utility libraries 可以幫助產生 action creators，像是 [redux-act](https://github.com/pauldijou/redux-act) 和 [redux-actions](https://github.com/acdlite/redux-actions)。這些可以幫助減少你的 boilerplate 程式碼並遵守像是 [Flux Standard Action (FSA)](https://github.com/acdlite/flux-standard-action) 的標準。
+也有一些 utility libraries 可以幫助產生 action creators，像是 [redux-act](https://github.com/pauldijou/redux-act) 和 [redux-actions](https://github.com/acdlite/redux-actions)。這些可以幫助減少 boilerplate 程式碼並強制遵守像是 [Flux Standard Action (FSA)](https://github.com/acdlite/flux-standard-action) 的標準。
 
 ## 非同步的 Action Creators
 
@@ -249,7 +250,7 @@ export default connect(state => ({
 
 >##### 附註
 
->Thunk middleware 只是一個 middleware 的例子。Middleware 不是「讓你 dispatch functions」：它讓你 dispatch 任何你使用的特定 middleware 知道要如何處理的東西。Thunk middleware 在你 dispatch functions 的時候添加了一個特定的行為，不過實際上這取決於你使用的 middleware。
+>Thunk middleware 只是一個 middleware 的例子。Middleware 不是「讓你 dispatch functions」。它讓你 dispatch 任何你使用的特定 middleware 知道要如何處理的東西。Thunk middleware 在你 dispatch functions 的時候添加了一個特定的行為，不過實際上這取決於你使用的 middleware。
 
 試想把上面的程式碼用 [redux-thunk](https://github.com/gaearon/redux-thunk) 來重寫：
 

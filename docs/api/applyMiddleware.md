@@ -14,7 +14,7 @@ Middleware 沒有被內建在 [`createStore`](createStore.md) 裡面而且也不
 
 #### 回傳
 
-(*Function*) 一個啟用了給定 middleware 的 store enhancer。store enhancer 是一個需要施加到 `createStore` 的 function。它將會回傳一個不同而有啟用 middleware 的 `createStore`。
+(*Function*) 一個啟用了給定 middleware 的 store enhancer。store enhancer signature 是 `createStore => createStore'`，但最簡單啟用它的方法是把它傳到 [`createStore()`](./createStore.md) 作為最後一個變數。
 
 #### 範例：客製化 Logger Middleware
 
@@ -37,8 +37,11 @@ function logger({ getState }) {
   }
 }
 
-let createStoreWithMiddleware = applyMiddleware(logger)(createStore)
-let store = createStoreWithMiddleware(todos, [ 'Use Redux' ])
+let store = createStore(
+  todos,
+  [ 'Use Redux' ],
+  applyMiddleware(logger)
+)
 
 store.dispatch({
   type: 'ADD_TODO',
@@ -56,12 +59,9 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import * as reducers from './reducers'
 
-// applyMiddleware 會用 middleware 增強 createStore：
-let createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
-
-// 我們可以就像使用「原生的」createStore 一般使用它。
 let reducer = combineReducers(reducers)
-let store = createStoreWithMiddleware(reducer)
+// applyMiddleware 會用 middleware 增強 createStore：
+let store = createStore(reducer, applyMiddleware(thunk))
 
 function fetchSecretSauce() {
   return fetch('https://www.google.com/search?q=secret+sauce')
@@ -229,7 +229,12 @@ export default connect(
     let d = require('another-debug-middleware');
     middleware = [ ...middleware, c, d ];
   }
-  const createStoreWithMiddleware = applyMiddleware(...middleware)(createStore);
+
+  const store = createStore(
+    reducer,
+    initialState,
+    applyMiddleware(...middleware)
+  )
   ```
 
   這讓建置工具可以比較簡單的去排除不需要的 modules 並減低你的建置的大小。
@@ -237,3 +242,5 @@ export default connect(
 * 有沒有想過 `applyMiddleware` 本身是什麼呢？它理當是一個比 middleware 本身更強大的擴充機制。的確，`applyMiddleware` 是一個 Redux 最強大的擴充機制叫做 [store enhancers](../Glossary.md#store-enhancer) 的例子。很有可能你不會想要自己寫一個 store enhancer。另一個 store enhancer 的例子是 [redux-devtools](https://github.com/gaearon/redux-devtools)。Middleware 沒有 store enhancer 那麼強大，不過它寫起來比較簡單。
 
 * Middleware 聽起來比它實際上複雜許多。要真正了解 middleware 的唯一方法就是去看現存的 middleware 是如何運作的，並試著撰寫你自己的 middleware。function 巢狀可能會很嚇人，不過你會發現實際上大部份的 middleware 只有大概 10 行左右，而巢狀與組合性是讓 middleware 系統強大的原因。
+
+* 要套用多個 store enhancers，你可以使用 [`compose()`](./compose.md)。

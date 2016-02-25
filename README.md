@@ -1,13 +1,13 @@
-# [Redux](http://rackt.github.io/redux)
+# [Redux](http://redux.js.org)
 
 Redux 是個給 JavaScript 應用程式所使用的可預測 state 容器。
 
 他幫助你撰寫行為一致的應用程式，可以在不同的環境下執行 (客戶端、伺服器、原生應用程式)，並且易於測試。在這之上，它提供一個很棒的開發體驗，例如[把程式碼即時編輯與時間旅行除錯器結合](https://github.com/gaearon/redux-devtools)。
 
 你可以使用 Redux 結合 [React](https://facebook.github.io/react/)，或結合其他任何的 view library。
-它非常小 (2kB) 並且沒有任何依賴套件。
+它非常小 (2kB ，包含依賴套件)。
 
-[![build status](https://img.shields.io/travis/rackt/redux/master.svg?style=flat-square)](https://travis-ci.org/rackt/redux)
+[![build status](https://img.shields.io/travis/reactjs/redux/master.svg?style=flat-square)](https://travis-ci.org/reactjs/redux)
 [![npm version](https://img.shields.io/npm/v/redux.svg?style=flat-square)](https://www.npmjs.com/package/redux)
 [![npm downloads](https://img.shields.io/npm/dm/redux.svg?style=flat-square)](https://www.npmjs.com/package/redux)
 [![redux channel on discord](https://img.shields.io/badge/discord-%23redux%20%40%20reactiflux-61dafb.svg?style=flat-square)](https://discord.gg/0ZcbPKXt5bZ6au5t)
@@ -45,7 +45,7 @@ Redux 從 [Flux](http://facebook.github.io/flux/) 的概念發展而來，不過
 npm install --save redux
 ```
 
-大多數情況，你也會需要 [React 的綁定](https://github.com/rackt/react-redux)和[開發者工具](https://github.com/gaearon/redux-devtools)。
+大多數情況，你也會需要 [React 的綁定](https://github.com/reactjs/react-redux)和[開發者工具](https://github.com/gaearon/redux-devtools)。
 
 ```
 npm install --save react-redux
@@ -141,26 +141,28 @@ store.dispatch({ type: 'DECREMENT' })
 
 ### 文件
 
-* [介紹](http://rackt.github.io/redux/docs/introduction/index.html)
-* [基礎](http://rackt.github.io/redux/docs/basics/index.html)
-* [進階](http://rackt.github.io/redux/docs/advanced/index.html)
-* [Recipes](http://rackt.github.io/redux/docs/recipes/index.html)
-* [疑難排解](http://rackt.github.io/redux/docs/Troubleshooting.html)
-* [術語表](http://rackt.github.io/redux/docs/Glossary.html)
-* [API 參考](http://rackt.github.io/redux/docs/api/index.html)
+* [介紹](http://redux.js.org/docs/introduction/index.html)
+* [基礎](http://redux.js.org/docs/basics/index.html)
+* [進階](http://redux.js.org/docs/advanced/index.html)
+* [Recipes](http://redux.js.org/docs/recipes/index.html)
+* [疑難排解](http://redux.js.org/docs/Troubleshooting.html)
+* [術語表](http://redux.js.org/docs/Glossary.html)
+* [API 參考](http://redux.js.org/docs/api/index.html)
 
 想要輸出成 PDF、ePub 和 MOBI 以方便離線閱讀的話，關於如何產生它們的說明，請參閱：[paulkogel/redux-offline-docs](https://github.com/paulkogel/redux-offline-docs)。
 
 ### 範例
 
-* [Counter](http://rackt.github.io/redux/docs/introduction/Examples.html#counter) ([原始碼](https://github.com/rackt/redux/tree/master/examples/counter))
-* [TodoMVC](http://rackt.github.io/redux/docs/introduction/Examples.html#todomvc) ([原始碼](https://github.com/rackt/redux/tree/master/examples/todomvc))
-* [Todos with Undo](http://rackt.github.io/redux/docs/introduction/Examples.html#todos-with-undo) ([原始碼](https://github.com/rackt/redux/tree/master/examples/todos-with-undo))
-* [Async](http://rackt.github.io/redux/docs/introduction/Examples.html#async) ([原始碼](https://github.com/rackt/redux/tree/master/examples/async))
-* [Universal](http://rackt.github.io/redux/docs/introduction/Examples.html#universal) ([原始碼](https://github.com/rackt/redux/tree/master/examples/universal))
-* [Real World](http://rackt.github.io/redux/docs/introduction/Examples.html#real-world) ([原始碼](https://github.com/rackt/redux/tree/master/examples/real-world))
-* [Shopping Cart](http://rackt.github.io/redux/docs/introduction/Examples.html#shopping-cart) ([原始碼](https://github.com/rackt/redux/tree/master/examples/shopping-cart))
-* [Tree View](http://rackt.github.io/redux/docs/introduction/Examples.html#tree-view) ([原始碼](https://github.com/rackt/redux/tree/master/examples/tree-view))
+* [Counter Vanilla](http://redux.js.org/docs/introduction/Examples.html#counter-vanilla) ([原始碼](https://github.com/reactjs/redux/tree/master/examples/counter-vanilla))
+* [Counter](http://redux.js.org/docs/introduction/Examples.html#counter) ([原始碼](https://github.com/reactjs/redux/tree/master/examples/counter))
+* [Todos](http://redux.js.org/docs/introduction/Examples.html#todos) ([原始碼](https://github.com/reactjs/redux/tree/master/examples/todos))
+* [Todos with Undo](http://redux.js.org/docs/introduction/Examples.html#todos-with-undo) ([原始碼](https://github.com/reactjs/redux/tree/master/examples/todos-with-undo))
+* [TodoMVC](http://redux.js.org/docs/introduction/Examples.html#todomvc) ([原始碼](https://github.com/reactjs/redux/tree/master/examples/todomvc))
+* [Shopping Cart](http://redux.js.org/docs/introduction/Examples.html#shopping-cart) ([原始碼](https://github.com/reactjs/redux/tree/master/examples/shopping-cart))
+* [Tree View](http://redux.js.org/docs/introduction/Examples.html#tree-view) ([原始碼](https://github.com/reactjs/redux/tree/master/examples/tree-view))
+* [Async](http://redux.js.org/docs/introduction/Examples.html#async) ([原始碼](https://github.com/reactjs/redux/tree/master/examples/async))
+* [Universal](http://redux.js.org/docs/introduction/Examples.html#universal) ([原始碼](https://github.com/reactjs/redux/tree/master/examples/universal))
+* [Real World](http://redux.js.org/docs/introduction/Examples.html#real-world) ([原始碼](https://github.com/reactjs/redux/tree/master/examples/real-world))
 
 如果你不熟悉 NPM 生態系並在讓專案運作起來時遇到了困難，或是你不確定要在哪裡貼上上面的程式碼片段，請查看 [simplest-redux-example](https://github.com/jackielii/simplest-redux-example)，它把 Redux 和 React、Browserify 結合在一起。
 
@@ -186,7 +188,7 @@ store.dispatch({ type: 'DECREMENT' })
 ### 變更日誌
 
 這個專案依照 [Semantic Versioning](http://semver.org/)。
-每一個釋出版本都會伴隨它的遷移說明，被記錄在 Github [Releases](https://github.com/rackt/redux/releases) 頁面上。
+每一個釋出版本都會伴隨它的遷移說明，被記錄在 Github [Releases](https://github.com/reactjs/redux/releases) 頁面上。
 
 ### 贊助者
 
@@ -194,7 +196,7 @@ store.dispatch({ type: 'DECREMENT' })
 遇到一些卓越的公司使這可以成真：
 
 * [Webflow](https://github.com/webflow)
-* [Chess iX](http://www.chess-ix.com/)
+* [Ximedes](https://www.ximedes.com/)
 
 [查看完整的 Redux 贊助者清單。](PATRONS.md)
 
