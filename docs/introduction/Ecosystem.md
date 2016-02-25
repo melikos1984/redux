@@ -26,6 +26,7 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 * [Understanding Redux](http://www.youhavetolearncomputers.com/blog/2015/9/15/a-conceptual-overview-of-redux-or-how-i-fell-in-love-with-a-javascript-state-container) — 學習 Redux 的基礎概念
 * [Handcrafting an Isomorphic Redux Application (With Love)](https://medium.com/@bananaoomarang/handcrafting-an-isomorphic-redux-application-with-love-40ada4468af4) — 一個藉由資料抓取與 routing 建立 universal 應用程式的教學
 * [Full-Stack Redux Tutorial](http://teropa.info/blog/2015/09/10/full-stack-redux-tutorial.html) — 一個使用 Redux、React 與 Immutable 進行測試先行開發的詳盡指南
+* [Secure Your React and Redux App with JWT Authentication](https://auth0.com/blog/2016/01/04/secure-your-react-and-redux-app-with-jwt-authentication/) — 學習如何加入 JWT 驗證到你的 React 和 Redux app
 * [Understanding Redux Middleware](https://medium.com/@meagle/understanding-87566abcfb7a#.l033pyr02) — 實作 Redux middleware 的深入指南
 * [Angular 2 — Introduction to Redux](https://medium.com/google-developer-experts/angular-2-introduction-to-redux-1cf18af27e6e) — 一個以 Angular 2 為範例的 Redux 基礎觀念介紹
 * [Working with VK API (in Russian)](https://www.gitbook.com/book/maxfarseer/redux-course-ru/details) — 一個示範建立 app 並使用 VK API 的俄文教學
@@ -102,6 +103,7 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 * [Log Monitor](https://github.com/gaearon/redux-devtools-log-monitor) — 使用樹狀 view 的 Redux DevTools 預設 monitor
 * [Dock Monitor](https://github.com/gaearon/redux-devtools-dock-monitor) — 一個讓 Redux DevTools monitors 使用的可更動大小與移動的 dock
 * [Slider Monitor](https://github.com/calesce/redux-slider-monitor) — 一個為 Redux DevTools 客製化來重複播放已紀錄之 Redux actions 的 monitor
+* [Inspector](https://github.com/alexkuz/redux-devtools-inspector) — 一個 Redux DevTools 客製化 monitor 用來讓你篩選 actions、檢查差異、探勘 state 路徑深度，以瞭解它們的變化
 * [Diff Monitor](https://github.com/whetstone/redux-devtools-diff-monitor) — 一個 Redux DevTools 用來比較 Redux store 經由 actions 更動後之差異的 monitor
 * [Filterable Log Monitor](https://github.com/bvaughn/redux-devtools-filterable-log-monitor/) — Redux DevTools 的可篩選樹狀 view monitor
 * [Chart Monitor](https://github.com/romseguy/redux-devtools-chart-monitor) — 一個 Redux DevTools 表單 monitor

@@ -109,7 +109,7 @@ export function receivePosts(subreddit, json) {
 
 >##### 關於錯誤處理的附註
 
->在一個真實的應用程式中，你也會想要在請求失敗時 dispatch 一個 action。我們不會在這份教學中實作錯誤處理，不過 [real world example](../introduction/Examples.html#real-world) 展示了其中一個可行的方法。
+>在一個真實的應用程式中，你也會想要在請求失敗時 dispatch 一個 action。我們不會在這份教學中實作錯誤處理，不過 [real world example](../introduction/Examples.md#real-world) 展示了其中一個可行的方法。
 
 ## 設計 State 的形狀
 
@@ -159,7 +159,7 @@ export function receivePosts(subreddit, json) {
 
 >在這個範例中，我們把收到的項目跟 pagination 資訊儲存在一起。但是，如果你有巢狀且互相參考的 entities，或是如果你讓使用者可以編輯項目，那這個方法不會運作得很好。試想如果使用者想要去編輯一個抓回來的 post，但是這個 post 被複製到 state tree 中的好幾個地方。實作這個將會非常痛苦。
 
->如果你有巢狀的 entities，或是如果你讓使用者可以編輯接收到的項目，你應該把它們分別保存在 state 中，就像它是一個資料庫。在 pagination 資訊中，你只會藉由它們的 IDs 來參考它們。這使你能讓它們始終保持更新到最新狀態。[real world example](../introduction/Examples.html#real-world) 展示了這個方法，並使用了 [normalizr](https://github.com/gaearon/normalizr) 來正規化巢狀的 API 回應。用這個方法，你的 state 可能會看起來像這樣：
+>如果你有巢狀的 entities，或是如果你讓使用者可以編輯接收到的項目，你應該把它們分別保存在 state 中，就像它是一個資料庫。在 pagination 資訊中，你只會藉由它們的 IDs 來參考它們。這使你能讓它們始終保持更新到最新狀態。[real world example](../introduction/Examples.md#real-world) 展示了這個方法，並使用了 [normalizr](https://github.com/gaearon/normalizr) 來正規化巢狀的 API 回應。用這個方法，你的 state 可能會看起來像這樣：
 
 >```js
 > {
@@ -292,7 +292,7 @@ export default rootReducer
   nextState[action.subreddit] = posts(state[action.subreddit], action)
   return Object.assign({}, state, nextState)
   ```
-* 我們把 `posts(state, action)` 抽出來管理具體的 post 清單的 state。這只是 [reducer composition](../basics/Reducers.md#splitting-reducers)！這是我們選擇用來把 reducer 拆分成更小的 reducers 的方式，而在這個案例中，我們把在物件中更新項目的工作委派給 `posts` reducer。[real world example](../introduction/Examples.html#real-world) 更進一步，展示了如何建立一個 reducer factory 來參數化 pagination reducers。
+* 我們把 `posts(state, action)` 抽出來管理具體的 post 清單的 state。這只是 [reducer composition](../basics/Reducers.md#splitting-reducers)！這是我們選擇用來把 reducer 拆分成更小的 reducers 的方式，而在這個案例中，我們把在物件中更新項目的工作委派給 `posts` reducer。[real world example](../introduction/Examples.md#real-world) 更進一步，展示了如何建立一個 reducer factory 來參數化 pagination reducers。
 
 請記得 reducers 只是些 functions，所以你可以盡你所能舒適的使用 functional composition 和 higher-order functions。
 
@@ -490,7 +490,7 @@ store.dispatch(fetchPostsIfNeeded('reactjs')).then(() =>
 
 >Async action creators 對伺服器 rendering 特別方便。你可以建立一個 store，dispatch 一個單一的 async action creator，它會 dispatches 其他的 async action creators 來為整個應用程式抓取資料，並在 Promise 回傳並完成之後才 render。接著你 rendering 之前需要的 state 將必須被 hydrated 到你的 store。
 
-[Thunk middleware](https://github.com/gaearon/redux-thunk) 不是在 Redux 中協調 asynchronous actions 的唯一方式。你可以使用 [redux-promise](https://github.com/acdlite/redux-promise) 或 [redux-promise-middleware](https://github.com/pburtchaell/redux-promise-middleware) 來 dispatch Promises 取代 functions。你可以藉由 [redux-rx](https://github.com/acdlite/redux-rx) dispatch Observables。你甚至可以撰寫一個客製化的 middleware 來描述你的 API 呼叫，像是 [real world example](../introduction/Examples.html#real-world) 做的那樣。你可以自由地嘗試幾個選項，選擇一個你喜歡的慣例，並遵守它，無論有沒有使用 middleware。
+[Thunk middleware](https://github.com/gaearon/redux-thunk) 不是在 Redux 中協調 asynchronous actions 的唯一方式。你可以使用 [redux-promise](https://github.com/acdlite/redux-promise) 或 [redux-promise-middleware](https://github.com/pburtchaell/redux-promise-middleware) 來 dispatch Promises 取代 functions。你可以藉由 [redux-rx](https://github.com/acdlite/redux-rx) dispatch Observables。你甚至可以撰寫一個客製化的 middleware 來描述你的 API 呼叫，像是 [real world example](../introduction/Examples.md#real-world) 做的那樣。你可以自由地嘗試幾個選項，選擇一個你喜歡的慣例，並遵守它，無論有沒有使用 middleware。
 
 ## 連結到 UI
 
