@@ -272,6 +272,8 @@ function applyMiddleware(store, middlewares) {
 
 * 為了確保你只會應用 middleware 一次，它操作在 `createStore()` 上而不是在 `store` 自己上面。它的 signature 是 `(...middlewares) => (createStore) => createStore`，而不是 `(store, middlewares) => store`。
 
+因為在使用前套用 function 在 `createStore()` 上太累贅了，所以 `createStore()` 接受在最後方使用一個選擇性的變數來指定這些 functions。
+
 ### 最後的方法
 
 把剛剛寫的這些 middleware 再拿出來：
@@ -305,13 +307,12 @@ const crashReporter = store => next => action => {
 ```js
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 
-// applyMiddleware 接收 createStore() 並回傳
-// 一個包含相容的 API 的 function。
-let createStoreWithMiddleware = applyMiddleware(logger, crashReporter)(createStore)
-
-// 像你使用 createStore() 一般使用它
 let todoApp = combineReducers(reducers)
-let store = createStoreWithMiddleware(todoApp)
+let store = createStore(
+  todoApp,
+  // applyMiddleware() 告訴 createStore() 如何處理 middleware
+  applyMiddleware(logger, crashReporter)
+)
 ```
 
 就是這樣！現在任何被 dispatched 到 store 實體的 actions 都將經過 `logger` 和 `crashReporter`：
@@ -472,15 +473,17 @@ const thunk = store => next => action =>
 
 
 // 你可以使用全部！(這不意味你應該這樣做。)
-let createStoreWithMiddleware = applyMiddleware(
-  rafScheduler,
-  timeoutScheduler,
-  thunk,
-  vanillaPromise,
-  readyStatePromise,
-  logger,
-  crashReporter
-)(createStore)
 let todoApp = combineReducers(reducers)
-let store = createStoreWithMiddleware(todoApp)
+let store = createStore(
+  todoApp,
+  applyMiddleware(
+    rafScheduler,
+    timeoutScheduler,
+    thunk,
+    vanillaPromise,
+    readyStatePromise,
+    logger,
+    crashReporter
+  )
+)
 ```

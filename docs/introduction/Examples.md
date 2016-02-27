@@ -1,15 +1,16 @@
 # 範例
 
-Redux 是隨著一些範例在它的[原始碼](https://github.com/rackt/redux/tree/master/examples)中一起發佈的。
+Redux 是隨著一些範例在它的[原始碼](https://github.com/reactjs/redux/tree/master/examples)中一起發佈的。
+
 >##### 關於複製的提醒
 >如果你把 Redux 範例複製到它們的目錄外面，你可以刪除它們的 `webpack.config.js` 尾端的幾行程式碼。 它們在 「You can safely delete these lines in your project.」 註解的後面。
 
 ## Counter Vanilla
 
-執行 [Counter Vanilla](https://github.com/rackt/redux/tree/master/examples/counter-vanilla) 範例：
+執行 [Counter Vanilla](https://github.com/reactjs/redux/tree/master/examples/counter-vanilla) 範例：
 
 ```
-git clone https://github.com/rackt/redux.git
+git clone https://github.com/reactjs/redux.git
 
 cd redux/examples/counter-vanilla
 open index.html
@@ -19,10 +20,10 @@ open index.html
 
 ## Counter
 
-執行 [Counter](https://github.com/rackt/redux/tree/master/examples/counter) 範例：
+執行 [Counter](https://github.com/reactjs/redux/tree/master/examples/counter) 範例：
 
 ```
-git clone https://github.com/rackt/redux.git
+git clone https://github.com/reactjs/redux.git
 
 cd redux/examples/counter
 npm install
@@ -31,37 +32,34 @@ npm start
 open http://localhost:3000/
 ```
 
-它涵蓋了：
+這是將 Redux 和 React 一起使用的最基礎範例。為了簡化，它在 store 更新時手動重新 render React component。在真實世界專案中，你會想要使用更高效的 [React Redux](https://github.com/reactjs/react-redux) 來合併。
 
-* 基礎的 Redux 資料流
-* 測試
+此範例包含了測試。
 
-## TodoMVC
+## Todos
 
-執行 [TodoMVC](https://github.com/rackt/redux/tree/master/examples/todomvc) 範例：
+執行 [Todos](https://github.com/reactjs/redux/tree/master/examples/todos) 範例：
 
 ```
-git clone https://github.com/rackt/redux.git
+git clone https://github.com/reactjs/redux.git
 
-cd redux/examples/todomvc
+cd redux/examples/todos
 npm install
 npm start
 
 open http://localhost:3000/
 ```
 
-它涵蓋了：
+這是深入了解 state 的更新如何在 Redux 中與 components 一起運作的最佳範例。它展示 reducers 能如何指派 handling actions 給其他 reducers，並且展示你可以如何從你的 presentational components 中使用 [React Redux](https://github.com/reactjs/react-redux) 來產生 container components。
 
-* 伴隨著兩個 reducers 的 Redux 資料流
-* 更新巢狀資料
-* 測試
+此範例包含了測試。
 
 ## Todos with Undo
 
-執行 [todos-with-undo](https://github.com/rackt/redux/tree/master/examples/todos-with-undo) 範例：
+執行 [Todos with Undo](https://github.com/reactjs/redux/tree/master/examples/todos-with-undo) 範例：
 
 ```
-git clone https://github.com/rackt/redux.git
+git clone https://github.com/reactjs/redux.git
 
 cd redux/examples/todos-with-undo
 npm install
@@ -70,80 +68,32 @@ npm start
 open http://localhost:3000/
 ```
 
-它涵蓋了：
+這是前一個範例的變形。它大部分相同，並額外展示如何用 [Redux Undo](https://github.com/omnidan/redux-undo) 的幾行程式包裝你的 reducer 來使你增加 Undo/Redo 功能到你的app中。
 
-* 有兩個 reducers 的 Redux 資料流
-* 在 Redux 中使用 [redux-undo](https://github.com/omnidan/redux-undo) 達成的 Undo/Redo 功能
+## TodoMVC
 
-## Async
-
-執行 [Async](https://github.com/rackt/redux/tree/master/examples/async)
+執行 [TodoMVC](https://github.com/reactjs/redux/tree/master/examples/todomvc) 範例：
 
 ```
-git clone https://github.com/rackt/redux.git
+git clone https://github.com/reactjs/redux.git
 
-cd redux/examples/async
+cd redux/examples/todomvc
 npm install
 npm start
 
 open http://localhost:3000/
 ```
 
-它涵蓋了：
+這是經典的 [TodoMVC](http://todomvc.com/) 範例。它放在這不只是為了比較，更涵蓋了與 Todos 範例相同的重點。
 
-* 使用 [redux-thunk](https://github.com/gaearon/redux-thunk) 處理基礎的非同步 Redux 資料流
-* 快取回應並在抓取資料時顯示一個 spinner
-* 讓快取的資料失效
-
-## Universal
-
-執行 [Universal](https://github.com/rackt/redux/tree/master/examples/universal) 範例：
-
-```
-git clone https://github.com/rackt/redux.git
-
-cd redux/examples/universal
-npm install
-npm start
-
-open http://localhost:3000/
-```
-
-它涵蓋了：
-
-* 使用 Redux 和 React 來做 [Universal rendering](../recipes/ServerRendering.md)
-* 基於 input 並藉由非同步查詢來提前取得 state
-* 從伺服器傳遞 state 到客戶端
-
-## Real World
-
-執行 [Real World](https://github.com/rackt/redux/tree/master/examples/real-world) 範例：
-
-```
-git clone https://github.com/rackt/redux.git
-
-cd redux/examples/real-world
-npm install
-npm start
-
-open http://localhost:3000/
-```
-
-它涵蓋了：
-
-* 真實世界的非同步 Redux 資料流
-* 保存 entities 在一個正規化的 entity 快取裡
-* 給 API 呼叫用的客製化 middleware
-* 快取回應並在抓取資料時顯示一個 spinner
-* Pagination
-* Routing
+此範例包含了測試。
 
 ## Shopping Cart
 
-執行 [Shopping Cart](https://github.com/rackt/redux/tree/master/examples/shopping-cart) 範例：
+執行 [Shopping Cart](https://github.com/reactjs/redux/tree/master/examples/shopping-cart) 範例：
 
 ```
-git clone https://github.com/rackt/redux.git
+git clone https://github.com/reactjs/redux.git
 
 cd redux/examples/shopping-cart
 npm install
@@ -152,25 +102,14 @@ npm start
 open http://localhost:3000/
 ```
 
-這是一個慣用的 Redux 開發模式的範例。
-
-它涵蓋了：
-
-* 正規化的 state
-* 清楚的 entity ID 追蹤
-* Reducer 組合
-* 查詢跟 reducers 定義在一起
-* 在失敗時 rollback 的範例
-* 安全的條件式 action dispatching
-* 只使用 [React Redux](https://github.com/rackt/react-redux) 來綁定 action creators
-* 條件式 middleware (logging 範例)
+這個範例展示了當你的 app 成長時將逐漸重要的慣用 Redux patterns。它尤其展示了如何由 IDs 標準化儲存 entities、如何在不同層面上建構 reducers、如何依靠 reducers 定義 selectors 使得 state shape 的含義得以被封裝在內。它也展示如何由 [Redux Logger](https://github.com/fcomb/redux-logger) 來 logging 和由 [Redux Thunk](https://github.com/gaearon/redux-thunk) middleware 來達成有條件的 dispatch actions。
 
 ## Tree View
 
-執行 [Tree View](https://github.com/rackt/redux/tree/master/examples/tree-view) 範例：
+執行 [Tree View](https://github.com/reactjs/redux/tree/master/examples/tree-view) 範例：
 
 ```
-git clone https://github.com/rackt/redux.git
+git clone https://github.com/reactjs/redux.git
 
 cd redux/examples/tree-view
 npm install
@@ -179,14 +118,57 @@ npm start
 open http://localhost:3000/
 ```
 
-這一個高效能 render 的範例。
+這個範例展示如何 render 一個深度巢狀的樹狀 view，並用一個標準化形式代表它的 state，所以它可以簡單的由 reducers 更新。經由 container components 細緻地 subscribe 其 render tree 節點 ，可以達到優良的 render 效能。
 
-它涵蓋了：
+此範例包含了測試。
 
-* 正規化的 state
-* Reducer 組合
-* 把 State 呈現成一個樹狀 view
-* 細緻的重新 render 一個大的子樹
+## Async
+
+執行 [Async](https://github.com/reactjs/redux/tree/master/examples/async) 範例：
+
+```
+git clone https://github.com/reactjs/redux.git
+
+cd redux/examples/async
+npm install
+npm start
+
+open http://localhost:3000/
+```
+
+這個範例包含了如何讀取非同步 API、抓取使用者輸入資料、顯示讀取中標記、快取 response、快取無效化。它使用 [Redux Thunk](https://github.com/gaearon/redux-thunk) middleware 來封裝非同步行為。
+
+## Universal
+
+執行 [Universal](https://github.com/reactjs/redux/tree/master/examples/universal) 範例：
+
+```
+git clone https://github.com/reactjs/redux.git
+
+cd redux/examples/universal
+npm install
+npm start
+
+open http://localhost:3000/
+```
+
+這是 Redux 和 React [伺服器端 rendering](../recipes/ServerRendering.md) 的基礎展示。它展示如何在伺服器端準備初始 store state 並傳遞到客戶端，所以客戶端 store 可以由現存的 state 開始啟動。
+
+## Real World
+
+執行 [Real World](https://github.com/reactjs/redux/tree/master/examples/real-world) 範例：
+
+```
+git clone https://github.com/reactjs/redux.git
+
+cd redux/examples/real-world
+npm install
+npm start
+
+open http://localhost:3000/
+```
+
+這是最進階的範例。它被高度地設計過。它涵蓋了由標準化快取中取得 entities、為了 API 呼叫實作客製化 middleware、render 部分讀取的資料、分頁化、快取 responses、顯示錯誤訊息、routing。此外，它也包含了 Redux DevTools。
 
 ## 更多範例
 

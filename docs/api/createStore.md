@@ -1,4 +1,4 @@
-# `createStore(reducer, [initialState])`
+# `createStore(reducer, [initialState], [enhancer])`
 
 建立一個 Redux [store](Store.md)，它掌控應用程式的完整 state tree。
 在你的應用程式中應該只有單一一個 store。
@@ -8,6 +8,8 @@
 1. `reducer` *(Function)*：一個回傳下個 [state tree](../Glossary.md#state) 的 [reducing function](../Glossary.md#reducer)，會接收當下的 state tree 和一個要處理的 [action](../Glossary.md#action)。
 
 2. [`initialState`] *(any)*：初始的 state。你可以選擇性的指定它來在 universal 應用程式 hydrate 從伺服器來的 state，或是用來恢復使用者先前被 serialize 的操作狀態。如果你使用 [`combineReducers`](combineReducers.md) 來產生 `reducer`，這必須是一個跟之前傳遞給它的物件有著相同形狀的 keys 的一般物件。反之，你可以自由地傳遞任何你的 `reducer` 可以了解的東西。
+
+3. [`enhancer`] *(Function)*：store 的 enhancer。你可以選擇指定它來使用第三方功能以加強 store，像是 middleware、時間旅行、persistence 等等。Redux 唯一附帶的 store enhancer 是 [`applyMiddleware()`](./applyMiddleware.md)。
 
 #### 回傳
 
@@ -44,8 +46,10 @@ console.log(store.getState())
 
 * 要怎樣選擇 state 的格式取決於你。你可以使用一般物件或是一些像是 [Immutable](http://facebook.github.io/immutable-js/) 的東西。如果你不確定要用什麼，請從使用一般物件開始。
 
-* 如果你的 state 是一個一般物件，請確認你從來沒有變更它！例如，不要從你的 reducers 回傳一些像是 `Object.assign(state, newData)` 的東西，應該回傳 `Object.assign({}, state, newData)`。用這個方法你不會覆寫掉先前的 `state`。如果你藉由 [Babel stage 1](http://babeljs.io/docs/usage/experimental/) 啟用 [ES7 object spread 提案](https://github.com/sebmarkbage/ecmascript-rest-spread)，你也可以寫成 `return { ...state, ...newData }`。
+* 如果你的 state 是一個一般物件，請確認你從來沒有變更它！例如，不要從你的 reducers 回傳一些像是 `Object.assign(state, newData)` 的東西，應該回傳 `Object.assign({}, state, newData)`。用這個方法你不會覆寫掉先前的 `state`。如果你啟用 [object spread 運算子提案](../recipes/UsingObjectSpreadOperator.md)，你也可以寫成 `return { ...state, ...newData }`。
 
 * 對於運行在伺服器上的 universal 應用程式，在每個請求建立一個 store 實體，因此它們彼此是隔離的。在伺服器上 render 應用程式之前，dispatch 幾個資料抓取的 actions 到 store 實體並等待它們完成。
 
 * 當一個 store 被建立，Redux 會 dispatch 一個假的 action 到你的 reducer 來把初始的 state 填到 store。這不意味你可以直接的處理這個假 action。只要記住如果給你的 reducer 作為第一個參數的 state 是 `undefined`，那它應該回傳某種初始的 state，然後你所有的東西都會設置好。
+
+* 要套用多個 store enhancers，你可以使用 [`compose()`](./compose.md)。

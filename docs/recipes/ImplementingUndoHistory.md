@@ -236,7 +236,7 @@ function undoable(state = initialState, action) {
       return state
   }
 }
-````
+```
 
 這份實作並不能使用，因為它忽略了三個重要的問題：
 
@@ -364,7 +364,7 @@ store.dispatch({
 
 前面提供了許多有用的資訊，但是我們不能只是下載一個 library 使用它而不要自己實作 `undoable` 嗎？我們當然可以！認識 [Redux Undo](https://github.com/omnidan/redux-undo)，一個提供簡單的 Undo 和 Redo 功能給你的 Redux tree 任何部分的 library。
 
-在這部分的 recipe 中，你將會學到如何讓 [Todo List 範例](http://rackt.github.io/redux/docs/basics/ExampleTodoList.html) 變成是 undoable 的。你可以在 [Redux 附帶的 `todos-with-undo` 範例](https://github.com/rackt/redux/tree/master/examples/todos-with-undo) 中找到這份 recipe 的完整原始碼。
+在這部分的 recipe 中，你將會學到如何讓 [Todo List 範例](http://redux.js.org/docs/basics/ExampleTodoList.html) 變成是 undoable 的。你可以在 [Redux 附帶的 `todos-with-undo` 範例](https://github.com/reactjs/redux/tree/master/examples/todos-with-undo) 中找到這份 recipe 的完整原始碼。
 
 ### 安裝
 
@@ -378,22 +378,44 @@ npm install --save redux-undo
 
 ### 包裝 Reducer
 
-你需要把你想要增強的 reducer 用 `undoable` function 包起來。例如，如果你使用 [`combineReducers()`](../api/combineReducers.md)，你的程式碼看起來可能像這樣：
+你需要把你想要增強的 reducer 用 `undoable` function 包起來。例如，如果你從一個專用檔案中 export 一個 `todos` reducer，你得改為 export 呼叫 `undoable()` 與你寫的 reducer 後的結果：
 
-#### `reducers.js`
+#### `reducers/todos.js`
 
 ```js
 import undoable, { distinctState } from 'redux-undo'
 
 /* ... */
 
-const todoApp = combineReducers({
-  visibilityFilter,
-  todos: undoable(todos, { filter: distinctState() })
+const todos = (state = [], action) => {
+  /* ... */
+}
+
+const undoableTodos = undoable(todos, {
+  filter: distinctState()
 })
+
+export default undoableTodos
 ```
 
 `distinctState()` filter 用來忽略沒有導致 state 改變的 actions。有[許多其他的選項](https://github.com/omnidan/redux-undo#configuration)可以用來設定你的 undoable reducer，例如設定 Undo 和 Redo actions 的 action type。
+
+值得一提的是，你的 `combineReducers()` 呼叫將會依然維持它原本的運作，但 `todos` reducer 現在已參考至 Redux Undo 加強過後的 reducer：
+
+#### `reducers/index.js`
+
+```js
+import { combineReducers } from 'redux'
+import todos from './todos'
+import visibilityFilter from './visibilityFilter'
+
+const todoApp = combineReducers({
+  todos,
+  visibilityFilter
+})
+
+export default todoApp
+```
 
 你可以在任何的 reducer composition 層級把一個或更多個 reducers 包進 `undoable` 中。我們選擇包裝 `todos` 而不是頂層 combined reducer，這樣的話對 `visibilityFilter` 的變更不會進到 undo 歷史中。
 
@@ -420,30 +442,13 @@ const todoApp = combineReducers({
 
 這意味著你需要用 `state.todos.present` 來存取你的 state 而不是 `state.todos`：
 
-#### `containers/App.js`
+#### `containers/VisibleTodoList.js`
 
 ```js
-function select(state) {
-  const presentTodos = state.todos.present
+const mapStateToProps = (state) => {
   return {
-    visibleTodos: selectTodos(presentTodos, state.visibilityFilter),
-    visibilityFilter: state.visibilityFilter
+    todos: getVisibleTodos(state.todos.present, state.visibilityFilter)
   }
-}
-```
-
-為了要在沒有東西可以 undo 或 redo 時讓 Undo 和 Redo 按鈕失效，你需要檢查 `past` 和 `future` 陣列是不是空的：
-
-#### `containers/App.js`
-
-```js
-function select(state) {
-  return {
-    undoDisabled: state.todos.past.length === 0,
-    redoDisabled: state.todos.future.length === 0,
-    visibleTodos: selectTodos(state.todos.present, state.visibilityFilter),
-    visibilityFilter: state.visibilityFilter
-  };
 }
 ```
 
@@ -451,61 +456,82 @@ function select(state) {
 
 現在你只需要添加按鈕給 Undo 和 Redo actions。
 
-首先，你需要從 `redux-undo` import `ActionCreators` 並把綁定好的版本傳遞到 `Footer` component：
+首先，為這些按鈕建立一個名為 `UndoRedo` 的新 container component。因為 presentational 的部份很小，所以我們將不拆分它到別的檔案：
 
-#### `containers/App.js`
+#### `containers/UndoRedo.js`
 
 ```js
-import { ActionCreators } from 'redux-undo'
+import React from 'react'
 
 /* ... */
 
-class App extends Component {
-  render() {
-    const { dispatch, visibleTodos, visibilityFilter } = this.props
-    return (
-      <div>
-        {/* ... */}
-        <Footer
-          filter={visibilityFilter}
-          onFilterChange={nextFilter => dispatch(setVisibilityFilter(nextFilter))}
-          onUndo={() => dispatch(ActionCreators.undo())}
-          onRedo={() => dispatch(ActionCreators.redo())}
-          undoDisabled={this.props.undoDisabled}
-          redoDisabled={this.props.redoDisabled} />
-      </div>
-    )
-  }
-}
+let UndoRedo = ({ canUndo, canRedo, onUndo, onRedo }) => (
+  <p>
+    <button onClick={onUndo} disabled={!canUndo}>
+      Undo
+    </button>
+    <button onClick={onRedo} disabled={!canRedo}>
+      Redo
+    </button>
+  </p>
+)
 ```
 
-現在你可以在 footer render 這些按鈕：
+你將從 [React Redux](https://github.com/reactjs/react-redux) 使用 `connect()` 來建立一個 container component。你可以檢查 `state.todos.past.length` 和 `state.todos.future.length` 來決定是否打開 Undo 和 Redo 按鈕。你將不需要為了執行 undo 和 redo 寫 action creators 因為 Redux Undo 已有提供：
 
-#### `components/Footer.js`
+#### `containers/UndoRedo.js`
 
 ```js
-export default class Footer extends Component {
+/* ... */
 
-  /* ... */
+import { ActionCreators as UndoActionCreators } from 'redux-undo'
+import { connect } from 'react-redux'
 
-  renderUndo() {
-    return (
-      <p>
-        <button onClick={this.props.onUndo} disabled={this.props.undoDisabled}>Undo</button>
-        <button onClick={this.props.onRedo} disabled={this.props.redoDisabled}>Redo</button>
-      </p>
-    )
-  }
+/* ... */
 
-  render() {
-    return (
-      <div>
-        {this.renderFilters()}
-        {this.renderUndo()}
-      </div>
-    )
+const mapStateToProps = (state) => {
+  return {
+    canUndo: state.todos.past.length > 0,
+    canRedo: state.todos.future.length > 0
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onUndo: () => dispatch(UndoActionCreators.undo()),
+    onRedo: () => dispatch(UndoActionCreators.redo())
+  }
+}
+
+UndoRedo = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UndoRedo)
+
+export default UndoRedo
 ```
 
-就這樣了！在[範例資料夾](https://github.com/rackt/redux/tree/master/examples/todos-with-undo)中執行 `npm install` 和 `npm start` 並嘗試一下！
+現在你可以在 `App` component 加入 `UndoRedo` component：
+
+#### `components/App.js`
+
+```js
+import React from 'react'
+import Footer from './Footer'
+import AddTodo from '../containers/AddTodo'
+import VisibleTodoList from '../containers/VisibleTodoList'
+import UndoRedo from '../containers/UndoRedo'
+
+const App = () => (
+  <div>
+    <AddTodo />
+    <VisibleTodoList />
+    <Footer />
+    <UndoRedo />
+  </div>
+)
+
+export default App
+```
+
+就這樣了！在[範例資料夾](https://github.com/reactjs/redux/tree/master/examples/todos-with-undo)中執行 `npm install` 和 `npm start` 並嘗試一下！

@@ -20,7 +20,7 @@ Redux 在伺服器端的任務就**_只有_**提供**初始的 state** 給我們
 
 ## 設置
 
-在接下來的 recipe 中，我們將會看一下要如何設置伺服器端 render。我們將會使用非常簡單的 [Counter app](https://github.com/rackt/redux/tree/master/examples/counter) 來教學並展示基於請求伺服器可以如何提早 render state。
+在接下來的 recipe 中，我們將會看一下要如何設置伺服器端 render。我們將會使用非常簡單的 [Counter app](https://github.com/reactjs/redux/tree/master/examples/counter) 來教學並展示基於請求伺服器可以如何提早 render state。
 
 ### 安裝套件
 
@@ -148,7 +148,7 @@ render(
   <Provider store={store}>
     <App />
   </Provider>,
-  document.getElementById('app')
+  document.getElementById('root')
 )
 ```
 
@@ -168,7 +168,7 @@ render(
 
 伺服器端程式碼唯一的輸入是當瀏覽器在你的應用程式中載入頁面時產生的請求。你可以選擇在啟動時選擇如何設定伺服器 (例如你是運行在一個開發或產品環境)，不過這個設定是靜態的。
 
-請求包含了與被請求的 URL 有關的資訊，包括任何的 query 參數，它在使用一些像是 [React Router](https://github.com/rackt/react-router) 之類的東西時很有用。它也可以包涵有像是 cookies 或是授權等輸入的 headers，或是 POST body 資料。讓我們來看看我們可以如何基於 query 參數來設定初始的 counter state。
+請求包含了與被請求的 URL 有關的資訊，包括任何的 query 參數，它在使用一些像是 [React Router](https://github.com/reactjs/react-router) 之類的東西時很有用。它也可以包涵有像是 cookies 或是授權等輸入的 headers，或是 POST body 資料。讓我們來看看我們可以如何基於 query 參數來設定初始的 counter state。
 
 #### `server.js`
 
@@ -179,7 +179,7 @@ import { renderToString } from 'react-dom/server'
 function handleRender(req, res) {
   // 如果有提供的話，從請求讀取 counter
   const params = qs.parse(req.query)
-  const counter = parseInt(params.counter) || 0
+  const counter = parseInt(params.counter, 10) || 0
 
   // 蒐集一個 initial state
   let initialState = { counter }
@@ -242,7 +242,7 @@ function handleRender(req, res) {
   fetchCounter(apiResult => {
     // 如果有提供的話，從請求讀取 counter
     const params = qs.parse(req.query)
-    const counter = parseInt(params.counter) || apiResult || 0
+    const counter = parseInt(params.counter, 10) || apiResult || 0
 
     // 蒐集一個 initial state
     let initialState = { counter }
@@ -282,4 +282,4 @@ function handleRender(req, res) {
 
 你可能會想閱讀 [Async Actions](../advanced/AsyncActions.md) 來學習更多有關在 Redux 中用非同步的基礎元素像是 Promises 和 thunks 來表達非同步資料流。請記住，你在那邊學的任何東西也可以被應用在 universal rendering。
 
-如果你使用一些像是 [React Router](https://github.com/rackt/react-router) 之類的東西，你可能也想要把你的資料抓取依賴關係表達成在你的 route handler components 上的靜態 `fetchData()` 方法。它們可以回傳 [async actions](../advanced/AsyncActions.md)，因此你的 `handleRender` function 可以把 route 匹配到幾個 route handler component class，然後 dispatch `fetchData()` 的結果給它們每一個，並只在 Promises 已經被 resolve 之後才 render。用這個方式不同的 routes 需要的特定 API 呼叫都用 route handler component 的定義放在同個地方。你也可以使用一樣的技術在客戶端來防止 router 切換頁面直到它的資料已經被載入。
+如果你使用一些像是 [React Router](https://github.com/reactjs/react-router) 之類的東西，你可能也想要把你的資料抓取依賴關係表達成在你的 route handler components 上的靜態 `fetchData()` 方法。它們可以回傳 [async actions](../advanced/AsyncActions.md)，因此你的 `handleRender` function 可以把 route 匹配到幾個 route handler component class，然後 dispatch `fetchData()` 的結果給它們每一個，並只在 Promises 已經被 resolve 之後才 render。用這個方式不同的 routes 需要的特定 API 呼叫都用 route handler component 的定義放在同個地方。你也可以使用一樣的技術在客戶端來防止 router 切換頁面直到它的資料已經被載入。

@@ -6,186 +6,130 @@
 
 讓我們再來看看 [Todos 清單的範例](../basics/UsageWithReact.md)：
 
-#### `containers/App.js`
+#### `containers/VisibleTodoList.js`
 
 ```js
-import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { addTodo, completeTodo, setVisibilityFilter, VisibilityFilters } from '../actions'
-import AddTodo from '../components/AddTodo'
+import { toggleTodo } from '../actions'
 import TodoList from '../components/TodoList'
-import Footer from '../components/Footer'
 
-class App extends Component {
-  render() {
-    // 藉由 connect() 呼叫來注入：
-    const { dispatch, visibleTodos, visibilityFilter } = this.props
-    return (
-      <div>
-        <AddTodo
-          onAddClick={text =>
-            dispatch(addTodo(text))
-          } />
-        <TodoList
-          todos={this.props.visibleTodos}
-          onTodoClick={index =>
-            dispatch(completeTodo(index))
-          } />
-        <Footer
-          filter={visibilityFilter}
-          onFilterChange={nextFilter =>
-            dispatch(setVisibilityFilter(nextFilter))
-          } />
-      </div>
-    )
-  }
-}
-
-App.propTypes = {
-  visibleTodos: PropTypes.arrayOf(PropTypes.shape({
-    text: PropTypes.string.isRequired,
-    completed: PropTypes.bool.isRequired
-  })),
-  visibilityFilter: PropTypes.oneOf([
-    'SHOW_ALL',
-    'SHOW_COMPLETED',
-    'SHOW_ACTIVE'
-  ]).isRequired
-}
-
-function selectTodos(todos, filter) {
+const getVisibleTodos = (todos, filter) => {
   switch (filter) {
-    case VisibilityFilters.SHOW_ALL:
+    case 'SHOW_ALL':
       return todos
-    case VisibilityFilters.SHOW_COMPLETED:
-      return todos.filter(todo => todo.completed)
-    case VisibilityFilters.SHOW_ACTIVE:
-      return todos.filter(todo => !todo.completed)
+    case 'SHOW_COMPLETED':
+      return todos.filter(t => t.completed)
+    case 'SHOW_ACTIVE':
+      return todos.filter(t => !t.completed)
   }
 }
 
-function select(state) {
+const mapStateToProps = (state) => {
   return {
-    visibleTodos: selectTodos(state.todos, state.visibilityFilter),
-    visibilityFilter: state.visibilityFilter
+    todos: getVisibleTodos(state.todos, state.visibilityFilter)
   }
 }
 
-// 把 component 包起來以注入 dispatch 和 state 進去
-export default connect(select)(App)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onTodoClick: (id) => {
+      dispatch(toggleTodo(id))
+    }
+  }
+}
+
+const VisibleTodoList = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TodoList)
+
+export default VisibleTodoList
 ```
 
-在上面的範例中，`select` 呼叫 `selectTodos` 以計算 `visibleTodos`。這運作得很好，不過有一個缺點：在每次 component 更新的時候都會計算 `visibleTodos`。如果 state tree 很大，或是計算的代價很大，在每次更新的時候重複計算可能會造成效能問題。Reselect 可以幫助我們避免這些不需要的重複計算。
+在上面的範例中，`mapStateToProps` 呼叫 `getVisibleTodos` 以計算 `todos`。這運作得很好，不過有一個缺點：在每次 component 更新的時候都會計算 `todos`。如果 state tree 很大，或是計算的代價很大，在每次更新的時候重複計算可能會造成效能問題。Reselect 可以幫助我們避免這些不需要的重複計算。
 
 ### 建立一個 Memoized Selector
 
-我們會想要把 `select` 換成一個 memoized selector，它會在 `state.todos` 或是 `state.visibilityFilter` 的值變更的時後重新計算 `visibleTodos`，但當變更發生在 state tree 其他 (不相關的) 的部分的時候則不會。
+我們會想要把 `getVisibleTodos` 換成一個 memoized selector，它會在 `state.todos` 或是 `state.visibilityFilter` 的值變更的時後重新計算 `todos`，但當變更發生在 state tree 其他 (不相關的) 的部分的時候則不會。
 
 Reselect 提供一個 `createSelector` function 來建立 memoized selectors。`createSelector` 接收一個 input-selectors 陣列和一個轉換 function 當作它的參數。如果用一個會造成 input-selector 的值改變的方式去變動 Redux 的 state tree，selector 將會以 input-selectors 的值作為參數呼叫它的轉換 function 並回傳結果。如果 input-selectors 的值跟先前呼叫 selector 的時候一樣，它會回傳先前的計算結果而不會呼叫轉換 function。
 
-讓我們來定義一個叫做 `visibleTodosSelector` 的 memoized selector 來取代 `select`：
+讓我們來定義一個叫做 `getVisibleTodos` 的 memoized selector 來取代上面的 non-memoized版本：
 
-#### `selectors/todoSelectors.js`
+#### `selectors/index.js`
 
 ```js
 import { createSelector } from 'reselect'
-import { VisibilityFilters } from './actions'
 
-function selectTodos(todos, filter) {
-  switch (filter) {
-    case VisibilityFilters.SHOW_ALL:
-      return todos
-    case VisibilityFilters.SHOW_COMPLETED:
-      return todos.filter(todo => todo.completed)
-    case VisibilityFilters.SHOW_ACTIVE:
-      return todos.filter(todo => !todo.completed)
-  }
-}
+const getVisibilityFilter = (state) => state.visibilityFilter
+const getTodos = (state) => state.todos
 
-const visibilityFilterSelector = (state) => state.visibilityFilter
-const todosSelector = (state) => state.todos
-
-export const visibleTodosSelector = createSelector(
-  [ visibilityFilterSelector, todosSelector ],
+export const getVisibleTodos = createSelector(
+  [ getVisibilityFilter, getTodos ],
   (visibilityFilter, todos) => {
-    return {
-      visibleTodos: selectTodos(todos, visibilityFilter),
-      visibilityFilter
+    switch (visibilityFilter) {
+      case 'SHOW_ALL':
+        return todos
+      case 'SHOW_COMPLETED':
+        return todos.filter(t => t.completed)
+      case 'SHOW_ACTIVE':
+        return todos.filter(t => !t.completed)
     }
   }
 )
 ```
 
-在上面的範例中，`visibilityFilterSelector` 和 `todosSelector` 就是 input-selectors。因為它們沒有轉換它們選擇的資料，所以被建立成普通的非 memoized selector functions。而另一方面，`visibleTodosSelector` 是一個 memoized selector。它接收 `visibilityFilterSelector` 和 `todosSelector` 作為 input-selectors，以及一個計算過濾後的 todos 清單的轉換 function。
+在上面的範例中，`getVisibilityFilter` 和 `getTodos` 就是 input-selectors。因為它們沒有轉換它們選擇的資料，所以被建立成普通的非 memoized selector functions。而另一方面，`getVisibleTodos` 是一個 memoized selector。它接收 `getVisibilityFilter` 和 `getTodos` 作為 input-selectors，以及一個計算過濾後的 todos 清單的轉換 function。
 
 ### 組合 Selectors
 
-一個 memoized selector 可以是另一個 memoized selector 的 input-selector。這裡 `visibleTodosSelector` 被用來當作 selector 的 input-selector，以藉由 keyword 進一步的過濾 todos：
+一個 memoized selector 可以是另一個 memoized selector 的 input-selector。這裡 `getVisibleTodos` 被用來當作 selector 的 input-selector，以藉由 keyword 進一步的過濾 todos：
 
 ```js
-const keywordSelector = (state) => state.keyword
+const getKeyword = (state) => state.keyword
 
-const keywordFilterSelector = createSelector(
-  [ visibleTodosSelector, keywordSelector ],
+const getVisibleTodosFilteredByKeyword = createSelector(
+  [ getVisibleTodos, getKeyword ],
   (visibleTodos, keyword) => visibleTodos.filter(
-    todo => todo.indexOf(keyword) > -1
+    todo => todo.text.indexOf(keyword) > -1
   )
 )
 ```
 
 ### 把 Selector 連結到 Redux Store
 
-如果你是使用 react-redux，你可以藉由 `connect` 把 memoized selector 連結到 Redux store：
+如果你是使用 [React Redux](https://github.com/reactjs/react-redux)，你可以在 `mapStateToProps()`內呼叫 selectors 當作正規的 functions使用：
 
-#### `containers/App.js`
+#### `containers/VisibleTodoList.js`
 
 ```js
-import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { addTodo, completeTodo, setVisibilityFilter } from '../actions'
-import AddTodo from '../components/AddTodo'
+import { toggleTodo } from '../actions'
 import TodoList from '../components/TodoList'
-import Footer from '../components/Footer'
-import { visibleTodosSelector } from '../selectors/todoSelectors'
+import { getVisibleTodos } from '../selectors'
 
-class App extends Component {
-  render() {
-    // 藉由 connect() 呼叫注入：
-    const { dispatch, visibleTodos, visibilityFilter } = this.props
-    return (
-      <div>
-        <AddTodo
-          onAddClick={text =>
-            dispatch(addTodo(text))
-          } />
-        <TodoList
-          todos={this.props.visibleTodos}
-          onTodoClick={index =>
-            dispatch(completeTodo(index))
-          } />
-        <Footer
-          filter={visibilityFilter}
-          onFilterChange={nextFilter =>
-            dispatch(setVisibilityFilter(nextFilter))
-          } />
-      </div>
-    )
+const mapStateToProps = (state) => {
+  return {
+    todos: getVisibleTodos(state)
   }
 }
 
-App.propTypes = {
-  visibleTodos: PropTypes.arrayOf(PropTypes.shape({
-    text: PropTypes.string.isRequired,
-    completed: PropTypes.bool.isRequired
-  })),
-  visibilityFilter: PropTypes.oneOf([
-    'SHOW_ALL',
-    'SHOW_COMPLETED',
-    'SHOW_ACTIVE'
-  ]).isRequired
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onTodoClick: (id) => {
+      dispatch(toggleTodo(id))
+    }
+  }
 }
 
-// 傳遞 selector 到 connect component
-export default connect(visibleTodosSelector)(App)
+const VisibleTodoList = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TodoList)
+
+export default VisibleTodoList
 ```
 
+## 接下來
+
+查看 Reselect [官方文件](https://github.com/rackt/reselect) 和它的 [FAQ](https://github.com/rackt/reselect#faq)。 大部分 Redux 專案遇到因太多衍生運算和浪費地重複 render 而造成效能問題時，都已開始使用 Reselect 。所以在你開始建構某些大專案前確保你已熟悉它。讀 [它的原始碼](https://github.com/rackt/reselect/blob/master/src/index.js) 也很有幫助，這讓你不會覺得它很神奇。

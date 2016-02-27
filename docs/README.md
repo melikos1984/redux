@@ -23,6 +23,7 @@
   * Next Steps
 * [Recipes](/docs/recipes/README.md)
   * [遷移到 Redux](/docs/recipes/MigratingToRedux.md)
+  * [使用 Object Spread 運算子](/docs/recipes/UsingObjectSpreadOperator.md)
   * [減少 Boilerplate](/docs/recipes/ReducingBoilerplate.md)
   * [伺服器 Render](/docs/recipes/ServerRendering.md)
   * [撰寫測試](/docs/recipes/WritingTests.md)

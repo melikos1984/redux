@@ -11,14 +11,20 @@
 npm install --save-dev mocha
 ```
 
-要結合 [Babel](http://babeljs.io) 一起使用的話，必須把這個加到你的 `package.json` 的 `scripts`：
+要結合 [Babel](http://babeljs.io) 一起使用的話，你必須先安裝 `babel-register`：
+
+```js
+npm install --save-dev babel-register
+```
+
+然後，把這段加到你的 `package.json` 的 `scripts`：
 
 ```js
 {
   ...
   "scripts": {
     ...
-    "test": "mocha --compilers js:babel-core/register --recursive",
+    "test": "mocha --compilers js:babel-register --recursive",
     "test:watch": "npm test -- --watch",
   },
   ...
@@ -356,7 +362,7 @@ global.navigator = global.window.navigator
   ...
   "scripts": {
     ...
-    "test": "mocha --compilers js:babel/register --recursive --require ./test/setup.js",
+    "test": "mocha --compilers js:babel-register --recursive --require ./test/setup.js",
   },
   ...
 }
@@ -364,7 +370,7 @@ global.navigator = global.window.navigator
 
 ### 已連結的 Components
 
-如果你使用一個類似 [React Redux](https://github.com/rackt/react-redux) 的 library，你可能正在使用像是 [`connect()`](https://github.com/rackt/react-redux#connectmapstatetoprops-mapdispatchtoprops-mergeprops) 之類的 [higher-order components](https://medium.com/@dan_abramov/mixins-are-dead-long-live-higher-order-components-94a0d2f9e750)。它讓你把 Redux state 注入一個正規的 React component 裡。
+如果你使用一個類似 [React Redux](https://github.com/reactjs/react-redux) 的 library，你可能正在使用像是 [`connect()`](https://github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options) 之類的 [higher-order components](https://medium.com/@dan_abramov/mixins-are-dead-long-live-higher-order-components-94a0d2f9e750)。它讓你把 Redux state 注入一個正規的 React component 裡。
 
 試想下面的 `App` component：
 
@@ -382,7 +388,7 @@ export default connect(mapStateToProps)(App)
 import App from './App'
 ```
 
-但是當你 import 它時，你實際上拿到的是 `connect()` 回傳的包裝過後的 component，而不是 `App` component 本身。如果你想要測試它與 Redux 的互動，這是個好消息：你可以把它跟特別為這個單元測試建立的 store 包在一個 [`<Provider>`](https://github.com/rackt/react-redux#provider-store) 中。但是有時你只是想要測試 component 的 rendering，而不想測試 Redux store。
+但是當你 import 它時，你實際上拿到的是 `connect()` 回傳的包裝過後的 component，而不是 `App` component 本身。如果你想要測試它與 Redux 的互動，這是個好消息：你可以把它跟特別為這個單元測試建立的 store 包在一個 [`<Provider>`](https://github.com/reactjs/react-redux#provider-store) 中。但是有時你只是想要測試 component 的 rendering，而不想測試 Redux store。
 
 為了能夠不處理 decorator 即可測試 App component 本身，我們也建議你 export 沒有被 decorated 的 component：
 
