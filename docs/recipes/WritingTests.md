@@ -337,9 +337,9 @@ describe('components', () => {
 })
 ```
 
-#### 修復壞掉的 `setState()`
+#### 在較舊的 React 版本修復壞掉的 `setState()`
 
-在 React 版本 <= 0.13、0.14.4 和 0.14.5，Shallow rendering 現在[如果呼叫 `setState` 會拋出一個錯誤](https://github.com/facebook/react/issues/4019)。React 貌似預期你有用 `setState` 時，DOM 是可以使用的。為了避開這個問題，我們使用 jsdom 讓 React 在 DOM 不能使用時也不會拋出 exception。以下是[設置它](https://github.com/facebook/react/issues/5046#issuecomment-146222515)的方法：
+在 React 版本 <= 0.13、0.14.4 和 0.14.5 時，Shallow rendering [如果呼叫 `setState` 會拋出一個錯誤](https://github.com/facebook/react/issues/4019)。React 貌似預期你有用 `setState` 時，DOM 是可以使用的。為了避開這個問題，我們使用 jsdom 讓 React 在 DOM 不能使用時也不會拋出 exception。以下是[設置它](https://github.com/facebook/react/issues/5046#issuecomment-146222515)的方法：
 
 ```
 npm install --save-dev jsdom
