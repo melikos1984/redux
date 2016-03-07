@@ -147,17 +147,18 @@ function todoApp(state = initialState, action) {
 ```js
 case COMPLETE_TODO:
   return Object.assign({}, state, {
-    todos: [
-      ...state.todos.slice(0, action.index),
-      Object.assign({}, state.todos[action.index], {
-        completed: true
-      }),
-      ...state.todos.slice(action.index + 1)
-    ]
+    todos: state.todos.map((todo, index) => {
+      if (index === action.index) {
+        return Object.assign({}, todo, {
+          completed: true
+        })
+      }
+      return todo
+    })
   })
 ```
 
-因為我們想要更新陣列中的一個特定項目而不採用改變的方式，所以我們必須從項目的前後把它切下來。如果你發覺自己時常撰寫這樣的操作，使用像是 [react-addons-update](https://facebook.github.io/react/docs/update.html)、[updeep](https://github.com/substantial/updeep) 之類的 helper、或甚至像是 [Immutable](http://facebook.github.io/immutable-js/) 之類有原生支援深層更新的 library 是個好主意。要記住永遠不要 assign 到任何 `state` 裡面的東西，除非你先 clone 它。
+因為我們想要更新陣列中的一個特定項目而不採用改變的方式，我們必須建立一個有相同元素的新的陣列，除了那個特定元素的索引。如果你發覺自己時常撰寫這樣的操作，使用像是 [react-addons-update](https://facebook.github.io/react/docs/update.html)、[updeep](https://github.com/substantial/updeep) 之類的 helper、或甚至像是 [Immutable](http://facebook.github.io/immutable-js/) 之類有原生支援深層更新的 library 是個好主意。要記住永遠不要 assign 到任何 `state` 裡面的東西，除非你先 clone 它。
 
 ## 拆分 Reducers
 
@@ -182,13 +183,14 @@ function todoApp(state = initialState, action) {
       })
     case COMPLETE_TODO:
       return Object.assign({}, state, {
-        todos: [
-          ...state.todos.slice(0, action.index),
-          Object.assign({}, state.todos[action.index], {
-            completed: true
-          }),
-          ...state.todos.slice(action.index + 1)
-        ]
+        todos: state.todos.map((todo, index) => {
+          if(index === action.index) {
+            return Object.assign({}, todo, {
+              completed: true
+            })
+          }
+          return todo
+        })
       })
     default:
       return state
@@ -210,13 +212,14 @@ function todos(state = [], action) {
         }
       ]
     case COMPLETE_TODO:
-      return [
-        ...state.slice(0, action.index),
-        Object.assign({}, state[action.index], {
-          completed: true
-        }),
-        ...state.slice(action.index + 1)
-      ]
+      return state.map(todo, index) => {
+        if (index === action.index) {
+          return Object.assign({}, todo, {
+            completed: true
+          })
+        }
+        return todo
+      }
     default:
       return state
   }
@@ -268,13 +271,14 @@ function todos(state = [], action) {
         }
       ]
     case COMPLETE_TODO:
-      return [
-        ...state.slice(0, action.index),
-        Object.assign({}, state[action.index], {
-          completed: true
-        }),
-        ...state.slice(action.index + 1)
-      ]
+      return state.map((todo, index) => {
+        if (index === action.index) {
+          return Object.assign({}, todo, {
+            completed: true
+          })
+        }
+        return todo
+      })
     default:
       return state
   }
@@ -389,13 +393,14 @@ function todos(state = [], action) {
         }
       ]
     case COMPLETE_TODO:
-      return [
-        ...state.slice(0, action.index),
-        Object.assign({}, state[action.index], {
-          completed: true
-        }),
-        ...state.slice(action.index + 1)
-      ]
+      return state.map((todo, index) => {
+        if (index === action.index) {
+          return Object.assign({}, todo, {
+            completed: true
+          })
+        }
+        return todo
+      })
     default:
       return state
   }

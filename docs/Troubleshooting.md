@@ -53,14 +53,15 @@ function todos(state = [], action) {
       ]
     case 'COMPLETE_TODO':
       // 回傳一個新的陣列
-      return [
-        ...state.slice(0, action.index),
-        // 在變動之前先複製物件
-        Object.assign({}, state[action.index], {
-          completed: true
-        }),
-        ...state.slice(action.index + 1)
-      ]
+      return state.map((todo, index) => {
+        if (index === action.index) {
+          // 在變動之前先複製物件
+          return Object.assign({}, todo, {
+            completed: true
+          })
+        }
+        return todo
+      })
     default:
       return state
   }
@@ -71,13 +72,14 @@ function todos(state = [], action) {
 
 ```js
 // 使用之前：
-return [
-  ...state.slice(0, action.index),
-  Object.assign({}, state[action.index], {
-    completed: true
-  }),
-  ...state.slice(action.index + 1)
-]
+return state.map((todo, index) => {
+  if (index === action.index) {
+    return Object.assign({}, todo, {
+      completed: true
+    })
+  }
+  return todo
+})
 
 // 使用之後：
 return update(state, {
@@ -97,20 +99,22 @@ return update(state, {
 
 ```js
 // 啟用之前：
-return [
-  ...state.slice(0, action.index),
-  Object.assign({}, state[action.index], {
-    completed: true
-  }),
-  ...state.slice(action.index + 1)
-]
+return state.map((todo, index) => {
+  if (index === action.index) {
+    return Object.assign({}, todo, {
+      completed: true
+    })
+  }
+  return todo
+})
 
 // 啟用之後：
-return [
-  ...state.slice(0, action.index),
-  { ...state[action.index], completed: true },
-  ...state.slice(action.index + 1)
-]
+return state.map((todo, index) => {
+  if (index === action.index) {
+    return { ...todo, completed: true }
+  }
+  return todo
+})
 ```
 
 需要注意的是，實驗性的語言功能有可能會變動。

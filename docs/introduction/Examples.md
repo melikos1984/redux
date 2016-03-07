@@ -2,9 +2,6 @@
 
 Redux 是隨著一些範例在它的[原始碼](https://github.com/reactjs/redux/tree/master/examples)中一起發佈的。
 
->##### 關於複製的提醒
->如果你把 Redux 範例複製到它們的目錄外面，你可以刪除它們的 `webpack.config.js` 尾端的幾行程式碼。 它們在 「You can safely delete these lines in your project.」 註解的後面。
-
 ## Counter Vanilla
 
 執行 [Counter Vanilla](https://github.com/reactjs/redux/tree/master/examples/counter-vanilla) 範例：

@@ -38,5 +38,11 @@
   * [applyMiddleware](/docs/api/applyMiddleware.md)
   * [bindActionCreators](/docs/api/bindActionCreators.md)
   * [compose](/docs/api/compose.md)
+<<<<<<< HEAD
 * [變更日誌](/CHANGELOG.md)
 * [贊助者](/PATRONS.md)
+=======
+* [Change Log](/CHANGELOG.md)
+* [Patrons](/PATRONS.md)
+* [Feedback](/docs/Feedback.md)
+>>>>>>> upstream/master
