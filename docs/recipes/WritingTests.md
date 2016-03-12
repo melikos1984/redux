@@ -112,7 +112,7 @@ import thunk from 'redux-thunk'
 import * as actions from '../../actions/counter'
 import * as types from '../../constants/ActionTypes'
 import nock from 'nock'
-import expect from 'expect'; // You can use any testing library
+import expect from 'expect'; // 你可以使用任何的測試函式庫
 
 const middlewares = [ thunk ]
 const mockStore = configureMockStore(middlewares)
