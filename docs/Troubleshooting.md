@@ -197,7 +197,7 @@ export default connect()(AddTodo)
 
 #### 確保 mapStateToProps 是正確的
 
-你可能正確的 dispatching 一個 action 以及使用你的 reducer，但是對應的 state 並沒有正確的被轉換成 props。
+可能導致你正確的 dispatch 了 action 也使用了 reducer，但是對應的 state 卻並沒有正確的被轉換成 props。
 
 ## 其他不能正常運作的原因
 
