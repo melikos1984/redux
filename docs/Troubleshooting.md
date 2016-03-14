@@ -195,6 +195,10 @@ export default connect()(AddTodo)
 
 如果你想要的話，你可以接著手動的把 `dispatch` 傳下去給其他的 components。
 
+#### 確保 mapStateToProps 是正確的
+
+可能導致你正確的 dispatch 了 action 也使用了 reducer，但是對應的 state 卻並沒有正確的被轉換成 props。
+
 ## 其他不能正常運作的原因
 
 在 **#redux** [Reactiflux](http://reactiflux.com/) Discord 頻道上詢問，或是[開一個 issue](https://github.com/reactjs/redux/issues)。
