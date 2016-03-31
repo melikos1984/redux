@@ -29,6 +29,7 @@
   * [撰寫測試](/docs/recipes/WritingTests.md)
   * [計算衍生資料](/docs/recipes/ComputingDerivedData.md)
   * [實作 Undo 歷史](/docs/recipes/ImplementingUndoHistory.md)
+* [FAQ](/docs/FAQ.md)
 * [疑難排解](/docs/Troubleshooting.md)
 * [術語表](/docs/Glossary.md)
 * [API 參考](/docs/api/README.md)
