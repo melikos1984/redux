@@ -132,7 +132,7 @@ export default VisibleTodoList
 
 ### 在 Selectors 存取 React Props
 
-> 這個部份我們介紹假設我們擴充我們的應用程式，使它能夠支援多個 Todo 清單。請注意，這個擴充的完整實作需要改變 reducers、components、actions 等等。這和我們要討論的主題沒有直接關係，為了方便我們省略這個部份。
+> 這個部份我們假設我們需要擴充我們的應用程式，使它能夠支援多個 Todo 清單。請注意，這個擴充的完整實作需要改變 reducers、components、actions 等等。這和我們要討論的主題沒有直接關係，為了方便我們省略這個部份。
 
 到目前為止，我們只看到 selectors 接收 Redux store state 作為參數，但是 selector 也可以接收 props。
 
@@ -155,7 +155,7 @@ const App = () => (
 )
 ```
 
-每個 `VisibleTodoList` container 應該根據 `listId` prop 去選擇經過 slice 後不同的 state，所以，讓我們修改 `getVisibilityFilter` 和 `getTodos` 來接受 props 參數：
+每個 `VisibleTodoList` container 應該根據 `listId` prop 去選擇經過 slice 後不同的 state，所以讓我們修改 `getVisibilityFilter` 和 `getTodos` 來接受 props 參數：
 
 #### `selectors/todoSelectors.js`
 

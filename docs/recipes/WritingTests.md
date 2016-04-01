@@ -134,11 +134,11 @@ describe('async actions', () => {
     const store = mockStore({ todos: [] })
 
     store.dispatch(actions.fetchTodos())
-      .then(() => { // return of async actions
+      .then(() => { // 回傳非同步的 actions
         expect(store.getActions()).toEqual(expectedActions)
       })
-      .then(done) // test passed
-      .catch(done) // test failed
+      .then(done) // test 通過
+      .catch(done) // test 失敗
   })
 })
 ```

@@ -71,14 +71,14 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 
 ### Enhancers
 
-  * [redux-batched-subscribe](https://github.com/tappleby/redux-batched-subscribe) — 客製化 batching 以及 debouncing 的呼叫給 store 的訂閱者
+* [redux-batched-subscribe](https://github.com/tappleby/redux-batched-subscribe) — 客製化 batching 以及 debouncing 的呼叫給 store 的訂閱者
 * [redux-history-transitions](https://github.com/johanneslumpe/redux-history-transitions) — 基於任意的 actions 來處理 History transitions
 * [redux-optimist](https://github.com/ForbesLindesay/redux-optimist) — 樂觀地使用可以在之後 commit 或 revert 的 actions
 * [redux-undo](https://github.com/omnidan/redux-undo) — 輕鬆的 undo/redo 並在你的 reducers 的歷史間活動
 * [redux-ignore](https://github.com/omnidan/redux-ignore) — 藉由陣列或是 filter function 來忽略 redux actions
 * [redux-recycle](https://github.com/omnidan/redux-recycle) — 在收到特定的 actions 時重置 redux state
 * [redux-batched-actions](https://github.com/tshelburne/redux-batched-actions) — 用只通知 subscriber 一次的方式來 Dispatch 多個 actions
-* [redux-search](https://github.com/treasure-data/redux-search) —  自動地幫資源在 web worker 中建立索引並透過非阻塞的方式搜尋它們
+* [redux-search](https://github.com/treasure-data/redux-search) — 自動地幫資源在 web worker 中建立索引並透過非阻塞的方式搜尋它們
 * [redux-electron-store](https://github.com/samiskin/redux-electron-store) — 跨越 Electron processes 同步 Redux stores 的 Store enhancers
 * [redux-loop](https://github.com/raisemarketplace/redux-loop) — 由 Reducer 返回達成自然且純粹地序列 effects
 * [redux-side-effects](https://github.com/salsita/redux-side-effects) — 從你的 pure reducers 利用 Generators 來宣告副作用的 yielding
