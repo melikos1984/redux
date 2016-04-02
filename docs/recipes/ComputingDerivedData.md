@@ -155,7 +155,7 @@ const App = () => (
 )
 ```
 
-每個 `VisibleTodoList` container 應該根據 `listId` prop 去選擇經過 slice 後不同的 state，所以讓我們修改 `getVisibilityFilter` 和 `getTodos` 來接受 props 參數：
+每個 `VisibleTodoList` container 應該根據 `listId` prop 去選擇不同的 state 部分，因此讓我們修改 `getVisibilityFilter` 和 `getTodos` 來接受 props 參數：
 
 #### `selectors/todoSelectors.js`
 
@@ -185,7 +185,7 @@ const getVisibleTodos = createSelector(
 export default getVisibleTodos
 ```
 
-`props` can be passed to `getVisibleTodos` from `mapStateToProps`:
+可以從 `mapStateToProps` 把 `props` 傳遞到 `getVisibleTodos`:
 
 ```js
 const mapStateToProps = (state, props) => {
@@ -195,11 +195,11 @@ const mapStateToProps = (state, props) => {
 }
 ```
 
-所以現在 `getVisibleTodos` 可以取得 `props`，這一切看起來都很正常。
+所以現在 `getVisibleTodos` 可以存取 `props`，這一切看起來都運作的很正常。
 
 **但是這裡還有一個問題！**
 
-`visibleTodoList` container 使用了多個 `getVisibleTodos` instances 會無法正常的 memoize：
+在多個 `visibleTodoList` container 的實體上使用 `getVisibleTodos` selector 會無法正常的 memoize：
 
 #### `containers/VisibleTodoList.js`
 
@@ -211,7 +211,7 @@ import { getVisibleTodos } from '../selectors'
 
 const mapStateToProps = (state, props) => {
   return {
-    // 警告：以下的 SELECTORS 不能正確的 MEMOIZE：
+    // 警告：以下的 SELECTORS 不能正確的 MEMOIZE
     todos: getVisibleTodos(state, props)
   }
 }
@@ -232,15 +232,15 @@ const VisibleTodoList = connect(
 export default VisibleTodoList
 ```
 
-當設定的參數和先前的參數相同時，透過 `createSelector` 建立的 selector 只會回傳 cache value。如果我們交替 rendering `<VisibleTodoList listId="1" />` 和 `<VisibleTodoList listId="2" />`，共用的 selector 會交替取得 `{listId: 1}` 和 `{listId: 2}` 做為 `props` 參數。這會導致每次呼叫參數時都會不同，所以 selector 會一直重新計算而不是回傳 cache value。我們會在接下來的部份來克服這個限制。
+當設定的參數和先前的參數相同時，透過 `createSelector` 建立的 selector 只會回傳快取的值。如果我們交替 render `<VisibleTodoList listId="1" />` 和 `<VisibleTodoList listId="2" />`，共用的 selector 會交替取得 `{listId: 1}` 和 `{listId: 2}` 做為 `props` 參數。這會導致每次呼叫時參數都會不同，所以 selector 會一直重新計算而不是回傳快取的值。我們會在接下來的部份看到要如何克服這個限制。
 
 ### 跨越多個 Components 共用 Selectors
 
 > 這個部份的範例需要 React Redux v4.3.0 或是更高的版本
 
-為了跨越多個 `VisibleTodoList` components 共用一個 selector **以及**保留 memoization，每個 component 的每個 instance 需要自己本身私有的 selector 副本。
+為了跨越多個 `VisibleTodoList` components 共用一個 selector **以及**保留 memoization，每個 component 實體需要有自己私有的 selector 副本。
 
-讓我們建立一個叫做 `makeGetVisibleTodos` 的 function，在每次被呼叫的時候，可以回傳一個新的 `getVisibleTodos` selector：
+讓我們建立一個叫做 `makeGetVisibleTodos` 的 function，在每次被呼叫的時候，可以回傳一個新的 `getVisibleTodos` selector 副本：
 
 #### `selectors/todoSelectors.js`
 
@@ -272,11 +272,11 @@ const makeGetVisibleTodos = () => {
 export default makeGetVisibleTodos
 ```
 
-我們也需要給每個 container 的 instance 存取本身私有的 selector 方法。`connect` 的 `mapStateToProps` 參數可以幫助我們。
+我們也需要給每個 container 的實體存取本身私有的 selector 方法。`connect` 的 `mapStateToProps` 參數可以幫助我們。
 
-**如果 `mapStateToProps` 參數提供給 `connect` 回傳的是參數，而不是物件，它可以被使用在每個 container 的 instance 中建立一個獨立的 `mapStateToProps` function。**
+**如果提供給 `connect` 的 `mapStateToProps` 參數回傳的是 function，而不是物件，它會被用來在對每個 container 的實體中建立一個獨立的 `mapStateToProps` function。**
 
-在下面的範例 `makeMapStateToProps` 建立一個新的 `getVisibleTodos` selector，以及回傳一個 `mapStateToProps` function 而且可以獨立存取的新 selector：
+在下面的範例 `makeMapStateToProps` 建立一個新的 `getVisibleTodos` selector，並回傳一個可以獨立存取的新 selector 的 `mapStateToProps` function：
 
 ```js
 const makeMapStateToProps = () => {
@@ -290,7 +290,7 @@ const makeMapStateToProps = () => {
 }
 ```
 
-如果我們傳送 `makeMapStateToProps` 到 `connect`，`VisibleTodosList` container 的每個 instance 都帶著私有的 `getVisibleTodos` selector 可以取得自己的 `mapStateToProps` function。
+如果我們傳遞 `makeMapStateToProps` 到 `connect`，每一個 `VisibleTodosList` container 的實體都會得到它自己的 `mapStateToProps` function 以及一個私有的 `getVisibleTodos` selector。 現在不管這些 `VisibleTodoList` containers 的 render 順序，Memoization 都將會正常的運作。
 
 #### `containers/VisibleTodoList.js`
 
