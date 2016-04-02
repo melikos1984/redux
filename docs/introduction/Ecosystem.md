@@ -81,7 +81,7 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 * [redux-search](https://github.com/treasure-data/redux-search) — 自動地幫資源在 web worker 中建立索引並透過非阻塞的方式搜尋它們
 * [redux-electron-store](https://github.com/samiskin/redux-electron-store) — 跨越 Electron processes 同步 Redux stores 的 Store enhancers
 * [redux-loop](https://github.com/raisemarketplace/redux-loop) — 由 Reducer 返回達成自然且純粹地序列 effects
-* [redux-side-effects](https://github.com/salsita/redux-side-effects) — 從你的 pure reducers 利用 Generators 來宣告副作用的 yielding
+* [redux-side-effects](https://github.com/salsita/redux-side-effects) — 利用 Generator 來從你的 pure reducer 宣告 side effect 的產生
 
 ### Utilities
 
