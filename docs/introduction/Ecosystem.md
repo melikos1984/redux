@@ -20,7 +20,6 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 
 ### 教學和文章
 
-<<<<<<< HEAD
 * [Redux Tutorial](https://github.com/happypoulp/redux-tutorial) — 一步一步的學習如何使用 redux
 * [Redux Egghead Course Notes](https://github.com/tayiorbeii/egghead.io_redux_course_notes) — Redux [Egghead 影片課程](https://egghead.io/series/getting-started-with-redux) 的筆記
 * [Integrating Data with React Native](http://makeitopen.com/tutorials/building-the-f8-app/data/) — An intro to using Redux with React
