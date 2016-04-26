@@ -45,6 +45,17 @@ Redux 從 [Flux](http://facebook.github.io/flux/) 的概念發展而來，不過
 npm install --save redux
 ```
 
+這裡假設你是使用 [npm](https://www.npmjs.com/) 作為你的套件管理器。
+If you don’t, you can [access these files on npmcdn](https://npmcdn.com/redux/), download them, or point your package manager to them.
+
+Most commonly people consume Redux as a collection of [CommonJS](http://webpack.github.io/docs/commonjs.html) modules. These modules are what you get when you import `redux` in a [Webpack](http://webpack.github.io), [Browserify](http://browserify.org/), or a Node environment. If you like to live on the edge and use [Rollup](http://rollupjs.org), we support that as well.
+
+If you don’t use a module bundler, it’s also fine. The `redux` npm package includes precompiled production and development [UMD](https://github.com/umdjs/umd) builds in the [`dist` folder](https://npmcdn.com/redux/dist/). They can be used directly without a bundler and are thus compatible with many popular JavaScript module loaders and environments. For example, you can drop a UMD build as a [`<script>` tag](https://npmcdn.com/redux/dist/redux.js) on the page, or [tell Bower to install it](https://github.com/reactjs/redux/pull/1181#issuecomment-167361975). The UMD builds make Redux available as a `window.Redux` global variable.
+
+The Redux source code is written in ES2015 but we precompile both CommonJS and UMD builds to ES5 so they work in [any modern browser](http://caniuse.com/#feat=es5). You don’t need to use Babel or a module bundler to [get started with Redux](https://github.com/reactjs/redux/blob/master/examples/counter-vanilla/index.html).
+
+#### Complementary Packages
+
 大多數情況，你也會需要 [React 的綁定](https://github.com/reactjs/react-redux)和[開發者工具](https://github.com/gaearon/redux-devtools)。
 
 ```
@@ -52,9 +63,7 @@ npm install --save react-redux
 npm install --save-dev redux-devtools
 ```
 
-這裡假設你是使用 [npm](https://www.npmjs.com/) 套件管理與一個模組 bundler，像是 [Webpack](http://webpack.github.io) 或是 [Browserify](http://browserify.org/) 來使用 [CommonJS 模組](http://webpack.github.io/docs/commonjs.html)。
-
-如果你還沒有使用 [npm](https://www.npmjs.com/) 或任何一個現代的模組 bundler，而且寧願使用可以讓 `Redux` 作為一個全域物件使用的單檔 [UMD](https://github.com/umdjs/umd) 編譯，你可以從 [cdnjs](https://cdnjs.com/libraries/redux) 取得一個預先編譯好的版本。對於任何重要的應用程式，我們*不*建議使用這個方法，因為大部份與 Redux 互補的 libraries 都只能在 [npm](https://www.npmjs.com/) 上取得。
+Note that unlike Redux itself, many packages in the Redux ecosystem don’t provide UMD builds, so we recommend using CommonJS module bundlers like [Webpack](http://webpack.github.io) and [Browserify](http://browserify.org/) for the most comfortable development experience.
 
 ### 程式碼片段
 
