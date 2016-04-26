@@ -102,7 +102,7 @@ boundCompleteTodo(index)
 
 `dispatch()` function 可以藉由 [`store.dispatch()`](../api/Store.md#dispatch) 直接地從 store 取用，不過你將更可能會藉由 helper 來取用它，例如 [react-redux](http://github.com/gaearon/react-redux) 的 `connect()`。你可以使用 [`bindActionCreators()`](../api/bindActionCreators.md) 來自動綁定許多 action creators 到一個 `dispatch()` function。
 
-Action creators can also be asynchronous and have side-effects.你可以詳讀在[進階教學](../advanced/README.md)中的 [async actions](../advanced/AsyncActions.md)，以學習如何處理 AJAX 回應和組合 action creators 到非同步控制流程中。 Don’t skip ahead to async actions until you’ve completed the basics tutorial, as it covers other important concepts that are prerequisite for the advanced tutorial and async actions.
+Action creators 也可以是非同步的，並擁有 side-effect。你可以詳讀在[進階教學](../advanced/README.md)中的 [async actions](../advanced/AsyncActions.md)，以學習如何處理 AJAX 回應和組合 action creators 到非同步控制流程中。直到你將基礎教學完成前，千萬別跳到 async action，因為它涵蓋了進階教學及 async action 所需的重要概念。
 
 ## 原始碼
 

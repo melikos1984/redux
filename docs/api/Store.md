@@ -83,7 +83,7 @@ store.dispatch(addTodo('Read about the middleware'))
 
 你可以從 change listener 呼叫 [`dispatch()`](#dispatch)，有以下注意事項:
 
-1. The listener should only call [`dispatch()`](#dispatch) either in response to user actions or under specific conditions (e. g. dispatching an action when the store has a specific field). Calling [`dispatch()`](#dispatch) without any conditions is technically possible, however it leads to infinite loop as every [`dispatch()`](#dispatch) call usually triggers the listener again.
+1. 只有在回應使用者的行為或是特定條件下（例如，當 store 有特定欄位時 dispatch 一個 action），listener 才會呼叫 [`dispatch()`](#dispatch)。不需任何條件的呼叫 [`dispatch()`](#dispatch) 在技術上是可行的，但是這麼做會導致無窮迴圈的發生，因為每個 [`dispatch()`](#dispatch) 的呼叫通常會再次的觸發 listener。
 
 2. Subscriptions 剛好在每個 [`dispatch()`](#dispatch) 呼叫前被存起來。若你在 listeners 正在被呼叫時進行 subscribe 或是 unsubscribe，將不會對正在運行中的 [`dispatch()`](#dispatch) 有任何影響。不過，下一個呼叫的 [`dispatch()`](#dispatch)，不論它是不是巢狀，都將使用更近被存起來的 subscription。
 

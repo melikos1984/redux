@@ -2,7 +2,7 @@
 
 Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來衍生出工具和 extensions 的生態系。
 
-如果需要一個有關 Redux 一切的廣泛清單，我們推薦 [Awesome Redux](https://github.com/xgrommx/awesome-redux)。它包含範例、boilerplates、middleware、utility libraries 和許多其他的東西。[React/Redux Links](https://github.com/markerikson/react-redux-links) contains tutorials and other useful resources for anyone learning React or Redux, and [Redux Ecosystem Links](https://github.com/markerikson/redux-ecosystem-links) lists many Redux-related libraries and addons.
+如果需要一個有關 Redux 一切的廣泛清單，我們推薦 [Awesome Redux](https://github.com/xgrommx/awesome-redux)。它包含範例、boilerplates、middleware、utility libraries 和許多其他的東西。[React/Redux Links](https://github.com/markerikson/react-redux-links) 涵蓋了教學及其他有用的資源，不論是學習 React 或 Redux 的人，而 [Redux Ecosystem Links](https://github.com/markerikson/redux-ecosystem-links) 則列了許多與 Redux 有關的 library 及附加功能。
 
 在這個頁面上，我們將只列出它們之中一些 Redux 維護者已經親自審核的。不要因此而打消你嘗試其他項目的念頭！這個生態系成長得太快，我們沒有足夠的時間去查看所有的東西。請把這些當作「員工推薦」，如果你已經使用 Redux 做出了很棒的東西，請不要猶豫馬上提交一個 PR。
 
@@ -16,20 +16,20 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 
 * [Official Examples](Examples.md) — 一些涵蓋不同 Redux 技術的官方範例
 * [SoundRedux](https://github.com/andrewngu/sound-redux) — 一個用 Redux 打造的 SoundCloud 客戶端
-* [grafgiti](https://github.com/mohebifar/grafgiti) — Create graffity on your GitHub contributions wall
+* [grafgiti](https://github.com/mohebifar/grafgiti) — 在你的 GitHub 貢獻牆上建立 graffity
 
 ### 教學和文章
 
 * [Redux Tutorial](https://github.com/happypoulp/redux-tutorial) — 一步一步的學習如何使用 redux
 * [Redux Egghead Course Notes](https://github.com/tayiorbeii/egghead.io_redux_course_notes) — Redux [Egghead 影片課程](https://egghead.io/series/getting-started-with-redux) 的筆記
-* [Integrating Data with React Native](http://makeitopen.com/tutorials/building-the-f8-app/data/) — An intro to using Redux with React
+* [Integrating Data with React Native](http://makeitopen.com/tutorials/building-the-f8-app/data/) — 將 Redux 與 React 一同使用的簡介
 * [What the Flux?! Let’s Redux.](https://blog.andyet.com/2015/08/06/what-the-flux-lets-redux) — 一個 Redux 的介紹
-* [Leveling Up with React: Redux](https://css-tricks.com/learning-react-redux/) — Another great intro to Redux
+* [Leveling Up with React: Redux](https://css-tricks.com/learning-react-redux/) — 另一個不錯的 Redux 簡介
 * [A cartoon intro to Redux](https://code-cartoons.com/a-cartoon-intro-to-redux-3afb775501a6) — 一個視覺化的 Redux 資料流說明
 * [Understanding Redux](http://www.youhavetolearncomputers.com/blog/2015/9/15/a-conceptual-overview-of-redux-or-how-i-fell-in-love-with-a-javascript-state-container) — 學習 Redux 的基礎概念
 * [Handcrafting an Isomorphic Redux Application (With Love)](https://medium.com/@bananaoomarang/handcrafting-an-isomorphic-redux-application-with-love-40ada4468af4) — 一個藉由資料抓取與 routing 建立 universal 應用程式的教學
 * [Full-Stack Redux Tutorial](http://teropa.info/blog/2015/09/10/full-stack-redux-tutorial.html) — 一個使用 Redux、React 與 Immutable 進行測試先行開發的詳盡指南
-* [Getting Started with React, Redux, and Immutable](http://www.theodo.fr/blog/2016/03/getting-started-with-react-redux-and-immutable-a-test-driven-tutorial-part-2/) — A test-driven intro to refactoring a React app to use Redux
+* [Getting Started with React, Redux, and Immutable](http://www.theodo.fr/blog/2016/03/getting-started-with-react-redux-and-immutable-a-test-driven-tutorial-part-2/) — 一個以 test-driven 將 React app 重構成使用 Redux 的簡介
 * [Secure Your React and Redux App with JWT Authentication](https://auth0.com/blog/2016/01/04/secure-your-react-and-redux-app-with-jwt-authentication/) — 學習如何加入 JWT 驗證到你的 React 和 Redux app
 * [Understanding Redux Middleware](https://medium.com/@meagle/understanding-87566abcfb7a#.l033pyr02) — 實作 Redux middleware 的深入指南
 * [Angular 2 — Introduction to Redux](https://medium.com/google-developer-experts/angular-2-introduction-to-redux-1cf18af27e6e) — 一個以 Angular 2 為範例的 Redux 基礎觀念介紹
@@ -97,7 +97,7 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 * [redux-immutable](https://github.com/gajus/redux-immutable) — 用來建立一個與 Redux 中 `combineReducers` 等價但使用 [Immutable.js](https://facebook.github.io/immutable-js/) state 的 function
 * [redux-tcomb](https://github.com/gcanti/redux-tcomb) — Immutable 與給 Redux 用的 type-checked state 和 actions
 * [redux-mock-store](https://github.com/arnaudbenard/redux-mock-store) — Mock redux store 以測試你的應用程式
-* [redux-actions-assertions](https://github.com/dmitry-zaets/redux-actions-assertions) — Assertions for Redux actions testing
+* [redux-actions-assertions](https://github.com/dmitry-zaets/redux-actions-assertions) — 測試 Redux actions 的 Assertion
 
 ### 開發工具
 
@@ -131,5 +131,5 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 ## 更多
 
 [Awesome Redux](https://github.com/xgrommx/awesome-redux) 是一個廣泛的 Redux 相關 repositories 的清單。
-[React-Redux Links](https://github.com/markerikson/react-redux-links) 是一個 React, Redux, ES6等等的高品質文章、教學、相關內容的搜集清單。
-[Redux Ecosystem Links](https://github.com/markerikson/redux-ecosystem-links) is a categorized collection of Redux-related libraries, addons, and utilities.
+[React-Redux Links](https://github.com/markerikson/react-redux-links) 是一個 React、Redux、ES6 等等的高品質文章、教學、相關內容的搜集清單。
+[Redux Ecosystem Links](https://github.com/markerikson/redux-ecosystem-links) 分類並收集了與 Redux 相關的 library、附加功能及通用套件。
