@@ -48,7 +48,7 @@ npm install --save redux
 這裡假設你是使用 [npm](https://www.npmjs.com/) 作為你的套件管理器。
 若不是的話，你可以[在 npmcdn 取得這些檔案](https://npmcdn.com/redux/)並下載它們，或是將套件管理器指向它們。
 
-最常見的是人們將 Redux 作為 [CommonJS](http://webpack.github.io/docs/commonjs.html) 模組中的一個 collection 使用。當你在 [Webpack](http://webpack.github.io)、[Browserify](http://browserify.org/) 或 Node 環境中 import `redux` 時就能取得此模組。若你是個特立獨行的人，使用 [Rollup](http://rollupjs.org)，我們也同樣支援它。
+最常見的是人們將 Redux 作為 [CommonJS](http://webpack.github.io/docs/commonjs.html) 模組中的一個 collection 使用。當你在 [Webpack](http://webpack.github.io)、[Browserify](http://browserify.org/) 或 Node 環境中 import `redux` 時就能取得此模組。若你願意冒風險使用 [Rollup](http://rollupjs.org)，我們也同樣支援它。
 
 如果你不想使用模組 bundler 也沒關係。`redux` npm 套件的 [`dist` 資料夾](https://npmcdn.com/redux/dist/)包含了已編譯之 production 與 development 的 [UMD](https://github.com/umdjs/umd) build。你可以不透過 bundler 直接使用它們，也因此它們與許多熱門的 JavaScript 模組 loader 及環境相容。舉個例子，你可以將一個 UMD build 作為 [`<script>` 標籤](https://npmcdn.com/redux/dist/redux.js)放入網頁中，或[透過 Bower 進行安裝](https://github.com/reactjs/redux/pull/1181#issuecomment-167361975)。UMD build 讓 Redux 能夠作為 `window.Redux` 全域變數進行使用。
 
