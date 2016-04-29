@@ -83,9 +83,11 @@ store.dispatch(addTodo('Read about the middleware'))
 
 你可以從 change listener 呼叫 [`dispatch()`](#dispatch)，有以下注意事項:
 
-1. subscriptions 剛好在每個 [`dispatch()`](#dispatch) 呼叫前被存起來。若你在 listeners 正在被呼叫時進行 subscribe 或是 unsubscribe，將不會對正在運行中的 [`dispatch()`](#dispatch) 有任何影響。不過，下一個呼叫的 [`dispatch()`](#dispatch)，不論它是不是巢狀，都將使用更近被存起來的 subscription。
+1. 只有在回應使用者的行為或是特定條件下（例如，當 store 有特定欄位時 dispatch 一個 action），listener 才會呼叫 [`dispatch()`](#dispatch)。不需任何條件的呼叫 [`dispatch()`](#dispatch) 在技術上是可行的，但是這麼做會導致無窮迴圈的發生，因為每個 [`dispatch()`](#dispatch) 的呼叫通常會再次的觸發 listener。
 
-2. listener 不應該預期會看到所有的 states 變化，因為在 listener 被呼叫之前，state 可能會在巢狀的 [`dispatch()`](#dispatch) 之中被更新數次。不過，這保證所有 [`dispatch()`](#dispatch) 開始時所註冊的 subscribers，都會在結束時以最新的 state 呼叫。
+2. Subscriptions 剛好在每個 [`dispatch()`](#dispatch) 呼叫前被存起來。若你在 listeners 正在被呼叫時進行 subscribe 或是 unsubscribe，將不會對正在運行中的 [`dispatch()`](#dispatch) 有任何影響。不過，下一個呼叫的 [`dispatch()`](#dispatch)，不論它是不是巢狀，都將使用更近被存起來的 subscription。
+
+3. Listener 不應該預期會看到所有的 states 變化，因為在 listener 被呼叫之前，state 可能會在巢狀的 [`dispatch()`](#dispatch) 之中被更新數次。不過，這保證所有 [`dispatch()`](#dispatch) 開始時所註冊的 subscribers，都會在結束時以最新的 state 呼叫。
 
 這是一個低階 API。你大部份時候不會直接使用它，你會使用 React (或其他的) 綁定。如果你覺得這個 callback 需要使用當下的 state 當參數來呼叫，你可能會想要[把 store 轉換成 Observable 或寫一個客製化的 `observeStore` utility 來取代](https://github.com/reactjs/redux/issues/303#issuecomment-125184409)。
 

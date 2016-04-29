@@ -53,7 +53,20 @@ import { ADD_TODO, REMOVE_TODO } from '../actionTypes'
 
 **Action creators** 就是—產生 actions 的 functions。「action」和「action creator」 這兩個詞非常容易混為一談，所以請盡你所能使用正確的術語。
 
-在[傳統的 Flux](http://facebook.github.io/flux) 實作中，action creators 被呼叫時，通常會像這樣觸發一個 dispatch：
+在 Redux 裡 action creators 簡單地回傳一個 action：
+
+```js
+function addTodo(text) {
+  return {
+    type: ADD_TODO,
+    text
+  }
+}
+```
+
+這讓它們更具有移植性並易於測試。
+
+在[傳統的 Flux](http://facebook.github.io/flux) 中，通常在 action creators 被呼叫時才會觸發 dispatch：
 
 ```js
 function addTodoWithDispatch(text) {
@@ -65,18 +78,8 @@ function addTodoWithDispatch(text) {
 }
 ```
 
-相比之下，在 Redux 裡 action creators 簡單地回傳一個 action：
-
-```js
-function addTodo(text) {
-  return {
-    type: ADD_TODO,
-    text
-  }
-}
-```
-
-這使它們更具有可攜性並更容易測試。要實際地啟動一個 dispatch，必須傳遞回傳值給 `dispatch()` function：
+在 Redux 中則*不是*採用這種方式：  
+取而代之的是，要實際地啟動一個 dispatch，只需傳遞結果給 `dispatch()` function：
 
 ```js
 dispatch(addTodo(text))
@@ -98,6 +101,8 @@ boundCompleteTodo(index)
 ```
 
 `dispatch()` function 可以藉由 [`store.dispatch()`](../api/Store.md#dispatch) 直接地從 store 取用，不過你將更可能會藉由 helper 來取用它，例如 [react-redux](http://github.com/gaearon/react-redux) 的 `connect()`。你可以使用 [`bindActionCreators()`](../api/bindActionCreators.md) 來自動綁定許多 action creators 到一個 `dispatch()` function。
+
+Action creators 也可以是非同步的，並擁有 side-effect。你可以詳讀在[進階教學](../advanced/README.md)中的 [async actions](../advanced/AsyncActions.md)，以學習如何處理 AJAX 回應和組合 action creators 到非同步控制流程中。直到你將基礎教學完成前，千萬別跳到 async action，因為它涵蓋了進階教學及 async action 所需的重要概念。
 
 ## 原始碼
 
@@ -142,6 +147,3 @@ export function setVisibilityFilter(filter) {
 ## 下一步
 
 現在讓我們來[定義一些 reducers](Reducers.md) 以指定當你 dispatch 這些 actions 時，state 要如何更新！
-
->##### 給進階使用者的附註
->如果你已經熟悉基本的概念而且之前已經看完了這份教學，請不要忘記查看在[進階教學](../advanced/README.md)中的 [async actions](../advanced/AsyncActions.md)，以學習如何處理 AJAX 回應和組合 action creators 到非同步控制流程中。

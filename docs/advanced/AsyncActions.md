@@ -20,7 +20,7 @@
 
 * **一個告知 reducers 請求失敗的 action。**
 
-  reducers 可以藉由重置 `isFetching` 屬性來處理這個 action。也許，有些 reducers 也會想要儲存錯誤訊息，這樣 UI 就可以顯示它。
+  Reducers 可以藉由重置 `isFetching` 屬性來處理這個 action。此外，有些 reducers 也會想要儲存錯誤訊息，這樣 UI 就可以顯示它。
 
 你可以在 actions 裡使用一個專用的 `status` 屬性：
 
