@@ -246,7 +246,7 @@ export default App
 
 ### Container Components
 
-現在是時候建立些 containers 使得那些 presentational components 接到 Redux 了。技術上來說，一個 container component 就只是個使用 [`store.subscribe()`](../api/Store.md#subscribe) 來讀取一部份 Redux state tree 並提供 props 讓 presentational component 來 render 用的 React component。你可以手寫一個 container component，但 React Redux 囊括了許多有用的優化，所以我們建議從 React Redux library 使用 [`connect()`](https://github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options) function 來產生 container components。
+現在是時候建立些 containers 使得那些 presentational components 接到 Redux 了。技術上來說，一個 container component 就只是個使用 [`store.subscribe()`](../api/Store.md#subscribe) 來讀取一部份 Redux state tree 並提供 props 讓 presentational component 來 render 用的 React component。你可以手寫一個 container component，但 React Redux 囊括了許多有用的優化，所以我們建議從 React Redux library 使用 [`connect()`](https://github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options) function 來產生 container components，它提供了許多有用的最佳化來避免不必要的 re-render。（其中一個結果就是，你不必擔心關於 [React 的效能建議](https://facebook.github.io/react/docs/advanced-performance.html)而自己實作 `shouldComponentUpdate`。）
 
 要使用 `connect()`，你需要定義一個名為 `mapStateToProps` 的特別 function，它述說將如何轉換目前 Redux store state 成為你想要傳到正在包裝的 presentational component 的 props。舉個例子，`VisibleTodoList` 需要計算 `todos` 來傳給 `TodoList`，所以我們定義一個根據 `state.visibilityFilter` 來篩選 `state.todos` 的 function，並在它的 `mapStateToProps` 中使用：
 

@@ -45,6 +45,17 @@ Redux 從 [Flux](http://facebook.github.io/flux/) 的概念發展而來，不過
 npm install --save redux
 ```
 
+這裡假設你是使用 [npm](https://www.npmjs.com/) 作為你的套件管理器。
+若不是的話，你可以[在 npmcdn 取得這些檔案](https://npmcdn.com/redux/)並下載它們，或是將套件管理器指向它們。
+
+最常見的是人們將 Redux 作為 [CommonJS](http://webpack.github.io/docs/commonjs.html) 模組中的一個 collection 使用。當你在 [Webpack](http://webpack.github.io)、[Browserify](http://browserify.org/) 或 Node 環境中 import `redux` 時就能取得此模組。若你願意冒風險使用 [Rollup](http://rollupjs.org)，我們也同樣支援它。
+
+如果你不想使用模組 bundler 也沒關係。`redux` npm 套件的 [`dist` 資料夾](https://npmcdn.com/redux/dist/)包含了已編譯之 production 與 development 的 [UMD](https://github.com/umdjs/umd) build。你可以不透過 bundler 直接使用它們，也因此它們與許多熱門的 JavaScript 模組 loader 及環境相容。舉個例子，你可以將一個 UMD build 作為 [`<script>` 標籤](https://npmcdn.com/redux/dist/redux.js)放入網頁中，或[透過 Bower 進行安裝](https://github.com/reactjs/redux/pull/1181#issuecomment-167361975)。UMD build 讓 Redux 能夠作為 `window.Redux` 全域變數進行使用。
+
+Redux 的原始碼由 ES2015 撰寫而成，但是我們預先編譯了 CommonJS 及 UMD build 兩種 ES5 版本，讓它們可以運作於[任何現代的瀏覽器](http://caniuse.com/#feat=es5)。你不必使用 Babel 或模組 bundler 即可[開始使用 Redux](https://github.com/reactjs/redux/blob/master/examples/counter-vanilla/index.html)。
+
+#### 補充性套件
+
 大多數情況，你也會需要 [React 的綁定](https://github.com/reactjs/react-redux)和[開發者工具](https://github.com/gaearon/redux-devtools)。
 
 ```
@@ -52,9 +63,7 @@ npm install --save react-redux
 npm install --save-dev redux-devtools
 ```
 
-這裡假設你是使用 [npm](https://www.npmjs.com/) 套件管理與一個模組 bundler，像是 [Webpack](http://webpack.github.io) 或是 [Browserify](http://browserify.org/) 來使用 [CommonJS 模組](http://webpack.github.io/docs/commonjs.html)。
-
-如果你還沒有使用 [npm](https://www.npmjs.com/) 或任何一個現代的模組 bundler，而且寧願使用可以讓 `Redux` 作為一個全域物件使用的單檔 [UMD](https://github.com/umdjs/umd) 編譯，你可以從 [cdnjs](https://cdnjs.com/libraries/redux) 取得一個預先編譯好的版本。對於任何重要的應用程式，我們*不*建議使用這個方法，因為大部份與 Redux 互補的 libraries 都只能在 [npm](https://www.npmjs.com/) 上取得。
+請注意，這些套件不同於 Redux 自身，許多 Redux 生態系中的套件並不提供 UMD build，所以我們建議使用像是 [Webpack](http://webpack.github.io) 或 [Browserify](http://browserify.org/) 的 CommonJS 模組 bundler，以取得最舒適的開發體驗。
 
 ### 程式碼片段
 
