@@ -10,7 +10,9 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 
 ### Screencasts
 
+<<<<<<< HEAD
 * **[Getting Started with Redux](https://egghead.io/series/getting-started-with-redux)** — 直接從 Redux 的作者學習它的基礎 (30 部免費影片)
+* **[Learn Redux](https://learnredux.com)** — 建立一個簡單的照片應用程式，簡化 Redux、 React Router 和 React.js 背後的核心概念
 
 ### 應用程式範例
 
@@ -20,20 +22,23 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 
 ### 教學和文章
 
-* [Redux Tutorial](https://github.com/happypoulp/redux-tutorial) — 一步一步的學習如何使用 redux
-* [Redux Egghead Course Notes](https://github.com/tayiorbeii/egghead.io_redux_course_notes) — Redux [Egghead 影片課程](https://egghead.io/series/getting-started-with-redux) 的筆記
-* [Integrating Data with React Native](http://makeitopen.com/tutorials/building-the-f8-app/data/) — 將 Redux 與 React 一同使用的簡介
-* [What the Flux?! Let’s Redux.](https://blog.andyet.com/2015/08/06/what-the-flux-lets-redux) — 一個 Redux 的介紹
-* [Leveling Up with React: Redux](https://css-tricks.com/learning-react-redux/) — 另一個不錯的 Redux 簡介
-* [A cartoon intro to Redux](https://code-cartoons.com/a-cartoon-intro-to-redux-3afb775501a6) — 一個視覺化的 Redux 資料流說明
-* [Understanding Redux](http://www.youhavetolearncomputers.com/blog/2015/9/15/a-conceptual-overview-of-redux-or-how-i-fell-in-love-with-a-javascript-state-container) — 學習 Redux 的基礎概念
-* [Handcrafting an Isomorphic Redux Application (With Love)](https://medium.com/@bananaoomarang/handcrafting-an-isomorphic-redux-application-with-love-40ada4468af4) — 一個藉由資料抓取與 routing 建立 universal 應用程式的教學
-* [Full-Stack Redux Tutorial](http://teropa.info/blog/2015/09/10/full-stack-redux-tutorial.html) — 一個使用 Redux、React 與 Immutable 進行測試先行開發的詳盡指南
-* [Getting Started with React, Redux, and Immutable](http://www.theodo.fr/blog/2016/03/getting-started-with-react-redux-and-immutable-a-test-driven-tutorial-part-2/) — 一個以 test-driven 將 React app 重構成使用 Redux 的簡介
-* [Secure Your React and Redux App with JWT Authentication](https://auth0.com/blog/2016/01/04/secure-your-react-and-redux-app-with-jwt-authentication/) — 學習如何加入 JWT 驗證到你的 React 和 Redux app
-* [Understanding Redux Middleware](https://medium.com/@meagle/understanding-87566abcfb7a#.l033pyr02) — 實作 Redux middleware 的深入指南
-* [Angular 2 — Introduction to Redux](https://medium.com/google-developer-experts/angular-2-introduction-to-redux-1cf18af27e6e) — 一個以 Angular 2 為範例的 Redux 基礎觀念介紹
-* [Working with VK API (in Russian)](https://www.gitbook.com/book/maxfarseer/redux-course-ru/details) — 一個示範建立 app 並使用 VK API 的俄文教學
+* [Redux Tutorial](https://github.com/happypoulp/redux-tutorial)
+* [Redux Egghead Course Notes](https://github.com/tayiorbeii/egghead.io_redux_course_notes)
+* [Integrating Data with React Native](http://makeitopen.com/tutorials/building-the-f8-app/data/)
+* [What the Flux?! Let’s Redux.](https://blog.andyet.com/2015/08/06/what-the-flux-lets-redux)
+* [Leveling Up with React: Redux](https://css-tricks.com/learning-react-redux/)
+* [A cartoon intro to Redux](https://code-cartoons.com/a-cartoon-intro-to-redux-3afb775501a6)
+* [Understanding Redux](http://www.youhavetolearncomputers.com/blog/2015/9/15/a-conceptual-overview-of-redux-or-how-i-fell-in-love-with-a-javascript-state-container)
+* [Handcrafting an Isomorphic Redux Application (With Love)](https://medium.com/@bananaoomarang/handcrafting-an-isomorphic-redux-application-with-love-40ada4468af4)
+* [Full-Stack Redux Tutorial](http://teropa.info/blog/2015/09/10/full-stack-redux-tutorial.html)
+* [Getting Started with React, Redux, and Immutable](http://www.theodo.fr/blog/2016/03/getting-started-with-react-redux-and-immutable-a-test-driven-tutorial-part-2/)
+* [Secure Your React and Redux App with JWT Authentication](https://auth0.com/blog/2016/01/04/secure-your-react-and-redux-app-with-jwt-authentication/)
+* [Understanding Redux Middleware](https://medium.com/@meagle/understanding-87566abcfb7a)
+* [Angular 2 — Introduction to Redux](https://medium.com/google-developer-experts/angular-2-introduction-to-redux-1cf18af27e6e)
+* [Apollo Client: GraphQL with React and Redux](https://medium.com/apollo-stack/apollo-client-graphql-with-react-and-redux-49b35d0f2641)
+* [Using redux-saga To Simplify Your Growing React Native Codebase](https://shift.infinite.red/using-redux-saga-to-simplify-your-growing-react-native-codebase-2b8036f650de)
+* [Build an Image Gallery Using Redux Saga](http://joelhooks.com/blog/2016/03/20/build-an-image-gallery-using-redux-saga)
+* [Working with VK API (in Russian)](https://www.gitbook.com/book/maxfarseer/redux-course-ru/details)
 
 ### 演講
 
@@ -56,17 +61,23 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 
 * [redux-thunk](http://github.com/gaearon/redux-thunk) — 撰寫 async action creators 的最簡單方式
 * [redux-promise](https://github.com/acdlite/redux-promise) — [FSA](https://github.com/acdlite/flux-standard-action)-相容的 promise middleware
+* [redux-axios-middleware](https://github.com/svrcekmichal/redux-axios-middleware) — 取得與 axios HTTP 客戶端資料的 Redux middleware
+* [redux-observable](https://github.com/blesh/redux-observable/) — Redux 的 RxJS middleware
 * [redux-rx](https://github.com/acdlite/redux-rx) — Redux 的 RxJS utilities，包含一個 Observable 的 middleware
 * [redux-batched-updates](https://github.com/acdlite/redux-batched-updates) — 讓 Redux dispatches 的結果批次發生 React 更新
 * [redux-logger](https://github.com/fcomb/redux-logger) — 記錄每一個 Redux action 和下一個 state
 * [redux-immutable-state-invariant](https://github.com/leoasis/redux-immutable-state-invariant) — 在開發時，警告 state 的變更
+* [redux-unhandled-action](https://github.com/socialtables/redux-unhandled-action) — 在開發階段時， 警告有關 action 所產生的 state 沒有改變
 * [redux-analytics](https://github.com/markdalgleish/redux-analytics) — Redux 的分析用 middleware
 * [redux-gen](https://github.com/weo-edu/redux-gen) — Redux 的 Generator middleware
 * [redux-saga](https://github.com/yelouafi/redux-saga) — 一個 Redux 應用程式的 side effect model 方案
+* [redux-action-tree](https://github.com/cerebral/redux-action-tree) — Redux 可組合的 Cerebral-style signals
+* [apollo-client](https://github.com/apollostack/apollo-client) — A simple caching client for any GraphQL server and UI framework built on top of Redux
 
 ### Routing
 
 * [react-router-redux](https://github.com/reactjs/react-router-redux) — 以極簡單的 bindings 維持 React Router 和 Redux 同步
+* [redial](https://github.com/markdalgleish/redial) — 與 Redux 合作的 React Universal 資料 fetch 和 route 生命週期管理
 
 ### Components
 
@@ -78,6 +89,7 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 * [redux-batched-subscribe](https://github.com/tappleby/redux-batched-subscribe) — 客製化 batching 以及 debouncing 的呼叫給 store 的訂閱者
 * [redux-history-transitions](https://github.com/johanneslumpe/redux-history-transitions) — 基於任意的 actions 來處理 History transitions
 * [redux-optimist](https://github.com/ForbesLindesay/redux-optimist) — 樂觀地使用可以在之後 commit 或 revert 的 actions
+* [redux-optimistic-ui](https://github.com/mattkrick/redux-optimistic-ui) — 一個 reducer enhancer 啟用 type-agnostic 更新
 * [redux-undo](https://github.com/omnidan/redux-undo) — 輕鬆的 undo/redo 並在你的 reducers 的歷史間活動
 * [redux-ignore](https://github.com/omnidan/redux-ignore) — 藉由陣列或是 filter function 來忽略 redux actions
 * [redux-recycle](https://github.com/omnidan/redux-recycle) — 在收到特定的 actions 時重置 redux state

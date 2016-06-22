@@ -1,4 +1,4 @@
-# `createStore(reducer, [initialState], [enhancer])`
+# `createStore(reducer, [preloadedState], [enhancer])`
 
 建立一個 Redux [store](Store.md)，它掌控應用程式的完整 state tree。
 在你的應用程式中應該只有單一一個 store。
@@ -7,7 +7,7 @@
 
 1. `reducer` *(Function)*：一個回傳下個 [state tree](../Glossary.md#state) 的 [reducing function](../Glossary.md#reducer)，會接收當下的 state tree 和一個要處理的 [action](../Glossary.md#action)。
 
-2. [`initialState`] *(any)*：初始的 state。你可以選擇性的指定它來在 universal 應用程式 hydrate 從伺服器來的 state，或是用來恢復使用者先前被 serialize 的操作狀態。如果你使用 [`combineReducers`](combineReducers.md) 來產生 `reducer`，這必須是一個跟之前傳遞給它的物件有著相同形狀的 keys 的一般物件。反之，你可以自由地傳遞任何你的 `reducer` 可以了解的東西。
+2. [`preloadedState`] *(any)*：初始的 state。你可以選擇性的指定它來在 universal 應用程式 hydrate 從伺服器來的 state，或是用來恢復使用者先前被 serialize 的操作狀態。如果你使用 [`combineReducers`](combineReducers.md) 來產生 `reducer`，這必須是一個跟之前傳遞給它的物件有著相同形狀的 keys 的一般物件。反之，你可以自由地傳遞任何你的 `reducer` 可以了解的東西。
 
 3. [`enhancer`] *(Function)*：store 的 enhancer。你可以選擇指定它來使用第三方功能以加強 store，像是 middleware、時間旅行、persistence 等等。Redux 唯一附帶的 store enhancer 是 [`applyMiddleware()`](./applyMiddleware.md)。
 

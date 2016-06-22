@@ -8,7 +8,7 @@
 
 ## 安裝 React Redux
 
-預設上，[React 綁定](https://github.com/gaearon/react-redux) 不包含在 Redux 中。你需要明確地安裝它：
+預設上，[React 綁定](https://github.com/reactjs/react-redux) 不包含在 Redux 中。你需要明確地安裝它：
 
 ```
 npm install --save react-redux
@@ -294,7 +294,7 @@ const VisibleTodoList = connect(
 export default VisibleTodoList
 ```
 
-這就是 React Redux API 的基礎，除此之外另有一些方便用法和厲害的選項，所以我們鼓勵你仔細查看 [它的文件](https://github.com/reactjs/react-redux)。萬一你擔心 `mapStateToProps` 會太常建立新的 object，那你可能會想要了解 [computing derived data](../recipes/ComputingDerivedData.md) 和 [reselect](https://github.com/rackt/reselect)。
+這就是 React Redux API 的基礎，除此之外另有一些方便用法和厲害的選項，所以我們鼓勵你仔細查看 [它的文件](https://github.com/reactjs/react-redux)。萬一你擔心 `mapStateToProps` 會太常建立新的 object，那你可能會想要了解 [computing derived data](../recipes/ComputingDerivedData.md) 和 [reselect](https://github.com/reactjs/reselect)。
 
 在下面找到 container components 剩餘定義的部分：
 
@@ -381,15 +381,21 @@ let AddTodo = ({ dispatch }) => {
 
   return (
     <div>
-      <input ref={node => {
-        input = node
-      }} />
-      <button onClick={() => {
+      <form onSubmit={e => {
+        e.preventDefault()
+        if (!input.value.trim()) {
+          return
+        }
         dispatch(addTodo(input.value))
         input.value = ''
       }}>
-        Add Todo
-      </button>
+        <input ref={node => {
+          input = node
+        }} />
+        <button type="submit">
+          Add Todo
+        </button>
+      </form>
     </div>
   )
 }

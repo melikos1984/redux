@@ -17,7 +17,15 @@ npm install --save-dev mocha
 npm install --save-dev babel-register
 ```
 
-然後，把這段加到你的 `package.json` 的 `scripts`：
+並在 `.babelrc` 內設定使用 ES2015 features：
+
+```js
+{
+  "presets": ["es2015"]
+}
+```
+
+接著，把這段加到你的 `package.json` 的 `scripts`：
 
 ```js
 {
@@ -112,7 +120,7 @@ import thunk from 'redux-thunk'
 import * as actions from '../../actions/counter'
 import * as types from '../../constants/ActionTypes'
 import nock from 'nock'
-import expect from 'expect'; // 你可以使用任何的測試函式庫
+import expect from 'expect' // 你可以使用任何的測試函式庫
 
 const middlewares = [ thunk ]
 const mockStore = configureMockStore(middlewares)
@@ -404,7 +412,7 @@ import { connect } from 'react-redux'
 export class App extends Component { /* ... */ }
 
 // 使用 default export 來處理已連結的 component (應用程式用)
-export default connect(mapDispatchToProps)(App)
+export default connect(mapStateToProps)(App)
 ```
 
 因為 default export 仍然是個 decorated component，上面出現的 import 語句會像之前一樣運作，所以你不需要變動應用程式中的程式碼。不過，你現在可以在你的測試檔像這樣 import 沒有被 decorate 的 `App` components：
@@ -454,7 +462,7 @@ const dispatchWithStoreOf = (storeData, action) => {
   const dispatch = singleDispatch(createFakeStore(storeData))(actionAttempt => dispatched = actionAttempt)
   dispatch(action)
   return dispatched
-};
+}
 
 describe('middleware', () => {
   it('should dispatch if store is empty', () => {

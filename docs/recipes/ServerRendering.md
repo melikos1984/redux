@@ -53,7 +53,7 @@ app.use(handleRender)
 
 // 我們將會在下面的章節把這些填補起來
 function handleRender(req, res) { /* ... */ }
-function renderFullPage(html, initialState) { /* ... */ }
+function renderFullPage(html, preloadedState) { /* ... */ }
 
 app.listen(port)
 ```
@@ -86,20 +86,21 @@ function handleRender(req, res) {
   const initialState = store.getState()
 
   // 把 render 完的頁面送回客戶端
-  res.send(renderFullPage(html, initialState))
+  res.send(renderFullPage(html, preloadedState))
 }
 ```
 
 ### 注入初始的 Component HTML 和 State
 
-在伺服器端的最後一個步驟是把我們初始的 component HTML 和初始的 state 注入到一個要被 render 到客戶端的模板。為了把 state 傳遞下去，我們添加了一個會把 `initialState` 放進 `window.__INITIAL_STATE__` 的 `<script>` 標籤。
+<<<<<<< HEAD
+在伺服器端的最後一個步驟是把我們初始的 component HTML 和初始的 state 注入到一個要被 render 到客戶端的模板。為了把 state 傳遞下去，我們添加了一個會把 `preloadedState` 放進 `window.__PRELOADED_STATE__` 的 `<script>` 標籤。
 
-之後在客戶端將會可以藉由存取 `window.__INITIAL_STATE__` 來取用 `initialState`。
+之後在客戶端將會可以藉由存取 `window.__INITIAL_STATE__` 來取用 `preloadedState`。
 
 我們也可以藉由一個 script 標籤來引入我們給客戶端應用程式用的 bundle 檔案。這就是你的 bundle 工具針對你的客戶端進入點提供的輸出。它可以是一個靜態檔案或是去 hot reload 開發伺服器的 URL。
 
 ```js
-function renderFullPage(html, initialState) {
+function renderFullPage(html, preloadedState) {
   return `
     <!doctype html>
     <html>
@@ -109,7 +110,7 @@ function renderFullPage(html, initialState) {
       <body>
         <div id="root">${html}</div>
         <script>
-          window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}
+          window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState)}
         </script>
         <script src="/static/bundle.js"></script>
       </body>
@@ -124,7 +125,8 @@ function renderFullPage(html, initialState) {
 
 ## 客戶端
 
-客戶端要做的非常簡單。我們只需要從 `window.__INITIAL_STATE__` 取得初始的 state，並把它傳遞到我們的 [`createStore()`](../api/createStore.md) function 作為初始的 state。
+<<<<<<< HEAD
+客戶端要做的非常簡單。我們只需要從 `window.__PRELOADED_STATE__` 取得初始的 state，並把它傳遞到我們的 [`createStore()`](../api/createStore.md) function 作為初始的 state。
 
 讓我們來看看我們新的客戶端檔案：
 
@@ -139,10 +141,10 @@ import App from './containers/App'
 import counterApp from './reducers'
 
 // 從一個被注入進去伺服器產生的 HTML 的全域變數取得 state
-const initialState = window.__INITIAL_STATE__
+const initialState = window.__PRELOADED_STATE__
 
 // 用初始的 state 來建立 Redux store
-const store = createStore(counterApp, initialState)
+const store = createStore(counterApp, preloadedState)
 
 render(
   <Provider store={store}>
@@ -182,10 +184,10 @@ function handleRender(req, res) {
   const counter = parseInt(params.counter, 10) || 0
 
   // 蒐集一個 initial state
-  let initialState = { counter }
+  let preloadedState = { counter }
 
   // 建立一個新的 Redux store 實體
-  const store = createStore(counterApp, initialState)
+  const store = createStore(counterApp, preloadedState)
 
   // 把 component Render 成字串
   const html = renderToString(
@@ -202,7 +204,7 @@ function handleRender(req, res) {
 }
 ```
 
-這份程式碼會從被傳遞進去伺服器 middleware 裡的 Express `Request` 物件進行讀取。該參數被解析成一個數字並接著設定進去初始的 state。如果你在瀏覽器訪問 [http://localhost:3000/?counter=100](http://localhost:3000/?counter=100)，你將會看到 counter 從 100 開始。在被 render 的 HTML 裡面，你會看到 counter 輸出為 100 而且 `__INITIAL_STATE__` 變數有設定 counter 在裡面。
+這份程式碼會從被傳遞進去伺服器 middleware 裡的 Express `Request` 物件進行讀取。該參數被解析成一個數字並接著設定進去初始的 state。如果你在瀏覽器訪問 [http://localhost:3000/?counter=100](http://localhost:3000/?counter=100)，你將會看到 counter 從 100 開始。在被 render 的 HTML 裡面，你會看到 counter 輸出為 100 而且 `__PRELOADED_STATE__` 變數有設定 counter 在裡面。
 
 ### 非同步抓取 State
 
@@ -245,10 +247,10 @@ function handleRender(req, res) {
     const counter = parseInt(params.counter, 10) || apiResult || 0
 
     // 蒐集一個 initial state
-    let initialState = { counter }
+    let preloadedState = { counter }
 
     // 建立一個新的 Redux store 實體
-    const store = createStore(counterApp, initialState)
+    const store = createStore(counterApp, preloadedState)
 
     // 把 component Render 成字串
     const html = renderToString(

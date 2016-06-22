@@ -6,7 +6,7 @@ Redux 暴露出來的 API 非常少。Redux 定義一系列的介面給你去實
 
 ### 頂層 Exports
 
-* [createStore(reducer, [initialState])](createStore.md)
+* [createStore(reducer, [preloadedState])](createStore.md)
 * [combineReducers(reducers)](combineReducers.md)
 * [applyMiddleware(...middlewares)](applyMiddleware.md)
 * [bindActionCreators(actionCreators, dispatch)](bindActionCreators.md)
@@ -27,17 +27,17 @@ Redux 暴露出來的 API 非常少。Redux 定義一系列的介面給你去實
 #### ES6
 
 ```js
-import { createStore } from 'redux';
+import { createStore } from 'redux'
 ```
 
 #### ES5 (CommonJS)
 
 ```js
-var createStore = require('redux').createStore;
+var createStore = require('redux').createStore
 ```
 
 #### ES5 (UMD build)
 
 ```js
-var createStore = Redux.createStore;
+var createStore = Redux.createStore
 ```
