@@ -92,7 +92,6 @@ function handleRender(req, res) {
 
 ### 注入初始的 Component HTML 和 State
 
-<<<<<<< HEAD
 在伺服器端的最後一個步驟是把我們初始的 component HTML 和初始的 state 注入到一個要被 render 到客戶端的模板。為了把 state 傳遞下去，我們添加了一個會把 `preloadedState` 放進 `window.__PRELOADED_STATE__` 的 `<script>` 標籤。
 
 之後在客戶端將會可以藉由存取 `window.__INITIAL_STATE__` 來取用 `preloadedState`。
@@ -125,7 +124,6 @@ function renderFullPage(html, preloadedState) {
 
 ## 客戶端
 
-<<<<<<< HEAD
 客戶端要做的非常簡單。我們只需要從 `window.__PRELOADED_STATE__` 取得初始的 state，並把它傳遞到我們的 [`createStore()`](../api/createStore.md) function 作為初始的 state。
 
 讓我們來看看我們新的客戶端檔案：

@@ -10,7 +10,6 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 
 ### Screencasts
 
-<<<<<<< HEAD
 * **[Getting Started with Redux](https://egghead.io/series/getting-started-with-redux)** — 直接從 Redux 的作者學習它的基礎 (30 部免費影片)
 * **[Learn Redux](https://learnredux.com)** — 建立一個簡單的照片應用程式，簡化 Redux、 React Router 和 React.js 背後的核心概念
 
