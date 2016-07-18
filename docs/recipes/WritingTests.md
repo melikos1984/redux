@@ -17,7 +17,7 @@ npm install --save-dev mocha
 npm install --save-dev babel-register
 ```
 
-並在 `.babelrc` 內設定使用 ES2015 features：
+並在 `.babelrc` 內設定使用 ES2015 功能：
 
 ```js
 {
