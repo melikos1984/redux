@@ -114,10 +114,10 @@ store 是個保存應用程式 state tree 的物件。
 ## Store creator
 
 ```js
-type StoreCreator = (reducer: Reducer, initialState: ?State) => Store
+type StoreCreator = (reducer: Reducer, preloadedState: ?State) => Store
 ```
 
-store creator 是個用來建立一個 Redux store 的 function。就像 dispatching function 一樣，我們必須區分從 Redux 套件 exported 的基本的 store creator [`createStore(reducer, initialState)`](api/createStore.md)，與從 store enhancers 回傳的 store creators。
+store creator 是個用來建立一個 Redux store 的 function。就像 dispatching function 一樣，我們必須區分從 Redux 套件 exported 的基本的 store creator [`createStore(reducer, preloadedState)`](api/createStore.md)，與從 store enhancers 回傳的 store creators。
 
 ## Store enhancer
 

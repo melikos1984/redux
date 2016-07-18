@@ -31,7 +31,7 @@ let store = createStore(todoApp, window.STATE_FROM_SERVER)
 現在我們已經建立了一個 store，讓我們來驗證程式可以運作！即使沒有任何的 UI，我們也已經可以測試更新邏輯。
 
 ```js
-import { addTodo, completeTodo, setVisibilityFilter, VisibilityFilters } from './actions'
+import { addTodo, toggleTodo, setVisibilityFilter, VisibilityFilters } from './actions'
 
 // 記錄初始 state
 console.log(store.getState())
@@ -46,8 +46,8 @@ let unsubscribe = store.subscribe(() =>
 store.dispatch(addTodo('Learn about actions'))
 store.dispatch(addTodo('Learn about reducers'))
 store.dispatch(addTodo('Learn about store'))
-store.dispatch(completeTodo(0))
-store.dispatch(completeTodo(1))
+store.dispatch(toggleTodo(0))
+store.dispatch(toggleTodo(1))
 store.dispatch(setVisibilityFilter(VisibilityFilters.SHOW_COMPLETED))
 
 // 停止監聽 state 的更新

@@ -1,6 +1,6 @@
-# [Redux](http://redux.js.org)
+# <a href='http://redux.js.org'><img src='https://camo.githubusercontent.com/f28b5bc7822f1b7bb28a96d8d09e7d79169248fc/687474703a2f2f692e696d6775722e636f6d2f4a65567164514d2e706e67' height='60'></a>
 
-Redux 是個給 JavaScript 應用程式所使用的可預測 state 容器。
+Redux 是個給 JavaScript 應用程式所使用的可預測 state 容器（如果你正在尋找一個 WordPress 框架，請查看 [Redux Framework](https://reduxframework.com/)）。
 
 他幫助你撰寫行為一致的應用程式，可以在不同的環境下執行 (客戶端、伺服器、原生應用程式)，並且易於測試。在這之上，它提供一個很棒的開發體驗，例如[把程式碼即時編輯與時間旅行除錯器結合](https://github.com/gaearon/redux-devtools)。
 
@@ -103,6 +103,8 @@ function counter(state = 0, action) {
 let store = createStore(counter)
 
 // 你可以手動的去訂閱更新，或是使用跟你的 view layer 之間的綁定。
+// 通常你會使用一個 view 綁定 library（例如：React Redux），而不是直接 subscribe()。
+// 然而也可以很方便的將目前狀態儲存在 localStorage。
 store.subscribe(() =>
   console.log(store.getState())
 )
@@ -193,6 +195,10 @@ store.dispatch({ type: 'DECREMENT' })
 * [React](https://github.com/facebook/react) 實際的創新。
 
 特別感謝 [Jamie Paton](http://jdpaton.github.io) 它移交了 `redux` NPM 套件名稱給我們。
+
+### Logo
+
+你可以在 [Github 上](https://github.com/reactjs/redux/tree/master/logo) 找到官方的 logo。
 
 ### 變更日誌
 

@@ -142,15 +142,15 @@ function todoApp(state = initialState, action) {
 
 就像之前一樣，我們從來不直接寫入 `state` 或是他的屬性，取而代之我們回傳一個新的物件。新的 `todos` 等同於舊的 `todos` 在尾端串接一個新項目。新的 todo 項目是使用從 action 來的資料建構而成。
 
-最後，`COMPLETE_TODO` handler 的實作應該完全不意外：
+最後，`TOGGLE_TODO` handler 的實作應該完全不意外：
 
 ```js
-case COMPLETE_TODO:
+case TOGGLE_TODO:
   return Object.assign({}, state, {
     todos: state.todos.map((todo, index) => {
       if (index === action.index) {
         return Object.assign({}, todo, {
-          completed: true
+          completed: !todo.completed
         })
       }
       return todo
@@ -181,12 +181,12 @@ function todoApp(state = initialState, action) {
           }
         ]
       })
-    case COMPLETE_TODO:
+    case TOGGLE_TODO:
       return Object.assign({}, state, {
         todos: state.todos.map((todo, index) => {
           if(index === action.index) {
             return Object.assign({}, todo, {
-              completed: true
+              completed: !todo.completed
             })
           }
           return todo
@@ -211,11 +211,11 @@ function todos(state = [], action) {
           completed: false
         }
       ]
-    case COMPLETE_TODO:
+    case TOGGLE_TODO:
       return state.map((todo, index) => {
         if (index === action.index) {
           return Object.assign({}, todo, {
-            completed: true
+            completed: !todo.completed
           })
         }
         return todo
@@ -232,7 +232,7 @@ function todoApp(state = initialState, action) {
         visibilityFilter: action.filter
       })
     case ADD_TODO:
-    case COMPLETE_TODO:
+    case TOGGLE_TODO:
       return Object.assign({}, state, {
         todos: todos(state.todos, action)
       })
@@ -270,11 +270,11 @@ function todos(state = [], action) {
           completed: false
         }
       ]
-    case COMPLETE_TODO:
+    case TOGGLE_TODO:
       return state.map((todo, index) => {
         if (index === action.index) {
           return Object.assign({}, todo, {
-            completed: true
+            completed: !todo.completed
           })
         }
         return todo
@@ -370,7 +370,7 @@ function reducer(state = {}, action) {
 
 ```js
 import { combineReducers } from 'redux'
-import { ADD_TODO, COMPLETE_TODO, SET_VISIBILITY_FILTER, VisibilityFilters } from './actions'
+import { ADD_TODO, TOGGLE_TODO, SET_VISIBILITY_FILTER, VisibilityFilters } from './actions'
 const { SHOW_ALL } = VisibilityFilters
 
 function visibilityFilter(state = SHOW_ALL, action) {
@@ -392,11 +392,11 @@ function todos(state = [], action) {
           completed: false
         }
       ]
-    case COMPLETE_TODO:
+    case TOGGLE_TODO:
       return state.map((todo, index) => {
         if (index === action.index) {
           return Object.assign({}, todo, {
-            completed: true
+            completed: !todo.completed
           })
         }
         return todo
