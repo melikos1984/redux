@@ -58,6 +58,7 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 
 ### Middleware
 
+<<<<<<< HEAD
 * [redux-thunk](http://github.com/gaearon/redux-thunk) — 撰寫 async action creators 的最簡單方式
 * [redux-promise](https://github.com/acdlite/redux-promise) — [FSA](https://github.com/acdlite/flux-standard-action)-相容的 promise middleware
 * [redux-axios-middleware](https://github.com/svrcekmichal/redux-axios-middleware) — 用 axios HTTP 客戶端來抓取資料的 Redux middleware
@@ -72,6 +73,20 @@ Redux 是個非常小的 library，但它的介面和 APIs 都是精挑細選來
 * [redux-saga](https://github.com/yelouafi/redux-saga) — 一個 Redux 應用程式的 side effect model 方案
 * [redux-action-tree](https://github.com/cerebral/redux-action-tree) — 給 Redux 用的可組合的 Cerebral-style signals
 * [apollo-client](https://github.com/apollostack/apollo-client) — 一個上用於任何 GraphQL 伺服器以及建置在 Redux 上的 UI 框架的簡易的快取客戶端
+=======
+* [redux-thunk](http://github.com/gaearon/redux-thunk) — The easiest way to write async action creators
+* [redux-promise](https://github.com/acdlite/redux-promise) — [FSA](https://github.com/acdlite/flux-standard-action)-compliant promise middleware
+* [redux-axios-middleware](https://github.com/svrcekmichal/redux-axios-middleware) — Redux middleware for fetching data with axios HTTP client
+* [redux-observable](https://github.com/redux-observable/redux-observable/) — RxJS middleware for action side effects using "Epics"
+* [redux-logger](https://github.com/fcomb/redux-logger) — Log every Redux action and the next state
+* [redux-immutable-state-invariant](https://github.com/leoasis/redux-immutable-state-invariant) — Warns about state mutations in development
+* [redux-unhandled-action](https://github.com/socialtables/redux-unhandled-action) — Warns about actions that produced no state changes in development
+* [redux-analytics](https://github.com/markdalgleish/redux-analytics) — Analytics middleware for Redux
+* [redux-gen](https://github.com/weo-edu/redux-gen) — Generator middleware for Redux
+* [redux-saga](https://github.com/yelouafi/redux-saga) — An alternative side effect model for Redux apps
+* [redux-action-tree](https://github.com/cerebral/redux-action-tree) — Composable Cerebral-style signals for Redux
+* [apollo-client](https://github.com/apollostack/apollo-client) — A simple caching client for any GraphQL server and UI framework built on top of Redux
+>>>>>>> upstream/master
 
 ### Routing
 

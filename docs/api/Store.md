@@ -89,7 +89,11 @@ store.dispatch(addTodo('Read about the middleware'))
 
 3. Listener 不應該預期會看到所有的 states 變化，因為在 listener 被呼叫之前，state 可能會在巢狀的 [`dispatch()`](#dispatch) 之中被更新數次。不過，這保證所有 [`dispatch()`](#dispatch) 開始時所註冊的 subscribers，都會在結束時以最新的 state 呼叫。
 
+<<<<<<< HEAD
 這是一個低階 API。你大部份時候不會直接使用它，你會使用 React (或其他的) 綁定。如果你覺得這個 callback 需要使用當下的 state 當參數來呼叫，你可能會想要[把 store 轉換成 Observable 或寫一個客製化的 `observeStore` utility 來取代](https://github.com/reactjs/redux/issues/303#issuecomment-125184409)。
+=======
+It is a low-level API. Most likely, instead of using it directly, you’ll use React (or other) bindings. If you commonly use the callback as a hook to react to state changes, you might want to [write a custom `observeStore` utility](https://github.com/reactjs/redux/issues/303#issuecomment-125184409). The `Store` is also an [`Observable`](https://github.com/zenparsing/es-observable), so you can `subscribe` to changes with libraries like [RxJS](https://github.com/ReactiveX/RxJS). 
+>>>>>>> upstream/master
 
 要取消訂閱 change listener，可以呼叫 `subscribe` 回傳的 function。
 

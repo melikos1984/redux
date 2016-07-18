@@ -30,9 +30,15 @@ console.log(store.getState())
 
 ### State 是唯讀的
 
+<<<<<<< HEAD
 **改變 state 的唯一的方式是發出一個 [action](../Glossary.md#action)，也就是一個描述發生什麼事的物件。**
 
 這能確保 views 和網路 callbacks 都不會直接寫入 state。替代的，它們表達了一個變更的意圖。因為所有的變更都是集中的，並依照嚴格的順序一個接一個的發生，沒有需要特別注意的微妙 race conditions。因為 Actions 只是普通物件，所以它們可以被記錄、serialized、儲存、並在之後為了 debugging 或測試目的而重播。
+=======
+**The only way to change the state is to emit an [action](../Glossary.md#action), an object describing what happened.**
+
+This ensures that neither the views nor the network callbacks will ever write directly to the state. Instead, they express an intent to transform the state. Because all changes are centralized and happen one by one in a strict order, there are no subtle race conditions to watch out for. As actions are just plain objects, they can be logged, serialized, stored, and later replayed for debugging or testing purposes.
+>>>>>>> upstream/master
 
 ```js
 store.dispatch({

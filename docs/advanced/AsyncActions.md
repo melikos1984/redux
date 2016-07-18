@@ -490,7 +490,17 @@ store.dispatch(fetchPostsIfNeeded('reactjs')).then(() =>
 
 >Async action creators 對伺服器 rendering 特別方便。你可以建立一個 store，dispatch 一個單一的 async action creator，它會 dispatches 其他的 async action creators 來為整個應用程式抓取資料，並在 Promise 回傳並完成之後才 render。接著你 rendering 之前需要的 state 將必須被 hydrated 到你的 store。
 
+<<<<<<< HEAD
 [Thunk middleware](https://github.com/gaearon/redux-thunk) 不是在 Redux 中協調 asynchronous actions 的唯一方式。你可以使用 [redux-promise](https://github.com/acdlite/redux-promise) 或 [redux-promise-middleware](https://github.com/pburtchaell/redux-promise-middleware) 來 dispatch Promises 取代 functions。你可以藉由 [redux-rx](https://github.com/acdlite/redux-rx) dispatch Observables。你甚至可以撰寫一個客製化的 middleware 來描述你的 API 呼叫，像是 [real world example](../introduction/Examples.md#real-world) 做的那樣。你可以自由地嘗試幾個選項，選擇一個你喜歡的慣例，並遵守它，無論有沒有使用 middleware。
+=======
+[Thunk middleware](https://github.com/gaearon/redux-thunk) isn’t the only way to orchestrate asynchronous actions in Redux:
+- You can use [redux-promise](https://github.com/acdlite/redux-promise) or [redux-promise-middleware](https://github.com/pburtchaell/redux-promise-middleware) to dispatch Promises instead of functions.
+- You can use [redux-rx](https://github.com/acdlite/redux-rx) or [redux-observable](https://github.com/redux-observable/redux-observable) to dispatch Observables.
+- You can use the [redux-saga](https://github.com/yelouafi/redux-saga/) middleware to build more complex asynchronous actions.
+- You can even write a custom middleware to describe calls to your API, like the [real world example](../introduction/Examples.md#real-world) does.
+
+It is up to you to try a few options, choose a convention you like, and follow it, whether with, or without the middleware.
+>>>>>>> upstream/master
 
 ## 連結到 UI
 

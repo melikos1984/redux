@@ -255,13 +255,21 @@ describe('todos reducer', () => {
 
 React components 的其中一個優點是它們通常都很小，而且只依賴它們的 props。這使它們容易測試。
 
+<<<<<<< HEAD
 首先，我們會先安裝 [React Test Utilities](https://facebook.github.io/react/docs/test-utils.html)：
+=======
+First, we will install [Enzyme](http://airbnb.io/enzyme/). Enzyme uses the [React Test Utilities](https://facebook.github.io/react/docs/test-utils.html) underneath, but is more convenient, readable, and powerful.
+>>>>>>> upstream/master
 
 ```
-npm install --save-dev react-addons-test-utils
+npm install --save-dev enzyme
 ```
 
+<<<<<<< HEAD
 為了測試 components，我們寫了一個 `setup()` helper，它會傳遞 stubbed callbacks 作為 props 並使用 [React shallow renderer](https://facebook.github.io/react/docs/test-utils.html#shallow-rendering) 來 renders component。這讓獨立的測試在預期 callbacks 會被呼叫時，可以 assert 是否 callbacks 有被呼叫。
+=======
+To test the components we make a `setup()` helper that passes the stubbed callbacks as props and renders the component with [shallow rendering](http://airbnb.io/enzyme/docs/api/shallow.html). This lets individual tests assert on whether the callbacks were called when expected.
+>>>>>>> upstream/master
 
 #### 範例
 
@@ -300,54 +308,47 @@ export default Header
 ```js
 import expect from 'expect'
 import React from 'react'
-import TestUtils from 'react-addons-test-utils'
+import { shallow } from 'enzyme'
 import Header from '../../components/Header'
-import TodoTextInput from '../../components/TodoTextInput'
 
 function setup() {
-  let props = {
+  const props = {
     addTodo: expect.createSpy()
   }
 
-  let renderer = TestUtils.createRenderer()
-  renderer.render(<Header {...props} />)
-  let output = renderer.getRenderOutput()
+  const enzymeWrapper = shallow(<Header {...props} />)
 
   return {
     props,
-    output,
-    renderer
+    enzymeWrapper
   }
 }
 
 describe('components', () => {
   describe('Header', () => {
-    it('should render correctly', () => {
-      const { output } = setup()
+    it('should render self and subcomponents', () => {
+      const { enzymeWrapper } = setup()
 
-      expect(output.type).toBe('header')
-      expect(output.props.className).toBe('header')
+      expect(enzymeWrapper.find('header').hasClass('header')).toBe(true)
 
-      let [ h1, input ] = output.props.children
+      expect(enzymeWrapper.find('h1').text()).toBe('todos')
 
-      expect(h1.type).toBe('h1')
-      expect(h1.props.children).toBe('todos')
-
-      expect(input.type).toBe(TodoTextInput)
-      expect(input.props.newTodo).toBe(true)
-      expect(input.props.placeholder).toBe('What needs to be done?')
+      const todoInputProps = enzymeWrapper.find('TodoTextInput').props()
+      expect(todoInputProps.newTodo).toBe(true)
+      expect(todoInputProps.placeholder).toEqual('What needs to be done?')
     })
 
     it('should call addTodo if length of text is greater than 0', () => {
-      const { output, props } = setup()
-      let input = output.props.children[1]
-      input.props.onSave('')
+      const { enzymeWrapper, props } = setup()
+      const input = enzymeWrapper.find('TodoTextInput')
+      input.props().onSave('')
       expect(props.addTodo.calls.length).toBe(0)
-      input.props.onSave('Use Redux')
+      input.props().onSave('Use Redux')
       expect(props.addTodo.calls.length).toBe(1)
     })
   })
 })
+<<<<<<< HEAD
 ```
 
 #### 在較舊的 React 版本修復壞掉的 `setState()`
@@ -379,6 +380,9 @@ global.navigator = global.window.navigator
   },
   ...
 }
+=======
+
+>>>>>>> upstream/master
 ```
 
 ### 已連結的 Components
@@ -491,8 +495,16 @@ describe('middleware', () => {
 
 ### 術語表
 
+<<<<<<< HEAD
 - [React Test Utils](http://facebook.github.io/react/docs/test-utils.html)：React 的測試 Utilities。
 
 - [jsdom](https://github.com/tmpvar/jsdom)：一個 DOM API 的純 JavaScript 實作。jsdom 讓我們可以不使用瀏覽器就能執行測試。
 
 - [Shallow rendering](http://facebook.github.io/react/docs/test-utils.html#shallow-rendering)：Shallow rendering 讓你可以實體化一個 component 並取得它的 `render` method 的回傳結果，它只會 render 一層的深度而不會遞迴地把 components render 成 DOM。shallow rendering 的結果是一個 [ReactElement](https://facebook.github.io/react/docs/glossary.html#react-elements)。這表示可以存取它的 children、props 並測試它是否如預期運作。這也意味你改變 child component 不會影響到 parent component 的測試。
+=======
+- [Enzyme](http://airbnb.io/enzyme/): Enzyme is a JavaScript Testing utility for React that makes it easier to assert, manipulate, and traverse your React Components' output.
+
+- [React Test Utils](http://facebook.github.io/react/docs/test-utils.html): Test Utilities for React. Used by Enzyme.
+
+- [Shallow rendering](http://airbnb.io/enzyme/docs/api/shallow.html): Shallow rendering lets you instantiate a component and effectively get the result of its `render` method just a single level deep instead of rendering components recursively to a DOM. Shallow rendering is useful for unit tests, where you test a particular component only, and importantly not its children. This also means that changing a child component won’t affect the tests for the parent component. Testing a component and all its children can be accomplished with [Enzyme's `mount()` method](http://airbnb.io/enzyme/docs/api/mount.html), aka full DOM rendering.
+>>>>>>> upstream/master
