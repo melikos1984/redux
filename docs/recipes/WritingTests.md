@@ -1,6 +1,6 @@
 # 撰寫測試
 
-大部份你撰寫的 Redux 程式碼都是 functions，而且它們之中有很多是 pure 的，它們不需要 mocking 就能簡單測試。
+大部份你撰寫的 Redux 程式碼都是 function，而且它們之中有很多是 pure 的，它們不需要 mock 就能簡單測試。
 
 ### 設置
 
@@ -41,9 +41,9 @@ npm install --save-dev babel-register
 
 然後執行 `npm test` 來跑一次測試，或是 `npm run test:watch` 來在每一次檔案變更時測試。
 
-### Action Creators
+### Action Creator
 
-在 Redux 中，action creators 是回傳一般物件的 functions。在測試 action creators 的時候，我們想要測試是否呼叫了正確的 action creator，還有是否回傳了正確的 action。
+在 Redux 中，action creator 是回傳一般物件的 function。在測試 action creator 的時候，我們想要測試是否呼叫了正確的 action creator，還有是否回傳了正確的 action。
 
 #### 範例
 
@@ -74,9 +74,9 @@ describe('actions', () => {
 })
 ```
 
-### Async Action Creators
+### Async Action Creator
 
-針對使用 [Redux Thunk](https://github.com/gaearon/redux-thunk) 或其他的 middleware 的 async action creators，為了測試，完全的 mock Redux store 是最好的。你可以使用 [redux-mock-store](https://github.com/arnaudbenard/redux-mock-store) 來把 middleware 應用在一個 mock store 上。你也可以使用 [nock](https://github.com/pgte/nock) 來 mock HTTP 請求。
+針對使用 [Redux Thunk](https://github.com/gaearon/redux-thunk) 或其他的 middleware 的 async action creator，為了測試，完全的 mock Redux store 是最好的。你可以使用 [redux-mock-store](https://github.com/arnaudbenard/redux-mock-store) 來把 middleware 應用在一個 mock store 上。你也可以使用 [nock](https://github.com/pgte/nock) 來 mock HTTP 請求。
 
 #### 範例
 
@@ -142,14 +142,14 @@ describe('async actions', () => {
     const store = mockStore({ todos: [] })
 
     return store.dispatch(actions.fetchTodos())
-      .then(() => { // 回傳非同步的 actions
+      .then(() => { // 回傳非同步的 action
         expect(store.getActions()).toEqual(expectedActions)
       })
   })
 })
 ```
 
-### Reducers
+### Reducer
 
 reducer 應該把 action 應用到先前的 state，然後回傳新的 state，而這就是下面所測試的行為。
 
@@ -251,25 +251,17 @@ describe('todos reducer', () => {
 })
 ```
 
-### Components
+### Component
 
-React components 的其中一個優點是它們通常都很小，而且只依賴它們的 props。這使它們容易測試。
+React component 的其中一個優點是它們通常都很小，而且只依賴它們的 props。這使它們容易測試。
 
-<<<<<<< HEAD
-首先，我們會先安裝 [React Test Utilities](https://facebook.github.io/react/docs/test-utils.html)：
-=======
-First, we will install [Enzyme](http://airbnb.io/enzyme/). Enzyme uses the [React Test Utilities](https://facebook.github.io/react/docs/test-utils.html) underneath, but is more convenient, readable, and powerful.
->>>>>>> upstream/master
+首先，我們會先安裝 [Enzyme](http://airbnb.io/enzyme/)。Enzyme 的背後使用 [React Test Utilities](https://facebook.github.io/react/docs/test-utils.html)，不過更為方便、可讀與強大。
 
 ```
 npm install --save-dev enzyme
 ```
 
-<<<<<<< HEAD
-為了測試 components，我們寫了一個 `setup()` helper，它會傳遞 stubbed callbacks 作為 props 並使用 [React shallow renderer](https://facebook.github.io/react/docs/test-utils.html#shallow-rendering) 來 renders component。這讓獨立的測試在預期 callbacks 會被呼叫時，可以 assert 是否 callbacks 有被呼叫。
-=======
-To test the components we make a `setup()` helper that passes the stubbed callbacks as props and renders the component with [shallow rendering](http://airbnb.io/enzyme/docs/api/shallow.html). This lets individual tests assert on whether the callbacks were called when expected.
->>>>>>> upstream/master
+為了測試 component，我們寫了一個 `setup()` helper，它會傳遞被 stub 的 callback 作為 props 並 [shallow rendering](http://airbnb.io/enzyme/docs/api/shallow.html) 來 render component。這讓獨立的測試在預期 callback 會被呼叫時，可以 assert callback 是否有被呼叫。
 
 #### 範例
 
@@ -348,46 +340,11 @@ describe('components', () => {
     })
   })
 })
-<<<<<<< HEAD
 ```
 
-#### 在較舊的 React 版本修復壞掉的 `setState()`
+### 已連結的 Component
 
-在 React 版本 <= 0.13、0.14.4 和 0.14.5 時，Shallow rendering [如果呼叫 `setState` 會拋出一個錯誤](https://github.com/facebook/react/issues/4019)。React 貌似預期你有用 `setState` 時，DOM 是可以使用的。為了避開這個問題，我們使用 jsdom 讓 React 在 DOM 不能使用時也不會拋出 exception。以下是[設置它](https://github.com/facebook/react/issues/5046#issuecomment-146222515)的方法：
-
-```
-npm install --save-dev jsdom
-```
-
-接著在你的測試目錄中建立一個 `setup.js` 檔案：
-
-```js
-import { jsdom } from 'jsdom'
-
-global.document = jsdom('<!doctype html><html><body></body></html>')
-global.window = document.defaultView
-global.navigator = global.window.navigator
-```
-
-讓這段程式碼在 React 被 import *之前*執行非常重要。為了確保這件事，調整你的 `mocha` 指令在 `package.json` 的選項中加入 `--require ./test/setup.js`：
-
-```js
-{
-  ...
-  "scripts": {
-    ...
-    "test": "mocha --compilers js:babel-register --recursive --require ./test/setup.js",
-  },
-  ...
-}
-=======
-
->>>>>>> upstream/master
-```
-
-### 已連結的 Components
-
-如果你使用一個類似 [React Redux](https://github.com/reactjs/react-redux) 的 library，你可能正在使用像是 [`connect()`](https://github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options) 之類的 [higher-order components](https://medium.com/@dan_abramov/mixins-are-dead-long-live-higher-order-components-94a0d2f9e750)。它讓你把 Redux state 注入一個正規的 React component 裡。
+如果你使用一個類似 [React Redux](https://github.com/reactjs/react-redux) 的 library，你可能正在使用像是 [`connect()`](https://github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options) 之類的 [higher-order component](https://medium.com/@dan_abramov/mixins-are-dead-long-live-higher-order-components-94a0d2f9e750)。它讓你把 Redux state 注入一個正規的 React component 裡。
 
 試想下面的 `App` component：
 
@@ -405,9 +362,9 @@ export default connect(mapStateToProps)(App)
 import App from './App'
 ```
 
-但是當你 import 它時，你實際上拿到的是 `connect()` 回傳的包裝過後的 component，而不是 `App` component 本身。如果你想要測試它與 Redux 的互動，這是個好消息：你可以把它跟特別為這個單元測試建立的 store 包在一個 [`<Provider>`](https://github.com/reactjs/react-redux#provider-store) 中。但是有時你只是想要測試 component 的 rendering，而不想測試 Redux store。
+但是當你 import 它時，你實際上拿到的是 `connect()` 回傳的包裝過後的 component，而不是 `App` component 本身。如果你想要測試它與 Redux 的互動，這是個好消息：你可以把它跟特別為這個單元測試建立的 store 包在一個 [`<Provider>`](https://github.com/reactjs/react-redux#provider-store) 中。但是有時你只是想要測試 component 的 render，而不想測試 Redux store。
 
-為了能夠不處理 decorator 即可測試 App component 本身，我們也建議你 export 沒有被 decorated 的 component：
+為了能夠不處理 decorator 即可測試 App component 本身，我們也建議你 export 沒有被 decorate 的 component：
 
 ```js
 import { connect } from 'react-redux'
@@ -419,7 +376,7 @@ export class App extends Component { /* ... */ }
 export default connect(mapStateToProps)(App)
 ```
 
-因為 default export 仍然是個 decorated component，上面出現的 import 語句會像之前一樣運作，所以你不需要變動應用程式中的程式碼。不過，你現在可以在你的測試檔像這樣 import 沒有被 decorate 的 `App` components：
+因為 default export 仍然是個被 decorate 的 component，上面出現的 import 語句會像之前一樣運作，所以你不需要變動應用程式中的程式碼。不過，你現在可以在你的測試檔像這樣 import 沒有被 decorate 的 `App` component：
 
 ```js
 // 注意大括號：抓取 named export 而不是 default export
@@ -446,7 +403,7 @@ import App from './App'
 
 ### Middleware
 
-Middleware functions 包裝了 Redux 中 `dispatch` 呼叫的行為，所以要測試這個修改後的行為我們必須 mock `dispatch` 呼叫的行為。
+Middleware function 包裝了 Redux 中 `dispatch` 呼叫的行為，所以要測試這個修改後的行為我們必須 mock `dispatch` 呼叫的行為。
 
 #### 範例
 
@@ -495,16 +452,8 @@ describe('middleware', () => {
 
 ### 術語表
 
-<<<<<<< HEAD
-- [React Test Utils](http://facebook.github.io/react/docs/test-utils.html)：React 的測試 Utilities。
+- [Enzyme](http://airbnb.io/enzyme/)：Enzyme 是一個給 React 用的 JavaScript 的 Test utility，它讓 assert、操作與 traverse 你的 React Component 的 output 變得更簡單。
 
-- [jsdom](https://github.com/tmpvar/jsdom)：一個 DOM API 的純 JavaScript 實作。jsdom 讓我們可以不使用瀏覽器就能執行測試。
+- [React Test Utils](http://facebook.github.io/react/docs/test-utils.html)：React 的測試 Utilities。被 Enzyme 所使用。
 
-- [Shallow rendering](http://facebook.github.io/react/docs/test-utils.html#shallow-rendering)：Shallow rendering 讓你可以實體化一個 component 並取得它的 `render` method 的回傳結果，它只會 render 一層的深度而不會遞迴地把 components render 成 DOM。shallow rendering 的結果是一個 [ReactElement](https://facebook.github.io/react/docs/glossary.html#react-elements)。這表示可以存取它的 children、props 並測試它是否如預期運作。這也意味你改變 child component 不會影響到 parent component 的測試。
-=======
-- [Enzyme](http://airbnb.io/enzyme/): Enzyme is a JavaScript Testing utility for React that makes it easier to assert, manipulate, and traverse your React Components' output.
-
-- [React Test Utils](http://facebook.github.io/react/docs/test-utils.html): Test Utilities for React. Used by Enzyme.
-
-- [Shallow rendering](http://airbnb.io/enzyme/docs/api/shallow.html): Shallow rendering lets you instantiate a component and effectively get the result of its `render` method just a single level deep instead of rendering components recursively to a DOM. Shallow rendering is useful for unit tests, where you test a particular component only, and importantly not its children. This also means that changing a child component won’t affect the tests for the parent component. Testing a component and all its children can be accomplished with [Enzyme's `mount()` method](http://airbnb.io/enzyme/docs/api/mount.html), aka full DOM rendering.
->>>>>>> upstream/master
+- [Shallow rendering](http://airbnb.io/enzyme/docs/api/shallow.html)：Shallow rendering 讓你可以實體化一個 component 並有效率地取得它的 `render` 方法的回傳結果，它只會 render 一層的深度而不會遞迴地把 component render 成 DOM。Shallow rendering 在單元測試非常有用，在那邊你只測試一個特定的 component，而重要的不是它的 children。這也意味著改變一個 child component 不會影響 parent component 的測試。測試一個 component 和它所有的 children 可以藉由 [Enzyme 的 `mount()` 方法](http://airbnb.io/enzyme/docs/api/mount.html)來實現，也就是完整的 DOM render。
