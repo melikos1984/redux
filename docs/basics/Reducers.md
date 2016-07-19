@@ -105,7 +105,7 @@ function todoApp(state = initialState, action) {
 
 >##### 關於 `Object.assign` 的附註
 
->[`Object.assign()`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) 是 ES6 的一部分，不過大部份瀏覽器尚未實作。你會需要使用一個 polyfill，[Babel plugin](https://www.npmjs.com/package/babel-plugin-object-assign) 或是從其他 library 來的 helper 像是 [`_.assign()`](https://lodash.com/docs#assign)。
+>[`Object.assign()`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) 是 ES6 的一部分，不過大部份瀏覽器尚未實作。你會需要使用一個 polyfill，[Babel plugin](https://www.npmjs.com/package/babel-plugin-transform-object-assign) 或是從其他 library 來的 helper 像是 [`_.assign()`](https://lodash.com/docs#assign)。
 
 >##### 關於 `switch` 和 Boilerplate 的附註
 
