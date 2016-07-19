@@ -1,6 +1,6 @@
 # 伺服器 Render
 
-伺服器端 render 最常見的使用案例是處理當使用者 (或是搜尋引擎爬蟲) 第一次送請求給我們的應用程式時的_首次 render_。當伺服器收到該請求時，它會把需要的 component(s) render 到一個 HTML 字串中，並接著把它作為回應送到客戶端。從這一個時間點開始，客戶端接管了 render 的責任。
+伺服器端 render 最常見的使用案例是處理當使用者 (或是搜尋引擎爬蟲) 第一次送請求給我們的應用程式時的_首次 render_。當伺服器收到該請求時，它會把需要的 component render 到一個 HTML 字串中，並接著把它作為回應送到客戶端。從這一個時間點開始，客戶端接管了 render 的責任。
 
 我們將會在下面的範例使用 React，不過同樣的技術可以被使用在其他可以在伺服器 render 的 view 框架上。
 
@@ -62,7 +62,7 @@ app.listen(port)
 
 在每個請求過來時，我們需要做的第一件事是建立一個新的 Redux store 實體。這個 store 實體的唯一目的是提供應用程式的初始 state。
 
-在 render 的時候，我們會把 root component `<App />` 包進一個 `<Provider>` 來讓 store 可以讓在 component tree 中的所有 components 取用，正如我們在[搭配 React 運用的章節](../basics/UsageWithReact.md)所看到的。
+在 render 的時候，我們會把 root component `<App />` 包進一個 `<Provider>` 來讓 store 可以讓在 component tree 中的所有 component 取用，正如我們在[搭配 React 運用的章節](../basics/UsageWithReact.md)所看到的。
 
 伺服器端 render 的關鍵步驟是在我們把 component 送到客戶端_**之前**_必須把它 render 成初始的 HTML。我們使用 [ReactDOMServer.renderToString()](https://facebook.github.io/react/docs/top-level-api.html#reactdomserver.rendertostring) 來做到這一點。
 
@@ -154,7 +154,7 @@ render(
 
 你可以設置你選擇的建置工具 (Webpack、Browserify、等等) 來編譯一個 bundle 的檔案到 `dist/bundle.js`。
 
-在頁面載入時，bundle 的檔案將會被啟動並且 [`ReactDOM.render()`](https://facebook.github.io/react/docs/top-level-api.html#reactdom.render) 將會抓到從伺服器 render 的 HTML 上的 `data-react-id` 屬性。這將會把我們新啟動的 React 實體連接到在伺服器上使用的 virtual DOM。因為我們有給 Redux store 一樣的初始 state 而且使用一樣的程式碼在我們所有的 view components 上，所以結果會是一樣的 DOM。
+在頁面載入時，bundle 的檔案將會被啟動並且 [`ReactDOM.render()`](https://facebook.github.io/react/docs/top-level-api.html#reactdom.render) 將會抓到從伺服器 render 的 HTML 上的 `data-react-id` 屬性。這將會把我們新啟動的 React 實體連接到在伺服器上使用的 virtual DOM。因為我們有給 Redux store 一樣的初始 state 而且使用一樣的程式碼在我們所有的 view component 上，所以結果會是一樣的 DOM。
 
 就是這樣！這就是我們要實作伺服器端 render 所需要做的事。
 
@@ -210,7 +210,7 @@ function handleRender(req, res) {
 
 要做到這個最簡單的方式是把一些 callback 傳回到你的同步程式碼裡。在這個例子中，它會是一個會參考回應物件並把被 render 的 HTML 送回到客戶端的 function。不要擔心，它沒有像它聽起來一樣那麼難。
 
-以我們的例子來說，我們假想有一個外部的資料存儲包含了 counter 的初始值 (Counter As A Service, or CaaS)。我們將會做一個 mock 呼叫給它們並從結果來建置我們的初始 state。我們從建置 API 的呼叫開始：
+以我們的例子來說，我們假想有一個外部的資料存儲包含了 counter 的初始值 (Counter As A Service, 或是 CaaS)。我們將會做一個 mock 呼叫給它們並從結果來建置我們的初始 state。我們從建置 API 的呼叫開始：
 
 #### `api/counter.js`
 
@@ -276,10 +276,10 @@ function handleRender(req, res) {
 
 對於我們這個簡單的範例來說，強制把我們的輸入轉換成一個數字已經夠安全了。如果你是在處理更複雜的輸入，例如自由的文字，那你應該讓這個輸入通過一個適當的保護 function，例如 [validator.js](https://www.npmjs.com/package/validator)。
 
-此外，你可以藉由對你的 state 輸出採取安全措施來添加額外的安全層。`JSON.stringify` 會受到 script 地注入。為了解決這個問題，你可以跳脫 HTML 標籤的 JSON 字串和其他危險的字元。這可以藉由在字串上做簡單的文字取代或是更複雜的 libraries 像是 [serialize-javascript](https://github.com/yahoo/serialize-javascript) 來達成。
+此外，你可以藉由對你的 state 輸出採取安全措施來添加額外的安全層。`JSON.stringify` 會受到 script 地注入。為了解決這個問題，你可以跳脫 HTML 標籤的 JSON 字串和其他危險的字元。這可以藉由在字串上做簡單的文字取代或是更複雜的 library 像是 [serialize-javascript](https://github.com/yahoo/serialize-javascript) 來達成。
 
 ## 下一步
 
-你可能會想閱讀 [Async Actions](../advanced/AsyncActions.md) 來學習更多有關在 Redux 中用非同步的基礎元素像是 Promises 和 thunks 來表達非同步資料流。請記住，你在那邊學的任何東西也可以被應用在 universal rendering。
+你可能會想閱讀 [Async Action](../advanced/AsyncActions.md) 來學習更多有關在 Redux 中用非同步的基礎元素像是 Promise 和 thunk 來表達非同步資料流。請記住，你在那邊學的任何東西也可以被應用在 universal render。
 
-如果你使用一些像是 [React Router](https://github.com/reactjs/react-router) 之類的東西，你可能也想要把你的資料抓取依賴關係表達成在你的 route handler components 上的靜態 `fetchData()` 方法。它們可以回傳 [async actions](../advanced/AsyncActions.md)，因此你的 `handleRender` function 可以把 route 匹配到幾個 route handler component class，然後 dispatch `fetchData()` 的結果給它們每一個，並只在 Promises 已經被 resolve 之後才 render。用這個方式不同的 routes 需要的特定 API 呼叫都用 route handler component 的定義放在同個地方。你也可以使用一樣的技術在客戶端來防止 router 切換頁面直到它的資料已經被載入。
+如果你使用一些像是 [React Router](https://github.com/reactjs/react-router) 之類的東西，你可能也想要把你的資料抓取依賴關係表達成在你的 route handler component 上的靜態 `fetchData()` 方法。它們可以回傳 [async actions](../advanced/AsyncActions.md)，因此你的 `handleRender` function 可以把 route 匹配到幾個 route handler component class，然後 dispatch `fetchData()` 的結果給它們每一個，並只在 Promises 已經被 resolve 之後才 render。用這個方式不同的 routes 需要的特定 API 呼叫都用 route handler component 的定義放在同個地方。你也可以使用一樣的技術在客戶端來防止 router 切換頁面直到它的資料已經被載入。

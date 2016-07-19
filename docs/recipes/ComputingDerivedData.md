@@ -1,8 +1,8 @@
 # 計算衍生資料
 
-[Reselect](https://github.com/faassen/reselect) 是一個簡單的 library 可以用來建立會自動記憶、可組合的 **selector** functions。可以用 Reselect 的 selectors 來有效率的從 Redux store 計算衍生資料。
+[Reselect](https://github.com/faassen/reselect) 是一個簡單的 library 可以用來建立會自動記憶、可組合的 **selector** function。可以用 Reselect 的 selector 來有效率的從 Redux store 計算衍生資料。
 
-### 使用 Memoized Selectors 的動機
+### 使用 Memoized Selector 的動機
 
 讓我們再來看看 [Todos 清單的範例](../basics/UsageWithReact.md)：
 
@@ -52,7 +52,7 @@ export default VisibleTodoList
 
 我們會想要把 `getVisibleTodos` 換成一個 memoized selector，它會在 `state.todos` 或是 `state.visibilityFilter` 的值變更的時後重新計算 `todos`，但當變更發生在 state tree 其他 (不相關的) 的部分的時候則不會。
 
-Reselect 提供一個 `createSelector` function 來建立 memoized selectors。`createSelector` 接收一個 input-selectors 陣列和一個轉換 function 當作它的參數。如果用一個會造成 input-selector 的值改變的方式去變動 Redux 的 state tree，selector 將會以 input-selectors 的值作為參數呼叫它的轉換 function 並回傳結果。如果 input-selectors 的值跟先前呼叫 selector 的時候一樣，它會回傳先前的計算結果而不會呼叫轉換 function。
+Reselect 提供一個 `createSelector` function 來建立 memoized selector。`createSelector` 接收一個 input-selector 陣列和一個轉換 function 當作它的參數。如果用一個會造成 input-selector 的值改變的方式去變動 Redux 的 state tree，selector 將會以 input-selector 的值作為參數呼叫它的轉換 function 並回傳結果。如果 input-selector 的值跟先前呼叫 selector 的時候一樣，它會回傳先前的計算結果而不會呼叫轉換 function。
 
 讓我們來定義一個叫做 `getVisibleTodos` 的 memoized selector 來取代上面的 non-memoized 版本：
 
@@ -79,9 +79,9 @@ export const getVisibleTodos = createSelector(
 )
 ```
 
-在上面的範例中，`getVisibilityFilter` 和 `getTodos` 就是 input-selectors。因為它們沒有轉換它們選擇的資料，所以被建立成普通的非 memoized selector functions。而另一方面，`getVisibleTodos` 是一個 memoized selector。它接收 `getVisibilityFilter` 和 `getTodos` 作為 input-selectors，以及一個計算過濾後的 todos 清單的轉換 function。
+在上面的範例中，`getVisibilityFilter` 和 `getTodos` 就是 input-selector。因為它們沒有轉換它們選擇的資料，所以被建立成普通的非 memoized selector function。而另一方面，`getVisibleTodos` 是一個 memoized selector。它接收 `getVisibilityFilter` 和 `getTodos` 作為 input-selector，以及一個計算過濾後的 todos 清單的轉換 function。
 
-### 組合 Selectors
+### 組合 Selector
 
 一個 memoized selector 可以是另一個 memoized selector 的 input-selector。這裡 `getVisibleTodos` 被用來當作 selector 的 input-selector，以藉由 keyword 進一步的過濾 todos：
 
@@ -98,7 +98,7 @@ const getVisibleTodosFilteredByKeyword = createSelector(
 
 ### 把 Selector 連結到 Redux Store
 
-如果你是使用 [React Redux](https://github.com/reactjs/react-redux)，你可以在 `mapStateToProps()` 內呼叫 selectors 當作正規的 functions 使用：
+如果你是使用 [React Redux](https://github.com/reactjs/react-redux)，你可以在 `mapStateToProps()` 內呼叫 selector 當作正規的 function 使用：
 
 #### `containers/VisibleTodoList.js`
 
@@ -130,13 +130,13 @@ const VisibleTodoList = connect(
 export default VisibleTodoList
 ```
 
-### 在 Selectors 存取 React Props
+### 在 Selector 存取 React Props
 
-> 這個部份我們假設我們需要擴充我們的應用程式，使它能夠支援多個 Todo 清單。請注意，這個擴充的完整實作需要改變 reducers、components、actions 等等。這和我們要討論的主題沒有直接關係，為了方便我們省略這個部份。
+> 這個部份我們假設我們需要擴充我們的應用程式，使它能夠支援多個 Todo 清單。請注意，這個擴充的完整實作需要改變 reducer、component、action 等等。這和我們要討論的主題沒有直接關係，為了方便我們省略這個部份。
 
-到目前為止，我們只看到 selectors 接收 Redux store state 作為參數，但是 selector 也可以接收 props。
+到目前為止，我們只看到 selector 接收 Redux store state 作為參數，但是 selector 也可以接收 props。
 
-這是一個 `App` component ，它 render 三個 `VisibleTodoList` components，每個元件都有一個 `listId` prop：
+這是一個 `App` component ，它 render 三個 `VisibleTodoList` component，每個元件都有一個 `listId` prop：
 
 #### `components/App.js`
 
@@ -211,7 +211,7 @@ import { getVisibleTodos } from '../selectors'
 
 const mapStateToProps = (state, props) => {
   return {
-    // 警告：以下的 SELECTORS 不能正確的 MEMOIZE
+    // 警告：以下的 SELECTOR 不能正確的 MEMOIZE
     todos: getVisibleTodos(state, props)
   }
 }
@@ -234,11 +234,11 @@ export default VisibleTodoList
 
 當設定的參數和先前的參數相同時，透過 `createSelector` 建立的 selector 只會回傳快取的值。如果我們交替 render `<VisibleTodoList listId="1" />` 和 `<VisibleTodoList listId="2" />`，共用的 selector 會交替取得 `{listId: 1}` 和 `{listId: 2}` 做為 `props` 參數。這會導致每次呼叫時參數都會不同，所以 selector 會一直重新計算而不是回傳快取的值。我們會在接下來的部份看到要如何克服這個限制。
 
-### 跨越多個 Components 共用 Selectors
+### 跨越多個 Component 共用 Selector
 
 > 這個部份的範例需要 React Redux v4.3.0 或是更高的版本
 
-為了跨越多個 `VisibleTodoList` components 共用一個 selector **以及**保留 memoization，每個 component 實體需要有自己私有的 selector 副本。
+為了跨越多個 `VisibleTodoList` component 共用一個 selector **以及**保留 memoization，每個 component 實體需要有自己私有的 selector 副本。
 
 讓我們建立一個叫做 `makeGetVisibleTodos` 的 function，在每次被呼叫的時候，可以回傳一個新的 `getVisibleTodos` selector 副本：
 
@@ -290,7 +290,7 @@ const makeMapStateToProps = () => {
 }
 ```
 
-如果我們傳遞 `makeMapStateToProps` 到 `connect`，每一個 `VisibleTodosList` container 的實體都會得到它自己的 `mapStateToProps` function 以及一個私有的 `getVisibleTodos` selector。 現在不管這些 `VisibleTodoList` containers 的 render 順序，Memoization 都將會正常的運作。
+如果我們傳遞 `makeMapStateToProps` 到 `connect`，每一個 `VisibleTodosList` container 的實體都會得到它自己的 `mapStateToProps` function 以及一個私有的 `getVisibleTodos` selector。 現在不管這些 `VisibleTodoList` container 的 render 順序，Memoization 都將會正常的運作。
 
 #### `containers/VisibleTodoList.js`
 

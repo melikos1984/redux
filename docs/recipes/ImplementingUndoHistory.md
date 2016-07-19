@@ -6,9 +6,9 @@
 
 但是用 Redux 的話，實作 undo 歷史是一件輕而易舉的事。這有三個理由：
 
-* 沒有許多個 models—只是一個你想要持續追蹤的 state subtree。
-* state 已經是 immutable 的，而變動已經被描述為獨立的 actions，它很接近 undo 堆疊的心智模型。
-* reducer 的 `(state, action) => state` signature 讓它可以很自然的實作一般的「reducer enhancers」或「higher order reducers」。它們是接收你的 reducer 並用一些額外的功能來增強它且維持一樣 signature 的 function。Undo 歷史正是一個這樣的範例。
+* 沒有許多個 model—只是一個你想要持續追蹤的 state subtree。
+* state 已經是 immutable 的，而變動已經被描述為獨立的 action，它很接近 undo 堆疊的心智模型。
+* reducer 的 `(state, action) => state` signature 讓它可以很自然的實作一般的「reducer enhancer」或「higher order reducer」。它們是接收你的 reducer 並用一些額外的功能來增強它且維持一樣 signature 的 function。Undo 歷史正是一個這樣的範例。
 
 在開始之前，請確保你已經完成了[基礎教學](../basics/README.md)並對 [reducer composition](../basics/Reducers.md) 有很好的了解。這份 recipe 將會基於描述在[基礎教學](../basics/README.md)中的範例上去建構。
 
@@ -151,7 +151,7 @@ Undo 歷史也是你應用程式的一部份 state，我們沒有理由用不同
 }
 ```
 
-或是保存許多不同部分的歷史讓使用者可以獨立的在它們上使用 undo 或 redo actions：
+或是保存許多不同部分的歷史讓使用者可以獨立的在它們上使用 undo 或 redo action：
 
 ```js
 {
@@ -182,7 +182,7 @@ Undo 歷史也是你應用程式的一部份 state，我們沒有理由用不同
 }
 ```
 
-讓我們來探討演算法以操作在上面描述過的 state 形狀。我們可以定義兩個 actions 來在這個 state 上操作：`UNDO` 和 `REDO`。在我們的 reducer 中，我們將會做以下的步驟來處理這些 actions：
+讓我們來探討演算法以操作在上面描述過的 state 形狀。我們可以定義兩個 action 來在這個 state 上操作：`UNDO` 和 `REDO`。在我們的 reducer 中，我們將會做以下的步驟來處理這些 action：
 
 #### 處理 Undo
 
@@ -232,7 +232,7 @@ function undoable(state = initialState, action) {
         future: newFuture
       }
     default:
-      // (?) 我們要如何處理其他 actions？
+      // (?) 我們要如何處理其他 action？
       return state
   }
 }
@@ -241,16 +241,16 @@ function undoable(state = initialState, action) {
 這份實作並不能使用，因為它忽略了三個重要的問題：
 
 * 我們要從哪裡拿到初始的 `present` state？我們似乎無法事先知道它。
-* 我們要在哪裡對外部的 actions 做出反應來把 `present` 存到 `past`？
+* 我們要在哪裡對外部的 action 做出反應來把 `present` 存到 `past`？
 * 我們要如何實際的把對 `present` state 的控制委託給一個自定的 reducer？
 
 似乎 reducer 不是正確的抽象，不過我們非常接近了。
 
-### 認識 Reducer Enhancers
+### 認識 Reducer Enhancer
 
-你可能已經熟悉了 [higher order functions](https://en.wikipedia.org/wiki/Higher-order_function)。如果你使用 React，你可能對 [higher order components](https://medium.com/@dan_abramov/mixins-are-dead-long-live-higher-order-components-94a0d2f9e750) 也很熟悉。這是同一種模式的變化，適用於 reducers。
+你可能已經熟悉了 [higher order functions](https://en.wikipedia.org/wiki/Higher-order_function)。如果你使用 React，你可能對 [higher order component](https://medium.com/@dan_abramov/mixins-are-dead-long-live-higher-order-components-94a0d2f9e750) 也很熟悉。這是同一種模式的變化，適用於 reducer。
 
-*reducer enhancer* (或稱作 *higher order reducer*) 是一個接收 reducer，並回傳一個新的 reducer 的 function，新的 reducer 可以處理新的 actions、或保存更多的 state，並把它不了解的 actions 委託給裡面的 reducer 來控制。這不是一個新模式—技術上來說，[`combineReducers()`](../api/combineReducers.md) 也是一個 reducer enhancer，因為它接受數個 reducers 並回傳一個新的 reducer。
+*reducer enhancer* (或稱作 *higher order reducer*) 是一個接收 reducer，並回傳一個新的 reducer 的 function，新的 reducer 可以處理新的 actions、或保存更多的 state，並把它不了解的 actions 委託給裡面的 reducer 來控制。這不是一個新模式—技術上來說，[`combineReducers()`](../api/combineReducers.md) 也是一個 reducer enhancer，因為它接受數個 reducer 並回傳一個新的 reducer。
 
 一個什麼事都不做的 reducer enhancer 看起來像這樣：
 
@@ -263,7 +263,7 @@ function doNothingWith(reducer) {
 }
 ```
 
-一個用來合併其他 reducers 的 reducer enhancer 看起來可能像這樣：
+一個用來合併其他 reducer 的 reducer enhancer 看起來可能像這樣：
 
 ```js
 function combineReducers(reducers) {
@@ -279,7 +279,7 @@ function combineReducers(reducers) {
 
 ### 第二個嘗試：寫一個 Reducer Enhancer
 
-現在我們對 reducer enhancers 有比較好的了解了，我們可以看到 `undoable` 確實應該要是個 reducer enhancer：
+現在我們對 reducer enhancer 有比較好的了解了，我們可以看到 `undoable` 確實應該要是個 reducer enhancer：
 
 ```js
 function undoable(reducer) {
@@ -327,7 +327,7 @@ function undoable(reducer) {
 }
 ```
 
-現在我們可以把任何的 reducer 包進 `undoable` reducer enhancer 來教它對 `UNDO` 和 `REDO` actions 做出反應。
+現在我們可以把任何的 reducer 包進 `undoable` reducer enhancer 來教它對 `UNDO` 和 `REDO` action 做出反應。
 
 ```js
 // 這是一個 reducer
@@ -398,7 +398,7 @@ const undoableTodos = undoable(todos, {
 export default undoableTodos
 ```
 
-`distinctState()` filter 用來忽略沒有導致 state 改變的 actions。有[許多其他的選項](https://github.com/omnidan/redux-undo#configuration)可以用來設定你的 undoable reducer，例如設定 Undo 和 Redo actions 的 action type。
+`distinctState()` filter 用來忽略沒有導致 state 改變的 action。有[許多其他的選項](https://github.com/omnidan/redux-undo#configuration)可以用來設定你的 undoable reducer，例如設定 Undo 和 Redo action 的 action type。
 
 值得一提的是，你的 `combineReducers()` 呼叫將會依然維持它原本的運作，但 `todos` reducer 現在已參考至 Redux Undo 加強過後的 reducer：
 
@@ -417,7 +417,7 @@ const todoApp = combineReducers({
 export default todoApp
 ```
 
-你可以在任何的 reducer composition 層級把一個或更多個 reducers 包進 `undoable` 中。我們選擇包裝 `todos` 而不是頂層 combined reducer，這樣的話對 `visibilityFilter` 的變更不會進到 undo 歷史中。
+你可以在任何的 reducer composition 層級把一個或更多個 reducer 包進 `undoable` 中。我們選擇包裝 `todos` 而不是頂層 combined reducer，這樣的話對 `visibilityFilter` 的變更不會進到 undo 歷史中。
 
 ### 更新 Selectors
 
@@ -454,7 +454,7 @@ const mapStateToProps = (state) => {
 
 ### 添加按鈕
 
-現在你只需要添加按鈕給 Undo 和 Redo actions。
+現在你只需要添加按鈕給 Undo 和 Redo action。
 
 首先，為這些按鈕建立一個名為 `UndoRedo` 的新 container component。因為 presentational 的部份很小，所以我們將不拆分它到別的檔案：
 
@@ -477,7 +477,7 @@ let UndoRedo = ({ canUndo, canRedo, onUndo, onRedo }) => (
 )
 ```
 
-你將從 [React Redux](https://github.com/reactjs/react-redux) 使用 `connect()` 來建立一個 container component。你可以檢查 `state.todos.past.length` 和 `state.todos.future.length` 來決定是否打開 Undo 和 Redo 按鈕。你將不需要為了執行 undo 和 redo 寫 action creators 因為 Redux Undo 已有提供：
+你將從 [React Redux](https://github.com/reactjs/react-redux) 使用 `connect()` 來建立一個 container component。你可以檢查 `state.todos.past.length` 和 `state.todos.future.length` 來決定是否打開 Undo 和 Redo 按鈕。你將不需要為了執行 undo 和 redo 寫 action creator 因為 Redux Undo 已有提供：
 
 #### `containers/UndoRedo.js`
 
