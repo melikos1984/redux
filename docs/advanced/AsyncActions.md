@@ -1,6 +1,6 @@
 # Async Actions
 
-在[基礎教學](../basics/README.md)中，我們建立了一個簡單的 todo 應用程式。它完全是同步的。每次 action 被 dispatched，state 都會立刻被更新。
+在[基礎教學](../basics/README.md)中，我們建立了一個簡單的 todo 應用程式。它完全是同步的。每次 action 被 dispatch，state 都會立刻被更新。
 
 在這份教學中，我們將會建立一個不同而且非同步的應用程式。它將會使用 Reddit API 針對選擇的 subreddit 來顯示現在的頭條新聞。如何讓非同步與 Redux 資料流結合呢？
 
@@ -8,19 +8,19 @@
 
 當你呼叫一個非同步 API，有兩個關鍵的時刻：你開始呼叫的的時候，以及當你收到回應 (或是逾時) 的時候。
 
-這兩個時刻通常都可以要求改變應用程式的 state；要做到這一點，你需要 dispatch 會被 reducers 同步處理的一般 actions。通常，針對任何一個 API 請求你會需要 dispatch 至少三個不同種類的 actions：
+這兩個時刻通常都可以要求改變應用程式的 state；要做到這一點，你需要 dispatch 會被 reducer 同步處理的一般 action。通常，針對任何一個 API 請求你會需要 dispatch 至少三個不同種類的 action：
 
-* **一個告知 reducers 請求開始的 action。**
+* **一個告知 reducer 請求開始的 action。**
 
-  reducers 可以藉由打開 state 裡的 `isFetching` flag 來處理這個 action。這樣 UI 就知道是時候顯示一個 spinner 了。
+  reducer 可以藉由打開 state 裡的 `isFetching` flag 來處理這個 action。這樣 UI 就知道是時候顯示一個 spinner 了。
 
-* **一個告知 reducers 請求成功完成的 action。**
+* **一個告知 reducer 請求成功完成的 action。**
 
-  reducers 可以藉由把新的資料合併到它們管理的 state 裡並重置 `isFetching` 屬性來處理這個 action。UI 將會把 spinner 隱藏，並顯示抓回來的資料。
+  reducer 可以藉由把新的資料合併到它們管理的 state 裡並重置 `isFetching` 屬性來處理這個 action。UI 將會把 spinner 隱藏，並顯示抓回來的資料。
 
-* **一個告知 reducers 請求失敗的 action。**
+* **一個告知 reducer 請求失敗的 action。**
 
-  Reducers 可以藉由重置 `isFetching` 屬性來處理這個 action。此外，有些 reducers 也會想要儲存錯誤訊息，這樣 UI 就可以顯示它。
+  Reducers 可以藉由重置 `isFetching` 屬性來處理這個 action。此外，有些 reducer 也會想要儲存錯誤訊息，這樣 UI 就可以顯示它。
 
 你可以在 actions 裡使用一個專用的 `status` 屬性：
 
@@ -38,14 +38,14 @@
 { type: 'FETCH_POSTS_SUCCESS', response: { ... } }
 ```
 
-無論要選擇使用單一一個 action type 與 flags，或是選擇多種 action types，這都取決於你。這是一個你需要跟你的團隊一起決定的慣例。多種的 types 出現錯誤的空間更小，不過如果你使用像是 [redux-actions](https://github.com/acdlite/redux-actions) 之類的 helper library 來產生 action creators 和 reducers 的話，這不會是個問題。
+無論要選擇使用單一一個 action type 與 flag，或是選擇多種 action type，這都取決於你。這是一個你需要跟你的團隊一起決定的慣例。多種的 type 出現錯誤的空間更小，不過如果你使用像是 [redux-actions](https://github.com/acdlite/redux-actions) 之類的 helper library 來產生 action creator 和 reducer 的話，這不會是個問題。
 
 無論你選擇怎樣的慣例，請在整個應用程式中貫徹下去。
-在這份教學中，我們將會使用不同的 types。
+在這份教學中，我們將會使用不同的 type。
 
-## 同步的 Action Creators
+## 同步的 Action Creator
 
-讓我們開始定義幾個在範例應用程式中需要的同步 action types 和 action creators。在這裡，使用者可以選擇顯示一個 subreddit：
+讓我們開始定義幾個在範例應用程式中需要的同步 action type 和 action creator。在這裡，使用者可以選擇顯示一個 subreddit：
 
 #### `actions.js`
 
@@ -73,7 +73,7 @@ export function invalidateSubreddit(subreddit) {
 }
 ```
 
-有一些 actions 是藉由使用者互動來控制。我們也會有其他種類藉由網路請求控制的 action。我們之後將會看到要如何 dispatch 它們，但現在，我們只想要定義它們。
+有一些 action 是藉由使用者互動來控制。我們也會有其他種類藉由網路請求控制的 action。我們之後將會看到要如何 dispatch 它們，但現在，我們只想要定義它們。
 
 當是時候針對 subreddit 抓取 posts 時，我們會 dispatch 一個 `REQUEST_POSTS` action：
 
@@ -105,7 +105,7 @@ export function receivePosts(subreddit, json) {
 }
 ```
 
-這些就是我們現在需要知道的。可以隨著網路請求一併 dispatch 這些 actions 的特別機制將會在之後討論。
+這些就是我們現在需要知道的。可以隨著網路請求一併 dispatch 這些 action 的特別機制將會在之後討論。
 
 >##### 關於錯誤處理的附註
 
@@ -117,7 +117,7 @@ export function receivePosts(subreddit, json) {
 
 這個部分常常讓初學者困惑，因為要用什麼資訊來描述一個非同步的應用程式的 state，還有要如何在單一一個 tree 上組織它不是一開始就很明顯。
 
-我們會先從最常見的使用案例開始：清單。網頁應用程式時常會顯示一些東西的清單。例如：posts 的清單、朋友的清單。 你會需要弄清楚你的應用程式可以顯示什麼類型的清單。你想要把它們分別儲存在 state 裡，因為這樣你可以快取它們而且只在需要時才重新抓取資料。
+我們會先從最常見的使用案例開始：清單。網頁應用程式時常會顯示一些東西的清單。例如：post 的清單、朋友的清單。 你會需要弄清楚你的應用程式可以顯示什麼類型的清單。你想要把它們分別儲存在 state 裡，因為這樣你可以快取它們而且只在需要時才重新抓取資料。
 
 這就是我們的「Reddit 頭條新聞」應用程式的 state 形狀可能會看起來的樣子：
 
@@ -204,7 +204,7 @@ export function receivePosts(subreddit, json) {
 
 ## 處理 Actions
 
-在走進把 dispatching actions 和網路請求結合的細節之前，我們將會撰寫 reducers 給我們上面定義的 actions。
+在走進把 dispatch action 和網路請求結合的細節之前，我們將會撰寫 reducer 給我們上面定義的 action。
 
 >##### 關於 Reducer Composition 的附註
 
@@ -292,17 +292,17 @@ export default rootReducer
   nextState[action.subreddit] = posts(state[action.subreddit], action)
   return Object.assign({}, state, nextState)
   ```
-* 我們把 `posts(state, action)` 抽出來管理具體的 post 清單的 state。這只是 [reducer composition](../basics/Reducers.md#splitting-reducers)！這是我們選擇用來把 reducer 拆分成更小的 reducers 的方式，而在這個案例中，我們把在物件中更新項目的工作委派給 `posts` reducer。[real world example](../introduction/Examples.md#real-world) 更進一步，展示了如何建立一個 reducer factory 來參數化 pagination reducers。
+* 我們把 `posts(state, action)` 抽出來管理具體的 post 清單的 state。這只是 [reducer composition](../basics/Reducers.md#splitting-reducers)！這是我們選擇用來把 reducer 拆分成更小的 reducers 的方式，而在這個案例中，我們把在物件中更新項目的工作委派給 `posts` reducer。[real world example](../introduction/Examples.md#real-world) 更進一步，展示了如何建立一個 reducer factory 來參數化 pagination reducer。
 
-請記得 reducers 只是些 functions，所以你可以盡你所能舒適的使用 functional composition 和 higher-order functions。
+請記得 reducer 只是些 function，所以你可以盡你所能舒適的使用 functional composition 和 higher-order function。
 
-## 非同步的 Action Creators
+## 非同步的 Action Creator
 
 最後，我們要如何一起使用我們[之前定義的](#synchronous-action-creators)同步的 action creator 和網路請求呢？用 Redux 要做到這個的標準方式是使用 [Redux Thunk middleware](https://github.com/gaearon/redux-thunk)。它屬於一個獨立的套件，叫做 `redux-thunk`。我們[晚點](Middleware.md)會解釋 middleware 一般來說是如何運作的；現在，你只有一件重要的事必需知道：藉由使用這個特定的 middleware，action creator 可以回傳一個 function 來取代 action 物件。這樣的話，function creator 就變成一個 [thunk](https://en.wikipedia.org/wiki/Thunk)。
 
-當一個 action creator 回傳一個 function 的時候，這個 function 將會被 Redux Thunk middleware 執行。這個 function 不需要是 pure 的；因此它被允許一些有 side effects 的動作，包括執行非同步的 API 呼叫。這個 function 也可以 dispatch action—像是那些我們之前定義的同步 action。
+當一個 action creator 回傳一個 function 的時候，這個 function 將會被 Redux Thunk middleware 執行。這個 function 不需要是 pure 的；因此它被允許一些有 side effect 的動作，包括執行非同步的 API 呼叫。這個 function 也可以 dispatch action—像是那些我們之前定義的同步 action。
 
-我們仍然可以把 這些特別的 thunk action creators 定義在我們的 `actions.js` 檔案中：
+我們仍然可以把 這些特別的 thunk action creator 定義在我們的 `actions.js` 檔案中：
 
 #### `actions.js`
 
@@ -333,9 +333,9 @@ function receivePosts(subreddit, json) {
 
 export function fetchPosts(subreddit) {
 
-  // Thunk middleware 知道如何去處理 functions。
+  // Thunk middleware 知道如何去處理 function。
   // 它把 dispatch method 作為參數傳遞給 function，
-  // 因此讓它可以自己 dispatch actions。
+  // 因此讓它可以自己 dispatch action。
 
   return function (dispatch) {
 
@@ -400,8 +400,8 @@ const loggerMiddleware = createLogger()
 const store = createStore(
   rootReducer,
   applyMiddleware(
-    thunkMiddleware, // 讓我們來 dispatch() functions
-    loggerMiddleware // 巧妙的 middleware，用來 logs actions
+    thunkMiddleware, // 讓我們來 dispatch() function
+    loggerMiddleware // 巧妙的 middleware，用來 log action
   )
 )
 
@@ -486,7 +486,7 @@ store.dispatch(fetchPostsIfNeeded('reactjs')).then(() =>
 )
 ```
 
->##### 關於伺服器 Rendering 的附註
+>##### 關於伺服器 Render 的附註
 
 >Async action creator 對伺服器 render 特別方便。你可以建立一個 store，dispatch 一個單一的 async action creator，它會 dispatch 其他的 async action creator 來為整個應用程式抓取資料，並在 Promise 回傳並完成之後才 render。接著你 render 之前需要的 state 將必須被 hydrate 到你的 store。
 
