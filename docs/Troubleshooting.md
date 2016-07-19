@@ -93,7 +93,7 @@ return update(state, {
 
 最後，要更新物件你會需要一些像是 Underscore 的 `_.extend` 的東西，或甚至更好的，一個 [`Object.assign`](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) 的 polyfill。
 
-請確保你有正確地使用 `Object.assign`。例如，請從你的 reducers 回傳 `Object.assign({}, state, newData)`，而不要回傳像是 `Object.assign(state, newData)` 這樣。這樣你才不會覆寫掉前面的 `state`。
+請確保你有正確地使用 `Object.assign`。例如，請從你的 reducer 回傳 `Object.assign({}, state, newData)`，而不要回傳像是 `Object.assign(state, newData)` 這樣。這樣你才不會覆寫掉前面的 `state`。
 
 你也可以為更簡潔的語法啟用 [object spread 運算子提案](recipes/UsingObjectSpreadOperator.md)：
 
@@ -154,7 +154,7 @@ class AddTodo extends Component {
 }
 ```
 
-這不會正常運作，因為你的 action creator 只是一個*回傳* action 的 function。而要由你來實際的 dispatch 它。我們不能在定義的時候把你的 action creators 綁定到一個特定的 Store 實體上，因為要在伺服器上 render 的應用程式需要對每個請求有一個獨立的 Redux store。
+這不會正常運作，因為你的 action creator 只是一個*回傳* action 的 function。而要由你來實際的 dispatch 它。我們不能在定義的時候把你的 action creator 綁定到一個特定的 Store 實體上，因為要在伺服器上 render 的應用程式需要對每個請求有一個獨立的 Redux store。
 
 解決方法是在 [store](api/Store.md) 實體上呼叫 [`dispatch()`](api/Store.md#dispatch) method：
 
@@ -193,7 +193,7 @@ class AddTodo extends Component {
 export default connect()(AddTodo)
 ```
 
-如果你想要的話，你可以接著手動的把 `dispatch` 傳下去給其他的 components。
+如果你想要的話，你可以接著手動的把 `dispatch` 傳下去給其他的 component。
 
 #### 確保 mapStateToProps 是正確的
 
