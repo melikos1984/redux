@@ -1,10 +1,10 @@
-# Async Actions
+# Async Action
 
 在[基礎教學](../basics/README.md)中，我們建立了一個簡單的 todo 應用程式。它完全是同步的。每次 action 被 dispatch，state 都會立刻被更新。
 
 在這份教學中，我們將會建立一個不同而且非同步的應用程式。它將會使用 Reddit API 針對選擇的 subreddit 來顯示現在的頭條新聞。如何讓非同步與 Redux 資料流結合呢？
 
-## Actions
+## Action
 
 當你呼叫一個非同步 API，有兩個關鍵的時刻：你開始呼叫的的時候，以及當你收到回應 (或是逾時) 的時候。
 
