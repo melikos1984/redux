@@ -47,7 +47,7 @@ npm start
 open http://localhost:3000/
 ```
 
-這是深入了解 state 的更新如何在 Redux 中與 components 一起運作的最佳範例。它展示 reducers 能如何指派 handling actions 給其他 reducers，並且展示你可以如何從你的 presentational components 中使用 [React Redux](https://github.com/reactjs/react-redux) 來產生 container components。
+這是深入了解 state 的更新如何在 Redux 中與 component 一起運作的最佳範例。它展示 reducer 能如何指派正在 handle 的 action 給其他 reducer，並且展示你可以如何從你的 presentational component 中使用 [React Redux](https://github.com/reactjs/react-redux) 來產生 container component。
 
 此範例包含了測試。
 
@@ -99,7 +99,7 @@ npm start
 open http://localhost:3000/
 ```
 
-這個範例展示了當你的 app 成長時將逐漸重要的慣用 Redux patterns。它尤其展示了如何由 IDs 標準化儲存 entities、如何在不同層面上建構 reducers、如何依靠 reducers 定義 selectors 使得 state shape 的含義得以被封裝在內。它也展示如何由 [Redux Logger](https://github.com/fcomb/redux-logger) 來 logging 和由 [Redux Thunk](https://github.com/gaearon/redux-thunk) middleware 來達成有條件的 dispatch actions。
+這個範例展示了當你的 app 成長時將逐漸重要的慣用 Redux pattern。它尤其展示了如何由 IDs 標準化儲存 entity、如何在不同層面上建構 reducer、如何依靠 reducer 定義 selector 使得 state shape 的含義得以被封裝在內。它也展示如何由 [Redux Logger](https://github.com/fcomb/redux-logger) 來 log 和由 [Redux Thunk](https://github.com/gaearon/redux-thunk) middleware 來達成有條件的 dispatch action。
 
 ## Tree View
 
@@ -115,7 +115,7 @@ npm start
 open http://localhost:3000/
 ```
 
-這個範例展示如何 render 一個深度巢狀的樹狀 view，並用一個標準化形式代表它的 state，所以它可以簡單的由 reducers 更新。經由 container components 細緻地 subscribe 其 render tree 節點 ，可以達到優良的 render 效能。
+這個範例展示如何 render 一個深度巢狀的樹狀 view，並用一個標準化形式代表它的 state，所以它可以簡單的由 reducer 更新。經由 container component 細緻地 subscribe 其 render tree 節點 ，可以達到優良的 render 效能。
 
 此範例包含了測試。
 
@@ -165,7 +165,7 @@ npm start
 open http://localhost:3000/
 ```
 
-這是最進階的範例。它被高度地設計過。它涵蓋了由標準化快取中取得 entities、為了 API 呼叫實作客製化 middleware、render 部分讀取的資料、分頁化、快取 responses、顯示錯誤訊息、routing。此外，它也包含了 Redux DevTools。
+這是最進階的範例。它被高度地設計過。它涵蓋了由標準化快取中取得 entity、為了 API 呼叫實作客製化 middleware、render 部分讀取的資料、分頁化、快取 responses、顯示錯誤訊息、routing。此外，它也包含了 Redux DevTools。
 
 ## 更多範例
 
