@@ -298,9 +298,9 @@ export default rootReducer
 
 ## 非同步的 Action Creators
 
-最後，我們要如何一起使用我們[之前定義的](#synchronous-action-creators)同步的 action creators 和網路請求呢？用 Redux 要做到這個的標準方式是使用 [Redux Thunk middleware](https://github.com/gaearon/redux-thunk)。它屬於一個獨立的套件，叫做 `redux-thunk`。我們[晚點](Middleware.md)會解釋 middleware 一般來說是如何運作的；現在，你只有一件重要的事必需知道：藉由使用這個特定的 middleware，action creator 可以回傳一個 function 來取代 action 物件。這樣的話，function creator 就變成一個 [thunk](https://en.wikipedia.org/wiki/Thunk)。
+最後，我們要如何一起使用我們[之前定義的](#synchronous-action-creators)同步的 action creator 和網路請求呢？用 Redux 要做到這個的標準方式是使用 [Redux Thunk middleware](https://github.com/gaearon/redux-thunk)。它屬於一個獨立的套件，叫做 `redux-thunk`。我們[晚點](Middleware.md)會解釋 middleware 一般來說是如何運作的；現在，你只有一件重要的事必需知道：藉由使用這個特定的 middleware，action creator 可以回傳一個 function 來取代 action 物件。這樣的話，function creator 就變成一個 [thunk](https://en.wikipedia.org/wiki/Thunk)。
 
-當一個 action creator 回傳一個 function 的時候，這個 function 將會被 Redux Thunk middleware 執行。這個 function 不需要是 pure 的；因此它被允許一些有 side effects 的動作，包括執行非同步的 API 呼叫。這個 function 也可以 dispatch actions—像是那些我們之前定義的同步 actions。
+當一個 action creator 回傳一個 function 的時候，這個 function 將會被 Redux Thunk middleware 執行。這個 function 不需要是 pure 的；因此它被允許一些有 side effects 的動作，包括執行非同步的 API 呼叫。這個 function 也可以 dispatch action—像是那些我們之前定義的同步 action。
 
 我們仍然可以把 這些特別的 thunk action creators 定義在我們的 `actions.js` 檔案中：
 
@@ -411,7 +411,7 @@ store.dispatch(fetchPosts('reactjs')).then(() =>
 )
 ```
 
-有關 thunks 的好處是，它們可以 dispatch 其他 thunk 的結果：
+有關 thunk 的好處是，它們可以 dispatch 其他 thunk 的結果：
 
 #### `actions.js`
 
@@ -488,24 +488,20 @@ store.dispatch(fetchPostsIfNeeded('reactjs')).then(() =>
 
 >##### 關於伺服器 Rendering 的附註
 
->Async action creators 對伺服器 rendering 特別方便。你可以建立一個 store，dispatch 一個單一的 async action creator，它會 dispatches 其他的 async action creators 來為整個應用程式抓取資料，並在 Promise 回傳並完成之後才 render。接著你 rendering 之前需要的 state 將必須被 hydrated 到你的 store。
+>Async action creator 對伺服器 render 特別方便。你可以建立一個 store，dispatch 一個單一的 async action creator，它會 dispatch 其他的 async action creator 來為整個應用程式抓取資料，並在 Promise 回傳並完成之後才 render。接著你 render 之前需要的 state 將必須被 hydrate 到你的 store。
 
-<<<<<<< HEAD
-[Thunk middleware](https://github.com/gaearon/redux-thunk) 不是在 Redux 中協調 asynchronous actions 的唯一方式。你可以使用 [redux-promise](https://github.com/acdlite/redux-promise) 或 [redux-promise-middleware](https://github.com/pburtchaell/redux-promise-middleware) 來 dispatch Promises 取代 functions。你可以藉由 [redux-rx](https://github.com/acdlite/redux-rx) dispatch Observables。你甚至可以撰寫一個客製化的 middleware 來描述你的 API 呼叫，像是 [real world example](../introduction/Examples.md#real-world) 做的那樣。你可以自由地嘗試幾個選項，選擇一個你喜歡的慣例，並遵守它，無論有沒有使用 middleware。
-=======
-[Thunk middleware](https://github.com/gaearon/redux-thunk) isn’t the only way to orchestrate asynchronous actions in Redux:
-- You can use [redux-promise](https://github.com/acdlite/redux-promise) or [redux-promise-middleware](https://github.com/pburtchaell/redux-promise-middleware) to dispatch Promises instead of functions.
-- You can use [redux-rx](https://github.com/acdlite/redux-rx) or [redux-observable](https://github.com/redux-observable/redux-observable) to dispatch Observables.
-- You can use the [redux-saga](https://github.com/yelouafi/redux-saga/) middleware to build more complex asynchronous actions.
-- You can even write a custom middleware to describe calls to your API, like the [real world example](../introduction/Examples.md#real-world) does.
+[Thunk middleware](https://github.com/gaearon/redux-thunk) 不是在 Redux 中協調非同步 action 的唯一方式：
+- 你可以使用 [redux-promise](https://github.com/acdlite/redux-promise) 或是 [redux-promise-middleware](https://github.com/pburtchaell/redux-promise-middleware) 來 dispatch Promise 取代 function。
+- 你可以使用 [redux-rx](https://github.com/acdlite/redux-rx) 或是 [redux-observable](https://github.com/redux-observable/redux-observable) 來 dispatch Observables。
+- 你可以使用 [redux-saga](https://github.com/yelouafi/redux-saga/) middleware 來建置更複雜的非同步 action。
+- 你甚至可以撰寫一個客製化的 middleware 來描述你的 API 呼叫，像是 [real world example](../introduction/Examples.md#real-world) 做的那樣。
 
-It is up to you to try a few options, choose a convention you like, and follow it, whether with, or without the middleware.
->>>>>>> upstream/master
+你可以自由地嘗試幾個選項，選擇一個你喜歡的慣例，並遵守它，無論有沒有使用 middleware。
 
 ## 連結到 UI
 
-Dispatching async actions 跟 dispatching 同步的 actions 沒有什麼不同，所以我們不會詳細討論這個。查看[搭配 React 運用](../basics/UsageWithReact.md)了解有關結合 Redux 與 React components 的介紹。查看[範例：Reddit API](ExampleRedditAPI.md)來取得在這個範例中討論的完整原始碼。
+Dispatch async action 跟 dispatch 同步的 action 沒有什麼不同，所以我們不會詳細討論這個。查看[搭配 React 運用](../basics/UsageWithReact.md)了解有關結合 Redux 與 React component 的介紹。查看[範例：Reddit API](ExampleRedditAPI.md)來取得在這個範例中討論的完整原始碼。
 
 ## 下一步
 
-查看[非同步資料流](AsyncFlow.md)回顧一下 async actions 如何融入 Redux 資料流。
+查看[非同步資料流](AsyncFlow.md)回顧一下 async action 如何融入 Redux 資料流。
