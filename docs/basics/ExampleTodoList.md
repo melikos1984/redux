@@ -24,7 +24,7 @@ render(
 )
 ```
 
-## Action Creators
+## Action Creator
 
 #### `actions/index.js`
 
@@ -53,7 +53,7 @@ export const toggleTodo = (id) => {
 }
 ```
 
-## Reducers
+## Reducer
 
 #### `reducers/todos.js`
 
@@ -74,7 +74,7 @@ const todo = (state, action) => {
       return Object.assign({}, state, {
         completed: !state.completed
       })
-      
+
     default:
       return state
   }
@@ -129,7 +129,7 @@ const todoApp = combineReducers({
 export default todoApp
 ```
 
-## Presentational Components
+## Presentational Component
 
 #### `components/Todo.js`
 
@@ -262,7 +262,7 @@ const App = () => (
 export default App
 ```
 
-## Container Components
+## Container Component
 
 #### `containers/VisibleTodoList.js`
 
@@ -333,7 +333,7 @@ const FilterLink = connect(
 export default FilterLink
 ```
 
-### 其它 Components
+### 其它 Component
 
 #### `containers/AddTodo.js`
 

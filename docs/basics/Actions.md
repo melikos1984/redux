@@ -1,8 +1,8 @@
 # Actions
 
-首先，讓我們來定義一些 actions。
+首先，讓我們來定義一些 action。
 
-**Actions** 是從你的應用程式傳遞資料到你的 store 的資訊 payloads。它們是 store *唯一的*資訊來源。你藉由 [`store.dispatch()`](../api/Store.md#dispatch) 來把它們傳遞到 store。
+**Actions** 是從你的應用程式傳遞資料到你的 store 的資訊 payload。它們是 store *唯一的*資訊來源。你藉由 [`store.dispatch()`](../api/Store.md#dispatch) 來把它們傳遞到 store。
 
 這是一個 action 的例子，它代表添加一個新的 todo 項目：
 
@@ -17,7 +17,7 @@ const ADD_TODO = 'ADD_TODO'
 }
 ```
 
-Actions 是一般的 JavaScript 物件。actions 必須有一個 `type` 屬性，它代表被執行的 action 的類型。Types 通常應該被定義成字串常數。一旦你的應用程式夠大了，你能會想把它們移進一個單獨的 module。
+Action 是一般的 JavaScript 物件。action 必須有一個 `type` 屬性，它代表被執行的 action 的類型。Type 通常應該被定義成字串常數。一旦你的應用程式夠大了，你能會想把它們移進一個單獨的 module。
 
 ```js
 import { ADD_TODO, REMOVE_TODO } from '../actionTypes'
@@ -25,9 +25,9 @@ import { ADD_TODO, REMOVE_TODO } from '../actionTypes'
 
 >##### 關於 Boilerplate 的附註
 
->你不需要定義 action type 常數在一個單獨的檔案，或甚至完全不需要定義它們。對小專案來說，直接使用字面字串當作 action types 可能更簡單一些。不過，在較大的程式庫中明確的定義常數有一些好處。閱讀[減少 Boilerplate](../recipes/ReducingBoilerplate.md) 來了解更多讓你的程式庫保持乾淨的實用技巧。
+>你不需要定義 action type 常數在一個單獨的檔案，或甚至完全不需要定義它們。對小專案來說，直接使用字面字串當作 action type 可能更簡單一些。不過，在較大的程式庫中明確的定義常數有一些好處。閱讀[減少 Boilerplate](../recipes/ReducingBoilerplate.md) 來了解更多讓你的程式庫保持乾淨的實用技巧。
 
-除了 `type` 以外，一個 action 物件的結構完全取決於你。如果你有興趣，請查看 [Flux Standard Action](https://github.com/acdlite/flux-standard-action) 上有關可以如何建構 actions 的建議。
+除了 `type` 以外，一個 action 物件的結構完全取決於你。如果你有興趣，請查看 [Flux Standard Action](https://github.com/acdlite/flux-standard-action) 上有關可以如何建構 action 的建議。
 
 我們再添加一個 action type 來描述一個使用者對 todo 打勾表示已完成。我們藉由 `index` 參考到特定的 todo，因為我們把他們儲存在一個陣列中。在一個實際的應用程式中，在每次新東西被創建時產生一個唯一的 ID 是比較明智的。
 
@@ -40,7 +40,7 @@ import { ADD_TODO, REMOVE_TODO } from '../actionTypes'
 
 盡量讓每個 action 中傳遞的資料越少越好。舉例來說，傳遞 `index` 比傳遞整個 todo 物件來得好。
 
-最後，我們再添加一個 action type 來改變現在顯示的 todos。
+最後，我們再添加一個 action type 來改變現在顯示的 todo。
 
 ```js
 {
@@ -49,11 +49,11 @@ import { ADD_TODO, REMOVE_TODO } from '../actionTypes'
 }
 ```
 
-## Action Creators
+## Action Creator
 
-**Action creators** 就是—產生 actions 的 functions。「action」和「action creator」 這兩個詞非常容易混為一談，所以請盡你所能使用正確的術語。
+**Action creator** 就是—產生 action 的 function。「action」和「action creator」 這兩個詞非常容易混為一談，所以請盡你所能使用正確的術語。
 
-在 Redux 裡 action creators 簡單地回傳一個 action：
+在 Redux 裡 action creator 簡單地回傳一個 action：
 
 ```js
 function addTodo(text) {
@@ -66,7 +66,7 @@ function addTodo(text) {
 
 這讓它們更具有移植性並易於測試。
 
-在[傳統的 Flux](http://facebook.github.io/flux) 中，通常在 action creators 被呼叫時才會觸發 dispatch：
+在[傳統的 Flux](http://facebook.github.io/flux) 中，通常在 action creator 被呼叫時才會觸發 dispatch：
 
 ```js
 function addTodoWithDispatch(text) {
@@ -78,7 +78,7 @@ function addTodoWithDispatch(text) {
 }
 ```
 
-在 Redux 中則*不是*採用這種方式：  
+在 Redux 中則*不是*採用這種方式：
 取而代之的是，要實際地啟動一個 dispatch，只需傳遞結果給 `dispatch()` function：
 
 ```js
@@ -86,7 +86,7 @@ dispatch(addTodo(text))
 dispatch(completeTodo(index))
 ```
 
-或者，你可以建立會自動地 dispatches 的 **bound action creator**：
+或者，你可以建立會自動地 dispatch 的 **bound action creator**：
 
 ```js
 const boundAddTodo = (text) => dispatch(addTodo(text))
@@ -100,9 +100,9 @@ boundAddTodo(text)
 boundCompleteTodo(index)
 ```
 
-`dispatch()` function 可以藉由 [`store.dispatch()`](../api/Store.md#dispatch) 直接地從 store 取用，不過你將更可能會藉由 helper 來取用它，例如 [react-redux](http://github.com/gaearon/react-redux) 的 `connect()`。你可以使用 [`bindActionCreators()`](../api/bindActionCreators.md) 來自動綁定許多 action creators 到一個 `dispatch()` function。
+`dispatch()` function 可以藉由 [`store.dispatch()`](../api/Store.md#dispatch) 直接地從 store 取用，不過你將更可能會藉由 helper 來取用它，例如 [react-redux](http://github.com/gaearon/react-redux) 的 `connect()`。你可以使用 [`bindActionCreators()`](../api/bindActionCreators.md) 來自動綁定許多 action creator 到一個 `dispatch()` function。
 
-Action creators 也可以是非同步的，並擁有 side-effect。你可以詳讀在[進階教學](../advanced/README.md)中的 [async actions](../advanced/AsyncActions.md)，以學習如何處理 AJAX 回應和組合 action creators 到非同步控制流程中。直到你將基礎教學完成前，千萬別跳到 async action，因為它涵蓋了進階教學及 async action 所需的重要概念。
+Action creator 也可以是非同步的，並擁有 side-effect。你可以詳讀在[進階教學](../advanced/README.md)中的 [async action](../advanced/AsyncActions.md)，以學習如何處理 AJAX 回應和組合 action creator 到非同步控制流程中。直到你將基礎教學完成前，千萬別跳到 async action，因為它涵蓋了進階教學及 async action 所需的重要概念。
 
 ## 原始碼
 
@@ -110,7 +110,7 @@ Action creators 也可以是非同步的，並擁有 side-effect。你可以詳�
 
 ```js
 /*
- * action types
+ * action type
  */
 
 export const ADD_TODO = 'ADD_TODO'
@@ -128,7 +128,7 @@ export const VisibilityFilters = {
 }
 
 /*
- * action creators
+ * action creator
  */
 
 export function addTodo(text) {
@@ -146,4 +146,4 @@ export function setVisibilityFilter(filter) {
 
 ## 下一步
 
-現在讓我們來[定義一些 reducers](Reducers.md) 以指定當你 dispatch 這些 actions 時，state 要如何更新！
+現在讓我們來[定義一些 reducer](Reducers.md) 以指定當你 dispatch 這些 action 時，state 要如何更新！

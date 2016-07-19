@@ -1,6 +1,6 @@
-# Reducers
+# Reducer
 
-[Actions](./Actions.md) 描述實際*發生一些事*，不過並不指定應用程式的 state 要如何去應對改變。這是 reducer 的工作。
+[Action](./Actions.md) 描述實際*發生一些事*，不過並不指定應用程式的 state 要如何去應對改變。這是 reducer 的工作。
 
 ## 設計 State 的形狀
 
@@ -29,11 +29,11 @@
 }
 ```
 
->##### 關於 Relationships 的附註
+>##### 關於 Relationship 的附註
 
 >在更複雜的應用程式中，你會希望不同的實體可以互相參考到其他實體。我們建議你盡量保持 state 正規化，不要有任何的巢狀。讓儲存在物件的每個實體都用一個 ID 作為 key，並且使用 IDs 來從其他實體或清單參考它。把應用程式的 state 想成是一個資料庫。這個方法詳細的描述在 [normalizr 的](https://github.com/gaearon/normalizr) 文件中。例如，在一個真實的應用程式中，同時把 `todosById: { id -> todo }` 和 `todos: array<id>` 保存在 state 裡面會是比較好的方式，不過我們會盡量讓範例保持簡單。
 
-## 處理 Actions
+## 處理 Action
 
 現在我們已經決定 state 物件要長什麼樣子了，我們準備幫它撰寫一個 reducer。reducer 是一個 pure function，它接收先前的 state 和一個 action，然後回傳下一個 state。
 
@@ -44,10 +44,10 @@
 它被稱作 reducer，是因為它是你傳遞到 [`Array.prototype.reduce(reducer, ?initialValue)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce) 的 function 類型。讓 reducer 保持 pure 非常重要。你**永遠不**應該在 reducer 裡面做這些事：
 
 * 改變它的參數；
-* 執行有 side effects 的動作，像是呼叫 API 和 routing 轉換。
-* 呼叫不是 pure 的 functions，像是 `Date.now()` 或是 `Math.random()`。
+* 執行有 side effect 的動作，像是呼叫 API 和 routing 轉換。
+* 呼叫不是 pure 的 function，像是 `Date.now()` 或是 `Math.random()`。
 
-我們將會在[進階教學](../advanced/README.md)中探索如何執行有 side effects 的動作。現在，只要記得 reducer 必須是 pure 的就好。**給定一樣的參數，他必須一樣計算下一個 state 並回傳它。沒有驚喜。沒有 side effects。沒有 API 呼叫。沒有變更。只是一個計算。**
+我們將會在[進階教學](../advanced/README.md)中探索如何執行有 side effects 的動作。現在，只要記得 reducer 必須是 pure 的就好。**給定一樣的參數，他必須一樣計算下一個 state 並回傳它。沒有驚喜。沒有 side effect。沒有 API 呼叫。沒有變更。只是一個計算。**
 
 避開這些，讓我們開始來撰寫我們的 reducer，藉由漸漸的教它認得我們之前定義的 [actions](Actions.md)。
 
@@ -66,7 +66,7 @@ function todoApp(state, action) {
     return initialState
   }
 
-  // 在現在，不要處理任何 actions
+  // 在現在，不要處理任何 action
   // 而只是回傳給我們的 state。
   return state
 }
@@ -76,7 +76,7 @@ function todoApp(state, action) {
 
 ```js
 function todoApp(state = initialState, action) {
-  // 現在，不要處理任何 actions
+  // 現在，不要處理任何 action
   // 而只是回傳給我們的 state。
   return state
 }
@@ -109,13 +109,13 @@ function todoApp(state = initialState, action) {
 
 >##### 關於 `switch` 和 Boilerplate 的附註
 
->`switch` 語句*不*算真實的 boilerplate。真實的 Flux boilerplate 是概念性的：需要發送更新、需要註冊 Store 到 Dispatcher、Store 需要是一個物件 (並在你想要一個 universal 應用程式的時候出現併發症)。Redux 藉由使用 pure reducers 取代 event emitters 解決了這些問題。
+>`switch` 語句*不*算真實的 boilerplate。真實的 Flux boilerplate 是概念性的：需要發送更新、需要註冊 Store 到 Dispatcher、Store 需要是一個物件 (並在你想要一個 universal 應用程式的時候出現併發症)。Redux 藉由使用 pure reducer 取代 event emitter 解決了這些問題。
 
 >不幸的事，許多人仍然依照它是不是在文件中使用 `switch` 語句來選擇框架。如果你不喜歡 `switch`，你可以使用一個接收 handler map 的自訂 `createReducer` function，如[「減少 boilerplate」](../recipes/ReducingBoilerplate.md#reducers)中所示。
 
-## 處理更多 Actions
+## 處理更多 Action
 
-我們有兩個以上的 actions 要處理！讓我們來擴充 reducer 以處理 `ADD_TODO`。
+我們有兩個以上的 action 要處理！讓我們來擴充 reducer 以處理 `ADD_TODO`。
 
 ```js
 function todoApp(state = initialState, action) {
@@ -257,7 +257,7 @@ function visibilityFilter(state = SHOW_ALL, action) {
 }
 ```
 
-現在我們可以把主要的 reducer 改寫成一個 function，它呼叫數個 reducers 來分別管理 state 的一部分，並把它們合併成單一一個物件。它也不再需要知道完整的初始 state 了。子 reducers 們在它們一開始被給予 `undefined 的時候只要回傳它們的初始 state 就足夠了。
+現在我們可以把主要的 reducer 改寫成一個 function，它呼叫數個 reducer 來分別管理 state 的一部分，並把它們合併成單一一個物件。它也不再需要知道完整的初始 state 了。子 reducers 們在它們一開始被給予 `undefined 的時候只要回傳它們的初始 state 就足夠了。
 
 ```js
 function todos(state = [], action) {
@@ -301,7 +301,7 @@ function todoApp(state = {}, action) {
 }
 ```
 
-**請記住這些 reducers 每一個都管理它所擁有的全域 state 一部分。每個 reducer 的 `state` 參數都不一樣，並對應到它管理的部分 state。**
+**請記住這些 reducer 每一個都管理它所擁有的全域 state 一部分。每個 reducer 的 `state` 參數都不一樣，並對應到它管理的部分 state。**
 
 這已經看起來蠻棒的了！隨著應用程式大小增長，我們可以把 reducers 拆分成個別的檔案並讓它們完全獨立並管理不同的資料領域。
 
@@ -329,7 +329,7 @@ export default function todoApp(state = {}, action) {
 }
 ```
 
-你也可以給它們不同的 keys、或呼叫不同的 functions。這兩個撰寫組合的 reducer 的方法完全相等：
+你也可以給它們不同的 key、或呼叫不同的 function。這兩個撰寫組合的 reducer 的方法完全相等：
 
 ```js
 const reducer = combineReducers({
@@ -349,11 +349,11 @@ function reducer(state = {}, action) {
 }
 ```
 
-[`combineReducers()`](../api/combineReducers.md) 做的就是產生一個 function，它**以依照它們的 keys 所選擇的 state 部分來**呼叫你的 reducers，並再次把它們的結果合併成單一一個物件。[它不是魔法。](https://github.com/reactjs/redux/issues/428#issuecomment-129223274)
+[`combineReducers()`](../api/combineReducers.md) 做的就是產生一個 function，它**以依照它們的 key 所選擇的 state 部分來**呼叫你的 reducers，並再次把它們的結果合併成單一一個物件。[它不是魔法。](https://github.com/reactjs/redux/issues/428#issuecomment-129223274)
 
 >##### 給理解 ES6 的使用者們的附註
 
->因為 `combineReducers` 預期會接收到一個物件，我們可以把所有底層 reducers 放進個別的檔案中，`export` 每一個 reducer function，然後使用 `import * as reducers` 取得一個以它們的名字作為 keys 的物件：
+>因為 `combineReducers` 預期會接收到一個物件，我們可以把所有底層 reducer 放進個別的檔案中，`export` 每一個 reducer function，然後使用 `import * as reducers` 取得一個以它們的名字作為 keys 的物件：
 
 >```js
 >import { combineReducers } from 'redux'

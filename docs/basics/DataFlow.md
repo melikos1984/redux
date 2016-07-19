@@ -20,7 +20,7 @@ Redux 架構圍繞著**嚴格的單向資料流**。
 
   把 action 想成是一個非常簡短的消息片段。「Mary liked article 42.」或是「Read the Redux docs.」被加到 todos 清單。
 
-  你可以在應用程式的任何地方呼叫 [`store.dispatch(action)`](../api/Store.md#dispatch)，包括 components 和 XHR callbacks，或甚至在排程的 intervals。
+  你可以在應用程式的任何地方呼叫 [`store.dispatch(action)`](../api/Store.md#dispatch)，包括 component 和 XHR callback，或甚至在排程的 interval。
 
 2. **Redux store 呼叫你給它的 reducer function。**
 
@@ -48,13 +48,13 @@ Redux 架構圍繞著**嚴格的單向資料流**。
     let nextState = todoApp(previousState, action)
     ```
 
-    請記得 reducer 只是個 pure function。它只*計算*下一個 state。它應該是完全可以預測的：用相同的 inputs 多次呼叫它應該產生相同的 outputs。它不應該執行任何有 side effects 的動作，像是 API 呼叫或是 router transitions。這些應該在 action 被 dispatched 之前發生。
+    請記得 reducer 只是個 pure function。它只*計算*下一個 state。它應該是完全可以預測的：用相同的 inputs 多次呼叫它應該產生相同的 output。它不應該執行任何有 side effects 的動作，像是 API 呼叫或是 router transition。這些應該在 action 被 dispatch 之前發生。
 
-3. **root reducer 可以把多個 reducers 的 output 合併成一個單一的 state tree。**
+3. **root reducer 可以把多個 reducer 的 output 合併成一個單一的 state tree。**
 
-  要如何建構 root reducer 完全取決於你。Redux 附帶一個 [`combineReducers()`](../api/combineReducers.md) helper function，用於把 root reducer「拆分」成數個獨立 functions，個別管理 state tree 的一個分支。
+  要如何建構 root reducer 完全取決於你。Redux 附帶一個 [`combineReducers()`](../api/combineReducers.md) helper function，用於把 root reducer「拆分」成數個獨立 function，個別管理 state tree 的一個分支。
 
-  下面就是 [`combineReducers()`](../api/combineReducers.md) 的運作方式。比方說，你有兩個 reducers，一個針對 todos 清單，然後另一個針對現在被選擇的過濾設定：
+  下面就是 [`combineReducers()`](../api/combineReducers.md) 的運作方式。比方說，你有兩個 reducer，一個針對 todos 清單，然後另一個針對現在被選擇的過濾設定：
 
     ```js
     function todos(state = [], action) {
@@ -73,7 +73,7 @@ Redux 架構圍繞著**嚴格的單向資料流**。
     })
     ```
 
-  當你發出一個 action 時，`combineReducers` 回傳的 `todoApp` 將會兩個 reducers 都呼叫：
+  當你發出一個 action 時，`combineReducers` 回傳的 `todoApp` 將會兩個 reducer 都呼叫：
 
     ```js
     let nextTodos = todos(state.todos, action)
@@ -102,4 +102,4 @@ Redux 架構圍繞著**嚴格的單向資料流**。
 現在你知道 Redux 如何運作了，讓我們來把[它連結到 React 應用程式](UsageWithReact.md)。
 
 >##### 給進階使用者的附註
->如果你已經熟悉基礎概念並且先前已經完成了這個教學，請不要忘記查看[進階教學](../advanced/README.md)中的[非同步資料流](../advanced/AsyncFlow.md)，來學習 middleware 如何在 [async actions](../advanced/AsyncActions.md) 進入到 reducer 之前轉換它們。
+>如果你已經熟悉基礎概念並且先前已經完成了這個教學，請不要忘記查看[進階教學](../advanced/README.md)中的[非同步資料流](../advanced/AsyncFlow.md)，來學習 middleware 如何在 [async action](../advanced/AsyncActions.md) 進入到 reducer 之前轉換它們。
