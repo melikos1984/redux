@@ -1,10 +1,10 @@
 # `bindActionCreators(actionCreators, dispatch)`
 
-把一個每個值都是 [action creators](../Glossary.md#action-creator) 的物件轉換成另一個有同樣的 keys 的物件，不過每個 action creator 都被包進一個 [`dispatch`](Store.md#dispatch) 呼叫裡面，所以它們可以直接被呼叫。
+把一個每個值都是 [action creator](../Glossary.md#action-creator) 的物件轉換成另一個有同樣的 keys 的物件，不過每個 action creator 都被包進一個 [`dispatch`](Store.md#dispatch) 呼叫裡面，所以它們可以直接被呼叫。
 
 通常你應該只需要直接在你的 [`Store`](Store.md) 實體上呼叫 [`dispatch`](Store.md#dispatch)。如果你結合 Redux 和 React 一起使用，[react-redux](https://github.com/gaearon/react-redux) 將會提供你 [`dispatch`](Store.md#dispatch) function，所以你也一樣可以直接地呼叫它。
 
-`bindActionCreators` 唯一的使用情境是，當你希望傳遞一些 action creators 下去一個不知道 Redux 存在的 component，而你不希望把 [`dispatch`](Store.md#dispatch) 或是 Redux 的 store 傳遞給它。
+`bindActionCreators` 唯一的使用情境是，當你希望傳遞一些 action creator 下去一個不知道 Redux 存在的 component，而你不希望把 [`dispatch`](Store.md#dispatch) 或是 Redux 的 store 傳遞給它。
 
 為方便起見，你也可以傳遞單一一個 function 作為第一個參數，並在回傳中得到一個 function。
 
@@ -89,7 +89,7 @@ class TodoListContainer extends Component {
 
     // 除了 bindActionCreators 之外的另一種選擇是
     // 把 dispatch function 傳遞下去，不過接著你的 child component
-    // 需要 import action creators 並了解它們。
+    // 需要 import action creator 並了解它們。
 
     // return <TodoList todos={todos} dispatch={dispatch} />
   }
@@ -102,6 +102,6 @@ export default connect(
 
 #### 提示
 
-* 你可能會問：為什麼我們不像傳統的 Flux 直接把 action creators 綁定到 store 實體上呢？問題是這在需要在伺服器 render 的 universal 應用程式上不會運作得很好。你很可能想要對每個請求擁有一個獨立的 store 實體，這讓你可以使用不同的資料來準備它們，但是在 action creators 定義時就綁定它們意味著你不得不對所有請求使用同一個 store 實體。
+* 你可能會問：為什麼我們不像傳統的 Flux 直接把 action creator 綁定到 store 實體上呢？問題是這在需要在伺服器 render 的 universal 應用程式上不會運作得很好。你很可能想要對每個請求擁有一個獨立的 store 實體，這讓你可以使用不同的資料來準備它們，但是在 action creator 定義時就綁定它們意味著你不得不對所有請求使用同一個 store 實體。
 
-* 如果你使用 ES5，你可以把 `require('./TodoActionCreators')` 作為第一個參數傳遞到 `bindActionCreators` 來取代 `import * as` 語法。它唯一在意的事情是 `actionCreators` 參數的值是 functions。module 系統並不重要。
+* 如果你使用 ES5，你可以把 `require('./TodoActionCreators')` 作為第一個參數傳遞到 `bindActionCreators` 來取代 `import * as` 語法。它唯一在意的事情是 `actionCreators` 參數的值是 function。module 系統並不重要。

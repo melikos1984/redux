@@ -17,11 +17,11 @@
 
 你可以藉由在傳遞進去的物件中針對 reducers 使用不同的 keys 來控制 state 的 key 的名稱。例如，你可以針對會是 `{ todos, counter }` 形狀的 state 呼叫 `combineReducers({ todos: myTodosReducer, counter: myCounterReducer })`。
 
-一個很受歡迎的慣例是用它們切分之後所管理的 state 來命名 reducers，如此一來你可以使用 ES6 property shorthand notation：`combineReducers({ counter, todos })`。這等同於撰寫 `combineReducers({ counter: counter, todos: todos })`。
+一個很受歡迎的慣例是用它們切分之後所管理的 state 來命名 reducer，如此一來你可以使用 ES6 property shorthand notation：`combineReducers({ counter, todos })`。這等同於撰寫 `combineReducers({ counter: counter, todos: todos })`。
 
 > ##### 給 Flux 使用者的附註
 
-> 這個 function 幫助你組織 reducers 來管理它們所擁有的一部分 state，類似於你如何擁有不同的 Flux Stores 來管理不同的 state。使用 Redux，只會有一個 store，不過 `combineReducers` 幫助你在 reducers 之間保持相同的邏輯劃分。
+> 這個 function 幫助你組織 reducer 來管理它們所擁有的一部分 state，類似於你如何擁有不同的 Flux Store 來管理不同的 state。使用 Redux，只會有一個 store，不過 `combineReducers` 幫助你在 reducer 之間保持相同的邏輯劃分。
 
 #### 參數
 
@@ -45,7 +45,7 @@
 
 * 如果傳給它的 `state` 是 `undefined`，它必須回傳初始的 state 給這個特定的 reducer。根據前一個條件，初始的 state 也不能是 `undefined`。用 ES6 optional arguments 語法來指定它很方便，不過你也可以明確地檢查第一個參數是不是 `undefined`。
 
-雖然 `combineReducers` 會嘗試去檢查你的 reducers 是否符合這些條件，不過你應該記住它們並盡你所能的去遵守它們。
+雖然 `combineReducers` 會嘗試去檢查你的 reducer 是否符合這些條件，不過你應該記住它們並盡你所能的去遵守它們。
 
 #### 範例
 
@@ -116,6 +116,6 @@ console.log(store.getState())
 
 #### 提示
 
-* 這個 helper 只是給你一個方便！你可以撰寫你自己[用不同方式運作的](https://github.com/acdlite/reduce-reducers) `combineReducers`，或甚至手動的從 child reducers 組裝 state 物件，或就像你寫的其他 function 一樣明確的寫一個 root reducing function。
+* 這個 helper 只是給你一個方便！你可以撰寫你自己[用不同方式運作的](https://github.com/acdlite/reduce-reducers) `combineReducers`，或甚至手動的從 child reducer 組裝 state 物件，或就像你寫的其他 function 一樣明確的寫一個 root reducing function。
 
-* 你可以在任何 reducer 的階層呼叫 `combineReducers`。它不需要發生在最上面。事實上你可以再次使用它把變得太複雜的 child reducers 拆分成獨立的 grandchildren，以此類推。
+* 你可以在任何 reducer 的階層呼叫 `combineReducers`。它不需要發生在最上面。事實上你可以再次使用它把變得太複雜的 child reducer 拆分成獨立的 grandchildren，以此類推。

@@ -1,6 +1,6 @@
 # API 參考
 
-Redux 暴露出來的 API 非常少。Redux 定義一系列的介面給你去實作 (例如 [reducers](../Glossary.md#reducer)) 並提供少數的 helper functions 來把這些介面綁在一起。
+Redux 暴露出來的 API 非常少。Redux 定義一系列的介面給你去實作 (例如 [reducers](../Glossary.md#reducer)) 並提供少數的 helper function 來把這些介面綁在一起。
 
 這個章節把 Redux API 完整的文件化。請謹記於心，Redux 只關注管理 state。在一個實際的應用程式中，你也會想要使用像是 [react-redux](https://github.com/gaearon/react-redux) 之類的 UI 綁定。
 

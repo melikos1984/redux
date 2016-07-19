@@ -52,4 +52,4 @@ console.log(store.getState())
 
 * 當一個 store 被建立，Redux 會 dispatch 一個假的 action 到你的 reducer 來把初始的 state 填到 store。這不意味你可以直接的處理這個假 action。只要記住如果給你的 reducer 作為第一個參數的 state 是 `undefined`，那它應該回傳某種初始的 state，然後你所有的東西都會設置好。
 
-* 要套用多個 store enhancers，你可以使用 [`compose()`](./compose.md)。
+* 要套用多個 store enhancer，你可以使用 [`compose()`](./compose.md)。

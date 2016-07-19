@@ -1,17 +1,17 @@
 # `compose(...functions)`
 
-把 functions 從右到左組合起來。
+把 function 從右到左組合起來。
 
 這是一個 functional programming 的 utility，並為了方便而直接被放在 Redux 裡。
-你可能會想要使用它來在一行中使用幾個 [store enhancers](../Glossary.md#store-enhancer)。
+你可能會想要使用它來在一行中使用幾個 [store enhancer](../Glossary.md#store-enhancer)。
 
 #### 參數
 
-1. (*arguments*)：要組合的 functions。每個 function 都預期會接收一個參數。它的回傳值將會作為在它左邊的 function 的變數，以此類推。有個例外是當為 resulting composed function 提供 signature 時， 最右邊的變數可接受多個參數。
+1. (*arguments*)：要組合的 function。每個 function 都預期會接收一個參數。它的回傳值將會作為在它左邊的 function 的變數，以此類推。有個例外是當為最後被組合的 function 提供 signature 時， 最右邊的變數可接受多個參數。
 
 #### 回傳
 
-(*Function*)：藉由從右到左組合給定的 functions 而獲得的最終 function。
+(*Function*)：藉由從右到左組合給定的 function 而獲得的最終 function。
 
 #### 範例
 
