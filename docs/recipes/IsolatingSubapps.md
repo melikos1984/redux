@@ -1,7 +1,6 @@
-# Isolating Redux Sub-Apps
+# 分隔 Redux 子應用程式
 
-Consider the case of a “big” app (contained in a `<BigApp>` component)
-that embeds smaller “sub-apps” (contained in `<SubApp>` components):
+試想一個嵌入較小的「子應用程式」(被裝在 `<SubApp>` component) 的「大型」應用程式 (被裝在一個 `<BigApp>` component) 案例：
 
 ```js
 import React, { Component } from 'react'
@@ -20,35 +19,28 @@ class BigApp extends Component {
 }
 ```
 
-These `<SubApp>`s will be completely independent. They won’t share data or
-actions, and won’t see or communicate with each other.
+這些 `<SubApp>` 會是完全地獨立的。它們不會共享資料或是 action，並不會看見或與彼此溝通。
 
-It’s best not to mix this approach with standard Redux reducer composition.
-For typical web apps, stick with reducer composition. For
-“product hubs”, “dashboards”, or enterprise software that groups disparate
-tools into a unified package, give the sub-app approach a try.
+最好不要把這個方式跟標準的 Redux reducer composition 混在一起。
+針對典型的 web 應用程式，請繼續使用 reducer composition。針對
+「product hub」、「dashboard」或是把不同的工具包進一個統一包裝的企業軟體，則可以試試子應用程式方式。
 
-The sub-app approach is also useful for large teams that are divided by product
-or feature verticals. These teams can ship sub-apps independently or in combination
-with an enclosing “app shell”.
+子應用程式方式也對以產品或功能劃分的大型團隊很有用。這些團隊可以獨立的發布子應用程式或是與一個附帶的 「應用程式 shell」做結合。
 
-Below is a sub-app’s root connected component.
-As usual, it can render more components, connected or not, as children.
-Usually we’d render it in `<Provider>` and be done with it.
+以下是一個子應用程式的 root connected component。
+跟一般一樣，它可以 render 更多的 component 作為 children，不管有沒有被 connect 的都可以。
+通常我們會就這樣在 `<Provider>` 中 render 它。
 
 ```js
 class App extends Component { ... }
 export default connect(mapStateToProps)(App)
 ```
 
-However, we don’t have to call `ReactDOM.render(<Provider><App /></Provider>)`
-if we’re interested in hiding the fact that the sub-app component is a Redux app.
+不過，如果我們對隱藏這個子應用程式 component 是一個 Redux 應用程式的事實有興趣，我們不需要呼叫 `ReactDOM.render(<Provider><App /></Provider>)`。
 
-Maybe we want to be able to run multiple instances of it in the same “bigger” app
-and keep it as a complete black box, with Redux being an implementation detail.
+或許我們想要能夠在同個「較大的」應用程式執行數個它的實體並讓它維持是一個完全的黑箱，把 Redux 變成實作細節。
 
-To hide Redux behind a React API, we can wrap it in a special component that
-initializes the store in the constructor:
+要把 Redux 隱藏在 React API 的背後，我們可以把它包在一個特別的 component 中，並在 constructor 初始化 store：
 
 ```js
 import React, { Component } from 'react'
@@ -61,7 +53,7 @@ class SubApp extends Component {
     super(props)
     this.store = createStore(reducer)
   }
-  
+
   render() {
     return (
       <Provider store={this.store}>
@@ -72,10 +64,9 @@ class SubApp extends Component {
 }
 ```
 
-This way every instance will be independent.
+用這個方法每個實體都會是獨立的。
 
-This pattern is *not* recommended for parts of the same app that share data.
-However, it can be useful when the bigger app has zero access to the smaller apps’ internals,
-and we’d like to keep the fact that they are implemented with Redux as an implementation detail.
-Each component instance will have its own store, so they won’t “know” about each other.
-
+這個模式*不*建議用在相同但是會共享資料的應用程式部件上。
+不過，它在較大的應用程式完全不存取較小的應用程式內部時很有用，
+而且我們想要把它們是用 Redux 實作的事實作為實作細節。
+每個 component 實體會有它自己的 store，所以它們不會「了解」彼此。
