@@ -45,7 +45,7 @@
 
 * 如果傳給它的 `state` 是 `undefined`，它必須回傳初始的 state 給這個特定的 reducer。根據前一個條件，初始的 state 也不能是 `undefined`。用 ES6 optional arguments 語法來指定它很方便，不過你也可以明確地檢查第一個參數是不是 `undefined`。
 
-雖然 `combineReducers` 會嘗試去檢查你的 reducer 是否符合這些條件，不過你應該記住它們並盡你所能的去遵守它們。
+雖然 `combineReducers` 會嘗試去檢查你的 reducer 是否符合這些條件，不過你應該記住它們並盡你所能的去遵守它們。`combineReducers` 會藉由傳遞 `undefined` 給你的 reducer 來檢查它們；即使你指定了初始的 state 給 `Redux.createStore(combinedReducers(...), initialState)` 依然會做這個檢查。因此，你**必須** 確保你的 reducer 在收到 `undefined` 作為 state 時能正常運作，即使你從來沒有打算在你自己的程式碼實際接收 `undefined`。
 
 #### 範例
 

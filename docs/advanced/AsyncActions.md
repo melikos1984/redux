@@ -155,11 +155,11 @@ export function receivePosts(subreddit, json) {
 
 * 針對每一個項目清單，你會想儲存一個 `isFetching` 屬性來顯示 spinner，`didInvalidate` 讓你可以在資料已經過時的時候再去觸發更新它，`lastUpdated` 讓你知道最後一次抓取資料的時間，還有 `items` 它們自己。在一個真實的應用程式中，你也會想要儲存 pagination state 像是 `fetchedPageCount` 和 `nextPageUrl`。
 
->##### 關於巢狀 Entities 的附註
+>##### 關於巢狀 Entity 的附註
 
->在這個範例中，我們把收到的項目跟 pagination 資訊儲存在一起。但是，如果你有巢狀且互相參考的 entities，或是如果你讓使用者可以編輯項目，那這個方法不會運作得很好。試想如果使用者想要去編輯一個抓回來的 post，但是這個 post 被複製到 state tree 中的好幾個地方。實作這個將會非常痛苦。
+>在這個範例中，我們把收到的項目跟 pagination 資訊儲存在一起。但是，如果你有巢狀且互相參考的 entity，或是如果你讓使用者可以編輯項目，那這個方法不會運作得很好。試想如果使用者想要去編輯一個抓回來的 post，但是這個 post 被複製到 state tree 中的好幾個地方。實作這個將會非常痛苦。
 
->如果你有巢狀的 entities，或是如果你讓使用者可以編輯接收到的項目，你應該把它們分別保存在 state 中，就像它是一個資料庫。在 pagination 資訊中，你只會藉由它們的 IDs 來參考它們。這使你能讓它們始終保持更新到最新狀態。[real world example](../introduction/Examples.md#real-world) 展示了這個方法，並使用了 [normalizr](https://github.com/gaearon/normalizr) 來正規化巢狀的 API 回應。用這個方法，你的 state 可能會看起來像這樣：
+>如果你有巢狀的 entity，或是如果你讓使用者可以編輯接收到的項目，你應該把它們分別保存在 state 中，就像它是一個資料庫。在 pagination 資訊中，你只會藉由它們的 IDs 來參考它們。這使你能讓它們始終保持更新到最新狀態。[real world example](../introduction/Examples.md#real-world) 展示了這個方法，並使用了 [normalizr](https://github.com/gaearon/normalizr) 來正規化巢狀的 API 回應。用這個方法，你的 state 可能會看起來像這樣：
 
 >```js
 > {
@@ -200,7 +200,7 @@ export function receivePosts(subreddit, json) {
 > }
 >```
 
->在這份教學中，我們不會把 entities 正規化，不過針對一個更動態的應用程式，你應該考慮這樣做。
+>在這份教學中，我們不會把 entity 正規化，不過針對一個更動態的應用程式，你應該考慮這樣做。
 
 ## 處理 Actions
 
@@ -208,7 +208,7 @@ export function receivePosts(subreddit, json) {
 
 >##### 關於 Reducer Composition 的附註
 
-> 這裡，我們假設你已經了解藉由 [`combineReducers()`](../api/combineReducers.md) 來做 reducer composition，它被描述在[基礎教學](../basics/README.md)的[拆分 Reducers](../basics/Reducers.md#splitting-reducers) 章節中。如果你不了解，請[先閱讀它](../basics/Reducers.md#splitting-reducers)。
+> 這裡，我們假設你已經了解藉由 [`combineReducers()`](../api/combineReducers.md) 來做 reducer composition，它被描述在[基礎教學](../basics/README.md)的[拆分 Reducer](../basics/Reducers.md#splitting-reducers) 章節中。如果你不了解，請[先閱讀它](../basics/Reducers.md#splitting-reducers)。
 
 #### `reducers.js`
 
@@ -492,7 +492,7 @@ store.dispatch(fetchPostsIfNeeded('reactjs')).then(() =>
 
 [Thunk middleware](https://github.com/gaearon/redux-thunk) 不是在 Redux 中協調非同步 action 的唯一方式：
 - 你可以使用 [redux-promise](https://github.com/acdlite/redux-promise) 或是 [redux-promise-middleware](https://github.com/pburtchaell/redux-promise-middleware) 來 dispatch Promise 取代 function。
-- 你可以使用 [redux-rx](https://github.com/acdlite/redux-rx) 或是 [redux-observable](https://github.com/redux-observable/redux-observable) 來 dispatch Observables。
+- 你可以使用 [redux-observable](https://github.com/redux-observable/redux-observable) 來 dispatch Observables。
 - 你可以使用 [redux-saga](https://github.com/yelouafi/redux-saga/) middleware 來建置更複雜的非同步 action。
 - 你甚至可以撰寫一個客製化的 middleware 來描述你的 API 呼叫，像是 [real world example](../introduction/Examples.md#real-world) 做的那樣。
 

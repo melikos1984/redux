@@ -107,7 +107,8 @@ Redux 是個非常小的 library，但它的介面和 API 都是精挑細選來�
 * [redux-immutable](https://github.com/gajus/redux-immutable) — 用來建立一個與 Redux 中 `combineReducers` 等價但使用 [Immutable.js](https://facebook.github.io/immutable-js/) state 的 function
 * [redux-tcomb](https://github.com/gcanti/redux-tcomb) — Immutable 與給 Redux 用的 type-checked state 和 action
 * [redux-mock-store](https://github.com/arnaudbenard/redux-mock-store) — Mock redux store 以測試你的應用程式
-* [redux-actions-assertions](https://github.com/dmitry-zaets/redux-actions-assertions) — 測試 Redux action 的 Assertion
+* [redux-actions-assertions](https://github.com/dmitry-zaets/redux-actions-assertions) — 測試 Redux action 用的 Assertion
+* [redux-bootstrap](https://github.com/remojansen/redux-bootstrap) — 給 Redux 應用程式用的起動 function
 
 ### 開發工具
 
