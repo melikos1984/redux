@@ -33,7 +33,7 @@ npm install --save-dev babel-register
   "scripts": {
     ...
     "test": "mocha --compilers js:babel-register --recursive",
-    "test:watch": "npm test -- --watch",
+    "test:watch": "npm test -- --watch"
   },
   ...
 }
