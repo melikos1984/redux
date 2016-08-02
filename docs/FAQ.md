@@ -49,13 +49,13 @@
 
 早期的 React contributor 之一，Pete Hunt 說：
 
-> 你會知道你哪時候需要 Flux。如果你不確定你是否需要，那就是不需要了。
+> 當你需要 Flux 的時候，你會知道。如果你不確定你是否需要，那就是不需要了。
 
-同樣的，Redux 的作者 Dan Abramov 這麼說：
+同樣的，Redux 的作者之一 Dan Abramov 這麼說：
 
-> 我會想要修改成：不要使用 Redux，直到你在原生的 React 發生了問題。
+> 我會想要這樣說：不要使用 Redux，直到你用原生的 React 出現了問題。
 
-一般來說，在當你有合理的資料量會隨著時間的推移而改變時使用 Redux，你需要唯一的資料來源，而且你發現像是把所有東西保存在頂層 React component 的 state 之類的方法不再是足夠的。
+一般來說，在當你有合理的資料量會隨著時間的推移而改變，你需要唯一的資料來源，而且你發現像是把所有東西保存在頂層 React component 的 state 之類的方法不再是足夠的時候使用 Redux。
 
 #### 更多資訊
 
@@ -68,21 +68,21 @@
 - [Flux 的案例](https://medium.com/swlh/the-case-for-flux-379b7d1982c6)
 - [Stack Overflow - 為什麼 Redux 會超越 Facebook 的 Flux？ Flux?](http://stackoverflow.com/questions/32461229/why-use-redux-over-facebook-flux)
 - [Stack Overflow - 為什麼我應該要在這個範例使用 Redux？](http://stackoverflow.com/questions/35675339/why-should-i-use-redux-in-this-example)
-- [Stack Overflow - 使用 Redux 而不是 Flux，缺點可能是什麼？](http://stackoverflow.com/questions/32021763/what-could-be-the-downsides-of-using-redux-instead-of-flux)
+- [Stack Overflow - 使用 Redux 取代 Flux，可能有什麼缺點？](http://stackoverflow.com/questions/32021763/what-could-be-the-downsides-of-using-redux-instead-of-flux)
 
 <a id="general-only-react"></a>
 ### Redux 只能用在 React 上嗎？
 
-在任何的 UI 層，Redux 可以被用來當作資料儲存。最常見的就是被用在 React，除此之外還可用在 Angular、Vue、Mithril 等等。Redux 只是提供一個訂閱的機制，它可以被用在任何其他的程式碼。
+Redux 可以被用作任何的 UI 層的資料儲存。最常見是用在 React 和 React Native，不過也有 Angular、Angular 2、Vue、Mithril 等等的綁定可以使用。Redux 只是簡單的提供一個訂閱的機制，它可以被用在任何其他的程式碼。也就是說它在與可以從 state 變更來推斷 UI 更新的宣告式 view 實作結合時最有用途。
 
 <a id="general-build-tools"></a>
 ### 我需要特定的建構工具才能使用 Redux 嗎？
 
-Redux 是由 ES6 所撰寫的，並建立於 Webpack 和 Babel。然而，它應該是可以用在任何 JavaScript 建構環境。還有一個是 UMD 版本，可以不需要任何建構工具就可以使用。[counter-vanilla](https://github.com/reactjs/redux/tree/master/examples/counter-vanilla) 示範透過 script 標籤引入 Redux 並使用基本的 ES5 來撰寫。就如同此 Pull Request 所加入的一段話：
+Redux 的原始碼是用 ES6 撰寫並用 Webpack 和 Babel 編譯成適合產品環境的 ES5 版本。它應該能夠用在任何的 JavaScript 建構環境。Redux 也提供一個 UMD 版本，它不需要任何建構過程就可以直接使用。[counter-vanilla](https://github.com/reactjs/redux/tree/master/examples/counter-vanilla) 範例展示了基本的 ES5 Redux 用法，透過 `<script>` 標籤引入它。就如同相關的 Pull Request 中所說的：
 
-> 新的 Counter 原生範例意旨在於去除 Redux 需要 Webpack、React、hot reloading、sagas、action creators、constants、Babel、npm、CSS modules、decorators、fluent Latin、一個 Egghead 的訂閱、一個 PhD，或是一個超過預期的 O.W.L. 水準的迷思。
+> 新的 Counter 原生範例意旨在於去除 Redux 需要 Webpack、React、hot reload、sagas、action creator、constant、Babel、npm、CSS modules、decorator、fluent Latin、訂閱 Egghead、PhD，或是超過預期的 O.W.L. 水準的迷思。
 
-> 以上皆非，只需要 HTML 還有一些 `<script>` tag 的引入，簡單的透過 DOM 來操作就可以了。Enjoy！
+> 不是的，它只需要 HTML，一些簡陋的 `<script>` tag，還有傳統的 DOM 操作。享受吧！
 
 
 ## Reducer
@@ -90,9 +90,9 @@ Redux 是由 ES6 所撰寫的，並建立於 Webpack 和 Babel。然而，它應
 <a id="reducers-share-state"></a>
 ### 我要如何在兩個 reducer 之間共用 state？我一定要使用 `combineReducers` 嗎？
 
-Redux store 建議的結構是透過 key 來拆分成多個 「slice」或「domains」state 物件，並提供一個單獨的 reducer function 來管理每個獨立的資料部份。這是類似於標準的 Flux 模式有多個獨立的 store，而 Redux 提供了 [`combineReducers`](api/combineReducers.md) function 讓這個模式更加簡單。然而，重要的是要注意到 `combineReducers` 不是必要的 - 它是一個簡單有效的工具，對於共同使用具有單一的 reducer function 的 state 切分和簡單的 JavaScript 物件的資料。
+Redux store 建議的結構是透過 key 來把 state 物件拆分成多個「部分」或「領域」，並提供一個單獨的 reducer function 來管理每個獨立的資料部份。這是類似於標準的 Flux 模式有數個獨立的 store，而 Redux 提供了 [`combineReducers`](api/combineReducers.md) function 讓這個模式更加簡單。然而，重要的是要注意 `combineReducers` *不是*必要的 - 它是一個簡單的 function，用以針對每個 state 部分有一個 reducer function 的常見情況，並以一般的 JavaScript 物件作為資料。
 
-許多使用者之後想要嘗試在兩個 reducer 間共用資料，但是發現 `combineReducers` 不允許他們這麼做。這裡有幾種可以使用的方法：
+許多使用者之後想要嘗試在兩個 reducer 之間共用資料，但是發現 `combineReducers` 不允許他們這麼做。這裡有幾種可以使用的方法：
 
 * 如果 reducer 需要知道資料是來自 state 的哪個部份，store 應該需要重新被組合，讓單一的 reducer 可以處理更多的資料。
 * 你可能需要撰寫一些自訂的 function 來處理一些 action。這可能需要將你的頂層 reducer function 來替代 `combineReducers`。你也可以使用一些有用的工具像是 [reduce-reducers](https://github.com/acdlite/reduce-reducers) 來執行 `combineReducers` 處理大部分的 action，同時執行更多 reducer 對於跨越不同 state 所指定的 action。
@@ -106,7 +106,7 @@ Redux store 建議的結構是透過 key 來拆分成多個 「slice」或「dom
 - [API：combineReducers](api/combineReducers.md)
 
 **討論**
-- [#601 - 當一個 action 與多個 reducers 有關時，在 combineReducers 所要關注的問題](https://github.com/reactjs/redux/issues/601)
+- [#601 - 當一個 action 與多個 reducer 有關時，在 combineReducers 所要關注的問題](https://github.com/reactjs/redux/issues/601)
 - [#1400 - 傳送頂層 state 物件到其他分支的 reducer 是一個 anti-pattern 嗎？](https://github.com/reactjs/redux/issues/1400)
 - [Stack Overflow - 當使用 combine reducers，可以存取其他部分的 state 嗎？](http://stackoverflow.com/questions/34333979/accessing-other-parts-of-the-state-when-using-combined-reducers)
 - [Stack Overflow - Reduce 整個 subtree 與 redux combineReducer](http://stackoverflow.com/questions/34427851/reducing-an-entire-subtree-with-redux-combinereducers)
