@@ -10,7 +10,11 @@ type State = any
 
 *State* (也稱作 *state tree*) 是一個廣義的詞彙，不過在 Redux API 中，它通常是指被 store 所管理的單一狀態值並藉由 [`getState()`](api/Store.md#getState) 來回傳。它代表 Redux 應用程式的完整狀態，通常是一個多層的巢狀物件。
 
+<<<<<<< HEAD
 慣例上，頂層 state 是個物件或一些其他 key-value collection 像是 Map，不過技術上來說它可以是任何 type。但是，你應該盡你所能的讓 state 是可以 serialize 的。不要放任何不能輕易轉成 JSON 的東西在裡面。
+=======
+By convention, the top-level state is an object or some other key-value collection like a Map, but technically it can be any type. Still, you should do your best to keep the state serializable. Don't put anything inside it that you can't easily turn into JSON.
+>>>>>>> upstream/master
 
 ## Action
 
@@ -20,9 +24,15 @@ type Action = Object
 
 *action* 是個一般的 JavaScript 物件，它代表一個改變 state 的意圖。Action 是讓 data 進到 store 的唯一方式。任何 data，無論是從 UI 事件、網路 callback、或其他來源，像是 WebSocket 最後都需要作為 action 被 dispatch。
 
+<<<<<<< HEAD
 Action 必須有一個 `type` 屬性，它代表被執行的 action 的類型。Type 可以被定義成常數並從其他 module import。使用字串作為 `type` 會比使用 [Symbol](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Symbol) 好，因為字串是可以 serialize 的。
 
 除了 `type` 以外，action 物件的結構完全取決於你。如果你有興趣，請查看 [Flux Standard Action](https://github.com/acdlite/flux-standard-action) 上有關應該如何建構 action 的建議。
+=======
+Actions must have a `type` field that indicates the type of action being performed. Types can be defined as constants and imported from another module. It's better to use strings for `type` than [Symbols](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Symbol) because strings are serializable.
+
+Other than `type`, the structure of an action object is really up to you. If you're interested, check out [Flux Standard Action](https://github.com/acdlite/flux-standard-action) for recommendations on how actions should be constructed.
+>>>>>>> upstream/master
 
 另外請查看下面的 [async action](#async-action)。
 
@@ -53,7 +63,11 @@ type Dispatch = (a: Action | AsyncAction) => any
 
 我們必須區分通常的 dispatching functions 和沒有任何 middleware 的 store 實體所提供的基本 [`dispatch`](api/Store.md#dispatch) function。
 
+<<<<<<< HEAD
 基本的 dispatch function *總是*同步的把 action 發送到 store 的 reducer，伴隨著 store 回傳的先前 state，以計算一個新的 state。它預期 action 是準備好要被 reducer 消耗的一般物件。
+=======
+The base dispatch function *always* synchronously sends an action to the store's reducer, along with the previous state returned by the store, to calculate a new state. It expects actions to be plain objects ready to be consumed by the reducer.
+>>>>>>> upstream/master
 
 [Middleware](#middleware) 包裝了基本的 dispatch function。它讓 dispatch function 除了 action 以外還可以去處理 [async action](#async-action)。Middleware 可以在把 action 或 async action 傳遞到下一個 middleware 之前，以轉換、延遲、忽略、或其他別的方式處理它們。請往下看以了解更多資訊。
 
@@ -65,7 +79,11 @@ type ActionCreator = (...args: any) => Action | AsyncAction
 
 *action creator* 是個產生 action 的 function，非常的簡單。請不要混淆這兩個詞—重複一次，action 是個資訊 payload，而 action creator 是個產生 action 的 factory。
 
+<<<<<<< HEAD
 呼叫 action creator 只會產生一個 action，但是不會 dispatch 它。你需要呼叫 store 的 [`dispatch`](api/Store.md#dispatch) function 來實際地造成變化。呼叫一個 action creator 並立即 dispatch 它的結果到一個具體的 store 實體的 function，有時我們稱 *bound action creator* 來表示。
+=======
+Calling an action creator only produces an action, but does not dispatch it. You need to call the store's [`dispatch`](api/Store.md#dispatch) function to actually cause the mutation. Sometimes we say *bound action creators* to mean functions that call an action creator and immediately dispatch its result to a specific store instance.
+>>>>>>> upstream/master
 
 如果 action creator 需要讀取現在的 state、執行 API 呼叫，或引起 side effect，例如 routing 轉換，它需要回傳一個 [async action](#async-action) 而不是 action。
 
@@ -101,6 +119,7 @@ type Store = {
 }
 ```
 
+<<<<<<< HEAD
 store 是個保存應用程式 state tree 的物件。
 在一個 Redux 應用程式裡，應該只有一個 store，因為 composition 發生在 reducer 層級。
 
@@ -108,6 +127,15 @@ store 是個保存應用程式 state tree 的物件。
 - [`getState()`](api/Store.md#getState) 回傳現在 store 的 state。
 - [`subscribe(listener)`](api/Store.md#subscribe) 註冊一個會在 state 改變時被呼叫的 function。
 - [`replaceReducer(nextReducer)`](api/Store.md#replaceReducer) 可以被用來實作 hot reloading 與 code splitting。你很有可能不會使用到它們。
+=======
+A store is an object that holds the application's state tree.  
+There should only be a single store in a Redux app, as the composition happens on the reducer level.
+
+- [`dispatch(action)`](api/Store.md#dispatch) is the base dispatch function described above.
+- [`getState()`](api/Store.md#getState) returns the current state of the store.
+- [`subscribe(listener)`](api/Store.md#subscribe) registers a function to be called on state changes.
+- [`replaceReducer(nextReducer)`](api/Store.md#replaceReducer) can be used to implement hot reloading and code splitting. Most likely you won't use it.
+>>>>>>> upstream/master
 
 查看完整的 [store API 參考](api/Store.md#dispatch)來了解細節。
 
@@ -131,4 +159,8 @@ Store enhancers 跟 React 的 higher-order component 是大致相同的概念，
 
 因為 store 不是個物件實體，而只是一個 function 的 collection，它的複製品可以簡單地被建立和調整而不會改變到原來的 store。在 [`compose`](api/compose.md) 文件中有一個範例展示了這個。
 
+<<<<<<< HEAD
 你很有可能永遠也不會寫到 store enhancer，但是你可能已經使用了一個由[開發工具](https://github.com/gaearon/redux-devtools)所提供的。這就是使 time travel 可以實現，但應用程式卻沒有意識到他發生的東西。有趣的是，[Redux middleware 的實作](api/applyMiddleware.md)本身就是一個 store enhancer。
+=======
+Most likely you'll never write a store enhancer, but you may use the one provided by the [developer tools](https://github.com/gaearon/redux-devtools). It is what makes time travel possible without the app being aware it is happening. Amusingly, the [Redux middleware implementation](api/applyMiddleware.md) is itself a store enhancer.
+>>>>>>> upstream/master
