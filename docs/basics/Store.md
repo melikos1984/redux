@@ -7,7 +7,7 @@
 * 掌管應用程式狀態；
 * 允許藉由 [`getState()`](../api/Store.md#getState) 獲取 state；
 * 允許藉由 [`dispatch(action)`](../api/Store.md#dispatch) 來更新 state；
-* 藉由 [`subscribe(listener)`](../api/Store.md#subscribe) 註冊 listener;
+* 藉由 [`subscribe(listener)`](../api/Store.md#subscribe) 註冊 listener；
 * 藉由 [`subscribe(listener)`](../api/Store.md#subscribe) 回傳的 function 處理撤銷 listener。
 
 有一點很重要需要注意，你的 Redux 應用程式中將只會有一個 store。當你想要把你的資料處理邏輯拆分時，你會使用 [reducer 合成](Reducers.md#splitting-reducers) 而不是使用許多的 store。
